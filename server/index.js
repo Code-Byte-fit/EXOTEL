@@ -12,6 +12,8 @@ const db=require('./models')
 const userRouter=require('./routes/Users')
 app.use("/users",userRouter);
 
+const guestRouter=require('./routes/Guests')
+app.use("/guests",guestRouter);
 
 db.sequelize.sync().then(()=>{
     app.listen(3001,()=>{

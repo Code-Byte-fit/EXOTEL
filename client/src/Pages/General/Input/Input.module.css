@@ -1,0 +1,33 @@
+
+.InputContainer{
+    display:inline-grid;
+    margin: 3vh 0 0 1vw;
+    row-gap: 1vh; 
+ }
+
+.Input{
+    padding: 1.5vh 1vw 1.25vh 1vw;
+    font-family: "Roboto Mono",monospace;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
+
+.Input:focus {
+    outline: none;
+    border-color: #0398fc;
+    box-shadow: 0 0 0 1px #0398fc;
+   }
+.select{
+    width: 9.3vw;
+    position: relative;
+    top: 0.1vh;
+}
+
+.unselect{
+    display: none;
+}
+
+::-webkit-calendar-picker-indicator{
+    cursor: pointer;
+}
+
