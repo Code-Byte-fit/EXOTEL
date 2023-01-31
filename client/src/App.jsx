@@ -9,6 +9,7 @@ export default function App() {
         createRoutesFromElements( 
             <Route path="/">
                 <Route path="/createReservation/Details" element={<ResPageTwo/>}/>
+                <Route path="/login" element={<h1>hello</h1>}/>
                 <Route path="*" element={<>Page Not Found</>}/>
             </Route>
         )
