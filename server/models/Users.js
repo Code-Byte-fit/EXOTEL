@@ -12,6 +12,10 @@ module.exports=(sequelize,Datatypes)=>{
             type:Datatypes.STRING,
             allowNull:false,
         },
+        password:{
+            type:Datatypes.STRING,
+            allowNull:false,
+        }
     })
     return Users;
 }
