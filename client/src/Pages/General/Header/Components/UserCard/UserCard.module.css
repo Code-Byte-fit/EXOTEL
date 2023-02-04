@@ -1,0 +1,26 @@
+.avatarPic{
+    width: 3vw;
+    height: 6vh;
+    margin: 0 1vw 0.5vh 2vw;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.userTextContainer{
+    display: grid;
+    cursor: pointer;
+}
+
+.name{
+    color: white;
+    font-size: 0.9rem;
+    display: block;
+}
+
+.role{
+    font-size: small;
+}
+
+.userTextContainer:hover .name{
+    text-decoration: underline;
+}
