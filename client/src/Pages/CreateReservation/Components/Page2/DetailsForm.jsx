@@ -3,7 +3,7 @@ import {useForm} from "react-hook-form"
 import {yupResolver} from "@hookform/resolvers/yup"
 import * as yup from 'yup'
 import axios from 'axios'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import uploadIcon from "../../../../Assets/Images/Upload.png"
 import style from "./Style.module.css"
 
 export default function DetailsForm() {
@@ -32,7 +32,7 @@ export default function DetailsForm() {
             </div>
             <div className={style.InputContainer}>
                 <label>Arrival Time</label>
-                <input type="time" className={style.Input} name="ArrivalTIme" {...register("ArrivalTIme")}/>
+                <input type="time" className={`${style.Input} ${style.time}`} name="ArrivalTIme" {...register("ArrivalTIme")}/>
             </div>
         </div>
 
@@ -48,7 +48,7 @@ export default function DetailsForm() {
             </div>
             <div className={style.InputContainer}>
                 <label>Birth Date</label>
-                <input type="date" className={style.Input} name="BirthDate" {...register("BirthDate")}/>
+                <input type="date" className={`${style.Input} ${style.date} `} name="BirthDate" {...register("BirthDate")}/>
             </div>
             <div className={style.InputContainer}>
                 <label>Country</label>
@@ -66,11 +66,13 @@ export default function DetailsForm() {
             </div>
         </div>
         <div>
-        <span className={style.sectionHeading}>IDENTIFICATION</span>
-       <button className='btn btn-outline-secondary' type="button">UPLOAD IDENTIFICATION</button>
-       
+            <span className={style.sectionHeading}>IDENTIFICATION</span>
+            <button className={style.uploadBtn} type="button">
+                 <img src={uploadIcon} className={style.uploadIcon}/>
+                 <span>upload identification</span>
+            </button>
         </div>
-          <button className={`btn btn-primary`} type="submit">PROCEED</button>
+          <button className={style.proceedBtn} type="submit">PROCEED</button>
     </form>
     </>
   )
