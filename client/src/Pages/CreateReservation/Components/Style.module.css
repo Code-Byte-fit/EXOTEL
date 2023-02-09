@@ -1,0 +1,32 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 69vh;
+    margin: 1vh 0 0 0;
+}
+
+.topContainer{
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+.topRightContainer{
+    margin: 0 1vw 0 0;
+}
+
+.dateRange{
+    margin:7vh 0 0 0;
+}
+
+.proceedBtn{
+    padding: 0.7%;
+    font-size: 0.7rem;
+    color: #ffff;
+    background:#4D5949;
+    border: none;
+    border-radius: 4px;
+    width: clamp(3vw,5vw,5vw);
+    align-self: flex-end;
+}

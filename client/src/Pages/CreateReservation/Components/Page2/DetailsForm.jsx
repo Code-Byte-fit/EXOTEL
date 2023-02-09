@@ -1,29 +1,81 @@
 import React from 'react'
-import {useForm} from "react-hook-form"
+import {Formik,Form,Field} from "formik"
 import {yupResolver} from "@hookform/resolvers/yup"
 import * as yup from 'yup'
 import axios from 'axios'
 import uploadIcon from "../../../../Assets/Images/Upload.png"
 import style from "./Style.module.css"
 
-export default function DetailsForm() {
-  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-  const schema=yup.object().shape({
-    FirstName:yup.string().required(),
-    LastName:yup.string().required(),
-    BirthDate: yup.date().typeError("please enter a valid date").required().min("1969-11-13", "Date is too early"),
-    Country:yup.string().required(),
-    Email:yup.string().email().required(),
-    PhoneNumber: yup.string().required("required").matches(phoneRegExp, 'Phone number is not valid').min(10, "too short")
-    .max(10, "too long"), })
-  const {register,handleSubmit}=useForm({resolver:yupResolver(schema)})
-  const onSubmit=(data)=>{
-  axios.post("http://localhost:3001/guests",data).then((res)=>{
-      console.log("working")
-  })}
+export default function DetailsForm(props) {
+//   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+//   const schema=yup.object().shape({
+//     FirstName:yup.string().required(),
+//     LastName:yup.string().required(),
+//     BirthDate: yup.date().typeError("please enter a valid date").required().min("1969-11-13", "Date is too early"),
+//     Country:yup.string().required(),
+//     Email:yup.string().email().required(),
+//     PhoneNumber: yup.string().required("required").matches(phoneRegExp, 'Phone number is not valid').min(10, "too short")
+//     .max(10, "too long"), })
+//   const onSubmit=(data)=>{
+//   axios.post("http://localhost:3001/guests",data).then((res)=>{
+//       console.log("working")
+//   })}
+
+
+  const handleSubmit=(values)=>{
+    props.next(values)
+  }
+
   return (
     <>
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <Formik initialValues={props.data} onSubmit={handleSubmit}>
+                <Form>
+                    <Field name="Country"/>
+                    <Field name="Email"/>
+                    <button type="button">Back</button>
+                    <button type="submit">Proceed</button>
+                </Form>
+        
+    </Formik>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {/* <form>
     <span className={style.sectionHeading}>RESERVATION DETAILS</span>
         <div>
             <div className={style.InputContainer}>
@@ -73,7 +125,7 @@ export default function DetailsForm() {
             </button>
         </div>
           <button className={style.proceedBtn} type="submit">PROCEED</button>
-    </form>
+    </form> */}
     </>
   )
 }

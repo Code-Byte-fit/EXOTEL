@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link} from 'react-router-dom';
 import addIcon from "../../../Assets/Images/Add.png"
 import sortIcon from "../../../Assets/Images/sort black.png"
 import 'bootstrap/dist/css/bootstrap.min.css'; 
@@ -11,7 +12,7 @@ export default function ReservationsTable() {
            <div className={style.tableHeader}>
                 <div className={style.headerLeft}>
                       <span className={style.heading}>RESERVATIONS</span>
-                      <img src={addIcon} className={style.addIcon}/>
+                     <Link to="/createReservation"><img src={addIcon} className={style.addIcon}/></Link> 
                 </div>
                 <div className={style.headerRight}>
                       <select className={`form-select ${style.select}`}>

@@ -1,14 +1,159 @@
-
-.icon{
-   width:35%;
-   height: 10%;
-   margin: 0.5vh 0 0 2vw;
-   cursor: pointer;
+/*navIcon*/
+.navContainer{
+    position: relative;
+    padding: 0.3%;
+    margin: 0.7%;
 }
 
-.burgerMenu{
-    height: 100%;
+.active{
+    outline: 0.5px solid #333333;
+    border-radius: 20%;
+}
+
+.navIcon{
+    width: 30px;
+    height: 30px;
+    position: relative;
+    transition: .1s;
+    cursor: pointer;
+  }
+  .navIcon span{
+    width: 7px;
+    height: 7px;
+    background-color: #333333;
+    display: block;
+    position: absolute;
+  }
+ 
+  .navIcon span:nth-child(1){
+    left: 0;
+    top: 0;
+  }
+  .navIcon span:nth-child(2){
+    left: 12px;
+    top: 0;
+  }
+  .navIcon span:nth-child(3){
+    right: 0;
+    top: 0;
+  }
+  .navIcon span:nth-child(4){
+    left: 0;
+    top: 12px;
+  }
+  .navIcon span:nth-child(5){
+    position: absolute;
+    left: 12px;
+    top: 12px;
+  }
+  .navIcon span:nth-child(6){
+    right: 0px;
+    top: 12px;
+  }
+  .navIcon span:nth-child(7){
+    left: 0px;
+    bottom: 0px;
+  }
+  .navIcon span:nth-child(8){
+    position: absolute;
+    left: 12px;
+    bottom: 0px;
+  }
+  .navIcon span:nth-child(9){
+    right: 0px;
+    bottom: 0px;
+  }
+  .navIcon.open{
+    transform: rotate(180deg);
+    cursor: pointer;
+    scale: 0.7;
+   
+  }
+  .navIcon.open span{
+    border-radius: 50%;
+  }
+  .navIcon.open span:nth-child(2) {
+    left: 6px;
+    top: 6px;
+  }
+  .navIcon.open span:nth-child(4) {
+    left: 6px;
+    top: 18px;
+  }
+  .navIcon.open span:nth-child(6) {
+    right: 6px;
+    top: 6px;
+  }
+  .navIcon.open span:nth-child(8) {
+    left: 18px;
+    bottom: 6px;
+  }
+
+
+
+/*navMenu*/
+
+.navMenu{
+  position: fixed;
+  display: none;
+  top: 8vh;
+  width: 15vw;
+  height: 92%;  
+  text-align: center;
+  background-color: #8F9489;
+  list-style: none;
+  transition: 0.3s;
+  z-index: 100;
+  border-top: 0.5px solid #ffffff55;
+}
+
+.navMenu a{
+  color: #ffff;
+  
+  margin: 1%;
+  width: 100%;
+  font-size: 0.85rem;
+  padding: 1vh 1vw;
+  text-decoration: none;
+}
+
+.navActive{
     display: flex;
-    background-color: red;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
+
+.upperIcons,.lowerIcons{
+  display: flex;
+  flex-direction: column;
+  gap: 2vh;
+}
+
+.upperIcons{
+  margin: 5vh 0 0 0;
+}
+
+.lowerIcons{
+  margin: 0 0 5vh 0;
+}
+
+.navLink{
+  display: flex;
+  justify-content:safe;
+  gap: 1vw;
+  padding: 1vh 0.5vw;
+  border-radius: 8px;
+}
+
+
+.navLink:hover{
+  outline: 1px solid #22311E;
+  color: #ffff;
+}
+
+
+
+
+
 
