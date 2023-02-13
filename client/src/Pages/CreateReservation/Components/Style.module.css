@@ -20,6 +20,43 @@
     margin:7vh 0 0 0;
 }
 
+.Available{
+    width: 30vw;
+    text-align: center;
+    background: #4D5949;
+    color: #ffff;
+    border-radius: 8px 8px 0 0;
+}
+
+
+.tableContainer{
+    width: 30vw;
+    text-align: center;
+    height: 30vh;
+}
+
+
+
+.tableContainer table{
+    width: 100%;
+    margin: 0;
+   
+}
+
+thead{
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+  
+  }
+
+
+.middleContainer{
+    display: flex;
+}
+
+
+
 .proceedBtn{
     padding: 0.7%;
     font-size: 0.7rem;

@@ -70,7 +70,7 @@
    
   }
   .navIcon.open span{
-    border-radius: 50%;
+    border-radius: 20%;
   }
   .navIcon.open span:nth-child(2) {
     left: 6px;

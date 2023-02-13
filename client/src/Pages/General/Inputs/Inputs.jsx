@@ -10,7 +10,7 @@ export default function Input({
     <>
         <div className={style.InputContainer}>
             <label>{props.label}</label>
-            {props.type!=="select" && <input {...field} {...props} type={props.type} className={style.Input} />}
+            {props.type!=="select" && <input {...field} {...props} type={props.type} className={style.Input}/>}
             {props.type==="select" && 
               <select {...field} {...props} className={style.Input}>
                   {props.options.map((option) => {

@@ -2,21 +2,21 @@ import React, { useEffect, useState} from 'react'
 import {Formik,Form,Field} from "formik"
 import axios from 'axios'
 import Input from "../../General/Inputs/Inputs"
-import { DatePicker, Space } from 'antd';
-import moment from "moment"
+import searchIcon from "../../../Assets/Images/Search.png"
+import "bootstrap/dist/css/bootstrap.min.css";
 import style from "./Style.module.css"
 
 
 
 export default function ResPageOne(props) {
  
-  const [listOfRooms,setListOfRooms]=useState([])
+  // const [listOfRooms,setListOfRooms]=useState([])
 
-  useEffect(()=>{
-    axios.get("http://localhost:3001/rooms").then((res)=>{
-      setListOfRooms(res.data);
-    })
-  },[])
+  // useEffect(()=>{
+  //   axios.get("http://localhost:3001/rooms").then((res)=>{
+  //     setListOfRooms(res.data);
+  //   })
+  // },[])
 
   
 
@@ -24,7 +24,6 @@ export default function ResPageOne(props) {
     props.next(values)
   }
 
-  const { RangePicker } = DatePicker;
 
   const RoomTypes = [
     { key: 'None Selected', value: '' },
@@ -38,20 +37,44 @@ const Pacakge = [
   { key: 'Half-Board', value: 'Half-Board' },
 ]
 
-const [booking1,setBooking1]=useState(null)
-const [booking2,setBooking2]=useState(null)
+const [dates,setDates]=useState({CheckIn:null,CheckOut:null})
 
-const filterByDate=(dates)=>{
-  const checkIn = dates[0].format("YYYY-MM-DD");
-  const checkOut = dates[1].format("YYYY-MM-DD");
-   
-  setBooking1(checkIn)
-  setBooking2(checkOut)
-  console.log(booking1,booking2)
-  // props.data.dates.checkIn=checkIn
-  // props.data.dates.checkOut=checkOut
+const getDates=(event)=>{
+  const {value,name}=event.target;
+    setDates(prevValue=>{
+      if(name==="CheckIn"){
+        return{
+          CheckIn:value,
+          CheckOut:prevValue.CheckOut
+        };
+      } else if(name==="CheckOut"){
+        return{
+          CheckIn:prevValue.CheckIn,
+          CheckOut:value
+        };
+      } 
+    })
 }
- 
+
+
+
+const [AvailableRooms,setAvailableRooms]=useState([])
+
+// useEffect(()=>{
+//   axios.get(`http://localhost:3001/rooms/availablity`).then((res)=>{
+//     setAvailableRooms(res.data);
+//   })
+// },[dates])
+
+  
+
+
+const reqRoom=async () => {
+  const response = await axios.get(`http://localhost:3001/rooms/availablity/${dates.CheckIn}/${dates.CheckOut}`);
+  setAvailableRooms(response.data);
+};
+
+
 
 
 
@@ -70,12 +93,46 @@ const filterByDate=(dates)=>{
                                     <Field name="PromoCode" component={Input} label="Promo-Code" type="text" />
                                 </div>
                                 <div className={style.topRightContainer}>
-                                  <RangePicker onChange={filterByDate} 
-                                  size="large" className={style.dateRange} format="YYYY-MM-DD" placeholder={["check-In","Check-out"]}/> 
-                                  <p>{booking1}</p>
+                                     <Field name="CheckIn" component={Input} label="Check-In" type="date" onBlur={getDates}/>
+                                     <Field name="CheckOut" component={Input} label="Check-Out" type="date" onBlur={getDates}/>
+                                     <button  type="button" onClick={reqRoom}><img src={searchIcon}/></button>
                                 </div>
-
                           </div>
+                        <div className={style.middleContainer}>
+                          <div>
+                          <div className={style.Available}>Available</div>
+                          <div class={`table-responsive ${style.tableContainer}`}>
+                            {AvailableRooms.length > 0 ? (
+                              <table className="table mt-3">
+                              <thead>
+                                <tr>
+                                  <th>Room No</th>
+                                  <th>Status</th>
+                                  <th>Check-in</th>
+                                  <th>Check-out</th>
+                                </tr>
+                              </thead>
+                              <tbody >
+                                    {AvailableRooms.map((room) => (
+                                      <tr key={room.RoomNo}>
+                                        <td>{room.RoomNo}</td>
+                                        <td>{room.Status}</td>
+                                        <td>{room.checkIn}</td>
+                                        <td>{room.checkOut}</td>
+                                      </tr>
+                                    ))}
+        </tbody>
+      </table>
+      ) : (
+        <p className="mt-3">No rooms available for the selected dates.</p>
+      )}
+                          </div>
+                          </div>
+                          <div>hi</div>
+                          </div>
+                     
+                          
+                         
                           <button type="submit" className={style.proceedBtn}>Proceed</button>
                         </div>
               </Form>

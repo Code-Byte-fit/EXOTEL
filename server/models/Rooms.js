@@ -10,11 +10,11 @@ module.exports=(sequelize,Datatypes)=>{
             defaultValue: "open",
             allowNull:false,
         },
-        BookedFrom:{
+        checkIn:{
             type:Datatypes.DATEONLY,
             allowNull:true,
         },
-        BookedTo:{
+        checkOut:{
             type:Datatypes.DATEONLY,
             allowNull:true,
         }
