@@ -1,0 +1,13 @@
+.notificationContainer{
+    position: relative;
+    left:0;
+    cursor: pointer;
+   
+    
+}
+
+.notificationEclipse{
+    position: absolute;
+    right: 0;
+   
+}

@@ -1,17 +1,23 @@
 import {React} from 'react'
 import {createBrowserRouter,createRoutesFromElements,Route,Link,RouterProvider,Outlet} from "react-router-dom";
-import ResPageTwo from './Pages/CreateReservation/Page2';
+import Header from './Pages/General/Header/Header';
+import ReservationTab from './Pages/ReservationTab/ReservationTab';
+import CreateRes from './Pages/CreateReservation/CreateRes';
+
 import axios from 'axios'
 
 
 export default function App() {
     const router=createBrowserRouter(
         createRoutesFromElements( 
-            <Route path="/">
-                <Route path="/createReservation/Details" element={<ResPageTwo/>}/>
-                <Route path="/login" element={<h1>hello</h1>}/>
-                <Route path="*" element={<>Page Not Found</>}/>
+            <>
+            <Route path="/" element={<Root/>}>
+                <Route path="/createReservation" element={<CreateRes/>}/>
+                <Route path="/reservationTab" element={<ReservationTab/>}/>
             </Route>
+            <Route path="*" element={<>Page Not Found</>}/>
+            </>
+            
         )
     )
     
@@ -19,7 +25,10 @@ export default function App() {
         <div>
             <RouterProvider router={router}/>
         </div>
+        
     )
+
+    
     // const [listOfUsers,setListOfUsers]=useState([])
     // useEffect(()=>{
     //     axios.get("http://localhost:3001/users").then((res)=>{
@@ -32,4 +41,14 @@ export default function App() {
     //         {listOfUsers.map((value,key)=>{return <div>{value.userName}</div>})}
     //     </>
     // )
+}
+
+const Root=()=>{
+    return(
+        <>
+        <Header/>
+          
+        <div><Outlet/></div>
+        </>
+    )
 }
