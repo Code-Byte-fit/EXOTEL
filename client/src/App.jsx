@@ -3,6 +3,8 @@ import {createBrowserRouter,createRoutesFromElements,Route,Link,RouterProvider,O
 import Header from './Pages/General/Header/Header';
 import ReservationTab from './Pages/ReservationTab/ReservationTab';
 import ResPageTwo from './Pages/CreateReservation/Page2';
+import Minibar from './Pages/Minibar/Minibar'
+
 
 import axios from 'axios'
 
@@ -13,6 +15,7 @@ export default function App() {
             <Route path="/" element={<Root/>}>
                 <Route path="/createReservation/Details" element={<ResPageTwo/>}/>
                 <Route path="/reservationTab" element={<ReservationTab/>}/>
+                <Route path="/minibar" element={<Minibar/>}/>
                 <Route path="*" element={<>Page Not Found</>}/>
             </Route>
         )

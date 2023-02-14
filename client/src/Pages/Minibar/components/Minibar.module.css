@@ -1,0 +1,344 @@
+.container {
+    width: 92vw;
+    height: 80vh;
+    position: fixed;
+    top: 14vh;
+    left: 9vw;
+    box-sizing: border-box;
+    /* background-color: antiquewhite;  */
+  }
+  .btnDiv{
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 10vw;
+    text-decoration: none;
+    font-size: 17px;
+    border-radius: 5px;
+  }
+  .btnDiv:hover{
+    background-color: #ddd;
+    color: black;
+  }
+  .btnDiv :active{
+    background-color: dodgerblue;
+    color: white;
+  }
+  
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    height: 35vh;
+    margin-top: 8vh;
+  }
+  
+  .div1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    width: 89vw;
+    margin-top: 2vh;
+    margin-left: -2vw;
+  }
+  
+  .inputOne,
+  .inputTwo,
+  .selectOne {
+    padding: 0.2rem;
+    margin-right: auto;
+    border-radius: 0.4vw;
+    border: 2px solid transparent;
+    color: #0d0c22;
+    transition: 0.3s ease;
+    box-shadow: 0 0 11px rgba(33, 33, 33, 0.4);
+    font-size: 12px;
+    height: 5.5vh;
+    width: 20vw;
+  }
+  
+  .selectOne {
+    width: 20vw;
+    height: 5.34vh;
+  }
+  
+  .inputOne:focus,
+  .inputOne:hover,
+  .inputTwo:focus,
+  .inputTwo:hover,
+  .selectOne:focus,
+  .selectOne:hover,
+  .textArea1:focus,
+  .textArea1:hover {
+    outline: none;
+    border-color: #be6731;
+    background-color: #fff;
+    box-shadow: 0 0 0 1px #be6731;
+  }
+  
+  .div2 {
+    width: 89vw;
+    height: 50vh;
+  
+  }
+  
+  .textArea1 {
+    position: absolute;
+    width: 85vw;
+    height: 15vh;
+    border-radius: 0.8vw;
+    border: 2px solid transparent;
+    color: #0d0c22;
+    transition: 0.3s ease;
+    box-shadow: 0 0 11px rgba(33, 33, 33, 0.4);
+    font-size: 12px;
+  }
+  
+  .labelOne {
+    font-size: 1.6rem;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  }
+  
+  .createBtn {
+    top: 114vh;
+    margin-left: 75vw;
+  
+  }
+  .inputTwo::before {
+	color: #999999;
+	content: attr(placeholder);
+}
+.inputTwo:focus,
+.inputTwo:valid {
+	color: #666666;
+}
+.inputTwo:focus::before,
+.inputTwo:valid::before {
+	content: "" !important;
+}
+.inputTwo{
+  color: #ffffff;
+  display: inline-block;
+  border: 1px solid #ccc;
+}
+
+/*-------- AddTable ------ */
+
+.area {
+  position:absolute;
+  z-index: 0;
+  width: 84%;
+  position: fixed;
+  top: 20vh;
+  left: 9vw;
+  right: 0;
+  margin-top: 18vw;
+}
+.tbl{
+  overflow: hidden;
+  overflow-y: auto;
+  height: 100px;
+  width: 100%;
+  height: 30vh;
+  margin: 1.5vh 0 0 0;
+}
+
+
+.tbl::-webkit-scrollbar{
+  width: 0.5vw;
+  
+}
+.tbl::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  background-color: #F5F5F5;
+  
+}
+.tbl::-webkit-scrollbar-thumb {
+  border-radius: 12px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+  background-color: #555;
+}
+
+.tblOne {
+  display: table;
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  border: none;
+  border-collapse: collapse; 
+  box-shadow: 0 0 15px rgba(33, 33, 33, 0.4);
+}
+.size{
+  width:20%;
+}
+.tblOne tr:nth-child(even){
+  background-color: #d8cec7;
+  /* border-bottom: 0.1vw solid #000; */
+}
+.tblOne-wrapper{
+  max-height: 10vh;
+  overflow-y: scroll;
+}
+  
+.tblOne th {
+  background-color: white;
+  border-bottom: 0.1vw solid #000;
+  padding: 0.5vw;   
+  font-size: 1vw;
+  padding-left: 2.8rem;
+}
+
+.tblOne td {
+  line-height: 1em;
+  /* border-top: 1px solid black; */
+  font-size: 0.8vw;
+}
+
+.tblOne tr > td,
+table.responsive-table th {
+  text-align: left;
+  text-align: center;
+  padding: 1vw;    
+}
+
+.containerTwo input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+ }
+ 
+ .containerTwo {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  font-size: 0.8vw;
+  user-select: none;   
+ }
+ 
+
+ /* .checkmark {
+  position: relative;
+  top: 0;
+  left: 0;
+  margin-left:5vw;
+  height: 1vw;
+  width: 1vw;
+  background-color: #343434;
+  border-radius: 3px;
+  transition: all 0.5s;
+ }
+ 
+
+ .containerTwo input:checked ~ .checkmark {
+  background-color: #f0f0f0;
+  border: 1vh solid #343434;
+ }
+ 
+ 
+ .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  filter: drop-shadow(0 0 10px #888);
+ }
+ 
+ /* Show the checkmark when checked */
+ /* .containerTwo input:checked ~ .checkmark:after {
+  display: block;
+ } */
+ 
+ /* Style the checkmark/indicator */
+ /* .containerTwo .checkmark:after {
+  left: 0.3em;
+  top: 0.05em;
+  width: 0.3em;
+  height: 0.65em;
+  border: solid #343434;
+  border-width: 0 0.2em 0.2em 0;
+  border-radius: 4px;
+  transform: rotate(45deg);
+  animation: bounceFadeIn 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+ }
+ 
+ @keyframes bounceFadeIn {
+  from {
+   transform: translate(0, -10px) rotate(45deg);
+   opacity: 0;
+  }
+ 
+  to {
+   transform: translate(0, 0) rotate(45deg);
+   opacity: 1;
+  }  */
+/* ----- button ----- */
+
+ 
+ .button1 {
+  position:fixed;
+  width:96px;
+  height: 37px;
+  background-color: #22311E;
+  border-radius: 10px;
+  margin:-4vh 0 0 80vw;
+  color: white;
+  border-color:none;
+  box-shadow: 0 0 11px rgba(33, 33, 33, 0.4);
+}
+
+.button1:hover {
+  color: rgb(255, 255, 255);
+  box-shadow: inset 0 -100px 0 0 #ff7003;
+  border-style: hidden;
+}
+
+.button1:active {
+  transform: scale(0.9);
+}
+h1{
+  text-align: center;
+  font-size: 16px;
+  letter-spacing: 1px;
+
+}
+/* --------------grouped button ------------------ */
+.comb{
+  position: absolute;
+  left: 9vw;
+  top:13vh;
+}
+.btn1,
+.btn2{
+  padding: 0.5vw 1vw;
+  cursor: pointer;
+  background-color: white;
+  border: 0.2vw solid #22311E;
+}
+.btn1{
+  border-radius: 1vw 0 0 1vw ;
+  border-right: none;
+  
+}
+.btn2{
+  border-radius: 0 1vw 1vw 0 ;
+}
+ 
+.btn1:hover {
+  color: rgb(255, 255, 255);
+  box-shadow: inset 0 -100px 0 0 #22311E;
+}
+
+.btn1:active {
+  transform: scale(1);
+  background-color: #22311E;
+}
+.btn2:hover {
+  color: rgb(255, 255, 255);
+  box-shadow: inset 0 -100px 0 0 #22311E;
+}
+
+.btn2:active {
+  transform: scale(1);
+}
