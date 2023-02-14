@@ -15,6 +15,12 @@ app.use("/users",userRouter);
 const guestRouter=require('./routes/Guests')
 app.use("/guests",guestRouter);
 
+const roomRouter=require('./routes/Rooms')
+app.use("/rooms",roomRouter);
+
+
+
+
 db.sequelize.sync().then(()=>{
     app.listen(3001,()=>{
         console.log("server running on port 3001")
