@@ -1,0 +1,68 @@
+.container{
+    margin: 3% 0 0 0;
+    height: 85.5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.innerContainer{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    width: 85vw;
+}
+
+
+/* header */
+
+.Header{
+    display: flex;
+    font-size: 1.5rem;
+}
+
+.stepsContainer{
+    display: flex;
+    margin: 0 0 0 auto;
+}
+
+.step{
+    margin: 0 0.7vw 0 0.7vw;
+    border-radius: 20px;
+    padding: 0.8vh 1.1vw;
+    border: 2px solid #4D5949;
+    color: #4D5949;
+}
+
+.stepCompleted{
+    background: #4D5949;
+    border: none;
+    color: #ffff;
+}
+
+/* Amount Bar */
+
+
+.amountBar{
+    margin: 2vh 0 0 0;
+    height: 8vh;
+    display: flex;
+    justify-self: end;
+    background: #D0CFC9;
+}
+
+.amountBarItems{
+    margin: 0 1vw 0 auto;
+    display: flex;
+    gap: 1.5vw;
+}
+
+.item{
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+
+.amount{
+    font-weight: normal;
+    color:#7D7C79;
+}
