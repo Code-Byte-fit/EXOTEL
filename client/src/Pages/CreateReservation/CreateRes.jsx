@@ -17,6 +17,8 @@ export default function CreateRes() {
         PromoCode:"",
         CheckIn:"",
         CheckOut:"",
+        AvailableRooms:[],
+        SelectedRooms:[],
         Source:"",
         ArrivalTime:"",
         FirstName:"",
@@ -51,6 +53,7 @@ export default function CreateRes() {
     <ResPageTwo next={handleNextStep} prev={handlePrevStep} data={data}/>
   ]
 
+  const [availableRooms, setAvailableRooms] = useState([]);
 
   return (
     <>

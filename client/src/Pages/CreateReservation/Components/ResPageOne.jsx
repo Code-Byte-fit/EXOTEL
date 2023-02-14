@@ -3,6 +3,7 @@ import {Formik,Form,Field} from "formik"
 import axios from 'axios'
 import Input from "../../General/Inputs/Inputs"
 import searchIcon from "../../../Assets/Images/Search.png"
+import addIcon from "../../../Assets/Images/Add small.png"
 import "bootstrap/dist/css/bootstrap.min.css";
 import style from "./Style.module.css"
 
@@ -10,16 +11,7 @@ import style from "./Style.module.css"
 
 export default function ResPageOne(props) {
  
-  // const [listOfRooms,setListOfRooms]=useState([])
-
-  // useEffect(()=>{
-  //   axios.get("http://localhost:3001/rooms").then((res)=>{
-  //     setListOfRooms(res.data);
-  //   })
-  // },[])
-
-  
-
+ 
   const handleSubmit=(values)=>{
     props.next(values)
   }
@@ -59,23 +51,12 @@ const getDates=(event)=>{
 
 
 const [AvailableRooms,setAvailableRooms]=useState([])
-
-// useEffect(()=>{
-//   axios.get(`http://localhost:3001/rooms/availablity`).then((res)=>{
-//     setAvailableRooms(res.data);
-//   })
-// },[dates])
-
-  
-
+const [SelectedRooms,setSelectedRooms]=useState([])
 
 const reqRoom=async () => {
   const response = await axios.get(`http://localhost:3001/rooms/availablity/${dates.CheckIn}/${dates.CheckOut}`);
   setAvailableRooms(response.data);
 };
-
-
-
 
 
 
@@ -110,6 +91,7 @@ const reqRoom=async () => {
                                   <th>Status</th>
                                   <th>Check-in</th>
                                   <th>Check-out</th>
+                                  <th></th>
                                 </tr>
                               </thead>
                               <tbody >
@@ -119,6 +101,7 @@ const reqRoom=async () => {
                                         <td>{room.Status}</td>
                                         <td>{room.checkIn}</td>
                                         <td>{room.checkOut}</td>
+                                        <td><button type="button" className={style.add}><img src={addIcon}/></button></td>
                                       </tr>
                                     ))}
         </tbody>
@@ -128,12 +111,8 @@ const reqRoom=async () => {
       )}
                           </div>
                           </div>
-                          <div>hi</div>
                           </div>
-                     
-                          
-                         
-                          <button type="submit" className={style.proceedBtn}>Proceed</button>
+                        <button type="submit" className={style.proceedBtn}>Proceed</button>
                         </div>
               </Form>
               )}
