@@ -7,7 +7,7 @@ export default function ResCalender() {
     <>
             <div className={style.calenderContainer}>
                 <img src={resCalenderIcon}/>
-                <span>23rd jan,2022</span>
+                <span>15th Feb,2023</span>
             </div>
     </>
   )
