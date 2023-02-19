@@ -1,29 +1,41 @@
-module.exports=(sequelize,Datatypes)=>{
-    const Guests=sequelize.define("Guests",{
-        FirstName:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        LastName:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        BirthDate:{
-            type:Datatypes.DATEONLY,
-            allowNull:false,
-        },
-        Country:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        Email:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        PhoneNumber:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-    })
+module.exports = (sequelize, DataTypes) => {
+    const Guests = sequelize.define('Guests', {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement:true
+      },
+      FirstName: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      LastName: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      DOB: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      Country: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      Email: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
+      PhoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }
+    }, {
+      timestamps: false
+    });
+  
+    Guests.associate = (models) => {
+        Guests.hasMany(models.Reservations, { foreignKey: 'guestId' });
+      };
+  
     return Guests;
-}
+  };

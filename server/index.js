@@ -18,6 +18,9 @@ app.use("/guests",guestRouter);
 const roomRouter=require('./routes/Rooms')
 app.use("/rooms",roomRouter);
 
+const reservationRouter=require('./routes/Reservations')
+app.use("/reservations",reservationRouter);
+
 
 
 
