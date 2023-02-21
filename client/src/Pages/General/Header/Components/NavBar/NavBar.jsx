@@ -8,7 +8,7 @@ export default function NavBar() {
   const navLinkActive=({isActive}) => {
     return {
       color: isActive && "white",
-      background:isActive && "#22311E"
+      background:isActive && "#577e79"
     };
   }
   

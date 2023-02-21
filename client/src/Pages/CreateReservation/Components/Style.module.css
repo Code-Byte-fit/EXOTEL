@@ -33,12 +33,18 @@
     margin:7vh 0 0 0;
 }
 
-.Available{
-    width: 30vw;
+.Available,.Selected{
     text-align: center;
     background: #4D5949;
     color: #ffff;
     border-radius: 8px 8px 0 0;
+}
+.Available{
+    width: 30vw;
+}
+
+.Selected{
+    width: 15vw;
 }
 
 
@@ -46,8 +52,16 @@
     width: 30vw;
     text-align: center;
     height: 30vh;
+    border-radius: 8px;
+    border: 0.1px solid #e5e6e4;
 }
 
+.selectedContainer{
+    text-align: center;
+    height: 30vh;
+    border-radius: 8px;
+    border: 0.1px solid #e5e6e4;
+}
 
 
 .tableContainer table{
@@ -66,18 +80,22 @@ thead{
 
 .middleContainer{
     display: flex;
+    gap: 5vw;
+    margin: 0  auto;
+    justify-content: space-between;
 }
 
 .add{
     border: none;
     width: 1.2vw;
+    background: transparent;
 }
 
 .add img{
     width: 100%;
 }
 
-.proceedBtn{
+.Btn{
     padding: 0.7%;
     font-size: 0.7rem;
     color: #ffff;
@@ -86,4 +104,166 @@ thead{
     border-radius: 4px;
     width: clamp(3vw,5vw,5vw);
     align-self: flex-end;
+    margin: 0 0 0 0.5vw;
 }
+
+.hidden{
+    visibility: hidden;
+}
+
+.formContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.btnContainer{
+    margin: 2vh 0 0 auto;
+}
+
+.btnContainer button{
+    height: 5vh;
+}
+
+
+.mainDetailsContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.topDetailsContainer{
+    display: flex;
+    background: #D0CFC9;
+    justify-content: space-evenly;
+    padding: 1vh 0.5vw;
+    border-radius: 8px;
+    margin: 2vh 0 3vh 0;
+}
+
+.topDetailsContainer div{
+    display: flex;
+    flex-direction: column;
+}
+
+.detailsLabel{
+    font-weight: bold;
+}
+
+.DetailsContainer{
+    display: flex;  
+    justify-content: space-between;
+}
+
+.otherDetailsContainer,.financialDetailsContainer{
+    height: 50vh;
+    border: 0.1px solid #e5e6e4;
+    border-radius: 0 0 8px 8px;
+}
+
+.innerOtherDetailsContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.line{
+    height: 2vh;
+    display: block;
+    background:#4D5949;
+    border-radius: 8px 8px 0 0;
+}
+
+.lineOne{
+    width: 50vw;
+}
+
+.lineTwo{
+    width: 30vw;
+}
+
+.innerContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    margin: 3vh 0 0 2vw;
+}
+
+.detailsLabelContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.label{
+    font-weight: bold;
+}
+
+.roomsContainer{
+   margin: 3vh 3vw 0 0; 
+   display: flex;
+   align-items: center;
+}
+
+.room{
+    align-self: center;
+    margin: 1vh 0 0 0;
+}
+
+.confirmModal{
+    margin: 2% 0 0 0;
+    display: flex;
+    height: 90%;
+    flex-direction: column;
+    position: relative;
+}
+
+.confirmHeading{
+    font-weight: bold;
+    font-size: 1.7rem;
+    margin: 1% 0 0 0;
+}
+
+.success{
+    margin: 5% 0 0 0;
+}
+
+.confirmBody{
+    margin: 5% 0 0 0;
+    font-size: 1.2rem;
+}
+
+.modalBtnContainer{
+    width: 90%;
+    margin: auto auto 0 auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.confirmBtn{
+    padding: 3%;
+}
+
+.cancelBtn{
+    font-size: 0.7rem;
+    border: 1px solid #4D5949;
+    border-radius: 4px;
+    width: clamp(3vw,5vw,5vw);
+    margin: 0 0 0 0.5vw;
+}
+
+.doneBtn{
+    align-self: center;
+    padding: 3%;
+    margin: 10% 0 0 0;
+}
+
+.successIcon{
+    width: 10%;
+    position: absolute;
+    top: -6vh;
+    left: 13.6vw;
+    
+}
+
+
+
+

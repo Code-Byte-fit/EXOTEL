@@ -13,6 +13,8 @@ export default function ResPageOne(props) {
  
  
   const handleSubmit=(values)=>{
+    values.AvailableRooms=AvailableRooms;
+    values.SelectedRooms=SelectedRooms;
     props.next(values)
   }
 
@@ -50,13 +52,20 @@ const getDates=(event)=>{
 
 
 
-const [AvailableRooms,setAvailableRooms]=useState([])
-const [SelectedRooms,setSelectedRooms]=useState([])
+const [AvailableRooms,setAvailableRooms]=useState(props.data.AvailableRooms)
+const [SelectedRooms,setSelectedRooms]=useState(props.data.SelectedRooms)
 
 const reqRoom=async () => {
   const response = await axios.get(`http://localhost:3001/rooms/availablity/${dates.CheckIn}/${dates.CheckOut}`);
   setAvailableRooms(response.data);
+  setSelectedRooms([])
 };
+
+const selectRoom=(RoomNo)=>{
+  setSelectedRooms([...SelectedRooms,RoomNo])
+  setAvailableRooms(AvailableRooms.filter(room => room.RoomNo !== RoomNo));
+  console.log(AvailableRooms)
+}
 
 
 
@@ -69,51 +78,66 @@ const reqRoom=async () => {
                       <div className={style.container}>
                           <div className={style.topContainer}>
                                 <div className={style.topLeftContainer}>
-                                    <Field name="RoomType" component={Input} label="Room Type" type="select" options={RoomTypes}/>
-                                    <Field name="Package" component={Input} label="Package" type="select" options={Pacakge}/>
-                                    <Field name="PromoCode" component={Input} label="Promo-Code" type="text" />
+                                    <Field name="RoomType" component={Input} label="Room Type" type="select" options={RoomTypes} id="RoomType"/>
+                                    <Field name="Package" component={Input} label="Package" type="select" options={Pacakge} id="Package"/>
+                                    <Field name="PromoCode" component={Input} label="Promo-Code" type="text" id="promoCode"/>
                                 </div>
                                 <div className={style.topRightContainer}>
-                                     <Field name="CheckIn" component={Input} label="Check-In" type="date" onBlur={getDates}/>
-                                     <Field name="CheckOut" component={Input} label="Check-Out" type="date" onBlur={getDates}/>
+                                     <Field name="CheckIn" component={Input} label="Check-In" type="date" onBlur={getDates} id="CheckIn"/>
+                                     <Field name="CheckOut" component={Input} label="Check-Out" type="date" onBlur={getDates} id="CheckOut"/>
                                      <button  type="button" onClick={reqRoom}><img src={searchIcon}/></button>
                                 </div>
                           </div>
                         <div className={style.middleContainer}>
                           <div>
-                          <div className={style.Available}>Available</div>
-                          <div class={`table-responsive ${style.tableContainer}`}>
-                            {AvailableRooms.length > 0 ? (
-                              <table className="table mt-3">
-                              <thead>
-                                <tr>
-                                  <th>Room No</th>
-                                  <th>Status</th>
-                                  <th>Check-in</th>
-                                  <th>Check-out</th>
-                                  <th></th>
-                                </tr>
-                              </thead>
-                              <tbody >
-                                    {AvailableRooms.map((room) => (
-                                      <tr key={room.RoomNo}>
-                                        <td>{room.RoomNo}</td>
-                                        <td>{room.Status}</td>
-                                        <td>{room.checkIn}</td>
-                                        <td>{room.checkOut}</td>
-                                        <td><button type="button" className={style.add}><img src={addIcon}/></button></td>
+                              <div className={style.Available}>Available</div>
+                              <div class={`table-responsive ${style.tableContainer}`}>
+                                  {AvailableRooms.length > 0 ? (
+                                  <table className="table mt-3">
+                                    <thead>
+                                      <tr>
+                                        <th>Room No</th>
+                                        <th>Status</th>
+                                        <th></th>
                                       </tr>
-                                    ))}
-        </tbody>
-      </table>
-      ) : (
-        <p className="mt-3">No rooms available for the selected dates.</p>
-      )}
+                                    </thead>
+                                    <tbody >
+                                          {AvailableRooms.map((room) => (
+                                            <tr key={room.RoomNo}>
+                                              <td>{room.RoomNo}</td>
+                                              <td>{room.Status}</td>
+                                              <td><button type="button" onClick={() => selectRoom(room.RoomNo)} className={style.add}><img src={addIcon}/></button></td>
+                                            </tr>
+                                          ))}
+                                    </tbody>
+                                  </table>
+                                 ) : (
+                                    <p className="mt-3">No rooms available for the selected dates.</p>
+                                  )}
+                            </div>
                           </div>
+                          <div>
+                              <div className={style.Selected}>Selected</div>
+                              <div class={`table-responsive ${style.selectedContainer}`}>
+                                  <table className="table mt-3">
+                                  <thead>
+                                    <tr>
+                                    <th>Room No</th> 
+                                    </tr>
+                                  </thead>
+                                    <tbody >
+                                    {SelectedRooms.map((room) => (
+                                            <tr key={room}>
+                                              <td>{room}</td>
+                                            </tr>
+                                          ))}
+                                    </tbody>
+                                  </table>
+                            </div>
                           </div>
-                          </div>
-                        <button type="submit" className={style.proceedBtn}>Proceed</button>
                         </div>
+                        {SelectedRooms.length>0 ? <button type="submit" className={style.Btn}>Proceed</button>:<button type="submit" className={`${style.proceedBtn} ${style.hidden}`}>Proceed</button>}
+                      </div>
               </Form>
               )}
       </Formik>    

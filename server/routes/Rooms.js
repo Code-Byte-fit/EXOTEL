@@ -1,7 +1,7 @@
 const express=require('express')
 const router=express.Router()
 const { Sequelize,Op } = require('sequelize');
-const {Rooms}=require('../models')
+const {Rooms,Reservations,ReservationRoom}=require('../models')
 
 
 router.get('/',async (req,res)=>{
@@ -9,35 +9,122 @@ router.get('/',async (req,res)=>{
     res.json(listOfRooms)
 })
 
+
 router.get('/availablity/:checkIn/:checkOut',async (req,res)=>{
-    const checkIn = req.params.checkIn;
-    const checkOut = req.params.checkOut;
-   
-    try {
-        const availableRooms = await Rooms.findAll({
-          where: {
-            [Op.or]: [
-              {
-                checkOut: {
-                  [Op.lt]: checkIn
-                }
-              },
-              {
-                checkIn: {
-                  [Op.gt]: checkOut
-                }
-              }
-            ]
-          },
-          order: ['RoomNo']
-        });
-    
-        res.json(availableRooms);
-      } catch (err) {
-        console.error(err);
-        res.status(500).send('An error occurred while fetching the available rooms.');
+  const checkin = req.params.checkIn;
+  const checkout = req.params.checkOut;
+  
+
+  try {
+    const reservations = await Reservations.findAll({
+      include: [{
+        model: Rooms,
+        through: {
+          model: ReservationRoom,
+        }
+      }],
+      where: {
+        checkIn: { [Op.lt]: checkout },
+        checkOut: { [Op.gt]: checkin },
       }
-})
+    });
+    
+    // retrieve the rooms associated with  reservations 
+    const bookedRoomNos = reservations.map(reservation => reservation.Rooms.map(room => room.RoomNo)).flat();
+    
+    // retrieve all rooms that are not associated with any of the reservations
+    const availableRooms = await Rooms.findAll({
+      where: {
+        RoomNo: { [Op.notIn]: bookedRoomNos }
+      }
+    });
+    
+    // return the available rooms to the user
+    res.json(availableRooms);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// router.get('/availablity/:checkIn/:checkOut',async (req,res)=>{
+//     const checkIn = req.params.checkIn;
+//     const checkOut = req.params.checkOut;
+
+//     const availableRooms = await Rooms.findAll({
+//       where: {
+//         Status: 'available',
+//         RoomNo: {
+//           [Sequelize.Op.notIn]: reservedRooms
+//         }
+//       },
+//       attributes: ['RoomNo', 'BaseCharge'],
+//       include: [
+//         {
+//           model: Reservations,
+//           required: false,
+//           where: {
+//             [Sequelize.Op.or]: [
+//               {
+//                 checkIn: {
+//                   [Sequelize.Op.gte]: checkOut
+//                 }
+//               },
+//               {
+//                 checkOut: {
+//                   [Sequelize.Op.lte]: checkIn
+//                 }
+//               }
+//             ]
+//           },
+//           attributes: []
+//         }
+//       ]
+//     });
+   
+    // try {
+    //     const availableRooms = await Rooms.findAll({
+    //       where: {
+    //         [Op.or]: [
+    //           {
+    //             checkOut: {
+    //               [Op.lt]: checkIn
+    //             }
+    //           },
+    //           {
+    //             checkIn: {
+    //               [Op.gt]: checkOut
+    //             }
+    //           }
+    //         ]
+    //       },
+    //       order: ['RoomNo']
+    //     });
+    
+    //     res.json(availableRooms);
+    //   } catch (err) {
+    //     console.error(err);
+    //     res.status(500).send('An error occurred while fetching the available rooms.');
+    //   }
+// })
 
 
 router.post("/",async (req,res)=>{
