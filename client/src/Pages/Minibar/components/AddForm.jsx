@@ -6,10 +6,11 @@ function AddForm({handleAddFormChange}){
     return(
         
         <>
-        <span className={style.formContainer}>
-        <form handleAddFormSubmit><label className={style.labelOne}>Add New Entry</label>
+        <div className={style.formContainer}>
+        <form handleAddFormSubmit>
+        <label className={style.labelOne}>Add New Entry</label>
         <div className={style.div1}>
-        <label for="roomNum">Room Number<br/>
+        <label className={style.lbl} for="roomNum">Room Number<br/>
                 <select name="roomNum" className={style.selectOne} onChange={handleAddFormChange}>
 
                     <option value="Room Number" disabled selected hidden>Room Number</option>
@@ -20,7 +21,7 @@ function AddForm({handleAddFormChange}){
                     <option value="Room Number 5">Room Number 5</option>
                 </select>
                 </label>
-                <label for="date">Date <br/>
+                <label className={style.lbl} for="date">Date <br/>
                 <input
                     type="date"
                     name="date"
@@ -28,7 +29,7 @@ function AddForm({handleAddFormChange}){
                     placeholder=" Date"
                     id='text' required
                     onChange={handleAddFormChange} /></label>
-                    <label for="itemname">Item Name <br/>
+                    <label className={style.lbl} for="itemname">Item Name <br/>
                 <input
                     type="text"
                     className={style.inputOne}
@@ -36,7 +37,7 @@ function AddForm({handleAddFormChange}){
                     name="item"
                     onChange={handleAddFormChange} /></label>
 
-                    <label for="qty">Quantity <br/>
+                    <label className={style.lbl} for="qty">Quantity <br/>
                 <input
                     type="text"
                     className={style.inputOne}
@@ -45,13 +46,13 @@ function AddForm({handleAddFormChange}){
                     onChange={handleAddFormChange} /> </label>
             </div>
             <span className={style.div2}>
-            <label for="add">Additional Information <br/>
-                <textarea className={style.textArea1} rows="4" cols="50">Additional Information
+            <label className={style.lbl} for="add">Additional Information <br/>
+                <textarea className={style.textArea1} rows="4" cols="50">
                 </textarea></label>
                 <span className={style.createBtn}></span>
             </span>
             </form>
-        </span>
+        </div>
         </>
       
     )

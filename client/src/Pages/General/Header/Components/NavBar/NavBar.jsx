@@ -40,9 +40,9 @@ export default function NavBar() {
                   <img src={dashBoardIcon}/>
                   <span>Reservations Tab</span>
           </NavLink>
-          <NavLink  to="/" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
+          <NavLink  to="/minibar" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
                   <img src={dashBoardIcon}/>
-                  <span>DashBoard</span>
+                  <span>Mini-Bar/Laundry</span>
           </NavLink>
           <NavLink  to="/" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
                   <img src={dashBoardIcon}/>

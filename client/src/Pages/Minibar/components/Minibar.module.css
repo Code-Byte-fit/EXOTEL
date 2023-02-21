@@ -1,6 +1,6 @@
 .container {
     width: 92vw;
-    height: 80vh;
+    height: 85vh;
     position: fixed;
     top: 14vh;
     left: 9vw;
@@ -26,10 +26,11 @@
   }
   
   .formContainer {
-    display: flex;
+     display: flex;
     flex-direction: column;
     height: 35vh;
-    margin-top: 8vh;
+    margin-top: 5vh; 
+  
   }
   
   .div1 {
@@ -37,8 +38,8 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
     width: 89vw;
-    margin-top: 2vh;
     margin-left: -2vw;
+   
   }
   
   .inputOne,
@@ -78,7 +79,9 @@
   .div2 {
     width: 89vw;
     height: 50vh;
-  
+  }
+  .lbl{
+    font-size: -10rem;
   }
   
   .textArea1 {
@@ -95,6 +98,7 @@
   
   .labelOne {
     font-size: 1.6rem;
+   
     font-weight: bold;
     font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   }
@@ -282,7 +286,7 @@ table.responsive-table th {
   height: 37px;
   background-color: #22311E;
   border-radius: 10px;
-  margin:-4vh 0 0 80vw;
+  margin:-1vh 0 0 78vw;
   color: white;
   border-color:none;
   box-shadow: 0 0 11px rgba(33, 33, 33, 0.4);
@@ -311,7 +315,7 @@ h1{
 }
 .btn1,
 .btn2{
-  padding: 0.5vw 1vw;
+  padding: 0.3vw 0.6vw;
   cursor: pointer;
   background-color: white;
   border: 0.2vw solid #22311E;
