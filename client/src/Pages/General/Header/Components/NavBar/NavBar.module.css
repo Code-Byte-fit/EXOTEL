@@ -70,7 +70,7 @@
    
   }
   .navIcon.open span{
-    border-radius: 20%;
+    border-radius: 40%;
   }
   .navIcon.open span:nth-child(2) {
     left: 6px;
@@ -100,7 +100,7 @@
   width: 15vw;
   height: 92%;  
   text-align: center;
-  background-color: #8F9489;
+  background-color: #a19b81;
   list-style: none;
   transition: 0.3s;
   z-index: 100;
@@ -109,7 +109,6 @@
 
 .navMenu a{
   color: #ffff;
-  
   margin: 1%;
   width: 100%;
   font-size: 0.85rem;

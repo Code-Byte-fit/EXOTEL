@@ -1,21 +1,48 @@
 module.exports=(sequelize,Datatypes)=>{
     const Users=sequelize.define("Users",{
         userId:{
+            type:Datatypes.INTEGER,
+            primaryKey:true,
+            autoIncrement:true,
+            allowNull:false,
+        },
+        FirstName:{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        userName:{
+        LastName:{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        email:{
+        BirthDate:{
+            type:Datatypes.DATEONLY,
+            allowNull:false,
+        },
+        Country:{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        password:{
+        Email:{
+            type:Datatypes.STRING,
+            allowNull:false,
+        },
+        PhoneNumber:{
             type:Datatypes.STRING,
             allowNull:false,
         }
+    },{
+        timestamps:false
     })
+
+    Users.hasOne(sequelize.models.UserAccounts, {
+        foreignKey: {
+          name: "userId",
+          unique: true
+        },
+        as: "userAccount"
+      });
+
+    
+    
     return Users;
 }

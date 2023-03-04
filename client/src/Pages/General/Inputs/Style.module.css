@@ -1,7 +1,11 @@
 .InputContainer{
     display:inline-grid;
-    margin: 3vh 0 0 1vw;
-    row-gap: 1vh; 
+    row-gap: 1vh;
+ }
+
+ .LabelContainer{
+    display: flex;
+    justify-content: space-between;
  }
 
  .Input{
@@ -12,18 +16,66 @@
 }
 
  .InputContainer input[type=text]{
-    padding: 0.8vh 0vw;
+    padding: 0.8vh 0;
 }
 
 .InputContainer input[type=date]{
-    padding: 0.8vh 1.2vw;
-   
+    padding: 0.8vh 1.7vw;  
+}
+
+.InputContainer input[type=time]{
+    padding: 0.8vh 1.8vw;  
 }
 
 .InputContainer select{
-    padding: 1.1vh 0.5vw;
+    padding: 1.1vh 0.7vw;
     cursor: pointer;
 }
+
+.mainCont{
+    display: flex;
+    gap: 1vw;
+}
+
+.fileInputContainer{
+    display: inline-flex;
+    gap: 1vw;
+}
+
+.fileInput{
+    display: none;
+}
+
+.fileInputLabel{
+    border: 1px solid lightgrey;
+    padding: 0.5vh 0.5vw;
+    border-radius: 8px;
+    display: inline-flex;
+    gap: 0.5vw;
+    align-items: center;   
+    cursor: pointer;
+}
+
+.fileInputLabel img{
+    width: 1.5vw;
+    margin: 0.7vh 0 0 0;
+    align-self:flex-end;
+}
+
+.selectedFilesContainer{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    text-align: center;
+    font-size: 0.9rem;
+    padding:0.5%;
+}
+
+.selectedFile{
+    color: rgb(129, 111, 111);
+    font-size: 0.8rem;
+}
+
 
 
 
@@ -42,3 +94,4 @@
     border-color: #0398fc;
     box-shadow: 0 0 0 1px #0398fc;
 }
+

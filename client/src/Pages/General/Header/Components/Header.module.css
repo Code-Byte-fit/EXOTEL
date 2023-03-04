@@ -1,13 +1,13 @@
 body{
-    background: #FBF7F4;
     overflow: hidden;
+    
 }
 
 .header{
     display: flex;
     align-items: center;
     height: clamp(2vh,8vh,10vh);
-    background: #969771D5;
+    background: #969771d5;
     align-items: center;
     margin: 0 0 2vh 0;
 }

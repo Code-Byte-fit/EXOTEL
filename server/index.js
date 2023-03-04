@@ -12,11 +12,20 @@ const db=require('./models')
 const userRouter=require('./routes/Users')
 app.use("/users",userRouter);
 
+const userAccountRouter=require('./routes/UserAccounts')
+app.use("/userAccounts",userAccountRouter);
+
+const registerRouter=require('./routes/Register')
+app.use("/register",registerRouter);
+
 const guestRouter=require('./routes/Guests')
 app.use("/guests",guestRouter);
 
 const roomRouter=require('./routes/Rooms')
 app.use("/rooms",roomRouter);
+
+const reservationRouter=require('./routes/Reservations')
+app.use("/reservations",reservationRouter);
 
 const promotionRouter=require('./routes/Promotions')
 app.use("/promotions",promotionRouter);

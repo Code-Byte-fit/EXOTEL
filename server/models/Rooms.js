@@ -5,14 +5,7 @@ module.exports=(sequelize,Datatypes)=>{
             allowNull:false,
             primaryKey:true,
         },
-        roomType:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        baseCharge:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
+    
         floor:{
             type:Datatypes.STRING,
             allowNull:false,
@@ -25,22 +18,24 @@ module.exports=(sequelize,Datatypes)=>{
             type:Datatypes.STRING,
             allowNull:true,
         },
-        Status:{
-            type:Datatypes.STRING,
-            defaultValue: "open",
-            allowNull:false,
+        Status: {
+            type: Datatypes.ENUM('available', 'booked'),
+            allowNull: false
         },
-        checkIn:{
-            type:Datatypes.DATEONLY,
-            allowNull:true,
-        },
-        checkOut:{
-            type:Datatypes.DATEONLY,
-            allowNull:true,
+        BaseCharge: {
+            type: Datatypes.FLOAT,
+            allowNull: false
         }
     },
     {
         timestamps: false
     })
+
+    Rooms.associate = (models) => {
+        Rooms.belongsToMany(models.Reservations, { through: 'ReservationRoom' });
+      };;
+
+    
+    
     return Rooms;
 }
