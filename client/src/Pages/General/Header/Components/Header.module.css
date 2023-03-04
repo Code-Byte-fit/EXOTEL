@@ -7,7 +7,7 @@ body{
     display: flex;
     align-items: center;
     height: clamp(2vh,8vh,10vh);
-    background: #8F9489;
+    background: #969771D5;
     align-items: center;
     margin: 0 0 2vh 0;
 }

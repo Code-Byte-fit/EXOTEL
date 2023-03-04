@@ -3,7 +3,11 @@ import {createBrowserRouter,createRoutesFromElements,Route,Link,RouterProvider,O
 import Header from './Pages/General/Header/Header';
 import ReservationTab from './Pages/ReservationTab/ReservationTab';
 import CreateRes from './Pages/CreateReservation/CreateRes';
-
+import ViewRooms from './Pages/ManageRooms/ViewRoomList'
+import Rooms from './Pages/NewRooms/Rooms'
+import Promotion from './Pages/Promotions/Promotion'
+import ViewPromotions from './Pages/ViewPromotions/ViewPromotions';
+import AddOns from './Pages/AddOns/AddOn';
 import axios from 'axios'
 
 
@@ -14,6 +18,12 @@ export default function App() {
             <Route path="/" element={<Root/>}>
                 <Route path="/createReservation" element={<CreateRes/>}/>
                 <Route path="/reservationTab" element={<ReservationTab/>}/>
+                <Route path="/viewRooms" element={<ViewRooms/>}/>
+                <Route path="/viewPromotions" element={<ViewPromotions/>}/>
+                <Route path="/rooms" element={<Rooms/>}/>
+                <Route path="/promotion" element={<Promotion/>}/>
+                <Route path="/addons" element={<AddOns/>}/>
+
             </Route>
             <Route path="*" element={<>Page Not Found</>}/>
             </>

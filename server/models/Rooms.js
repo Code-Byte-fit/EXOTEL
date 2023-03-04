@@ -5,6 +5,26 @@ module.exports=(sequelize,Datatypes)=>{
             allowNull:false,
             primaryKey:true,
         },
+        roomType:{
+            type:Datatypes.STRING,
+            allowNull:false,
+        },
+        baseCharge:{
+            type:Datatypes.STRING,
+            allowNull:false,
+        },
+        floor:{
+            type:Datatypes.STRING,
+            allowNull:false,
+        },
+        sqFeet:{
+            type:Datatypes.STRING,
+            allowNull:false,
+        },
+        addInfo:{
+            type:Datatypes.STRING,
+            allowNull:true,
+        },
         Status:{
             type:Datatypes.STRING,
             defaultValue: "open",
