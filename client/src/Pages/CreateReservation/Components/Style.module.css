@@ -1,3 +1,4 @@
+/* one*/
 .container{
     display: flex;
     flex-direction: column;
@@ -6,10 +7,21 @@
     margin: 1vh 0 0 0;
 }
 
+.innerContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    margin: 3vh 0 0 2vw;
+}
+
 .topContainer{
     display: flex;
     justify-content: space-between;
     
+}
+.topLeftContainer,.topRightContainer{
+   display: flex;
+   gap: 1vw;
 }
 
 .topRightContainer{
@@ -18,10 +30,9 @@
 
 .topContainer button{
     width: 2vw;
+    height: 5vh;
+    align-self:self-end;
     border: none;
-    position: relative;
-    top: 5vh;
-    left: 1vw;
 }
 
 .topContainer button img{
@@ -31,6 +42,13 @@
 
 .dateRange{
     margin:7vh 0 0 0;
+}
+
+.middleContainer{
+    display: flex;
+    gap: 5vw;
+    margin: 0  auto;
+    justify-content: space-between;
 }
 
 .Available,.Selected{
@@ -70,20 +88,12 @@
    
 }
 
-thead{
+.tableContainer thead,.selectedContainer thead{
     position: sticky;
     top: 0;
     background-color: #fff;
   
   }
-
-
-.middleContainer{
-    display: flex;
-    gap: 5vw;
-    margin: 0  auto;
-    justify-content: space-between;
-}
 
 .add{
     border: none;
@@ -107,13 +117,21 @@ thead{
     margin: 0 0 0 0.5vw;
 }
 
-.hidden{
-    visibility: hidden;
-}
-
+/* page two */
 .formContainer{
     display: flex;
     flex-direction: column;
+    gap: 2vh;
+}
+
+.heading{
+    margin: 2vh 0 1vh 0;
+    font-size: 1.2rem;
+}
+
+.inputContainer{
+    display: flex;
+    gap: 2vw;
 }
 
 .btnContainer{
@@ -124,7 +142,26 @@ thead{
     height: 5vh;
 }
 
+.hidden{
+    visibility: hidden;
+}
 
+.innerinputContainer{
+    display: inline-flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.errorMsg{
+    color: red;
+    align-self:flex-end;
+    position: absolute;
+    bottom: -3vh;
+}
+
+
+
+/* page Three */
 .mainDetailsContainer{
     display: flex;
     flex-direction: column;
@@ -179,13 +216,6 @@ thead{
 
 .lineTwo{
     width: 30vw;
-}
-
-.innerContainer{
-    display: flex;
-    flex-direction: column;
-    gap: 1vw;
-    margin: 3vh 0 0 2vw;
 }
 
 .detailsLabelContainer{

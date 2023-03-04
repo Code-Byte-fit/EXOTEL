@@ -2,7 +2,9 @@ import {React} from 'react'
 import {createBrowserRouter,createRoutesFromElements,Route,Link,RouterProvider,Outlet} from "react-router-dom";
 import Header from './Pages/General/Header/Header';
 import ReservationTab from './Pages/ReservationTab/ReservationTab';
+import Reservations from "./Pages/Reservations/Reservations"
 import CreateRes from './Pages/CreateReservation/CreateRes';
+import RegisterUser from './Pages/RegisterUser/RegisterUser';
 
 import axios from 'axios'
 
@@ -14,7 +16,10 @@ export default function App() {
             <Route path="/" element={<Root/>}>
                 <Route path="/createReservation" element={<CreateRes/>}/>
                 <Route path="/reservationTab" element={<ReservationTab/>}/>
+                <Route path="/reservations" element={<Reservations/>}/>
+                <Route path="/register" element={<RegisterUser/>}/>
             </Route>
+            
             <Route path="*" element={<>Page Not Found</>}/>
             </>
             
