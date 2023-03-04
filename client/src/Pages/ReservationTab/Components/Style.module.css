@@ -29,7 +29,7 @@
 }
 
 .resTableContainer{
-    margin: 7vh 0 0 0;
+    margin: 10vh 0 0 0;
 }
 
 .tableHeader{
@@ -46,23 +46,19 @@
 }
 
 .addIcon{
-   width: 2vw;
-   height: 4vh;
+   width: 30px;
+   height: 30px;
    margin: 0.2vh 0 0 0;
 }
 
 .select{
-    background: #EFDACD;
-    color: #BE6731;
     text-align: center;
-    border: none;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    padding: 0;
-    
 }
 
 
+
+.tableCont{
+    margin: 2vh 0 0 0;
+}
 
 

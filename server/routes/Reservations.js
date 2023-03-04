@@ -1,6 +1,6 @@
 const express=require('express')
 const router=express.Router()
-const {Sequelize} = require('sequelize');
+const {Sequelize,Op} = require('sequelize');
 const {Reservations,Guests,Rooms,ReservationRoom}=require('../models')
 
 
@@ -28,7 +28,6 @@ router.post("/",async (req,res)=>{
           });
         }
       }
-
     res.status(201).json({ reservation, guest });}
     catch (error) {
         console.error(error);
@@ -36,4 +35,92 @@ router.post("/",async (req,res)=>{
       }
 })
 
+router.get('/reservationTab', async (req, res) => {
+  
+  const currentDate = new Date();
+  const tomorrowDate = new Date();
+  tomorrowDate.setDate(currentDate.getDate() + 1);
+
+  
+  const todaysReservations = await Reservations.findAll({
+    attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
+    include: [
+      {
+        model: Guests,
+        attributes: ['id', 'FirstName']
+      },
+      {
+        model: Rooms,
+        attributes: ['RoomNo'],
+        through: {
+          attributes: []
+        }
+      }
+    ],
+    where: {
+      CheckIn: {
+        [Op.gte]: currentDate,
+        [Op.lt]: tomorrowDate
+      }
+    }
+  });
+
+  
+  const tomorrowsReservations = await Reservations.findAll({
+    attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
+    include: [
+      {
+        model: Guests,
+        attributes: ['id', 'FirstName']
+      },
+      {
+        model: Rooms,
+        attributes: ['RoomNo'],
+        through: {
+          attributes: []
+        }
+      }
+    ],
+    where: {
+      CheckIn: {
+        [Op.between]: [tomorrowDate, new Date(tomorrowDate.getTime() + 24 * 60 * 60 * 1000)]
+      }
+    }
+  });
+
+  const formattedTodaysReservations = todaysReservations.map(reservation => ({
+    id: reservation.id,
+    guestFirstName: reservation.Guest.FirstName,
+    rooms: reservation.Rooms.map(room => room.RoomNo),
+    checkIn: reservation.CheckIn,
+    checkOut: reservation.CheckOut,
+    reservationStatus: reservation.ReservationStatus,
+    source: reservation.Source
+  }));
+
+  const formattedTomorrowsReservations = tomorrowsReservations.map(reservation => ({
+    id: reservation.id,
+    guestFirstName: reservation.Guest.FirstName,
+    rooms: reservation.Rooms.map(room => room.RoomNo),
+    checkIn: reservation.CheckIn,
+    checkOut: reservation.CheckOut,
+    reservationStatus: reservation.ReservationStatus,
+    source: reservation.Source
+  }));
+
+  res.json({
+    todaysReservations: formattedTodaysReservations,
+    tomorrowsReservations: formattedTomorrowsReservations
+  });
+});
+
+router.delete("/:resId",async (req,res)=>{
+    const resID=req.params.resId
+    await Reservations.destroy({
+      where:{
+        id:resID,
+      },
+    })
+    res.json("Deleted Successfully")
+})
 module.exports=router

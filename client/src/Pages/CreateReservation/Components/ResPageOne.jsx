@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import {Formik,Form,Field} from "formik"
 import axios from 'axios'
+import * as yup from 'yup';
 import Input from "../../General/Inputs/Inputs"
 import searchIcon from "../../../Assets/Images/Search.png"
 import addIcon from "../../../Assets/Images/Add small.png"
@@ -10,6 +11,7 @@ import style from "./Style.module.css"
 
 
 export default function ResPageOne(props) {
+  
  
  
   const handleSubmit=(values)=>{
@@ -56,10 +58,11 @@ const [AvailableRooms,setAvailableRooms]=useState(props.data.AvailableRooms)
 const [SelectedRooms,setSelectedRooms]=useState(props.data.SelectedRooms)
 
 const reqRoom=async () => {
+  if(dates.CheckIn && dates.CheckOut){
   const response = await axios.get(`http://localhost:3001/rooms/availablity/${dates.CheckIn}/${dates.CheckOut}`);
   setAvailableRooms(response.data);
   setSelectedRooms([])
-};
+  }};
 
 const selectRoom=(RoomNo)=>{
   setSelectedRooms([...SelectedRooms,RoomNo])
@@ -73,7 +76,7 @@ const selectRoom=(RoomNo)=>{
   return (
     <>
       <Formik initialValues={props.data} onSubmit={handleSubmit} >
-              {()=>(
+              {(formik)=>(
                 <Form>
                       <div className={style.container}>
                           <div className={style.topContainer}>
@@ -85,7 +88,7 @@ const selectRoom=(RoomNo)=>{
                                 <div className={style.topRightContainer}>
                                      <Field name="CheckIn" component={Input} label="Check-In" type="date" onBlur={getDates} id="CheckIn"/>
                                      <Field name="CheckOut" component={Input} label="Check-Out" type="date" onBlur={getDates} id="CheckOut"/>
-                                     <button  type="button" onClick={reqRoom}><img src={searchIcon}/></button>
+                                     <button  type="button" onClick={reqRoom} ><img src={searchIcon}/></button>
                                 </div>
                           </div>
                         <div className={style.middleContainer}>
@@ -136,7 +139,7 @@ const selectRoom=(RoomNo)=>{
                             </div>
                           </div>
                         </div>
-                        {SelectedRooms.length>0 ? <button type="submit" className={style.Btn}>Proceed</button>:<button type="submit" className={`${style.proceedBtn} ${style.hidden}`}>Proceed</button>}
+                        {SelectedRooms.length>0 ? <button type="submit" className={style.Btn}>Proceed</button>:<button type="submit" className={style.hidden}>Proceed</button>}
                       </div>
               </Form>
               )}
