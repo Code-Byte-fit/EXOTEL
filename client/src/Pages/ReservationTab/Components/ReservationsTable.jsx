@@ -3,13 +3,14 @@ import { Link} from 'react-router-dom';
 import axios from "axios"
 import addIcon from "../../../Assets/Images/Add.png"
 import EditDelete from '../../General/Table/EditDelete';
+import EditRes from './EditRes';
 import Table from '../../General/Table/Table';
 import style from "./Style.module.css"
 
 export default function ReservationsTable() {
   const [reservationDetails,setReservationDetails]=useState([]);
   const [selectedDate, setSelectedDate] = useState('today');
-  const [isDeleted, setIsDeleted] =useState(false);
+  const [isDone, setIsDone] = useState(false);
 
   
 
@@ -29,23 +30,29 @@ export default function ReservationsTable() {
   };
 
   const handleEdit=(row)=>{
+    axios.put("http://localhost:3001/reservations").then(()=>{
+      setIsDone(true)
+      
+    })
+  }
+
+  const handleDelete = (row) => {
     console.log(row)
+    axios.delete(`http://localhost:3001/reservations/${row.id}`).then(() => {
+      setIsDone(true)
+    });
+  };
+
+
+  const handleDone=()=>{
+    setIsDone(false)
+    axios.get("http://localhost:3001/reservations/reservationTab").then((response)=>{
+      setReservationDetails(response.data)
+    })
   }
  
-  const handleDelete = (row) => {
-    axios.delete(`http://localhost:3001/reservations/${row.id}`)
-      .then(() => {
-        setReservationDetails(prevReservationDetails => {
-          const updatedTodaysReservations = prevReservationDetails.todaysReservations.filter(reservation => reservation.id !== row.id);
-          const updatedTomorrowsReservations = prevReservationDetails.tomorrowsReservations.filter(reservation => reservation.id !== row.id);
-          return {
-            todaysReservations: updatedTodaysReservations,
-            tomorrowsReservations: updatedTomorrowsReservations
-          };
-        });
-      })
-      ;
-  };
+ 
+
   
 
   const columns = [
@@ -85,7 +92,7 @@ export default function ReservationsTable() {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete onEdit={() => handleEdit(row)} onDelete={()=>handleDelete(row)}/>
+      cell: (row) => <EditDelete onEdit={() => handleEdit(row)} onDelete={()=>handleDelete(row)}  isDone={isDone} handleDone={handleDone} editComponent={<EditRes values={row}/>}/>
     },
 ];
 

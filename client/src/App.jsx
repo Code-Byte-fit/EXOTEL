@@ -5,8 +5,7 @@ import ReservationTab from './Pages/ReservationTab/ReservationTab';
 import Reservations from "./Pages/Reservations/Reservations"
 import CreateRes from './Pages/CreateReservation/CreateRes';
 import RegisterUser from './Pages/RegisterUser/RegisterUser';
-
-import axios from 'axios'
+import Test from './Pages/Test';
 
 
 export default function App() {
@@ -14,10 +13,11 @@ export default function App() {
         createRoutesFromElements( 
             <>
             <Route path="/" element={<Root/>}>
-                <Route path="/createReservation" element={<CreateRes/>}/>
-                <Route path="/reservationTab" element={<ReservationTab/>}/>
-                <Route path="/reservations" element={<Reservations/>}/>
-                <Route path="/register" element={<RegisterUser/>}/>
+                    <Route path="/createReservation" element={<CreateRes/>}/>
+                    <Route path="/reservationTab" element={<ReservationTab/>}/>
+                    <Route path="/reservations" element={<Reservations/>}/>
+                    <Route path="/register" element={<RegisterUser/>}/>
+                    <Route path="/r" element={<Test/>}/>
             </Route>
             
             <Route path="*" element={<>Page Not Found</>}/>
@@ -32,27 +32,12 @@ export default function App() {
         </div>
         
     )
-
-    
-    // const [listOfUsers,setListOfUsers]=useState([])
-    // useEffect(()=>{
-    //     axios.get("http://localhost:3001/users").then((res)=>{
-    //         setListOfUsers(res.data);
-    //     })
-    // },[])
-        
-    // return (
-    //     <>
-    //         {listOfUsers.map((value,key)=>{return <div>{value.userName}</div>})}
-    //     </>
-    // )
 }
 
 const Root=()=>{
     return(
         <>
         <Header/>
-          
         <div><Outlet/></div>
         </>
     )

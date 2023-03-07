@@ -105,7 +105,7 @@ export default function RegisterUser() {
                   
                 </div>
                 </div>
-                <ConfirmRegistration values={formikValues.values} />
+                <ConfirmRegistration values={formikValues.values} isValid={formikValues.isValid && formikValues.dirty}/>
               </div>
              
              

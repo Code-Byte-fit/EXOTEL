@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     Source: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('Phone', 'Walk-In'),
       allowNull: false
     },
     ReservationStatus: {
