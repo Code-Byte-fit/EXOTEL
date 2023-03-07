@@ -1,14 +1,13 @@
 const express=require('express')
 const router=express.Router()
 const { Sequelize,Op } = require('sequelize');
-const {Rooms,Reservations,ReservationRoom}=require('../models')
+const {Rooms,Reservations,ReservationRoom , RoomTypes}=require('../models');
 
 
 router.get('/',async (req,res)=>{
-    const listOfRooms=await Rooms.findAll()
-    res.json(listOfRooms)
+  const listOfRooms=await Rooms.findAll()
+  res.json(listOfRooms)
 })
-
 
 router.get('/availablity/:checkIn/:checkOut',async (req,res)=>{
   const checkin = req.params.checkIn;
@@ -47,6 +46,17 @@ router.get('/availablity/:checkIn/:checkOut',async (req,res)=>{
     }
   });
 
+
+  router.post("/",async (req,res)=>{
+    try{const{RoomNo,floor,Status, TypeName}=req.body
+    const rooms = await Rooms.create({ RoomNo, floor, Status, TypeName });
+   
+    res.status(201).json({ rooms });}
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to create room' });
+      }
+})
 
 
 
@@ -127,10 +137,10 @@ router.get('/availablity/:checkIn/:checkOut',async (req,res)=>{
 // })
 
 
-router.post("/",async (req,res)=>{
-    const room=req.body
-    await Rooms.create(room)
-    res.json(room)
-})
+// router.post("/",async (req,res)=>{
+//     const room=req.body
+//     await Rooms.create(room)
+//     res.json(room)
+// })
 
 module.exports=router

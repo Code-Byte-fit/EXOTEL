@@ -27,6 +27,15 @@ app.use("/rooms",roomRouter);
 const reservationRouter=require('./routes/Reservations')
 app.use("/reservations",reservationRouter);
 
+const promotionRouter=require('./routes/Promotions')
+app.use("/promotions",promotionRouter);
+
+const roomTypenRouter=require('./routes/RoomTypes')
+app.use("/roomtypes",roomTypenRouter);
+
+// const addOnRouter=require('./routes/AddOns')
+// app.use("/addons",addOnRouter);
+
 
 
 
