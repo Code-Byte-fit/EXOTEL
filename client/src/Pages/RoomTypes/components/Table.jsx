@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import style from "./Rooms.module.css";
+import style from "./Types.module.css";
 import axios from "axios";
 import sort from "../../../Assets/Images/sort.png";
 import editIcon from "../../../Assets/Images/Small FAB(1).png";
@@ -7,19 +7,19 @@ import deleteIcon from "../../../Assets/Images/Small FAB.png";
 import { useEffect } from "react";
 import Popup from "./EditPopup";
 
-function Table({ room }) {
-  const [listOfRooms, setlistOfRooms] = useState([]);
+function Table({ type }) {
+  const [listOfRoomTypes, setlistOfRoomTypes] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [selectedRoomType, setSelectedRoomTypes] = useState(null);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/rooms").then((response) => {
-      setlistOfRooms(response.data);
+    axios.get("http://localhost:3001/roomtypes").then((response) => {
+      setlistOfRoomTypes(response.data);
     });
   }, []);
 
-  function handleEditClick(room) {
-    setSelectedRoom(room);
+  function handleEditClick(type) {
+    setSelectedRoomTypes(type);
     setShowPopup(true);
   }
 
@@ -29,7 +29,7 @@ function Table({ room }) {
 
   return (
     <span className={style.tableContainer}>
-      <label className={style.labelTwo}>Edit/Delete Room</label>
+      <label className={style.labelTwo}>Edit/Delete Room Types</label>
 
       <div className={style.tbl}>
         <span className={style.div3}>
@@ -37,20 +37,18 @@ function Table({ room }) {
             <table className={style.tableOne}>
               <thead>
                 <tr>
-                  <th>
-                    Room Number <img src={sort} className={style.sort1} />
-                  </th>
+              
                   <th>
                     Room Type<img src={sort} className={style.sort1} />
                   </th>
                   <th>
-                    Base Charge<img src={sort} className={style.sort1} />
+                  No Of Beds<img src={sort} className={style.sort1} />
                   </th>
                   <th>
-                    Floor<img src={sort} className={style.sort1} />
+                  sqFeet<img src={sort} className={style.sort1} />
                   </th>
                   <th>
-                    Sq.Feet<img src={sort} className={style.sort1} />
+                  Base Charge<img src={sort} className={style.sort1} />
                   </th>
                   <th>
                     Actions<img src={sort} className={style.sort1} />
@@ -58,15 +56,14 @@ function Table({ room }) {
                 </tr>
               </thead>
 
-              {listOfRooms.map((value, key) => {
+              {listOfRoomTypes.map((value, key) => {
                 return (
                   <tbody key={key}>
                     <tr>
-                      <td>{value.RoomNo}</td>
                       <td>{value.TypeName}</td>
-                      <td>{value.BaseCharge}</td>
-                      <td>{value.floor}</td>
+                      <td>{value.NoOfBeds}</td>
                       <td>{value.sqFeet}</td>
+                      <td>{value.BaseCharge}</td>
                       <td>
                         <button
                           type="button"
@@ -94,7 +91,7 @@ function Table({ room }) {
       {showPopup && (
         
         <Popup 
-          room={selectedRoom}
+          room={selectedRoomType}
           closePopup={() => setShowPopup(false)}
         />
       )}

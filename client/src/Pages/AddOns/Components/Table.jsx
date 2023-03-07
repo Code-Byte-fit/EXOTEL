@@ -5,18 +5,19 @@ import sort from "../../../Assets/Images/sort.png"
 import editIcon from "../../../Assets/Images/Small FAB(1).png"
 import deleteIcon from "../../../Assets/Images/Small FAB.png"
 import { useEffect } from "react";
+import Popup from "./EditPopup";
+function Table({ addon }) {
 
-function Table({room}) {
-
-    
-
-
-    const [listOfRooms, setlistOfRooms] = useState([]);
+    const [listOfAddons, setlistOfAddons] = useState([]);
     const [showPopup, setShowPopup] = useState(false);
+    const [selectedAddon, setSelectedAddon] = useState(null);
+
+
+   
 
     useEffect(() => {
-        axios.get("http://localhost:3001/rooms").then((response) => {
-            setlistOfRooms(response.data);
+        axios.get("http://localhost:3001/addons").then((response) => {
+            setlistOfAddons(response.data);
         })
     }, [])
 
@@ -30,53 +31,63 @@ function Table({room}) {
 
     return (
         <span className={style.tableContainer}>
-            <label className={style.labelTwo}>Edit/Delete Room</label>
-          
+            <label className={style.labelTwo}>Edit/Delete Add Ons</label>
+
             <div className={style.tbl}>
                 <span className={style.div3}>
                     <form >
                         <table className={style.tableOne}>
                             <thead>
                                 <tr>
-                 
-                                    <th>Room Number <img src={sort} className={style.sort1} /></th>
-                                    <th>Room Type<img src={sort} className={style.sort1} /></th>
-                                    <th>Base Charge<img src={sort} className={style.sort1} /></th>
-                                    <th>Floor<img src={sort} className={style.sort1} /></th>
-                                    <th>Sq.Feet<img src={sort} className={style.sort1} /></th>
+
+                                    <th>Add On Number <img src={sort} className={style.sort1} /></th>
+                                    <th>Add On<img src={sort} className={style.sort1} /></th>
+                                    <th>Amount<img src={sort} className={style.sort1} /></th>
                                     <th>Actions<img src={sort} className={style.sort1} /></th>
 
 
                                 </tr>
                             </thead>
-                        
-                        {listOfRooms.map((value, key) => {
-                            return (
-                     
-                                    <tbody>
-                                        <td>{value.RoomNo}</td>
-                                        <td>{value.roomType}</td>
-                                        <td>{value.baseCharge}</td>
-                                        <td>{value.floor}</td>
-                                        <td>{value.sqFeet}</td>
-                                        <td>
-                    <button type="button" className={style.editBtn}  onClick={handleEditClick} ><img src={editIcon}/></button>
-                    <button type="button" className={style.deleteBtn} onClick={handleDeleteClick}><img src={deleteIcon}/></button>
-                </td>
-                                    </tbody>
-                                   
 
-                            );
-                        })}
+                            {listOfAddons.map((value, key) => {
+                                return (
+
+                                    <tbody>
+                                        <td>{value.AddOnNo}</td>
+                                        <td>{value.AddOn}</td>
+                                        <td>{value.Amt}</td>
+
+                                        <td>
+                                            <button
+                                                type="button"
+                                                className={style.editBtn}
+                                                onClick={() => handleEditClick(value)}
+                                            >
+                                                <img src={editIcon} alt="Edit" />
+                                            </button>
+                                            <button
+                                                type="button"
+                                                className={style.deleteBtn}
+                                                onClick={handleDeleteClick}
+                                            >
+                                                <img src={deleteIcon} alt="Delete" />
+                                            </button>
+                                        </td>
+                                    </tbody>
+
+
+                                );
+                            })}
                         </table>
                     </form>
                 </span>
             </div>
             {showPopup && (
-                <div className={style.popup}>
-                <h1>hello</h1>
-                    </div>
-               
+                <Popup 
+          room={selectedAddon}
+          closePopup={() => setShowPopup(false)}
+        />
+
             )}
         </span>
 

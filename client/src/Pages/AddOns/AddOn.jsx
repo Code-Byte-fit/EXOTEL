@@ -1,7 +1,7 @@
 import React from "react";
 import style from '../AddOns/Components/AddOns.module.css'
 
-import DisplayFormData from "../NewRooms/components/DisplayFormData";
+import DisplayFormData from "../AddOns/Components/DisplayFormData";
 
 
 

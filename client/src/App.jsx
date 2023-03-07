@@ -10,7 +10,7 @@ import Rooms from './Pages/NewRooms/Rooms'
 import Promotion from './Pages/Promotions/Promotion'
 import ViewPromotions from './Pages/ViewPromotions/ViewPromotions';
 import AddOns from './Pages/AddOns/AddOn';
-
+import RoomTypes from './Pages/RoomTypes/Types'
 import RegisterUser from './Pages/RegisterUser/RegisterUser';
 
 
@@ -30,7 +30,7 @@ export default function App() {
                 <Route path="/rooms" element={<Rooms/>}/>
                 <Route path="/promotion" element={<Promotion/>}/>
                 <Route path="/addons" element={<AddOns/>}/>
-
+                <Route path="/roomtypes" element={<RoomTypes/>}/>
 
                 <Route path="/reservations" element={<Reservations/>}/>
                 <Route path="/register" element={<RegisterUser/>}/>

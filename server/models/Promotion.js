@@ -32,7 +32,13 @@ module.exports=(sequelize,Datatypes)=>{
         addInfo:{
             type:Datatypes.STRING,
             allowNull:true, 
-        }
-    })
+        } },
+        {
+            timestamps: false
+        });
+
+        Promotion.associate = (models) => {
+            Promotion.hasMany(models.Reservations, { foreignKey: 'PromoCode' });
+          };
     return Promotion;
 }

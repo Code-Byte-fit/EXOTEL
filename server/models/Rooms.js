@@ -10,20 +10,12 @@ module.exports=(sequelize,Datatypes)=>{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        sqFeet:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
         addInfo:{
             type:Datatypes.STRING,
             allowNull:true,
         },
         Status: {
             type: Datatypes.ENUM('available', 'booked'),
-            allowNull: false
-        },
-        BaseCharge: {
-            type: Datatypes.FLOAT,
             allowNull: false
         }
     },
@@ -33,7 +25,8 @@ module.exports=(sequelize,Datatypes)=>{
 
     Rooms.associate = (models) => {
         Rooms.belongsToMany(models.Reservations, { through: 'ReservationRoom' });
-      };;
+        Rooms.belongsTo(models.RoomTypes, { foreignKey: 'TypeName' });
+      };
 
     
     

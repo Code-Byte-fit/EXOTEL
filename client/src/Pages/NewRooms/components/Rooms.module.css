@@ -28,11 +28,11 @@
 .div1 {
   display: flex;
   gap: 4vw;
-  margin-top: -2vh;
+  margin-top: 2vh;
 }
 
 .div2 {
-  margin-top: -2vh;
+  margin-top: 2vh;
   width: 89vw;
 }
 

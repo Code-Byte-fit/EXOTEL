@@ -11,11 +11,12 @@ function DisplayFormData() {
   
     const [rooms, setRooms] = useState(data);
     const [addFormData, setAddFormData] = useState({
-        roomNumber: '',
-        roomType: '',
-        baseCharge: '',
+        RoomNo: '',
+        TypeName: '',
+        BaseCharge: '',
         floor: '',
-        sqFeet: ''
+        sqFeet: '',
+        Status: 'available'
     })
 
 
@@ -40,7 +41,7 @@ function DisplayFormData() {
             id: nanoid(),
             roomNumber: addFormData.roomNumber,
             roomType: addFormData.roomType,
-            baseCharge: addFormData.baseCharge,
+            BaseCharge: addFormData.BaseCharge,
             floor: addFormData.floor,
             sqFeet: addFormData.sqFeet
         };

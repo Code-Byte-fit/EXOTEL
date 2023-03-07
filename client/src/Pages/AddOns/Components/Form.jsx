@@ -13,9 +13,7 @@ function FormOne({handleAddFormChange}) {
         AddOnNo: '',
         AddOn: '',
         Amt: '',
-        Qty: '',
-        Tax: '',
-        AddInfo: '',
+        AddInfo: ''
     };
     const validationSchema = Yup.object().shape({
         AddOnNo: Yup.string().required("*Room Number is Required")
@@ -23,12 +21,10 @@ function FormOne({handleAddFormChange}) {
         .max(10, 'Room Number must be at most 10 characters long'),
         AddOn: Yup.string().required("*Room Type is Required"),
         Amt: Yup.number().required("*Base Charge is Required"),
-        Qty: Yup.string().required("*Floor is Required"),
-        Tax: Yup.number().required("*Square Feet is Required"),
       });
 
     const makeReq=async(formData)=>{
-        await axios.post("http://localhost:3001/rooms",formData);
+        await axios.post("http://localhost:3001/addons",formData);
     }
 
     const onSubmit=(data) => {
@@ -36,36 +32,6 @@ function FormOne({handleAddFormChange}) {
 
        };
 
-        // const onSubmit = (data) => {
-        //     setShowConfirmation(true);
-        //   };
-        
-        //   const handleConfirm = (data) => {
-        //     makeReq(data);
-        //     setShowConfirmation(false);
-        //   };
-        
-        //   const handleCancel = () => {
-        //     setShowConfirmation(false);
-        //   };
-        
-
-    // const baseCharge = [
-    //     { key: "--None Selected --", value: "" },
-    //     { key: "500", value: "500" },
-    //     { key: "1000", value: "1000" },
-    //     { key: "2000", value: "2000" }]
-
-    // const Floor = [
-    //     { key: "--None Selected --", value: "" },
-    //     { key: "Ground Floor", value: "Ground Floor" },
-    //     { key: "1st Floor", value: "1st Floor" },
-    //     { key: "2nd Floor", value: "3rd Floor" }]
-        
-    // const sqFeet = [{ key: "--None Selected --", value: "" },
-    // { key: "250 cm2", value: "250" },
-    // { key: "500 cm2", value: "500" },
-    // { key: "550 cm2", value: "550" }]
 
     return (
 
@@ -108,27 +74,7 @@ function FormOne({handleAddFormChange}) {
                             width="13vw" />
                               <ErrorMessage name="Amt" component="div"  className={style.error}/>
 </span>
- <span>  
-                        <Field name="Qty"
-                            component={Input}
-                            label="Qty"
-                            type="select"
-                           
-                             onBlur={handleAddFormChange}
-                            width="13vw" />
-                              <ErrorMessage name="Qty" component="div"  className={style.error}/>
-</span>
-<span>
-                        <Field name="Tax"
-                            component={Input}
-                            label="Tax"
-                            type="select"
-                    
-                            className={style.inpuOne}
-                           onBlur={handleAddFormChange}
-                            width="13vw" />
-                              <ErrorMessage name="Tax" component="div"  className={style.error}/>
-                            </span>
+ 
                     </div>
 
                     <div className={style.div2}>
@@ -140,7 +86,7 @@ function FormOne({handleAddFormChange}) {
                             cols="150" />
                     </div>
                     <span className={style.createBtn}> 
-                    <button  className={style.buttonOne}  type="submit">Create Room</button>
+                    <button  className={style.buttonOne}  type="submit">Create Add On</button>
                     </span> 
         
              
