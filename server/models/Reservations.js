@@ -32,6 +32,8 @@ module.exports = (sequelize, DataTypes) => {
   Reservations.associate = (models) => {
     Reservations.belongsTo(models.Guests, { foreignKey: 'guestId' });
     Reservations.belongsToMany(models.Rooms, { through: 'ReservationRoom' });
+    Reservations.belongsToMany(models.Addons, { through: 'ReservationAddOn' });
+    Reservations.belongsTo(models.Promotion, { foreignKey: 'PromoCode' });
   };
 
   return Reservations;

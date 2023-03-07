@@ -1,29 +1,31 @@
 module.exports=(sequelize,Datatypes)=>{
     const RoomTypes=sequelize.define("RoomTypes",{
-        FirstName:{
+    
+        TypeName:{
+            type:Datatypes.STRING,
+            allowNull:false,
+            primaryKey:true,
+        },
+        NoOfBeds:{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        LastName:{
+        sqFeet:{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        BirthDate:{
-            type:Datatypes.DATEONLY,
+        BaseCharge:{
+            type:Datatypes.FLOAT,
             allowNull:false,
-        },
-        Country:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        Email:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        PhoneNumber:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-    })
+        }
+    },
+        {
+            timestamps: false
+        });
+
+        RoomTypes.associate = (models) => {
+            RoomTypes.hasMany(models.Rooms, { foreignKey: 'TypeName' });
+          };
+      
     return RoomTypes;
 }
