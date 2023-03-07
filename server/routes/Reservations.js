@@ -114,6 +114,19 @@ router.get('/reservationTab', async (req, res) => {
   });
 });
 
+
+router.put("/",async (req,res)=>{
+  const {id,checkIn,checkOut,reservationStatus,source,guestFirstName,rooms}=req.body
+  await Reservations.update({
+    CheckIn:checkIn,
+    CheckOut:checkOut,
+    Source:source,
+    ReservationStatus:reservationStatus
+  },{where:{id:id}})
+  res.json("updated Successfully")
+})
+
+
 router.delete("/:resId",async (req,res)=>{
     const resID=req.params.resId
     await Reservations.destroy({
@@ -123,4 +136,8 @@ router.delete("/:resId",async (req,res)=>{
     })
     res.json("Deleted Successfully")
 })
+
+
+
+
 module.exports=router

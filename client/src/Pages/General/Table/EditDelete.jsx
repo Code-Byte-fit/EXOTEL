@@ -8,7 +8,7 @@ import style from "./Style.module.css";
 export default function EditDelete(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] =useState(false);
-  const [isDeleted, setIsDeleted] =useState(false);
+  const [editOpen, setEditOpen] =useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -27,6 +27,7 @@ export default function EditDelete(props) {
 
   const closeModal = () => {
     setDeleteOpen(false);
+    setEditOpen(false)
     setIsOpen(false);
   };
 
@@ -35,7 +36,7 @@ export default function EditDelete(props) {
   };
 
   const handleEdit = () => {
-    props.onEdit();
+    setEditOpen(true)
     setIsOpen(false);
   };
 
@@ -46,14 +47,19 @@ export default function EditDelete(props) {
 
   const handleClosePopup = () => {
     setDeleteOpen(false);
+    setEditOpen(false)
+
   };
 
   const handleConfirm=()=>{
     props.onDelete()
-    setIsDeleted(true);
   }
 
-  
+
+  const handleDone=()=>{
+    props.handleDone();
+    closeModal();
+  }
 
   
 
@@ -66,8 +72,8 @@ export default function EditDelete(props) {
         <div className={`${style.options} ${style.delete}`} onClick={handleDelete}>Delete</div>
       </div>
       }
-      <Popup open={deleteOpen}  onClose={handleClosePopup}>
-         {!isDeleted?
+      <Popup open={deleteOpen} closeOnDocumentClick={false}  onClose={handleClosePopup}>
+         {!props.isDone?
          <div className={style.confirmModal}>
           <span className={style.confirmHeading}>Confirm Deletion</span>
           <span className={style.confirmBody}>Are you sure you want to delete this reservation?</span>
@@ -76,7 +82,28 @@ export default function EditDelete(props) {
               <button onClick={handleConfirm} className={`${style.Btn} ${style.deleteBtn}`}>Delete</button>
           </div>
         </div>:
-        <>hi</>
+        <>
+          <div className={style.confirmModal}>
+            <img src={successIcon} className={style.successIcon}/>
+            <span className={`${style.confirmHeading} ${style.success}`}>Success!</span>
+            <span className={style.confirmBody}>Successfully Deleted</span>
+            <button onClick={handleDone} className={`${style.Btn} ${style.doneBtn}`}>Done</button>
+          </div>
+        </>
+        }
+      </Popup>
+
+
+      <Popup open={editOpen}  closeOnDocumentClick={true} onClose={handleClosePopup}>
+         {!props.isDone?props.editComponent:
+        <>
+          <div className={style.confirmModal}>
+            <img src={successIcon} className={style.successIcon}/>
+            <span className={`${style.confirmHeading} ${style.success}`}>Success!</span>
+            <span className={style.confirmBody}>Successfully Updated</span>
+            <button onClick={handleDone} className={`${style.Btn} ${style.doneBtn}`}>Done</button>
+          </div>
+        </>
         }
       </Popup>
     </>

@@ -32,7 +32,7 @@ export default function ResPageTwo(props) {
 ]
   return (
     <>
-        <Formik initialValues={props.data} onSubmit={handleSubmit} >
+        <Formik initialValues={props.data} onSubmit={handleSubmit} validationSchema={schema}>
                 {({values})=>(
                   <Form>
                   <div className={style.formContainer}>
