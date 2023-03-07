@@ -1,0 +1,90 @@
+[
+    {
+      "id": 1,
+      "promoCode": "001",
+      "promoType": "king",
+      "value": "2000",
+      "maxUses": "4",
+      "status": "Active",
+      "sDate": "22/10/2023",
+      "eDate": "30/10/2023"
+
+    },
+    {
+        "id": 2,
+        "promoCode": "002",
+        "promoType": "child",
+        "value": "2000",
+      "maxUses": "4",
+      "status": "Active",
+      "sDate": "22/10/2023",
+      "eDate": "30/10/2023"
+    },
+    {
+        "id": 3,
+        "promoCode": "003",
+        "promoType": "double",
+        "value": "2000",
+        "maxUses": "4",
+        "status": "Active",
+        "sDate": "22/10/2023",
+        "eDate": "30/10/2023"
+    },
+    {
+        "id": 4,
+        "promoCode": "004",
+        "promoType": "riare",
+        "value": "2000",
+        "maxUses": "4",
+        "status": "Active",
+        "sDate": "22/10/2023",
+        "eDate": "30/10/2023"
+    }
+
+    ,
+    {
+        "id": 5,
+        "promoCode": "005",
+        "promoType": "mali",
+        "value": "2000",
+      "maxUses": "4",
+      "status": "Active",
+      "sDate": "22/10/2023",
+      "eDate": "30/10/2023"
+    },
+    {
+        "id": 6,
+        "promoCode": "006",
+        "promoType": "kavi",
+        "value": "2000",
+        "maxUses": "4",
+        "status": "Active",
+        "sDate": "22/10/2023",
+        "eDate": "30/10/2023"
+    }
+
+    ,  {
+        "id": 7,
+        "promoCode": "007",
+        "promoType": "riare",
+        "value": "2000",
+        "maxUses": "4",
+        "status": "Active",
+        "sDate": "22/10/2023",
+        "eDate": "30/10/2023"
+    }
+
+    ,  {
+        "id": 8,
+        "promoCode": "008",
+        "promoType": "riare",
+        "value": "2000",
+        "maxUses": "4",
+        "status": "Active",
+        "sDate": "22/10/2023",
+        "eDate": "30/10/2023"
+    }
+
+    
+
+]

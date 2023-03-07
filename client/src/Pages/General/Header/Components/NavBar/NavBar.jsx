@@ -44,10 +44,15 @@ export default function NavBar() {
                   <img src={dashBoardIcon}/>
                   <span>DashBoard</span>
           </NavLink>
-          <NavLink  to="/" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
+          <NavLink  to="/rooms" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
                   <img src={dashBoardIcon}/>
-                  <span>DashBoard</span>
+                  <span>Rooms</span>
           </NavLink>
+          <NavLink  to="/promotion" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
+                  <img src={dashBoardIcon}/>
+                  <span>Promotions</span>
+          </NavLink>
+         
       </div>
       <div className={style.lowerIcons}>
       <NavLink  to="/dashboard" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
