@@ -1,29 +1,18 @@
 module.exports=(sequelize,Datatypes)=>{
     const Bill=sequelize.define("Bill",{
-        FirstName:{
+        billNumber:{
             type:Datatypes.STRING,
+            primaryKey: true,
+        },
+        grossAmount:{
+            type:Datatypes.FLOAT,
             allowNull:false,
-        },
-        LastName:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        BirthDate:{
-            type:Datatypes.DATEONLY,
-            allowNull:false,
-        },
-        Country:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        Email:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        PhoneNumber:{
-            type:Datatypes.STRING,
-            allowNull:false, 
-        },
-    })
+        }
+    },{
+        timestamps: false
+    });
+    Bill.associate = (models)=>{
+        Bill.belongsTo(models.Cashier,{foreignKey: 'employeeId'})
+    }
     return Bill;
 }

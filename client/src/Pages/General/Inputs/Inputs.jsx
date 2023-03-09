@@ -6,14 +6,13 @@ export default function Input({
   form: { touched, errors },
   ...props
 }) {
-
   return (
     <>
         <div className={style.InputContainer}>
-            <label for={props.id}>{props.label}</label>
-            {props.type!=="select" && <input {...field} {...props} type={props.type} id={props.id} className={`${style.Input}`} style={{width:props.width}}/>}
+            <label>{props.label}</label>
+            {props.type!=="select" && props.type!=="textarea" && <input {...field} {...props} type={props.type} className={style.Input} />}
             {props.type==="select" && 
-              <select {...field} {...props} className={style.Input} id={props.id} style={props.style}>
+              <select {...field} {...props} className={style.Input}>
                   {props.options.map((option) => {
                         return (
                             <option key={option.value} value={option.value}>
@@ -21,6 +20,9 @@ export default function Input({
                             </option>
                             );})}
               </select>
+            }
+            {props.type==="textarea" &&
+              <textarea {...field} {...props} className={style.Input} rows={props.rows} cols={props.cols} />
             }
         </div>
     </>

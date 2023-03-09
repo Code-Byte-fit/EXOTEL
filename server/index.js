@@ -1,9 +1,9 @@
 const express=require("express")
-const app=express()
 const cors=require('cors')
 
-app.use(express.json())
-app.use(cors())
+const app=express();
+app.use(express.json());
+app.use(cors());
 
 const db=require('./models')
 
@@ -21,7 +21,8 @@ app.use("/rooms",roomRouter);
 const reservationRouter=require('./routes/Reservations')
 app.use("/reservations",reservationRouter);
 
-
+const minibarRouter = require ('./routes/Minibar')
+app.use("/minibar", minibarRouter);
 
 
 db.sequelize.sync().then(()=>{

@@ -1,29 +1,39 @@
 module.exports=(sequelize,Datatypes)=>{
     const Cashier=sequelize.define("Cashier",{
-        FirstName:{
+        employeeId:{
+            type:Datatypes.STRING,
+            primaryKey: true,
+        },
+        firstName:{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        LastName:{
+        lastName:{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        BirthDate:{
-            type:Datatypes.DATEONLY,
+        nic:{
+            type:Datatypes.INTEGER,
             allowNull:false,
         },
-        Country:{
+        address:{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        Email:{
+        email:{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        PhoneNumber:{
+        phoneNumber:{
             type:Datatypes.STRING,
             allowNull:false,
-        },
-    })
+        }
+    }, {
+        timestamps: false
+      });
+    
+      Cashier.associate = (models) => {
+          Cashier.hasMany(models.Bill, { foreignKey: 'employeeId' });
+        };
     return Cashier;
 }
