@@ -2,11 +2,20 @@ import {React} from 'react'
 import {createBrowserRouter,createRoutesFromElements,Route,Link,RouterProvider,Outlet} from "react-router-dom";
 import Header from './Pages/General/Header/Header';
 import ReservationTab from './Pages/ReservationTab/ReservationTab';
+import Reservations from "./Pages/Reservations/Reservations"
 import Minibar from './Pages/Minibar/Minibar'
 import Laundry from './Pages/Laundry/Laundry'
 import CreateRes from './Pages/CreateReservation/CreateRes';
 
+import ViewRooms from './Pages/ManageRooms/ViewRoomList'
+import Rooms from './Pages/NewRooms/Rooms'
+import Promotion from './Pages/Promotions/Promotion'
+import ViewPromotions from './Pages/ViewPromotions/ViewPromotions';
+import AddOns from './Pages/AddOns/AddOn';
+import RoomTypes from './Pages/RoomTypes/Types'
+import RegisterUser from './Pages/RegisterUser/RegisterUser';
 import axios from 'axios'
+
 
 
 export default function App() {
@@ -16,9 +25,18 @@ export default function App() {
             <Route path="/" element={<Root/>}>
                 <Route path="/createReservation" element={<CreateRes/>}/>
                 <Route path="/reservationTab" element={<ReservationTab/>}/>
+                <Route path="/viewRooms" element={<ViewRooms/>}/>
+                <Route path="/viewPromotions" element={<ViewPromotions/>}/>
+                <Route path="/rooms" element={<Rooms/>}/>
+                <Route path="/promotion" element={<Promotion/>}/>
+                <Route path="/addons" element={<AddOns/>}/>
+                <Route path="/roomtypes" element={<RoomTypes/>}/>
+                <Route path="/reservations" element={<Reservations/>}/>
+                <Route path="/register" element={<RegisterUser/>}/>
                 {/* <Route path="/minibar" element={<Minibar/>}/> */}
                 <Route path="/minibar" element={<Laundry/>}/>
             </Route>
+            
             <Route path="*" element={<>Page Not Found</>}/>
 
             </>
@@ -32,27 +50,12 @@ export default function App() {
         </div>
         
     )
-
-    
-    // const [listOfUsers,setListOfUsers]=useState([])
-    // useEffect(()=>{
-    //     axios.get("http://localhost:3001/users").then((res)=>{
-    //         setListOfUsers(res.data);
-    //     })
-    // },[])
-        
-    // return (
-    //     <>
-    //         {listOfUsers.map((value,key)=>{return <div>{value.userName}</div>})}
-    //     </>
-    // )
 }
 
 const Root=()=>{
     return(
         <>
         <Header/>
-          
         <div><Outlet/></div>
         </>
     )

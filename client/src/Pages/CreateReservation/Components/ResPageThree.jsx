@@ -10,7 +10,6 @@ export default function ResPageThree(props) {
       }
 
       const handleConfirm = () => {
-        // Call the handleSubmit function here
         handleSubmit(props.data);
       };
 

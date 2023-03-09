@@ -12,6 +12,12 @@ const db=require('./models')
 const userRouter=require('./routes/Users')
 app.use("/users",userRouter);
 
+const userAccountRouter=require('./routes/UserAccounts')
+app.use("/userAccounts",userAccountRouter);
+
+const registerRouter=require('./routes/Register')
+app.use("/register",registerRouter);
+
 const guestRouter=require('./routes/Guests')
 app.use("/guests",guestRouter);
 
@@ -20,6 +26,24 @@ app.use("/rooms",roomRouter);
 
 const reservationRouter=require('./routes/Reservations')
 app.use("/reservations",reservationRouter);
+
+const promotionRouter=require('./routes/Promotions')
+app.use("/promotions",promotionRouter);
+
+const roomTypenRouter=require('./routes/RoomTypes')
+app.use("/roomtypes",roomTypenRouter);
+
+// const addOnRouter=require('./routes/AddOns')
+// app.use("/addons",addOnRouter);
+
+const promotionRouter=require('./routes/Promotions')
+app.use("/promotions",promotionRouter);
+
+const roomTypenRouter=require('./routes/RoomTypes')
+app.use("/roomtypes",roomTypenRouter);
+
+// const addOnRouter=require('./routes/AddOns')
+// app.use("/addons",addOnRouter);
 
 const minibarRouter = require ('./routes/Minibar')
 app.use("/minibar", minibarRouter);

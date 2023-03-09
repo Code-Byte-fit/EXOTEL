@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     Source: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM('Phone', 'Walk-In'),
       allowNull: false
     },
     ReservationStatus: {
@@ -32,6 +32,8 @@ module.exports = (sequelize, DataTypes) => {
   Reservations.associate = (models) => {
     Reservations.belongsTo(models.Guests, { foreignKey: 'guestId' });
     Reservations.belongsToMany(models.Rooms, { through: 'ReservationRoom' });
+    Reservations.belongsToMany(models.Addons, { through: 'ReservationAddOn' });
+    Reservations.belongsTo(models.Promotion, { foreignKey: 'PromoCode' });
   };
 
   return Reservations;

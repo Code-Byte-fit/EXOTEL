@@ -7,8 +7,8 @@ export default function UserCard() {
     <>
         <img src={avatarPic} className={style.avatarPic}/>
         <div className={style.userTextContainer}>
-            <span className={style.name}>Shamly Shanawaz </span>
-            <span className={style.role}>Receptionist</span>
+            <span className={style.name}>Malithi Abayadeera </span>
+            <span className={style.role}>Administrator</span>
         </div>
     </>
   )

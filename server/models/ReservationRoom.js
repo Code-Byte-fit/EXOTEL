@@ -1,6 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
     const ReservationRoom = sequelize.define('ReservationRoom', {
-      // no attributes are defined
     },{
       timestamps: false
     });

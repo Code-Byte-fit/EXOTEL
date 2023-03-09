@@ -10,10 +10,10 @@ export default function ReservationTab() {
         <div className={style.container}>
             <ResCalender/>
             <div className={style.cardContainer}>
+                <StatCard value="20" desc="arrival"/>
+                <StatCard value="24" desc="arrival"/>
                 <StatCard value="14" desc="arrival"/>
-                <StatCard value="14" desc="arrival"/>
-                <StatCard value="14" desc="arrival"/>
-                <StatCard value="14" desc="arrival"/>
+                <StatCard value="32" desc="arrival"/>
             </div>
             <ReservationsTable/>
         </div>
