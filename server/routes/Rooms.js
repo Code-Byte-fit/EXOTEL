@@ -25,6 +25,7 @@ router.get('/availablity/:checkIn/:checkOut',async (req,res)=>{
       where: {
         checkIn: { [Op.lt]: checkout },
         checkOut: { [Op.gt]: checkin },
+        ReservationStatus: { [Op.not]: 'cancelled' }, 
       }
     });
     

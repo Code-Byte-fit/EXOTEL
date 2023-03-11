@@ -18,7 +18,7 @@ function ViewRooms() {
     return (
         <>
         <div className={style.heading}>
-<h1>Available Rooms</h1>
+<span>Available Rooms</span>
         </div>
         <div className={style.container}>
 

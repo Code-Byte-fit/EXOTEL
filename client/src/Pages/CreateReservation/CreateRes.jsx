@@ -25,7 +25,6 @@ export default function CreateRes() {
         ArrivalTime:"",
         FirstName:"",
         LastName:"",
-        DOB:"",
         Country:"",
         Email:"",
         PhoneNumber:"",
