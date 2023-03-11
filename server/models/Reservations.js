@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     ReservationStatus: {
-      type: DataTypes.ENUM('active', 'cancelled', 'expired'),
+      type: DataTypes.ENUM('active', 'cancelled', 'expired','Checked-In','Checked-Out'),
       allowNull: false
     },
     totalAmount: {

@@ -4,7 +4,6 @@ import Header from './Pages/General/Header/Header';
 import ReservationTab from './Pages/ReservationTab/ReservationTab';
 import Reservations from "./Pages/Reservations/Reservations"
 import CreateRes from './Pages/CreateReservation/CreateRes';
-
 import ViewRooms from './Pages/ManageRooms/ViewRoomList'
 import Rooms from './Pages/NewRooms/Rooms'
 import Promotion from './Pages/Promotions/Promotion'
@@ -12,7 +11,7 @@ import ViewPromotions from './Pages/ViewPromotions/ViewPromotions';
 import AddOns from './Pages/AddOns/AddOn';
 import RoomTypes from './Pages/RoomTypes/Types'
 import RegisterUser from './Pages/RegisterUser/RegisterUser';
-import axios from 'axios'
+
 
 
 

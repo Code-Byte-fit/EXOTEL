@@ -13,10 +13,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      DOB: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
       Country: {
         type: DataTypes.STRING,
         allowNull: false

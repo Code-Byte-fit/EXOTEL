@@ -47,7 +47,6 @@ const Sources = [
                         <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
                         <button type='button' className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
                       </div>
-                      
                       </div> 
                   </Form>
                 )}
