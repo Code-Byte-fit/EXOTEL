@@ -5,7 +5,24 @@ const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations}=require(
 
 
 router.get('/',async (req,res)=>{
-    const listOfReservations=await Reservations.findAll()
+    // const listOfReservations=await Reservations.findAll()
+    // res.json(listOfReservations)
+    const listOfReservations=await Reservations.findAll({
+      attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
+      include: [
+        {
+          model: Guests,
+          attributes: ['id', 'FirstName']
+        },
+        {
+          model: Rooms,
+          attributes: ['RoomNo'],
+          through: {
+            attributes: []
+          }
+        }
+      ],
+    });
     res.json(listOfReservations)
 })
 

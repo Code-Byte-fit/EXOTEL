@@ -119,3 +119,7 @@
     background:#4D5949;
     color: white;
 }
+
+.filter{
+    z-index: 2;
+}

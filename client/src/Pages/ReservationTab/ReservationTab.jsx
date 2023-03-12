@@ -1,7 +1,7 @@
 import React from 'react'
 import ResCalender from './Components/ResCalender'
 import StatCard from './Components/StatCard'
-import ReservationsTable from './Components/ReservationsTable'
+import ReservationsTable from './Components/ReservationTable/ReservationsTable'
 import style from "./Components/Style.module.css"
 
 export default function ReservationTab() {
