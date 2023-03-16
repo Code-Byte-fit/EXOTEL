@@ -5,6 +5,7 @@ import ReservationTab from './Pages/ReservationTab/ReservationTab';
 import Reservations from "./Pages/Reservations/Reservations"
 import CreateRes from './Pages/CreateReservation/CreateRes';
 import RegisterUser from './Pages/RegisterUser/RegisterUser';
+import Login from '../src/Pages/LoginPage/Login'
 
 import axios from 'axios'
 
@@ -18,8 +19,10 @@ export default function App() {
                 <Route path="/reservationTab" element={<ReservationTab/>}/>
                 <Route path="/reservations" element={<Reservations/>}/>
                 <Route path="/register" element={<RegisterUser/>}/>
+
             </Route>
-            
+            <Route path="/login" element={<Login/>}/>
+
             <Route path="*" element={<>Page Not Found</>}/>
             </>
             

@@ -1,0 +1,194 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    overflow: hidden;
+}
+body{
+    margin: 0;
+}
+.container {
+    display: flex;
+    height: 100vh;
+}
+.right {
+    flex: 1.1;
+    margin: 0;
+    background-color: #EEE6E2;
+}
+
+.cont2 {
+    flex: 1;
+    background: url('../Images/pic.png');
+    background-position:15%;
+    background-size: cover;     
+}
+.exotel{
+    width: 40%;
+    position: relative;
+    margin-top:82vh;
+    left: 4vw;
+}
+
+.cont2 span{
+    position: relative;
+    top: 47vh;
+    right: 7vw;
+    color: #FEFFFE;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    
+}
+.logo{
+    width: 30%;
+    position: relative;
+    display:block;
+    left: 33%;
+    top: 8vh;
+}
+
+.cont3{
+    position: relative;
+    display: inline-block;
+    top:20vh;
+    left: 12vw;
+    width:70%;  
+}
+
+.lbl2{
+    color:#22311E;
+    font-weight: bolder;
+    font-size:2rem;
+    display:block;
+    margin:0 0 4vh 0;
+}
+
+.inputs {
+    line-height: 30px;
+    border: 2px solid transparent;
+    width: 25vw;
+    border-bottom-color:7px  #EADAD1;
+    padding: .2rem ;
+    display: block;
+    margin: 0 0 4vh 1vw;
+    outline: none;
+    background-color: transparent;
+    color: #0d0c22;
+    transition: .3s cubic-bezier(0.645, 0.045, 0.355, 1);
+   }
+   label{
+    margin-top: 1vh
+   }
+   .inputs::placeholder{
+    font-size: large;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #7F7A78;
+    margin-bottom: 2vh;
+   }
+   .inputs:focus, inputs:hover {
+    outline: none;
+    padding: .2rem 1rem;
+    border-radius: 1rem;
+    border-color: #7a9cc6;
+   }
+   
+   .inputs::placeholder {
+    color: #777;
+    
+   }
+   .inputs:focus::placeholder {
+    opacity: 0;
+    transition: opacity .3s;
+   }
+   
+   .check{
+    position:relative;
+    display: inline-block;
+    margin: 0;
+    left: 1vw;
+    height: 1.2em;
+    width: 1.2em;
+    accent-color: #BE6731;
+   }
+
+   /* .remember{
+    position: relative;
+    left:1.4vw;
+    bottom:0.3vh;
+   } */
+   .forgot{
+    position: relative;
+    left: 1.3vw;
+    bottom: 1vh;
+    font-size: smaller;
+   }
+
+   .btn1 {
+    display: block;
+    border-radius: 12px;
+    background-color: #BE6731;
+    border: none;
+    color: #FEFFFE;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    /* padding: 10px; */
+    width: 9vw;
+    transition: all 0.5s;
+    cursor: pointer;
+    display: block;
+    border-radius: 12px;
+    background-color: #BE6731;
+    border: none;
+    color: #FEFFFE;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    /* padding: 10px; */
+    width: 9vw;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 2vh 0 3vh 7vw;
+   }
+   
+
+   .Login_terms__CtZub {
+
+    margin: 0 0 0 0;
+}
+
+   .btn1 span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+   }
+   
+   .btn1 span:after {
+    content: '»';
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: -150px;
+    transition: 0.5s;
+   }
+   
+   .btn1:hover span {
+    padding-right: 5px;
+   }
+   
+   .btn1:hover span:after {
+    opacity: 1;
+   }
+   .terms{
+    margin: 0 0 0 0;
+    }
+
+    /* span{
+        color: red;
+    } */
+   
+   
+   
+   
+   
+   
