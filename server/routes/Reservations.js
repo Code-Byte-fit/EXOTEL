@@ -27,17 +27,19 @@ router.get('/',async (req,res)=>{
 })
 
 router.post("/",async (req,res)=>{
-    try{const{CheckIn,CheckOut,SelectedRooms,Source,ArrivalTime,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus}=req.body
+    try{const{CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus}=req.body
     const guest = await Guests.create({ FirstName, LastName, DOB, Country, Email, PhoneNumber });
     const reservation = await Reservations.create({
         CheckIn,
         CheckOut,
+        CheckInTime,
+        CheckOutTime,
         Source,
         ReservationStatus,
         guestId: guest.id,
     });
     for (const roomNumber of SelectedRooms) {
-        const room = await Rooms.findOne({ where: { RoomNo: roomNumber } });
+        const room = await Rooms.findOne({ where: { RoomNo: roomNumber.RoomNo } });
         if (room) {
           await ReservationRoom.create({
             ReservationId: reservation.id,

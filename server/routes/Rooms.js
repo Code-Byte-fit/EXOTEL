@@ -1,4 +1,5 @@
 const express=require('express')
+const moment = require('moment');
 const router=express.Router()
 const { Sequelize,Op } = require('sequelize');
 const {Rooms,Reservations,ReservationRoom , RoomTypes}=require('../models');
@@ -9,11 +10,13 @@ router.get('/',async (req,res)=>{
   res.json(listOfRooms)
 })
 
-router.get('/availablity/:checkIn/:checkOut',async (req,res)=>{
+
+router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async (req, res) => {
   const checkin = req.params.checkIn;
   const checkout = req.params.checkOut;
+  const checkinTime = req.params.checkInTime;
+  const checkoutTime = req.params.checkOutTime;
   
-
   try {
     const reservations = await Reservations.findAll({
       include: [{
@@ -30,7 +33,12 @@ router.get('/availablity/:checkIn/:checkOut',async (req,res)=>{
     });
     
     // retrieve the rooms associated with  reservations 
-    const bookedRoomNos = reservations.map(reservation => reservation.Rooms.map(room => room.RoomNo)).flat();
+    const bookedRoomNos = reservations.filter(reservation =>{
+      const checkInConflict = reservation.CheckIn < checkout && reservation.CheckOut > checkin;
+      const checkInTimeConflict = reservation.CheckIn === checkin && reservation.CheckInTime >= checkoutTime;
+      const checkOutTimeConflict = reservation.CheckOut === checkout && reservation.CheckOutTime <= checkinTime;
+      return checkInConflict || checkInTimeConflict || checkOutTimeConflict;
+    }).map(reservation => reservation.Rooms.map(room => room.RoomNo)).flat();
     
     // retrieve all rooms that are not associated with any of the reservations
     const availableRooms = await Rooms.findAll({
@@ -46,6 +54,7 @@ router.get('/availablity/:checkIn/:checkOut',async (req,res)=>{
       res.status(500).json({ message: 'Internal server error' });
     }
   });
+
 
 
   router.post("/",async (req,res)=>{
@@ -111,30 +120,30 @@ router.get('/availablity/:checkIn/:checkOut',async (req,res)=>{
 //       ]
 //     });
    
-    // try {
-    //     const availableRooms = await Rooms.findAll({
-    //       where: {
-    //         [Op.or]: [
-    //           {
-    //             checkOut: {
-    //               [Op.lt]: checkIn
-    //             }
-    //           },
-    //           {
-    //             checkIn: {
-    //               [Op.gt]: checkOut
-    //             }
-    //           }
-    //         ]
-    //       },
-    //       order: ['RoomNo']
-    //     });
+//     try {
+//         const availableRooms = await Rooms.findAll({
+//           where: {
+//             [Op.or]: [
+//               {
+//                 checkOut: {
+//                   [Op.lt]: checkIn
+//                 }
+//               },
+//               {
+//                 checkIn: {
+//                   [Op.gt]: checkOut
+//                 }
+//               }
+//             ]
+//           },
+//           order: ['RoomNo']
+//         });
     
-    //     res.json(availableRooms);
-    //   } catch (err) {
-    //     console.error(err);
-    //     res.status(500).send('An error occurred while fetching the available rooms.');
-    //   }
+//         res.json(availableRooms);
+//       } catch (err) {
+//         console.error(err);
+//         res.status(500).send('An error occurred while fetching the available rooms.');
+//       }
 // })
 
 

@@ -36,10 +36,13 @@ export default function Filter(props) {
           label: 'Walk-In'
         },
       ]
+
+      
   return (
     <>
          <div className={style.filter}>
-            <MultiLevelSelector
+          <div className={style.select}>
+                <MultiLevelSelector
               options={[
                 {
                   value: 'ReservationStatus',
@@ -50,12 +53,14 @@ export default function Filter(props) {
                   value: 'Source',
                   label: 'Sources',
                   options: Sources
-                }
+                },
               ]}
-              value={[props.selectedFilters]}
               onChange={values => props.setSelectedFilters(values.map(filter => ({ value: filter.value, options: filter.options })))}
-              hasSelectAll={false}
             />
+          </div>
+             <input type="text" onChange={e => props.setSearchQuery(e.target.value)} />
+             <input type="date" onChange={e => props.setSearchQuery(e.target.value)} />
+             <input type="date" onChange={e => props.setSearchQuery(e.target.value)} />
     </div>
     </>
   )

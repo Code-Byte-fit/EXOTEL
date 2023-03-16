@@ -35,6 +35,7 @@
 .tableHeader{
     display: flex;
     justify-content: space-between;
+    position: relative;
 }
 
 .headerLeft,.headerRight{
@@ -45,17 +46,17 @@
     margin: 0 0.8vw 0 0;
 }
 
+.headerRight{
+    position:absolute;
+    right: 0;
+    gap: 1vw;
+}
+
 .addIcon{
    width: 30px;
    height: 30px;
    margin: 0.2vh 0 0 0;
 }
-
-.select{
-    text-align: center;
-}
-
-
 
 .tableCont{
     margin: 2vh 0 0 0;
@@ -122,4 +123,58 @@
 
 .filter{
     z-index: 2;
+    display: flex;
+    gap: 1vw;
 }
+
+.filter input{
+    font-family: "Roboto Mono",monospace;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    text-align: center;
+}
+
+
+.filter input[type=text]{
+    width: 10vw;
+}
+
+.filter input[type=date]{
+    width: 8vw;
+}
+
+
+.filter input:focus {
+    outline: none;
+    border-color: #0398fc;
+    box-shadow: 0 0 0 1px #0398fc;
+   }
+
+.filterIcon{
+    width: 2vw;
+    height: 4vh;
+    cursor: pointer;
+}
+
+.select{
+    z-index: 2;
+    min-width: 16vw;
+}
+
+.select *{
+    text-align: start;
+    font-size: 0.7rem;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.menu{
+    margin: 0 2vw 0 0;
+}
+
+
+
+
+

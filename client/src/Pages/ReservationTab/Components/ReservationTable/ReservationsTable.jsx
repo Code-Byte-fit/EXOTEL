@@ -1,24 +1,29 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,useMemo} from 'react'
 import { Link} from 'react-router-dom';
 import axios from "axios"
 import addIcon from "../../../../Assets/Images/Add.png"
 import Table from '../../../General/Table/Table';
 import ResEditDelete from './ResEditDelete';
 import Filter from './Filter';
+import filterIcon from "../../../../Assets/Images/filter.png"
 import style from "../Style.module.css"
 
 export default function ReservationsTable() {
   const [reservationDetails,setReservationDetails]=useState([]);
   const [selectedFilters, setSelectedFilters] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isFilterActive, setIsFilterActive] = useState(false);
+
+
+  
    
   useEffect(()=>{
    axios.get("http://localhost:3001/reservations").then((response)=>{
       setReservationDetails(response.data)
     })
   },[])
-  console.log(reservationDetails)
 
- 
+
   const filteredData = reservationDetails.filter((item) => {
     let matchesFilter = true;
     for (const filter of selectedFilters) {
@@ -26,15 +31,13 @@ export default function ReservationsTable() {
         matchesFilter = matchesFilter && filter.options.some(option => item[filter.value] === option.value);
       }
     }
+    if (searchQuery) {
+      matchesFilter = matchesFilter && item.Guest.FirstName.toLowerCase().includes(searchQuery.toLowerCase());
+    }
     return matchesFilter;
   });
-
-  console.log(filteredData)
-
   
-  
- 
- 
+
 
   
 
@@ -88,12 +91,13 @@ return (
                 <div className={style.headerLeft}>
                       <span className={style.heading}>RESERVATIONS</span>
                      <Link to="/createReservation"><img src={addIcon} className={style.addIcon}/></Link> 
-                     <div className={style.filter}>
-                     <Filter selectedFilters={selectedFilters} setSelectedFilters={setSelectedFilters}/>
-                </div>
+                    
                 </div>
                 <div className={style.headerRight}>
-                
+                <span className={`${isFilterActive && style.hidden}`}>
+                    <Filter  setSelectedFilters={setSelectedFilters} setSearchQuery={setSearchQuery} searchQuery={searchQuery}/>
+                </span>
+                <img src={filterIcon} className={style.filterIcon} onClick={()=>setIsFilterActive(!isFilterActive)}/>
                 </div>
            </div>
            <div className={style.tableCont}>

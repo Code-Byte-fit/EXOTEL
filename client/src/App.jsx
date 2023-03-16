@@ -1,5 +1,5 @@
 import {React} from 'react'
-import {createBrowserRouter,createRoutesFromElements,Route,Link,RouterProvider,Outlet} from "react-router-dom";
+import {createBrowserRouter,createRoutesFromElements,Route,RouterProvider,Outlet} from "react-router-dom";
 import Header from './Pages/General/Header/Header';
 import ReservationTab from './Pages/ReservationTab/ReservationTab';
 import Reservations from "./Pages/Reservations/Reservations"
@@ -31,6 +31,7 @@ export default function App() {
                 <Route path="/reservations" element={<Reservations/>}/>
                 <Route path="/register" element={<RegisterUser/>}/>
             </Route>
+            
             
             <Route path="*" element={<>Page Not Found</>}/>
             </>
