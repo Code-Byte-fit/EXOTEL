@@ -25,7 +25,8 @@ export default function App() {
                 <Route path="/createReservation" element={<CreateRes/>}/>
                 <Route path="/reservationTab" element={<ReservationTab/>}/>
 
-              
+                <Route path="/viewRooms" element={<ViewRooms/>}/>
+                <Route path="/viewPromotions" element={<ViewPromotions/>}/>
                 <Route path="/rooms" element={<Rooms/>}/>
                 <Route path="/admin" element={<AdminDash/>}/>
                 <Route path="/promotion" element={<Promotion/>}/>
@@ -40,7 +41,6 @@ export default function App() {
 
                 <Route path="/reservations" element={<Reservations/>}/>
                 <Route path="/register" element={<RegisterUser/>}/>
-
             </Route>
             
             <Route path="*" element={<>Page Not Found</>}/>
@@ -55,27 +55,12 @@ export default function App() {
         </div>
         
     )
-
-    
-    // const [listOfUsers,setListOfUsers]=useState([])
-    // useEffect(()=>{
-    //     axios.get("http://localhost:3001/users").then((res)=>{
-    //         setListOfUsers(res.data);
-    //     })
-    // },[])
-        
-    // return (
-    //     <>
-    //         {listOfUsers.map((value,key)=>{return <div>{value.userName}</div>})}
-    //     </>
-    // )
 }
 
 const Root=()=>{
     return(
         <>
         <Header/>
-          
         <div><Outlet/></div>
         </>
     )

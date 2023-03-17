@@ -13,7 +13,6 @@ export default function ResPageTwo(props) {
     ArrivalTime: yup.string().required('required'),
     FirstName: yup.string().required('required'),
     LastName: yup.string().required('required'),
-    DOB: yup.date().required('required'),
     Country: yup.string().required('required'),
     Email: yup.string().email('Invalid email').required('required'),
     PhoneNumber: yup.string()
@@ -32,12 +31,12 @@ export default function ResPageTwo(props) {
 ]
   return (
     <>
-        <Formik initialValues={props.data} onSubmit={handleSubmit} >
+        <Formik initialValues={props.data} onSubmit={handleSubmit} validationSchema={schema}>
                 {({values})=>(
                   <Form>
                   <div className={style.formContainer}>
                   <div>
-                    <div className={style.heading}>RESERVSTION DETAILS</div>
+                    <div className={style.heading}>RESERVATION DETAILS</div>
                     <div className={style.inputContainer}>
                     <span className={style.innerinputContainer}>
                       <Field name="Source" component={Input} label="Source" type="select" options={Sources}/>
@@ -59,10 +58,6 @@ export default function ResPageTwo(props) {
                     <span className={style.innerinputContainer}>
                         <Field name="LastName" component={Input} label="Last-Name" type="text"/>
                         <ErrorMessage name="LastName" component="small" className={style.errorMsg} />
-                    </span>
-                    <span className={style.innerinputContainer}>
-                        <Field name="DOB" component={Input} label="Date-of-Birth" type="date"/>
-                        <ErrorMessage name="DOB" component="small" className={style.errorMsg} />
                     </span>
                     <span className={style.innerinputContainer}>
                         <Field name="Country" component={Input} label="Country" type="text"/>

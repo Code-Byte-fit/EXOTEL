@@ -3,13 +3,15 @@ import { Link} from 'react-router-dom';
 import axios from "axios"
 import addIcon from "../../../Assets/Images/Add.png"
 import EditDelete from '../../General/Table/EditDelete';
+import EditRes from './EditRes';
 import Table from '../../General/Table/Table';
 import style from "./Style.module.css"
 
 export default function ReservationsTable() {
   const [reservationDetails,setReservationDetails]=useState([]);
   const [selectedDate, setSelectedDate] = useState('today');
-  const [isDeleted, setIsDeleted] =useState(false);
+  const [isDone, setIsDone] = useState(false);
+  const [isReBookValid, setIsReBookValid] =useState(true);
 
   
 
@@ -29,23 +31,56 @@ export default function ReservationsTable() {
   };
 
   const handleEdit=(row)=>{
-    console.log(row)
+    axios.put("http://localhost:3001/reservations").then(()=>{
+      setIsDone(true)
+      
+    })
+  }
+
+  const handleCancel = (row) => {
+    axios.put(`http://localhost:3001/reservations/Cancel/${row.id}`).then(() => {
+      setIsDone(true)
+    });
+  };
+
+
+  const handleRebook = (row) => {
+    axios.put(`http://localhost:3001/reservations/Rebook/${row.id}`)
+      .then(() => {
+        setIsDone(true);
+      })
+      .catch((error) => {
+        console.log("error checking in")
+      });
+  };
+
+  const handleRebookError=()=>{
+    setIsReBookValid(true);
+  }
+
+
+  const handleCheckIn = (row) => {
+    axios.put(`http://localhost:3001/reservations/CheckIn/${row.id}`)
+      .then(() => {
+        setIsDone(true);
+        setIsReBookValid(true);
+      })
+      .catch((error) => {
+        setIsReBookValid(false);
+      });
+  };
+  
+
+
+  const handleDone=()=>{
+    setIsDone(false)
+    axios.get("http://localhost:3001/reservations/reservationTab").then((response)=>{
+      setReservationDetails(response.data)
+    })
   }
  
-  const handleDelete = (row) => {
-    axios.delete(`http://localhost:3001/reservations/${row.id}`)
-      .then(() => {
-        setReservationDetails(prevReservationDetails => {
-          const updatedTodaysReservations = prevReservationDetails.todaysReservations.filter(reservation => reservation.id !== row.id);
-          const updatedTomorrowsReservations = prevReservationDetails.tomorrowsReservations.filter(reservation => reservation.id !== row.id);
-          return {
-            todaysReservations: updatedTodaysReservations,
-            tomorrowsReservations: updatedTomorrowsReservations
-          };
-        });
-      })
-      ;
-  };
+ 
+
   
 
   const columns = [
@@ -85,13 +120,28 @@ export default function ReservationsTable() {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete onEdit={() => handleEdit(row)} onDelete={()=>handleDelete(row)}/>
+      cell: (row) => <EditDelete 
+                      cancelOption={row.reservationStatus==="active"}
+                      reBookOption={row.reservationStatus==="cancelled"} 
+                      checkinOption={row.reservationStatus==="active"}
+                      onEdit={() => handleEdit(row)} 
+                      onCancel={()=>handleCancel(row)}  
+                      onRebook={()=>handleRebook(row)}
+                      onCheckIn={()=>handleCheckIn(row)}
+                      isDone={isDone}
+                      isReBookValid={isReBookValid}
+                      handleDone={handleDone} 
+                      handleReBookError={handleRebookError}
+                      editComponent={<EditRes values={row}/>} 
+                      cancelHeading="Confirm Cancellation"
+                      cancelBody="Are you sure that you want to cancel this reservation?"
+                      />
     },
 ];
 
  
 
-  return (
+return (
     <>
     <div className={style.resTableContainer}>
       <div className={style.tableHeader}>
