@@ -1,12 +1,12 @@
 .cardContainer {
     display: flex;
   
-    width: 50%;
-    height: 28%;
- 
-    margin-left: -73vw;
-    margin-top: 27vh;
+    width: 59%;
+    height: 20%;
 
+ /* padding: -8vh -8vh -8vh -8vw; */
+    margin-left: 30vw;
+   /*  margin-top: 2vh;  */
   }
   
   .card {

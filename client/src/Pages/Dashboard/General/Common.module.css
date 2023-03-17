@@ -7,6 +7,7 @@
     background-color:#EEE6E2;
     height:100vh;
     width: 100vw;
+    
   }
   
   .LeftPanel {
@@ -14,6 +15,7 @@
     flex-direction: column;
     width: 30%;
     padding: 0 10px;
+   
   }
   
   .RightPanel {
@@ -21,8 +23,12 @@
     flex-direction: column;
     width: 70%;
     padding: 0 10px;
+   
   }
   
   .otherCont{
-    
+
+   width: 72vw;
+   height: 62vh;
+   margin-left: 3vw;
   }
