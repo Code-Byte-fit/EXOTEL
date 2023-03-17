@@ -1,52 +1,74 @@
-import React from "react";
 import Input from "../../General/Inputs/Inputs";
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
-import style from "./Rooms.module.css";
+import style from "./Promotions.module.css";
+import React, { useState } from 'react';
 
 
-function FormOne({ handleAddFormChange }) {
+function FormOne(props) {
     
+    const today = new Date();
     const initialValues = {
         PromoCode: '',
         PromoType: '',
         Value: '',
         MaxUses: '',
         Status: '',
-        Startdate:'',
-        Enddate:'',
+        Startdate: today.toISOString().slice(0, 10), // set to today's date in yyyy-mm-dd format
+        Enddate: today.toISOString().slice(0, 10), // set to today's date in yyyy-mm-dd format
+        AddInfo:''
     };
+    
+
+    const [Promotions, setPromotions] = useState([]);
 
     const validationSchema = Yup.object().shape({
         PromoCode: Yup.string().required('Required'),
         PromoType: Yup.string().required('Required'),
         Value: Yup.number().required('Required'),
-        MaxUses: Yup.number().required('Required'),
+        MaxUses: Yup.number()
+  .required('Required')
+  .test('non-negative', 'MaxUses must be non-negative', function (value) {
+    return value >= 0;
+  }),
+
         Status: Yup.string().required('Required'),
-        Startdate: Yup.date().required('Required'),
-        Enddate: Yup.date().required('Required'),
-        addInfo: Yup.string(),
-    });
+        Startdate: Yup.date()
+          .required('Required')
+          .test(
+            'end-date-after-start-date',
+            'End date must be after start date',
+            function (value) {
+              const { Enddate } = this.parent;
+              return !Enddate || value <= Enddate;
+            }
+          ),
+        Enddate: Yup.date()
+          .required('Required')
+          .test(
+            'end-date-after-start-date',
+            'End date must be after start date',
+            function (value) {
+              const { Startdate } = this.parent;
+              return !Startdate || value >= Startdate;
+            }
+          ),
+          AddInfo: Yup.string(),
+      });
+      
 
     const Status = [{ key: "--None Selected --", value: "" },
     { key: "Active", value: "Active" },
     { key: "Disabled", value: "Disabled" },
     { key: "Expired", value: "Expired" }]
 
-    const makeReq=async(formData)=>{
-        await axios.post("http://localhost:3001/promotions",formData);
-    }
-
-    const onSubmit=(data) => {
-        makeReq(data)
-
-        };
+  
     return (
         <span className={style.formContainer}>
             <label className={style.labelOne}>Add Promotions</label>
 
-            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+            <Formik initialValues={initialValues} onSubmit={props.makeReq} validationSchema={validationSchema}>
               <Form>
               <div className={style.div1}>
               <div>
@@ -56,7 +78,7 @@ function FormOne({ handleAddFormChange }) {
                             component={Input}
                             label="Promo Code"
                             type="text"
-                            onBlur={handleAddFormChange}
+                           
                             width="13vw" />
                      <ErrorMessage name="PromoCode" component="div" className={style.error}/>
                     </span>
@@ -65,7 +87,7 @@ function FormOne({ handleAddFormChange }) {
                             component={Input}
                             label="Promo Type"
                             type="text"
-                            onBlur={handleAddFormChange}
+                          
                             width="13vw" />
                       <ErrorMessage name="PromoType" component="div" className={style.error}/>
                     </span>
@@ -74,7 +96,7 @@ function FormOne({ handleAddFormChange }) {
                             component={Input}
                             label="Value"
                             type="text"
-                            onBlur={handleAddFormChange}
+                          
                             width="13vw" />
                      <ErrorMessage name="Value" component="div" className={style.error}/>
                     </span>
@@ -83,7 +105,7 @@ function FormOne({ handleAddFormChange }) {
                             component={Input}
                             label="Max Uses"
                             type="number"
-                            onBlur={handleAddFormChange}
+                           
                             width="13vw" 
                            
                             />
@@ -94,7 +116,7 @@ function FormOne({ handleAddFormChange }) {
                             component={Input}
                             label="Status"
                             type="select"
-                            onBlur={handleAddFormChange}
+                          
                             options={Status}
                             width="13vw" />
                        <ErrorMessage name="Status" component="div" className={style.error}/>
@@ -107,7 +129,7 @@ function FormOne({ handleAddFormChange }) {
                             component={Input}
                             label="Start Date"
                             type="Date"
-                            onBlur={handleAddFormChange}
+                          
                             width="13vw" />
                        <ErrorMessage name="Startdate" component="div" className={style.error}/>
                     </span>
@@ -116,13 +138,13 @@ function FormOne({ handleAddFormChange }) {
                             component={Input}
                             label="End Date"
                             type="Date"
-                            onBlur={handleAddFormChange}
+                           
                             width="13vw" />
                        <ErrorMessage name="Enddate" component="div" className={style.error}/>
                     </span>
                     </div>
                     <div className={style.textArea}> 
-                        <Field name="addInfo"
+                        <Field name="AddInfo"
                             component={Input}
                             label="Additional Information"
                             type="textarea"

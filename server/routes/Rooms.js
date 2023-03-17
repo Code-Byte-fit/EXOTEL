@@ -9,6 +9,7 @@ router.get('/',async (req,res)=>{
   res.json(listOfRooms)
 })
 
+
 router.get('/availablity/:checkIn/:checkOut',async (req,res)=>{
   const checkin = req.params.checkIn;
   const checkout = req.params.checkOut;
@@ -48,16 +49,30 @@ router.get('/availablity/:checkIn/:checkOut',async (req,res)=>{
   });
 
 
-  router.post("/",async (req,res)=>{
-    try{const{RoomNo,floor,Status, TypeName}=req.body
-    const rooms = await Rooms.create({ RoomNo, floor, Status, TypeName });
-   
-    res.status(201).json({ rooms });}
-    catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Failed to create room' });
+  router.post("/", async (req, res) => {
+    try {
+      const { RoomNo, floor, View, Status, TypeName, AdditionalCharges ,  AddInfo} = req.body;
+  
+      // Find the room type with the given TypeName to get the standard charge
+      const roomType = await RoomTypes.findOne({ where: { TypeName } });
+  
+      if (!roomType) {
+        return res.status(404).json({ error: 'Room type not found' });
       }
-})
+  
+      // Calculate the base charge by adding the additional charge and standard charge
+      const BaseCharge = roomType.StandardCharge+ parseFloat(AdditionalCharges);
+  
+      // Create a new room with the calculated base charge
+      const room = await Rooms.create({ RoomNo, floor, View, Status, TypeName, AdditionalCharges,BaseCharge ,AddInfo });
+  
+      res.status(201).json({ room });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to create room' });
+    }
+  });
+  
 
 
 
@@ -66,82 +81,5 @@ router.get('/availablity/:checkIn/:checkOut',async (req,res)=>{
 
 
 
-
-
-
-
-
-
-
-
-
-
-// router.get('/availablity/:checkIn/:checkOut',async (req,res)=>{
-//     const checkIn = req.params.checkIn;
-//     const checkOut = req.params.checkOut;
-
-//     const availableRooms = await Rooms.findAll({
-//       where: {
-//         Status: 'available',
-//         RoomNo: {
-//           [Sequelize.Op.notIn]: reservedRooms
-//         }
-//       },
-//       attributes: ['RoomNo', 'BaseCharge'],
-//       include: [
-//         {
-//           model: Reservations,
-//           required: false,
-//           where: {
-//             [Sequelize.Op.or]: [
-//               {
-//                 checkIn: {
-//                   [Sequelize.Op.gte]: checkOut
-//                 }
-//               },
-//               {
-//                 checkOut: {
-//                   [Sequelize.Op.lte]: checkIn
-//                 }
-//               }
-//             ]
-//           },
-//           attributes: []
-//         }
-//       ]
-//     });
-   
-    // try {
-    //     const availableRooms = await Rooms.findAll({
-    //       where: {
-    //         [Op.or]: [
-    //           {
-    //             checkOut: {
-    //               [Op.lt]: checkIn
-    //             }
-    //           },
-    //           {
-    //             checkIn: {
-    //               [Op.gt]: checkOut
-    //             }
-    //           }
-    //         ]
-    //       },
-    //       order: ['RoomNo']
-    //     });
-    
-    //     res.json(availableRooms);
-    //   } catch (err) {
-    //     console.error(err);
-    //     res.status(500).send('An error occurred while fetching the available rooms.');
-    //   }
-// })
-
-
-// router.post("/",async (req,res)=>{
-//     const room=req.body
-//     await Rooms.create(room)
-//     res.json(room)
-// })
 
 module.exports=router

@@ -6,31 +6,22 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
 import ConfirmationPopup from '../../NewRooms/components/ConfirmationPopup';
 
-function FormOne({handleAddFormChange}) {
+function FormOne(props) {
     const [showConfirmation, setShowConfirmation] = useState(false);
  
     const initialValues = {
-        AddOnNo: '',
         AddOn: '',
-        Amt: '',
+        Unit: '',
+        Charge: '',
         AddInfo: ''
     };
     const validationSchema = Yup.object().shape({
-        AddOnNo: Yup.string().required("*Room Number is Required")
-        .matches(/^[A-Za-z0-9]+$/, 'Must only contain letters and numbers')
-        .max(10, 'Room Number must be at most 10 characters long'),
-        AddOn: Yup.string().required("*Room Type is Required"),
-        Amt: Yup.number().required("*Base Charge is Required"),
+        AddOn: Yup.string().required("Required"),
+        Charge: Yup.number().required("Required"),
+        Unit: Yup.string().required("Required"),
+        AddInfo: Yup.string(),
       });
 
-    const makeReq=async(formData)=>{
-        await axios.post("http://localhost:3001/addons",formData);
-    }
-
-    const onSubmit=(data) => {
-        makeReq(data)
-
-       };
 
 
     return (
@@ -38,47 +29,46 @@ function FormOne({handleAddFormChange}) {
         <span className={style.formContainer}>
 
 
-            <label className={style.labelOne}>Add AddOn</label>
+            <label className={style.labelOne}>Add Add-On</label>
 
-            <Formik initialValues={initialValues} onSubmit={onSubmit}  validationSchema={validationSchema} >
+            <Formik initialValues={initialValues} onSubmit={props.makeReq}  validationSchema={validationSchema} >
                 <Form>
 
                     <div className={style.div1}>
                     
                     <span>  
-                        <Field name="AddOnNo"
+                        <Field name="AddOn"
                             component={Input}
-                            label="AddOn Number"
+                            label="Add-On"
                             type="text"
-                            onBlur={handleAddFormChange}
+                       
                             width="13vw" />
-                      <ErrorMessage name="AddOnNo" component="div"  className={style.error}/>
+                      <ErrorMessage name="AddOn" component="div"  className={style.error}/>
                     </span>
 
                     <span>  
-                        <Field name="AddOn"
+                        <Field name="Unit"
                             component={Input}
-                            label="AddOn"
+                            label="Unit"
                             type="text"
-                            onBlur={handleAddFormChange}
+                      
                             width="13vw" />
-                              <ErrorMessage name="AddOn" component="div"  className={style.error}/>
+                              <ErrorMessage name="Unit" component="div"  className={style.error}/>
 </span>
  <span>  
-                        <Field name="Amt"
+                        <Field name="Charge"
                             component={Input}
-                            label="Amount"
+                            label="Charge"
                             type="text"
-                           
-                        onBlur={handleAddFormChange}
+                       
                             width="13vw" />
-                              <ErrorMessage name="Amt" component="div"  className={style.error}/>
+                              <ErrorMessage name="Charge" component="div"  className={style.error}/>
 </span>
  
                     </div>
 
                     <div className={style.div2}>
-                        <Field name="addInfo"
+                        <Field name="AddInfo"
                             component={Input}
                             label="Additional Information"
                             type="textarea"

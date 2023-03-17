@@ -14,10 +14,14 @@ module.exports=(sequelize,Datatypes)=>{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        BaseCharge:{
+        StandardCharge:{
             type:Datatypes.FLOAT,
             allowNull:false,
-        }
+        },
+        AddInfo:{
+            type:Datatypes.STRING,
+            allowNull:true,
+        },
     },
         {
             timestamps: false
