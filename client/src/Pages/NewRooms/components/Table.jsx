@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import style from "./Rooms.module.css";
 import axios from "axios";
-import sort from "../../../Assets/Images/sort.png";
-import editIcon from "../../../Assets/Images/Small FAB(1).png";
-import deleteIcon from "../../../Assets/Images/Small FAB.png";
 import { useEffect } from "react";
+import RoomTable from "../../General/Table/Table";
+import EditDelete from "../../General/Table/EditDelete";
 import Popup from "./EditPopup";
 
-function Table({ room }) {
+function Table(props) {
   const [listOfRooms, setlistOfRooms] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState(null);
@@ -15,90 +14,80 @@ function Table({ room }) {
   useEffect(() => {
     axios.get("http://localhost:3001/rooms").then((response) => {
       setlistOfRooms(response.data);
+      console.log(listOfRooms)
+      
     });
-  }, []);
+  },[]);
 
-  function handleEditClick(room) {
-    setSelectedRoom(room);
-    setShowPopup(true);
-  }
+ 
+  const columns = [
+    {
+        name: 'ROOM-NO',
+        selector: row => row.RoomNo,
+        sortable: true,
+    },
+    {
+        name: 'ROOM-TYPE',
+        selector: row => row.TypeName,
+        sortable: true,
+    },
+  
+    {
+      name: 'VIEW',
+      selector: row => row.View,
+      sortable: true,
+    },
+    {
+      name: 'FLOOR',
+      selector: row => row.floor,
+      sortable: true,
+    },
+    {
+      name: 'STATUS',
+      selector: row => row.Status,
+      sortable: true,
+      cell: row => (
+          <div 
+              style={{ 
+                  backgroundColor: row.Status === "Available" ? "blue" : "pink",
+                  borderRadius: "8px",
+                  padding: "5px",
+              }}
+          >
+              {row.Status}
+          </div>
+      ),
+  },
+    
+    {
+      name: 'BASE CHARGE',
+      selector: row => row.BaseCharge,
+      sortable: true,
+    },
+    {
+      name: 'ADD-INFO',
+      selector: row => row.AddInfo,
+      sortable: true,
+      cell: row => (
+        <div className={style.tooltip}>
+          {row.AddInfo}
+          <span className={style.tooltipText}>{row.AddInfo}</span>
+        </div>
+      ),
+    },
+    {
+      selector: row => row,
+      cell: (row) => <EditDelete/>
+    },
+];
 
-  function handleDeleteClick() {
-    // Handle delete logic here
-  }
 
   return (
-    <span className={style.tableContainer}>
-      <label className={style.labelTwo}>Edit/Delete Room</label>
+    <div className={style.tableContainer}>
+    <label className={style.labelTwo}>Edit/Delete Room</label>
+      <RoomTable columns={columns} data={props.listOfRooms} height="30vh" edit pagination/>
 
-      <div className={style.tbl}>
-        <span className={style.div3}>
-          <form>
-            <table className={style.tableOne}>
-              <thead>
-                <tr>
-                  <th>
-                    Room Number <img src={sort} className={style.sort1} />
-                  </th>
-                  <th>
-                    Room Type<img src={sort} className={style.sort1} />
-                  </th>
-                  <th>
-                    Base Charge<img src={sort} className={style.sort1} />
-                  </th>
-                  <th>
-                    Floor<img src={sort} className={style.sort1} />
-                  </th>
-                  <th>
-                    Sq.Feet<img src={sort} className={style.sort1} />
-                  </th>
-                  <th>
-                    Actions<img src={sort} className={style.sort1} />
-                  </th>
-                </tr>
-              </thead>
-
-              {listOfRooms.map((value, key) => {
-                return (
-                  <tbody key={key}>
-                    <tr>
-                      <td>{value.RoomNo}</td>
-                      <td>{value.TypeName}</td>
-                      <td>{value.BaseCharge}</td>
-                      <td>{value.floor}</td>
-                      <td>{value.sqFeet}</td>
-                      <td>
-                        <button
-                          type="button"
-                          className={style.editBtn}
-                          onClick={() => handleEditClick(value)}
-                        >
-                          <img src={editIcon} alt="Edit" />
-                        </button>
-                        <button
-                          type="button"
-                          className={style.deleteBtn}
-                          onClick={handleDeleteClick}
-                        >
-                          <img src={deleteIcon} alt="Delete" />
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                );
-              })}
-            </table>
-          </form>
-        </span>
-      </div>
-      {showPopup && (
-        
-        <Popup 
-          room={selectedRoom}
-          closePopup={() => setShowPopup(false)}
-        />
-      )}
-    </span>
+    </div>
   );
 }
 

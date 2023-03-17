@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import style from "./Rooms.module.css"
-import editIcon from "../../../Assets/Images/Small FAB(1).png"
-import deleteIcon from "../../../Assets/Images/Small FAB.png"
-import sort from "../../../Assets/Images/sort.png"
+import style from "./Promotions.module.css"
 import { useEffect } from "react";
 import axios from 'axios';
+import PromotionTable from '../../General/Table/Table'
+import EditDelete from "../../General/Table/EditDelete";
+import styled from 'styled-components';
 
-function Table({ promotions }) {
+function Table(props) {
 
     
     const [listOfPromotions, setlistOfPromotions] = useState([]);
@@ -17,56 +17,87 @@ function Table({ promotions }) {
         })
     }, [])
 
+    const StatusCell = styled.div`
+    padding: 5px;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    ${({ status }) => {
+      switch (status) {
+        case 'Active':
+          return 'background-color: pink;';
+        case 'Disabled':
+          return 'background-color: green;';
+        case 'Expired':
+          return 'background-color: blue;';
+        default:
+          return '';
+      }
+    }}
+  `;
 
+    const columns = [
+        {
+            name: 'Promo Code',
+            selector: row => row.PromoCode,
+            sortable: true,
+        },
+        {
+            name: 'Promo Type',
+            selector: row => row.PromoType,
+            sortable: true,
+        },
+    
+        {
+          name: 'Value',
+          selector: row => row.Value,
+          sortable: true,
+        },
+        {
+          name: 'Max Uses',
+          selector: row => row.MaxUses,
+          sortable: true,
+        },
+        {
+          name: 'Status',
+          selector: row => row.Status,
+          sortable: true,
+          cell: row => <StatusCell status={row.Status}>{row.Status}</StatusCell>,
+        },
+          {
+            name: 'Start Date',
+            selector: row => row.Startdate,
+            sortable: true,
+          },
+          {
+            name: 'End Date',
+            selector: row => row.Enddate,
+            sortable: true,
+          },
+          {
+            name: 'Add Info',
+            selector: row => row.AddInfo,
+            sortable: true,
+            cell: row => (
+              <div className={style.tooltip}>
+                {row.AddInfo}
+                <span className={style.tooltipText}>{row.AddInfo}</span>
+              </div>
+            ),
+          },
+        {
+          selector: row => row,
+          cell: (row) => <EditDelete/>
+        },
+    ];
+    
     return (
 
         <span className={style.tableContainer}>
             <label className={style.labelTwo}>Edit/Delete Promotions</label>
-          
-            <div className={style.tbl}>
-                <span className={style.div3}>
-                    <form >
-                        <table className={style.tableOne}>
-                            <thead>
-                                <tr>
-                 
-                                    <th>Promo Code <img src={sort} className={style.sort1} /></th>
-                                    <th>Promo Type<img src={sort} className={style.sort1} /></th>
-                                    <th>Value<img src={sort} className={style.sort1} /></th>
-                                    <th>Max Uses<img src={sort} className={style.sort1} /></th>
-                                    <th>Status<img src={sort} className={style.sort1} /></th>
-                                    <th>Start Date<img src={sort} className={style.sort1} /></th>
-                                    <th>End Date<img src={sort} className={style.sort1} /></th>
-                                    <th>Actions<img src={sort} className={style.sort1} /></th>
-
-
-                                </tr>
-                            </thead>
-                        
-                        {listOfPromotions.map((value, key) => {
-                            return (
-                     
-                                    <tbody>
-                                        <td>{value.PromoCode}</td>
-                                        <td>{value.PromoType}</td>
-                                        <td>{value.Value}</td>
-                                        <td>{value.MaxUses}</td>
-                                        <td>{value.Status}</td>
-                                        <td>{value.Startdate}</td>
-                                        <td>{value.Enddate}</td>
-                                        <td>
-                    <button type="button" className={style.editBtn} ><img src={editIcon}/></button>
-                    <button type="button" className={style.deleteBtn}><img src={deleteIcon}/></button>
-                </td>
-                                    </tbody>
-                                   
-
-                            );
-                        })}
-                        </table>
-                    </form>
-                </span>
-            </div>
+            <PromotionTable columns={columns} data={props.listOfPromotions} height="30vh" edit pagination/>
+         
         </span>
 
     )

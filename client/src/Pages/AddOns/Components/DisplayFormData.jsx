@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect } from "react";
 import Table from "./Table";
 import FormOne from "./Form";
-
+import axios from "axios";
 import data from "./Mock-data.json"
-import { nanoid } from 'nanoid';
+
 
 
 function DisplayFormData() {
@@ -11,52 +11,41 @@ function DisplayFormData() {
   
     const [addOns, setAddOns] = useState(data);
     const [addFormData, setAddFormData] = useState({
-        AddOnNo: '',
         AddOn: '',
-        Amt: '',
+        Unit: '',
+        Charge: '',
         AddInfo: '',
     })
 
 
+    const [listOfAddons, setlistOAddons] = useState([]);
 
 
-    const handleAddFormChange = (event) => {
-        event.preventDefault();
-
-        const fieldName = event.target.getAttribute('name');
-        const fieldValue = event.target.value;
-
-        const newFormData = { ...addFormData };
-        newFormData[fieldName] = fieldValue;
-
-        setAddFormData(newFormData);
-    }
-
-    const handleAddFormSubmit = (event) => {
-        event.preventDefault();
-
-        const newAddOn = {
-            id: nanoid(),
-            AddOnNo: addFormData.AddOnNo,
-            AddOn: addFormData.AddOn,
-            Amt: addFormData.Amt,
-            AddInfo: addFormData.AddInfo
-        };
-
-
-        const newAddOns = [...addOns, newAddOn];
-        setAddOns(newAddOns);
-    };
+    useEffect(() => {
+        axios.get("http://localhost:3001/addon").then((response) => {
+            setlistOAddons(response.data);
+          console.log(listOfAddons)
+          
+        });
+      },[]);
+    
+        const makeReq = async (formData) => {
+            await axios.post("http://localhost:3001/addon", formData).then(()=>{
+                axios.get("http://localhost:3001/addon").then((response) => {
+                    setlistOAddons(response.data);
+            });
+            })
+        }
 
 
 
     return (
         <React.Fragment>
 
-            <FormOne handleAddFormChange={handleAddFormChange}
+            <FormOne  makeReq={makeReq}
                 addFormData={addFormData} />
           
-            <Table rooms={addOns} />
+        <Table rooms={addOns} listOfAddons={listOfAddons} />
         </React.Fragment>
 
 
