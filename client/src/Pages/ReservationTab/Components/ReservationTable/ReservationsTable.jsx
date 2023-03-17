@@ -5,13 +5,15 @@ import addIcon from "../../../../Assets/Images/Add.png"
 import Table from '../../../General/Table/Table';
 import ResEditDelete from './ResEditDelete';
 import Filter from './Filter';
-import filterIcon from "../../../../Assets/Images/filter.png"
+import filterIcon from "../../../../Assets/Images/mixer.png"
 import style from "../Style.module.css"
 
 export default function ReservationsTable() {
   const [reservationDetails,setReservationDetails]=useState([]);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [checkInQuery, setCheckInQuery] = useState('');
+  const [checkOutQuery, setCheckOutQuery] = useState('');
   const [isFilterActive, setIsFilterActive] = useState(false);
 
 
@@ -33,6 +35,12 @@ export default function ReservationsTable() {
     }
     if (searchQuery) {
       matchesFilter = matchesFilter && item.Guest.FirstName.toLowerCase().includes(searchQuery.toLowerCase());
+    }
+    if (checkInQuery) {
+      matchesFilter = matchesFilter && item.CheckIn.includes(checkInQuery);
+    }
+    if (checkOutQuery) {
+      matchesFilter = matchesFilter && item.CheckOut.includes(checkOutQuery);
     }
     return matchesFilter;
   });
@@ -93,9 +101,9 @@ return (
                      <Link to="/createReservation"><img src={addIcon} className={style.addIcon}/></Link> 
                     
                 </div>
-                <div className={style.headerRight}>
-                <span className={`${isFilterActive && style.hidden}`}>
-                    <Filter  setSelectedFilters={setSelectedFilters} setSearchQuery={setSearchQuery} searchQuery={searchQuery}/>
+              <div className={style.headerRight}>
+                <span className={`${!isFilterActive && style.hidden}`}>
+                    <Filter  setSelectedFilters={setSelectedFilters} setSearchQuery={setSearchQuery}  setCheckInQuery={setCheckInQuery} setCheckOutQuery={setCheckOutQuery}/>
                 </span>
                 <img src={filterIcon} className={style.filterIcon} onClick={()=>setIsFilterActive(!isFilterActive)}/>
                 </div>

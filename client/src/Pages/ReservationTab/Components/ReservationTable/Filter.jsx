@@ -58,9 +58,20 @@ export default function Filter(props) {
               onChange={values => props.setSelectedFilters(values.map(filter => ({ value: filter.value, options: filter.options })))}
             />
           </div>
-             <input type="text" onChange={e => props.setSearchQuery(e.target.value)} />
-             <input type="date" onChange={e => props.setSearchQuery(e.target.value)} />
-             <input type="date" onChange={e => props.setSearchQuery(e.target.value)} />
+                  <div className={style.inputs}>
+                      <label for="name">Name</label>
+                       <input id ="name" type="text" onChange={e => props.setSearchQuery(e.target.value)} />
+                  </div>
+                 
+                  <div className={style.inputs}>
+                      <label for="checkIn">Check-In</label>
+                      <input type="date" id="checkIn" defaultValue={new Date().toISOString().substr(0, 10)} onChange={e => props.setCheckInQuery(e.target.value)} />
+                  </div>
+                  <div className={style.inputs}>
+                    <label for="checkOut">Check-Out</label>
+                    <input type="date" id="checkOut" onChange={e => props.setCheckOutQuery(e.target.value)} /> 
+                  </div>
+                   
     </div>
     </>
   )

@@ -1,6 +1,7 @@
 const express=require('express')
 const router=express.Router()
 const {Sequelize,Op} = require('sequelize');
+const moment = require('moment');
 const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations}=require('../models')
 
 
@@ -240,6 +241,45 @@ router.put("/CheckIn/:resId",async (req,res)=>{
     });
   }
 });
+
+router.get('/todayStats', async (req, res) => {
+  try {
+    const today = moment().startOf('day');
+
+    const checkins = await Reservations.count({
+      where: {
+        CheckIn: {[Op.eq]: today.toDate()},
+        ReservationStatus: 'active',
+      },
+    });
+
+    const checkouts = await Reservations.count({
+      where: {
+        CheckOut: {[Op.eq]: today.toDate()},
+        ReservationStatus: 'Checked-In',
+      },
+    });
+
+    const stayovers = await Reservations.count({
+      where: {
+        CheckIn: {
+          [Op.lt]: today.toDate(),
+        },
+        CheckOut: {
+          [Op.gt]: today.toDate(),
+        },
+        ReservationStatus: 'Checked-In',
+      },
+    })
+
+    res.status(200).json({checkins,checkouts,stayovers,});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+module.exports = router;
 
 
 

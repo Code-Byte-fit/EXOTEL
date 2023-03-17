@@ -11,7 +11,7 @@
 }
 
 .cardContainer{
-    margin: 2vh 0 0 0;
+    margin: 2vh 0 0 5vw;
     justify-content: center;
     gap: 1.5vw;
     display: flex;
@@ -19,17 +19,20 @@
 
 .card{
     display: inline-grid;
-    padding:2vh 5vw;
+    padding:2vh;
+    width: 15vw;
     border-radius: 12px;
     background: #F0EBE2;
+    text-align: center;
 }
 
 .value{
     font-size: 3rem;
+    text-align: center;
 }
 
 .resTableContainer{
-    margin: 10vh 0 0 0;
+    margin: 8vh 0 0 0;
 }
 
 .tableHeader{
@@ -48,7 +51,7 @@
 
 .headerRight{
     position:absolute;
-    right: 0;
+    right: -3vw;
     gap: 1vw;
 }
 
@@ -154,6 +157,8 @@
     width: 2vw;
     height: 4vh;
     cursor: pointer;
+    position: relative;
+    top: 1vh;
 }
 
 .select{
@@ -173,6 +178,25 @@
 .menu{
     margin: 0 2vw 0 0;
 }
+
+.inputs{
+   display: flex;
+   flex-direction: column;
+   position: relative;
+   bottom: 3.2vh;
+}
+
+.inputs input{
+    padding: 5%;
+}
+
+.inputs input[type="date"]{
+   width: 9vw;
+   padding:6%;
+}
+
+
+
 
 
 
