@@ -10,7 +10,6 @@ import style from "./Style.module.css"
 export default function ResPageTwo(props) {
   const schema = yup.object().shape({
     Source: yup.string().required('required'),
-    ArrivalTime: yup.string().required('required'),
     FirstName: yup.string().required('required'),
     LastName: yup.string().required('required'),
     Country: yup.string().required('required'),
@@ -41,10 +40,6 @@ export default function ResPageTwo(props) {
                     <span className={style.innerinputContainer}>
                       <Field name="Source" component={Input} label="Source" type="select" options={Sources}/>
                       <ErrorMessage name="Source" component="small" className={style.errorMsg} />
-                    </span>
-                    <span className={style.innerinputContainer}>
-                      <Field name="ArrivalTime" component={Input} label="Arrival Time" type="time" />
-                      <ErrorMessage name="ArrivalTime" component="small" className={style.errorMsg} />
                     </span>
                     </div>
                   </div>

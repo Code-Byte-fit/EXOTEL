@@ -1,26 +1,46 @@
 const express=require('express')
 const router=express.Router()
 const {Sequelize,Op} = require('sequelize');
+const moment = require('moment');
 const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations}=require('../models')
 
 
 router.get('/',async (req,res)=>{
-    const listOfReservations=await Reservations.findAll()
+    // const listOfReservations=await Reservations.findAll()
+    // res.json(listOfReservations)
+    const listOfReservations=await Reservations.findAll({
+      attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
+      include: [
+        {
+          model: Guests,
+          attributes: ['id', 'FirstName']
+        },
+        {
+          model: Rooms,
+          attributes: ['RoomNo'],
+          through: {
+            attributes: []
+          }
+        }
+      ],
+    });
     res.json(listOfReservations)
 })
 
 router.post("/",async (req,res)=>{
-    try{const{CheckIn,CheckOut,SelectedRooms,Source,ArrivalTime,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus}=req.body
+    try{const{CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus}=req.body
     const guest = await Guests.create({ FirstName, LastName, DOB, Country, Email, PhoneNumber });
     const reservation = await Reservations.create({
         CheckIn,
         CheckOut,
+        CheckInTime,
+        CheckOutTime,
         Source,
         ReservationStatus,
         guestId: guest.id,
     });
     for (const roomNumber of SelectedRooms) {
-        const room = await Rooms.findOne({ where: { RoomNo: roomNumber } });
+        const room = await Rooms.findOne({ where: { RoomNo: roomNumber.RoomNo } });
         if (room) {
           await ReservationRoom.create({
             ReservationId: reservation.id,
@@ -221,6 +241,45 @@ router.put("/CheckIn/:resId",async (req,res)=>{
     });
   }
 });
+
+router.get('/todayStats', async (req, res) => {
+  try {
+    const today = moment().startOf('day');
+
+    const checkins = await Reservations.count({
+      where: {
+        CheckIn: {[Op.eq]: today.toDate()},
+        ReservationStatus: 'active',
+      },
+    });
+
+    const checkouts = await Reservations.count({
+      where: {
+        CheckOut: {[Op.eq]: today.toDate()},
+        ReservationStatus: 'Checked-In',
+      },
+    });
+
+    const stayovers = await Reservations.count({
+      where: {
+        CheckIn: {
+          [Op.lt]: today.toDate(),
+        },
+        CheckOut: {
+          [Op.gt]: today.toDate(),
+        },
+        ReservationStatus: 'Checked-In',
+      },
+    })
+
+    res.status(200).json({checkins,checkouts,stayovers,});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+module.exports = router;
 
 
 

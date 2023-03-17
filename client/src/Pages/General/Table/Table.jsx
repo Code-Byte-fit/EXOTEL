@@ -39,7 +39,6 @@ export default function Table(props) {
          <DataTable
             columns={props.columns}
             data={props.data}
-            selectableRows
             fixedHeader
             fixedHeaderScrollHeight={props.height}
             highlightOnHover
