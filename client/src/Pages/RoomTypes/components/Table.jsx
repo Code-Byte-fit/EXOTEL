@@ -6,8 +6,11 @@ import editIcon from "../../../Assets/Images/Small FAB(1).png";
 import deleteIcon from "../../../Assets/Images/Small FAB.png";
 import { useEffect } from "react";
 import Popup from "./EditPopup";
+import RoomTypeTable from '../../General/Table/Table'
+import EditDelete from "../../General/Table/EditDelete";
 
-function Table({ type }) {
+
+function Table(props) {
   const [listOfRoomTypes, setlistOfRoomTypes] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedRoomType, setSelectedRoomTypes] = useState(null);
@@ -18,83 +21,52 @@ function Table({ type }) {
     });
   }, []);
 
-  function handleEditClick(type) {
-    setSelectedRoomTypes(type);
-    setShowPopup(true);
-  }
+ 
 
-  function handleDeleteClick() {
-    // Handle delete logic here
-  }
+  
+  const columns = [
+    {
+        name: 'Type Name',
+        selector: row => row.TypeName,
+        sortable: true,
+    },
+    {
+        name: 'No of Beds',
+        selector: row => row.NoOfBeds,
+        sortable: true,
+    },
 
+    {
+      name: 'Square Feet',
+      selector: row => row.sqFeet,
+      sortable: true,
+    },
+    {
+      name: 'Standard Charge',
+      selector: row => row.StandardCharge,
+      sortable: true,
+    },
+    {
+      name: 'Add Info',
+      selector: row => row.AddInfo,
+      sortable: true,
+      cell: row => (
+        <div className={style.tooltip}>
+          {row.AddInfo}
+          <span className={style.tooltipText}>{row.AddInfo}</span>
+        </div>
+      ),
+    },
+    {
+      selector: row => row,
+      cell: (row) => <EditDelete/>
+    },
+];
   return (
     <span className={style.tableContainer}>
       <label className={style.labelTwo}>Edit/Delete Room Types</label>
-
-      <div className={style.tbl}>
-        <span className={style.div3}>
-          <form>
-            <table className={style.tableOne}>
-              <thead>
-                <tr>
-              
-                  <th>
-                    Room Type<img src={sort} className={style.sort1} />
-                  </th>
-                  <th>
-                  No Of Beds<img src={sort} className={style.sort1} />
-                  </th>
-                  <th>
-                  sqFeet<img src={sort} className={style.sort1} />
-                  </th>
-                  <th>
-                  Base Charge<img src={sort} className={style.sort1} />
-                  </th>
-                  <th>
-                    Actions<img src={sort} className={style.sort1} />
-                  </th>
-                </tr>
-              </thead>
-
-              {listOfRoomTypes.map((value, key) => {
-                return (
-                  <tbody key={key}>
-                    <tr>
-                      <td>{value.TypeName}</td>
-                      <td>{value.NoOfBeds}</td>
-                      <td>{value.sqFeet}</td>
-                      <td>{value.BaseCharge}</td>
-                      <td>
-                        <button
-                          type="button"
-                          className={style.editBtn}
-                          onClick={() => handleEditClick(value)}
-                        >
-                          <img src={editIcon} alt="Edit" />
-                        </button>
-                        <button
-                          type="button"
-                          className={style.deleteBtn}
-                          onClick={handleDeleteClick}
-                        >
-                          <img src={deleteIcon} alt="Delete" />
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                );
-              })}
-            </table>
-          </form>
-        </span>
-      </div>
-      {showPopup && (
-        
-        <Popup 
-          room={selectedRoomType}
-          closePopup={() => setShowPopup(false)}
-        />
-      )}
+      <RoomTypeTable columns={columns} data={props.listOfRoomTypes} height="35vh" edit pagination />
+    
     </span>
   );
 }

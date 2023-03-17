@@ -1,21 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import FormOne from "./Form";
 import data from "./Mock-data.json"
 import Popup from "./EditPopup";
 import { nanoid } from 'nanoid';
-
+import axios from "axios";
 
 function DisplayFormData() {
 
-  
+    
     const [RoomTypes, setRoomTypes] = useState(data);
+    const [listOfRoomTypes, setlistOfRoomTypes] = useState([]);
     const [addFormData, setAddFormData] = useState({
         TypeName: '',
         NoOfBeds: '',
         sqFeet: '',
         BaseCharge: ''
     })
+
+
+    useEffect(() => {
+        axios.get("http://localhost:3001/roomtypes").then((response) => {
+          setlistOfRoomTypes(response.data);
+          console.log(listOfRoomTypes)
+          
+        });
+      },[]);
+    
+        const makeReq = async (formData) => {
+            await axios.post("http://localhost:3001/roomtypes", formData).then(()=>{
+                axios.get("http://localhost:3001/roomtypes").then((response) => {
+                    setlistOfRoomTypes(response.data);
+            });
+            })
+        }
+    
+  
+
 
 
 
@@ -53,10 +74,10 @@ function DisplayFormData() {
     return (
         <React.Fragment>
 
-            <FormOne handleAddFormChange={handleAddFormChange}
-                addFormData={addFormData} />
+            <FormOne 
+                addFormData={addFormData}     makeReq={makeReq}/>
           
-            <Table RoomTypes={RoomTypes} />
+            <Table RoomTypes={RoomTypes}  listOfRoomTypes={listOfRoomTypes}/>
            
         </React.Fragment>
 
