@@ -1,29 +1,48 @@
-module.exports=(sequelize,Datatypes)=>{
-    const TaskAllocation=sequelize.define("TaskAllocation",{
-        FirstName:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        LastName:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        BirthDate:{
-            type:Datatypes.DATEONLY,
-            allowNull:false,
-        },
-        Country:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        Email:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        PhoneNumber:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-    })
-    return TaskAllocation;
-}
+//Nethmi
+module.exports = (sequelize, Datatypes) => {
+  const TaskAllocation = sequelize.define("TaskAllocation", {
+    taskNo: {
+      type: Datatypes.STRING,
+      allowNull: false,
+      primaryKey: true,
+    },
+    ReservationNo: {
+      type: Datatypes.STRING,
+      allowNull: false,
+    },
+    RoomNo: {
+      type: Datatypes.STRING,
+      allowNull: false,
+    },
+    userId: {
+      type: Datatypes.STRING,
+      allowNull: false,
+    },
+    TaskType: {
+      type: Datatypes.ENUM("laundry", "minibar", "clean"),
+      allowNull: false,
+    },
+    TaskDate: {
+      type: Datatypes.DATEONLY,
+      allowNull: false,
+    },
+    TaskTime: {
+      type: Datatypes.TIME,
+      allowNull: false,
+    },
+    Notes: {
+      type: Datatypes.STRING,
+      allowNull: false,
+    },
+  });
+
+  TaskAllocation.associate = (models) => {
+    TaskAllocation.belongsTo(models.Reservations, {
+      foreignKey: "ReservationNo",
+    });
+    TaskAllocation.belongsTo(models.Rooms, { foreignKey: "RoomNo" }); //refer rooms
+    TaskAllocation.belongsTo(models.Users, { foreignKey: "userId" }); //refer users
+  };
+
+  return TaskAllocation;
+};
