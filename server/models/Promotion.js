@@ -1,29 +1,44 @@
 module.exports=(sequelize,Datatypes)=>{
     const Promotion=sequelize.define("Promotion",{
-        FirstName:{
+        PromoCode:{
+            type:Datatypes.STRING,
+            allowNull:false,
+            primaryKey:true
+        },
+        PromoType:{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        LastName:{
+        Value:{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        BirthDate:{
+        MaxUses:{
+            type:Datatypes.STRING,
+            allowNull:false,
+        },
+        Status:{
+            type:Datatypes.STRING,
+            allowNull:false,
+        },
+        Startdate:{
             type:Datatypes.DATEONLY,
-            allowNull:false,
-        },
-        Country:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        Email:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        PhoneNumber:{
-            type:Datatypes.STRING,
             allowNull:false, 
         },
-    })
+        Enddate:{
+            type:Datatypes.DATEONLY,
+            allowNull:false, 
+        },
+        AddInfo:{
+            type:Datatypes.STRING,
+            allowNull:true,
+        } },
+        {
+            timestamps: false
+        });
+
+        Promotion.associate = (models) => {
+            Promotion.hasMany(models.Reservations, { foreignKey: 'PromoCode' });
+          };
     return Promotion;
 }

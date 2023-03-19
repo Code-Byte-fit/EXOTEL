@@ -1,6 +1,7 @@
 import {React,useState} from 'react'
 import style from "./Style.module.css"
 
+
 export default function Input({
   field, 
   form: { touched, errors },
@@ -14,7 +15,7 @@ export default function Input({
             <label for={props.id}>{props.label}</label>
             {props.isRequired && <span>*</span>}
           </div>
-            {props.type!=="select" && <input {...field} {...props} type={props.type} id={props.id} className={`${style.Input}`} style={{width:props.width}}/>}
+            {props.type!=="select" &&  props.type!=="textarea" && <input {...field} {...props} type={props.type} id={props.id} className={`${style.Input}`} style={{width:props.width}}/>}
             {props.type==="select" && 
               <select {...field} {...props} className={style.Input} id={props.id} style={props.style}>
                   {props.options.map((option) => {
@@ -24,6 +25,9 @@ export default function Input({
                             </option>
                             );})}
               </select>
+            }
+            {props.type==="textarea" && 
+              <textarea {...field} {...props} className={style.Input} rows={props.rows} cols={props.cols} />
             }
         </div>
     </>

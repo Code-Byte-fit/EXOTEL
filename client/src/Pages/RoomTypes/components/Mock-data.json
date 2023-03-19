@@ -1,0 +1,69 @@
+[
+    {
+      "id": 1,
+      "TypeName": "king",
+      "NoOfBeds": "2000",
+      "sqFeet": "4",
+      "BaseCharge": "234"
+    },
+    {
+        "id": 2,
+        "TypeName": "king",
+        "NoOfBeds": "2000",
+        "sqFeet": "4",
+        "BaseCharge": "234"
+    },
+    {
+        "id": 3,
+      "TypeName": "king",
+      "NoOfBeds": "2000",
+      "sqFeet": "4",
+      "BaseCharge": "234"
+    },
+    {
+        "id": 4,
+
+        "TypeName": "king",
+        "NoOfBeds": "2000",
+        "sqFeet": "4",
+        "BaseCharge": "234"
+    }
+
+    ,
+    {
+        "id": 5,
+
+      "TypeName": "king",
+      "NoOfBeds": "2000",
+      "sqFeet": "4",
+      "BaseCharge": "234"
+    },
+    {  "id": 6,
+
+    "TypeName": "king",
+    "NoOfBeds": "2000",
+    "sqFeet": "4",
+    "BaseCharge": "234"
+    }
+
+    ,  {
+        "id": 7,
+   
+      "TypeName": "king",
+      "NoOfBeds": "2000",
+      "sqFeet": "4",
+      "BaseCharge": "234"
+    }
+
+    ,  {
+        "id": 8,
+      
+      "TypeName": "king",
+      "NoOfBeds": "2000",
+      "sqFeet": "4",
+      "BaseCharge": "234"
+    }
+
+    
+
+]

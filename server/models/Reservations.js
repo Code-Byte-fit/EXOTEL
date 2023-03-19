@@ -13,12 +13,20 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATEONLY,
       allowNull: false
     },
-    Source: {
+    CheckInTime: {
       type: DataTypes.STRING,
       allowNull: false
     },
+    CheckOutTime: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    Source: {
+      type: DataTypes.ENUM('Phone', 'Walk-In'),
+      allowNull: false
+    },
     ReservationStatus: {
-      type: DataTypes.ENUM('active', 'cancelled', 'expired'),
+      type: DataTypes.ENUM('active', 'cancelled', 'expired','Checked-In','Checked-Out'),
       allowNull: false
     },
     totalAmount: {
@@ -32,6 +40,8 @@ module.exports = (sequelize, DataTypes) => {
   Reservations.associate = (models) => {
     Reservations.belongsTo(models.Guests, { foreignKey: 'guestId' });
     Reservations.belongsToMany(models.Rooms, { through: 'ReservationRoom' });
+    Reservations.belongsToMany(models.Addons, { through: 'ReservationAddOn' });
+    Reservations.belongsTo(models.Promotion, { foreignKey: 'PromoCode' });
   };
 
   return Reservations;

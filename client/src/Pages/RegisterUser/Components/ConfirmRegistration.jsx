@@ -12,9 +12,6 @@ export default function ConfirmRegistration(props) {
   const [isUserNameValid, setIsUserNameValid] = useState(true);
   const [isConfirmed,setIsConfirmed]=useState(false);
   
-
-
-
   const handleSubmit = async (values) => {
     try {
       const response=await axios.post('http://localhost:3001/register', values);
@@ -50,7 +47,7 @@ export default function ConfirmRegistration(props) {
 
   return (
     <>
-      <button type="submit" className={`${style.Btn} ${style.RegisterBtn}`} onClick={openModal}>Register</button>
+      <button type="submit" className={`${style.Btn} ${style.RegisterBtn}`} onClick={props.isValid && openModal}>Register</button>
       <Popup open={open} closeOnDocumentClick={false} onClose={closeModal}>
       {!isConfirmed ?
         (isUserNameValid?

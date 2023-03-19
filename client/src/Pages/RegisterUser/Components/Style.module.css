@@ -17,6 +17,8 @@
     color: #42505C;
 }
 
+
+
 .formContainer{
     margin: 2vh 10vw;
     display: flex;
@@ -37,6 +39,11 @@
     flex-direction: column;
     margin: 0 3vw 0 2vw;
     position: relative;
+}
+
+.inputContainer select{
+    padding: 1.1vh 0;
+    width: 12.2vw;
 }
 
 .fileInputCont{
@@ -127,7 +134,7 @@
     width: 10%;
     position: absolute;
     top: -6vh;
-    left: 13.6vw;   
+    left: 15.6vw;  
 }
 
 

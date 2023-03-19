@@ -14,10 +14,6 @@ module.exports=(sequelize,Datatypes)=>{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        BirthDate:{
-            type:Datatypes.DATEONLY,
-            allowNull:false,
-        },
         Country:{
             type:Datatypes.STRING,
             allowNull:false,

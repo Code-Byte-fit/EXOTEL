@@ -5,12 +5,28 @@ module.exports=(sequelize,Datatypes)=>{
             allowNull:false,
             primaryKey:true,
         },
+        View:{
+            type:Datatypes.STRING,
+            allowNull:true,
+        },
+        floor:{
+            type:Datatypes.STRING,
+            allowNull:false,
+        },
+        AddInfo:{
+            type:Datatypes.STRING,
+            allowNull:true,
+        },
+        AdditionalCharges:{
+            type:Datatypes.FLOAT,
+            allowNull:true,
+        },
+        BaseCharge:{
+            type:Datatypes.FLOAT,
+            allowNull:true,
+        },
         Status: {
             type: Datatypes.ENUM('available', 'booked'),
-            allowNull: false
-        },
-        BaseCharge: {
-            type: Datatypes.FLOAT,
             allowNull: false
         }
     },
@@ -20,7 +36,8 @@ module.exports=(sequelize,Datatypes)=>{
 
     Rooms.associate = (models) => {
         Rooms.belongsToMany(models.Reservations, { through: 'ReservationRoom' });
-      };;
+        Rooms.belongsTo(models.RoomTypes, { foreignKey: 'TypeName' });
+      };
 
     
     
