@@ -12,6 +12,7 @@ import ViewAddOns from './Pages/AddOns/ViewAddOns/ViewAddOns';
 import AddOns from './Pages/AddOns/AddOn';
 import RoomTypes from './Pages/RoomTypes/Types'
 import RegisterUser from './Pages/RegisterUser/RegisterUser';
+import Login from '../src/Pages/LoginPage/Login'
 import ViewRoomTypes from './Pages/RoomTypes/ViewRoomTypes/ViewRoomTypes';
 import AdminDash from './Pages/Dashboard/Admin/Admin'
 
@@ -37,6 +38,7 @@ export default function App() {
                 <Route path="/reservations" element={<Reservations/>}/>
                 <Route path="/register" element={<RegisterUser/>}/>
             </Route>
+            <Route path="/login" element={<Login/>}/>
             <Route path="*" element={<>Page Not Found</>}/>
             </>
             

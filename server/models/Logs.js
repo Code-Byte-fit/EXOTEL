@@ -1,29 +1,11 @@
 module.exports=(sequelize,Datatypes)=>{
     const Logs=sequelize.define("Logs",{
-        FirstName:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        LastName:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        BirthDate:{
-            type:Datatypes.DATEONLY,
-            allowNull:false,
-        },
-        Country:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        Email:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        PhoneNumber:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
+        loginId: {
+            type: Datatypes.INTEGER,
+            primaryKey: true,
+            autoIncrement:true
+          },
+       
     })
     return Logs;
 }
