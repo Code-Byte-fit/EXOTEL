@@ -1,11 +1,11 @@
-*{
+/* *{
     box-sizing: border-box;
     margin: 0;
     overflow: hidden;
 }
 body{
     margin: 0;
-}
+} */
 .container {
     display: flex;
     height: 100vh;
@@ -18,7 +18,7 @@ body{
 
 .cont2 {
     flex: 1;
-    background: url('../Images/pic.png');
+    background: url('../../../Assets/Images/pic.png');
     background-position:15%;
     background-size: cover;     
 }

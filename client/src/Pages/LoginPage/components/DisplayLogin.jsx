@@ -1,10 +1,10 @@
 import React from "react";
 import style from '../components/Login.module.css'
-import logo from '../Images/logo.png'
-import exotel from '../Images/exotel.png'
+import logo from '../../../Assets/Logos/logo(2).png'
+import exotel from '../../../Assets/Images/exotel.png'
 import FormOne from "./FormOne";
 
-function App() {
+function DisplayLogin() {
     return <div >
     <div class={style.container}>
         <div class={style.cont2}>
@@ -19,4 +19,4 @@ function App() {
     </div>
 }
 
-export default App;
+export default DisplayLogin;
