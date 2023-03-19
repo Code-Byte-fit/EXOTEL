@@ -2,7 +2,7 @@ const express=require('express')
 const router=express.Router()
 const {Sequelize,Op} = require('sequelize');
 const moment = require('moment');
-const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations}=require('../models')
+const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations,GuestEmail,GuestPhoneNumber}=require('../models')
 
 
 router.get('/',async (req,res)=>{
@@ -25,172 +25,149 @@ router.get('/',async (req,res)=>{
     res.json(listOfReservations)
 })
 
-router.post("/", async (req, res) => {
-  try {
-    const {
-      CheckIn,
-      CheckOut,
-      CheckInTime,
-      CheckOutTime,
-      SelectedRooms,
-      Source,
-      FirstName,
-      LastName,
-      DOB,
-      Country,
-      Email,
-      PhoneNumber,
-      ReservationStatus
-    } = req.body;
 
-    const guestIdentifier = `${FirstName.trim().toLowerCase()}_${LastName.trim().toLowerCase()}`;
-    let guest = await Guests.findOne({ where: { Identifier: guestIdentifier } }); // Check if guest already exists
-    if (!guest) {
-      guest = await Guests.create({
-        FirstName,
-        LastName,
-        DOB,
-        Country,
-        Email,
-        PhoneNumber,
-        Identifier: guestIdentifier
-      });
-    }
-
-    const reservation = await Reservations.create({
-      CheckIn,
-      CheckOut,
-      CheckInTime,
-      CheckOutTime,
-      Source,
-      ReservationStatus,
-      guestId: guest.id
+router.post("/",async (req,res)=>{
+    try{const{CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus}=req.body
+    let isGuest = await Guests.findOne({
+      where: {
+        firstName: FirstName.trim(),
+        lastName: LastName.trim()
+      }
     });
-
-    for (const roomNumber of SelectedRooms) {
-      const room = await Rooms.findOne({ where: { RoomNo: roomNumber.RoomNo } });
-      if (room) {
-        await ReservationRoom.create({
-          ReservationId: reservation.id,
-          RoomRoomNo: room.RoomNo
+    let guestId=null;
+    if (!isGuest) {
+      const guest = await Guests.create({ FirstName, LastName, DOB, Country });
+      await GuestEmail.create({ email: Email, guestId: guest.id });
+      guestId=guest.id
+    } 
+    else {
+      guestId=isGuest.id
+      const guestEmail = await GuestEmail.findOne({
+        where: { guestId: guestId, email: Email }
+      });
+      if (!guestEmail) {
+        await GuestEmail.create({ email: Email, guestId: guestId });
+      }
+      
+       // Check if phone number already exists for guest
+       const guestPhoneNumber = await GuestPhoneNumber.findOne({
+        where: {
+          guestId,
+          phoneNumber: PhoneNumber.trim(),
+        },
+      });
+      if (!guestPhoneNumber) {
+        // Add phone number to guest phone number list
+        await GuestPhoneNumber.create({
+          guestId,
+          phoneNumber: PhoneNumber.trim(),
         });
       }
+
     }
+    const reservation = await Reservations.create({
+        CheckIn,
+        CheckOut,
+        CheckInTime,
+        CheckOutTime,
+        Source,
+        ReservationStatus,
+        guestId: guestId,
+    });
+    for (const roomNumber of SelectedRooms) {
+        const room = await Rooms.findOne({ where: { RoomNo: roomNumber.RoomNo } });
+        if (room) {
+          await ReservationRoom.create({
+            ReservationId: reservation.id,
+            RoomRoomNo: room.RoomNo,
+          });
+        }
+      }
+    res.status(201).json({ reservation, guest });}
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to create reservation' });
+      }
+})
 
-    res.status(201).json({ reservation, guest });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Failed to create reservation" });
-  }
+router.get('/reservationTab', async (req, res) => {
+  
+  const currentDate = new Date();
+  const tomorrowDate = new Date();
+  tomorrowDate.setDate(currentDate.getDate() + 1);
+
+  
+  const todaysReservations = await Reservations.findAll({
+    attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
+    include: [
+      {
+        model: Guests,
+        attributes: ['id', 'FirstName']
+      },
+      {
+        model: Rooms,
+        attributes: ['RoomNo'],
+        through: {
+          attributes: []
+        }
+      }
+    ],
+    where: {
+      CheckIn: {
+        [Op.gte]: currentDate,
+        [Op.lt]: tomorrowDate
+      }
+    }
+  });
+
+  
+  const tomorrowsReservations = await Reservations.findAll({
+    attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
+    include: [
+      {
+        model: Guests,
+        attributes: ['id', 'FirstName']
+      },
+      {
+        model: Rooms,
+        attributes: ['RoomNo'],
+        through: {
+          attributes: []
+        }
+      }
+    ],
+    where: {
+      CheckIn: {
+        [Op.between]: [tomorrowDate, new Date(tomorrowDate.getTime() + 24 * 60 * 60 * 1000)]
+      }
+    }
+  });
+
+  const formattedTodaysReservations = todaysReservations.map(reservation => ({
+    id: reservation.id,
+    guestFirstName: reservation.Guest.FirstName,
+    rooms: reservation.Rooms.map(room => room.RoomNo),
+    checkIn: reservation.CheckIn,
+    checkOut: reservation.CheckOut,
+    reservationStatus: reservation.ReservationStatus,
+    source: reservation.Source
+  }));
+
+  const formattedTomorrowsReservations = tomorrowsReservations.map(reservation => ({
+    id: reservation.id,
+    guestFirstName: reservation.Guest.FirstName,
+    rooms: reservation.Rooms.map(room => room.RoomNo),
+    checkIn: reservation.CheckIn,
+    checkOut: reservation.CheckOut,
+    reservationStatus: reservation.ReservationStatus,
+    source: reservation.Source
+  }));
+
+  res.json({
+    todaysReservations: formattedTodaysReservations,
+    tomorrowsReservations: formattedTomorrowsReservations
+  });
 });
-
-
-// router.post("/",async (req,res)=>{
-//     try{const{CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus}=req.body
-//     const guest = await Guests.create({ FirstName, LastName, DOB, Country, Email, PhoneNumber });
-//     const reservation = await Reservations.create({
-//         CheckIn,
-//         CheckOut,
-//         CheckInTime,
-//         CheckOutTime,
-//         Source,
-//         ReservationStatus,
-//         guestId: guest.id,
-//     });
-//     for (const roomNumber of SelectedRooms) {
-//         const room = await Rooms.findOne({ where: { RoomNo: roomNumber.RoomNo } });
-//         if (room) {
-//           await ReservationRoom.create({
-//             ReservationId: reservation.id,
-//             RoomRoomNo: room.RoomNo,
-//           });
-//         }
-//       }
-//     res.status(201).json({ reservation, guest });}
-//     catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: 'Failed to create reservation' });
-//       }
-// })
-
-// router.get('/reservationTab', async (req, res) => {
-  
-//   const currentDate = new Date();
-//   const tomorrowDate = new Date();
-//   tomorrowDate.setDate(currentDate.getDate() + 1);
-
-  
-//   const todaysReservations = await Reservations.findAll({
-//     attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
-//     include: [
-//       {
-//         model: Guests,
-//         attributes: ['id', 'FirstName']
-//       },
-//       {
-//         model: Rooms,
-//         attributes: ['RoomNo'],
-//         through: {
-//           attributes: []
-//         }
-//       }
-//     ],
-//     where: {
-//       CheckIn: {
-//         [Op.gte]: currentDate,
-//         [Op.lt]: tomorrowDate
-//       }
-//     }
-//   });
-
-  
-//   const tomorrowsReservations = await Reservations.findAll({
-//     attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
-//     include: [
-//       {
-//         model: Guests,
-//         attributes: ['id', 'FirstName']
-//       },
-//       {
-//         model: Rooms,
-//         attributes: ['RoomNo'],
-//         through: {
-//           attributes: []
-//         }
-//       }
-//     ],
-//     where: {
-//       CheckIn: {
-//         [Op.between]: [tomorrowDate, new Date(tomorrowDate.getTime() + 24 * 60 * 60 * 1000)]
-//       }
-//     }
-//   });
-
-//   const formattedTodaysReservations = todaysReservations.map(reservation => ({
-//     id: reservation.id,
-//     guestFirstName: reservation.Guest.FirstName,
-//     rooms: reservation.Rooms.map(room => room.RoomNo),
-//     checkIn: reservation.CheckIn,
-//     checkOut: reservation.CheckOut,
-//     reservationStatus: reservation.ReservationStatus,
-//     source: reservation.Source
-//   }));
-
-//   const formattedTomorrowsReservations = tomorrowsReservations.map(reservation => ({
-//     id: reservation.id,
-//     guestFirstName: reservation.Guest.FirstName,
-//     rooms: reservation.Rooms.map(room => room.RoomNo),
-//     checkIn: reservation.CheckIn,
-//     checkOut: reservation.CheckOut,
-//     reservationStatus: reservation.ReservationStatus,
-//     source: reservation.Source
-//   }));
-
-//   res.json({
-//     todaysReservations: formattedTodaysReservations,
-//     tomorrowsReservations: formattedTomorrowsReservations
-//   });
-// });
 
 
 router.put("/",async (req,res)=>{

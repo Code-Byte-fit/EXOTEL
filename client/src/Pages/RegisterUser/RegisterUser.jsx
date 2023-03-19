@@ -11,7 +11,6 @@ export default function RegisterUser() {
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required('required'),
     lastName: Yup.string().required('required'),
-    birthDate: Yup.date().required('required'),
     country: Yup.string().required('required'),
     email: Yup.string().email('Invalid email').required('required'),
     phoneNumber: Yup.string().required('required'),
@@ -23,7 +22,7 @@ export default function RegisterUser() {
   const initialValues={
     firstName: '',
     lastName: '',
-    birthDate: '',
+    userGroup:'',
     country: '',
     email: '',
     phoneNumber: '',

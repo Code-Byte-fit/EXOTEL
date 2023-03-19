@@ -36,12 +36,12 @@ export default function Guests() {
     },
     {
       name: 'E-MAIL',
-      selector: row => row.Email,
+      selector: row  => row.GuestEmails.map(email => <div>{email['email']}</div>),
       sortable: true,
     },
     {
       name: 'PHONE-NO',
-      selector: row => row.PhoneNumber,
+      selector: row =>row.GuestPhoneNumbers.map(number => <div>{number['phoneNumber']}</div>),
       sortable: true,
     }
 ];

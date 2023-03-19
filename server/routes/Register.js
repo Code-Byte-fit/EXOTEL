@@ -17,6 +17,7 @@ router.post('/', async (req, res) => {
       const user = await Users.create({
         FirstName: req.body.firstName,
         LastName: req.body.lastName,
+        Role:req.body.userGroup,
         BirthDate: req.body.birthDate,
         Country: req.body.country,
         Email: req.body.email,
