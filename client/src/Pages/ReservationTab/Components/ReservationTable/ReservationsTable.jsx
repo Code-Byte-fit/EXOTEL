@@ -8,7 +8,8 @@ import Filter from './Filter';
 import filterIcon from "../../../../Assets/Images/mixer.png"
 import style from "../Style.module.css"
 
-export default function ReservationsTable() {
+
+export default function ReservationsTable(props) {
   const [reservationDetails,setReservationDetails]=useState([]);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -86,7 +87,7 @@ export default function ReservationsTable() {
     },
     {
       selector: row => row,
-      cell: (row) => <ResEditDelete row={row} setReservationDetails={setReservationDetails}/>
+      cell: (row) => <ResEditDelete row={row} setReservationDetails={setReservationDetails} setStats={props.setStats}/>
     },
 ];
 

@@ -3,7 +3,7 @@ import { NavLink,useMatch,useResolvedPath } from 'react-router-dom';
 import dashBoardIcon from "../../../../../Assets/Images/Dashboard.png"
 import style from "./NavBar.module.css"
 
-export default function NavBar() {
+export default function NavBar(props) {
   const [active,setActive]=useState(false);
   const navMenuRef = useRef(null);
   const navContainerRef = useRef(null);
@@ -38,8 +38,7 @@ export default function NavBar() {
   return (
     <>
     <div className={`${style.navContainer} ${active && style.active}`}>
-          <div className={`${style.navIcon} ${active && style.open}`} onClick={()=>setActive(!active)} ref={navContainerRef}
->
+          <div className={`${style.navIcon} ${active && style.open}`} onClick={()=>setActive(!active)} ref={navContainerRef}>
                   <span></span>
                   <span></span>
                   <span></span>
@@ -55,17 +54,19 @@ export default function NavBar() {
     
     <nav className={`${style.navMenu} ${active && style.navActive}`} ref={navMenuRef}>
       <div className={style.upperIcons}>
-          <NavLink  to="/createReservation" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
+      {props.role==="receptionist" && 
+      <>
+      <NavLink  to="/guests" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
+                  <img src={dashBoardIcon}/>
+                  <span>Guests</span>
+          </NavLink>
+      <NavLink  to="/createReservation" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
                 <img src={dashBoardIcon}/>
                 <span>Create-Reservation</span>
           </NavLink>
           <NavLink  to="/reservationTab" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
                   <img src={dashBoardIcon}/>
                   <span>Reservations Tab</span>
-          </NavLink>
-          <NavLink  to="/" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                  <img src={dashBoardIcon}/>
-                  <span>DashBoard</span>
           </NavLink>
           <NavLink  to="/rooms" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
                   <img src={dashBoardIcon}/>
@@ -75,6 +76,8 @@ export default function NavBar() {
                   <img src={dashBoardIcon}/>
                   <span>Promotions</span>
           </NavLink>
+          </>}
+          
          
       </div>
       <div className={style.lowerIcons}>
