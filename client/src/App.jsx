@@ -1,5 +1,5 @@
 import {React} from 'react'
-import {createBrowserRouter,createRoutesFromElements,Route,Link,RouterProvider,Outlet} from "react-router-dom";
+import {createBrowserRouter,createRoutesFromElements,Route,RouterProvider,Outlet} from "react-router-dom";
 import Header from './Pages/General/Header/Header';
 import ReservationTab from './Pages/ReservationTab/ReservationTab';
 import Reservations from "./Pages/Reservations/Reservations"
@@ -12,9 +12,9 @@ import ViewAddOns from './Pages/AddOns/ViewAddOns/ViewAddOns';
 import AddOns from './Pages/AddOns/AddOn';
 import RoomTypes from './Pages/RoomTypes/Types'
 import RegisterUser from './Pages/RegisterUser/RegisterUser';
+import Login from '../src/Pages/LoginPage/Login'
 import ViewRoomTypes from './Pages/RoomTypes/ViewRoomTypes/ViewRoomTypes';
 import AdminDash from './Pages/Dashboard/Admin/Admin'
-import axios from 'axios'
 
 
 export default function App() {
@@ -24,7 +24,6 @@ export default function App() {
             <Route path="/" element={<Root/>}>
                 <Route path="/createReservation" element={<CreateRes/>}/>
                 <Route path="/reservationTab" element={<ReservationTab/>}/>
-
                 <Route path="/viewRooms" element={<ViewRooms/>}/>
                 <Route path="/viewPromotions" element={<ViewPromotions/>}/>
                 <Route path="/rooms" element={<Rooms/>}/>
@@ -32,17 +31,14 @@ export default function App() {
                 <Route path="/promotion" element={<Promotion/>}/>
                 <Route path="/addons" element={<AddOns/>}/>
                 <Route path="/roomtypes" element={<RoomTypes/>}/>
-
                 <Route path="/viewRooms" element={<ViewRooms/>}/>
                 <Route path="/viewPromotions" element={<ViewPromotions/>}/>
                 <Route path="/viewaddons" element={<ViewAddOns/>}/>
                 <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/>
-
-
                 <Route path="/reservations" element={<Reservations/>}/>
                 <Route path="/register" element={<RegisterUser/>}/>
             </Route>
-            
+            <Route path="/login" element={<Login/>}/>
             <Route path="*" element={<>Page Not Found</>}/>
             </>
             

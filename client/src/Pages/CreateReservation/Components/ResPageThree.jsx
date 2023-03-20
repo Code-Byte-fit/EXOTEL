@@ -13,7 +13,7 @@ export default function ResPageThree(props) {
         handleSubmit(props.data);
       };
 
-      
+      console.log(props.data.SelectedRooms)
   return (
     <>
      <Formik initialValues={props.data} onSubmit={handleSubmit}>
@@ -74,8 +74,8 @@ export default function ResPageThree(props) {
                                                 <div className={style.detailsLabelContainer}>
                                                     <span className={style.label}>Rooms:</span>
                                                     {props.data.SelectedRooms.map((room) => (
-                                                    <span key={room} className={style.room}>
-                                                    {room}
+                                                    <span key={room.RoomNo} className={style.room}>
+                                                    {room.RoomNo}
                                                     </span>
                                                 ))}
                                                 </div>
