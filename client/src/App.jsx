@@ -17,10 +17,10 @@ import Header from "./Pages/General/Header/Header";
 // import ViewAddOns from "./Pages/AddOns/ViewAddOns/ViewAddOns";
 // import AddOns from "./Pages/AddOns/AddOn";
 // import RoomTypes from "./Pages/RoomTypes/Types";
-// import RegisterUser from "./Pages/RegisterUser/RegisterUser";
+import RegisterUser from "./Pages/RegisterUser/RegisterUser";
 // import Login from "../src/Pages/LoginPage/Login";
 // import ViewRoomTypes from "./Pages/RoomTypes/ViewRoomTypes/ViewRoomTypes";
-// import AdminDash from "./Pages/Dashboard/Admin/Admin";
+import AdminDash from "./Pages/Dashboard/Admin/Admin";
 import TaskPage from "./Pages/AddTasks/TaskPage";
 import ViewTaskPage from "./Pages/ViewTasks/ViewTaskPage";
 
@@ -46,6 +46,8 @@ export default function App() {
           <Route path="/register" element={<RegisterUser />} /> */}
           <Route path="/addTasks" element={<TaskPage />} />
           <Route path="/viewTasks" element={<ViewTaskPage />} />
+          {/* <Route path="/admin" element={<AdminDash />} /> */}
+          <Route path="/register" element={<RegisterUser />} />
         </Route>
         {/* <Route path="/login" element={<Login />} /> */}
         <Route path="*" element={<>Page Not Found</>} />

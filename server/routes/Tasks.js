@@ -37,7 +37,6 @@ router.get("/taskDetails", async (req, res) => {
       roomDetails: roomDetails,
       roomBoyDetails: roomBoyDetails,
     };
-    // console.log(response);
     res.json(response);
   } catch (err) {
     console.error(err.message);

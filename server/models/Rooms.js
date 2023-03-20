@@ -29,6 +29,8 @@ module.exports = (sequelize, Datatypes) => {
   Rooms.associate = (models) => {
     Rooms.belongsToMany(models.Reservations, { through: "ReservationRoom" });
     Rooms.belongsTo(models.RoomTypes, { foreignKey: "TypeName" });
+    Rooms.hasMany(models.TaskAllocation, { foreighKey: "RoomNo" });
+    Rooms.hasMany(models.RepairReq, { foreignKey: "RoomNo" });
   };
 
   return Rooms;

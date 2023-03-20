@@ -59,11 +59,7 @@ const TaskAddSection = () => {
     makeReq(data);
   };
 
-  // const viewTasks = async () => {
-  //   const response = await axios.get(`http://localhost:3001/tasks/:roomNumber`);
-  //   setRoomNumbers(response.data);
-  // };
-
+  //Retrieve data from room and user tables for the drop downs in the forms
   async function viewTasks() {
     try {
       const response = await axios.get(
@@ -95,6 +91,7 @@ const TaskAddSection = () => {
     viewTasks();
   }, []);
 
+  //Task Type array
   const Task = [
     { key: "--None Selected --", value: "" },
     { key: "Laundry", value: "laundry" },
@@ -102,7 +99,6 @@ const TaskAddSection = () => {
     { key: "Clean", value: "clean" },
   ];
 
-  // rbNumber.map((roomboy) => console.log(roomboy));
   return (
     <div className={style.divAddTaskSection}>
       <div className={style.divTitleAddTask}>ADD TASKS</div>
@@ -191,7 +187,7 @@ const TaskAddSection = () => {
             <Field
               name="specialNotes"
               component={Input}
-              label="Task Time"
+              label="Special Notes"
               type="textarea"
               style={{ width: "88vw", height: "10vh", resize: "none" }}
             />
@@ -202,7 +198,7 @@ const TaskAddSection = () => {
             />
           </div>
           <div className={style.divBtnAddToList}>
-            <button className={style.btnaddItems}>+ Add Items </button>
+            {/* <button className={style.btnaddItems}>+ Add Items </button> */}
             <input
               type="submit"
               className={style.btnAddToList}
