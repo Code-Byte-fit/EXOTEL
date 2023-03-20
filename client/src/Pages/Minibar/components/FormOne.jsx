@@ -1,17 +1,20 @@
 import React from "react";
+import {useState,useEffect} from 'react';
 import Input from "../../General/Inputs/Inputs";
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
-import style from '../components/Laundry.module.css'
+import Select from 'react-select';
+import style from '../components/Minibar.module.css'
 
 export default function FormOne(props) {
-    const today = new Date();
+  const [Reservations, serReservations] = useState([]);
+  const today = new Date();
     const initialValues = {
-        resNumber: '',
-        receivedDate: today.toISOString().slice(0, 10),
-        returnDate: '',
-        load: ''
+        ResNumber: '',
+        LastRestocked: today.toISOString().slice(0, 10),
+        ItemName: '',
+        Quantity: ''
     };
 
     const validationSchema = Yup.object().shape({
@@ -22,45 +25,57 @@ export default function FormOne(props) {
     });
     
 
-    // const RoomNumber = [
+    // const ResNumber = [
     //     {key:"--None Selected--", value:""},
     //     {key: "1", value:"1"},  
     //     {key: "2", value:"2"},
     //     {key: "3", value:"3"},
     //     {key: "4", value:"4"}
     //   ]
+
+    const minibarOptions = [
+      { label: "-- None Selected --", value: "" },
+      { label: "Hard Liquor", value: "Hard Liquor" },
+      { label: "", value: "Bear" },
+      { label: "Both", value: "Both" },
+     
+    ];
+
+    const fetchResNum = async()=>{
+      const response = await axios.get("http://locathost:3001/resId");
+      serReservations(response.data);}
+      useEffect(()=>{
+        fetchResNum();
+      },[]);
+    
+    
+
       return (
 
         <div className={style.formContainer}>
-            <label className={style.labelOne}>Add Laundry</label>
+            <label className={style.labelOne}>Minibar</label>
             <Formik 
               initialValues={initialValues} 
               onSubmit={props.onSubmit} >
                 {({values})=>(
                  <Form>
                  <div className={style.div1}>
-                     {/* <ErrorMessage name="RoomNo" component="span"/> */}
-                     <Field name="resNumber"
-                         component={Input}
-                         label="Res-Number"
+                     <Field name="minibarId" 
+                         component={Input} 
+                         label="Minibar Id"
                          type="text"
                          width="20vw" />
-                     {/* <ErrorMessage name="Date" component="span"/> */}
-                     <Field name="receivedDate" 
-                         component={Input} 
-                         label="Received Date"
-                         type="date"
-                         width="20vw" />
-                     {/* <ErrorMessage name="ItemNumber" component="span"/> */}
-                     <Field name="returnDate"
+                
+                     <Field name="package"
                          component={Input}
-                         label="Return Date"
-                         type="date"
+                         label="Package"
+                         type="select"
+                         options={minibarOptions}
                          width="20vw" />
-                     {/* <ErrorMessage name="Qty" component="span"/> */}
-                     <Field name="load"
+
+                    <Field name="Amount"
                          component={Input}
-                         label="Load (Kg)"
+                         label="Amount"
                          type="text"
                          width="20vw" />
 
@@ -85,5 +100,6 @@ export default function FormOne(props) {
         
         </div>
         
-    )
-}
+    ) 
+  }
+                               

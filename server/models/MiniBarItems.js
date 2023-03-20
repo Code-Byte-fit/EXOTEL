@@ -1,29 +1,30 @@
 module.exports=(sequelize,Datatypes)=>{
     const MiniBarItems=sequelize.define("MiniBarItems",{
-        FirstName:{
+        ItemId:{
+            type:Datatypes.STRING,
+            primaryKey: true,
+        },
+        ItemName:{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        LastName:{
-            type:Datatypes.STRING,
+        Volume:{
+            type:Datatypes.FLOAT,
             allowNull:false,
         },
-        BirthDate:{
-            type:Datatypes.DATEONLY,
+        ItemPrice:{
+            type:Datatypes.FLOAT,
             allowNull:false,
-        },
-        Country:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        Email:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        PhoneNumber:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-    })
+        }
+    },
+    {
+        timestamps: false
+        
+    });
+    MiniBarItems.associate = (models) =>{
+        MiniBarItems.belongsToMany(models.MinibarPackage,{through:'MItemPackage'});
+        MiniBarItems.belongsToMany(models.MiniBarRestock,{through:'MRestockItem'});
+        
+    }
     return MiniBarItems;
 }

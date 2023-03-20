@@ -1,35 +1,37 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import FormOne from "../components/FormOne";
-import LTable from './LTable';
-
+import CTable from './CTable';
 
 function DisplayData() {
-    const [listOfLaundry, setListOfLaundry] = useState([]);
+    const [listOfComp, setListOfComp] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:3001/laundry")
+        axios.get("http://localhost:3001/compensation")
         .then((response) => {
-          setListOfLaundry(response.data);
+          setListOfComp(response.data);
         });
       }, []);
 
       const onSubmit = async (fData) =>{
-        await axios.post("http://localhost:3001/laundry",fData).then(()=>{
-            axios.get("http://localhost:3001/laundry")
+        await axios.post("http://localhost:3001/compensation",fData).then(()=>{
+            axios.get("http://localhost:3001/compensation")
             .then((response) => {
-            setListOfLaundry(response.data);
+            setListOfComp(response.data);
         });
         })
         console.log(fData)
     };
   
-    const [laundry, setlaundry] = useState();
+    const [comp, setcomp] = useState();
     const [addFormData, setAddFormData] = useState({
         resNumber: '',
-        receivedDate: '',
-        returnDate: '',
-        load: '',
+        roomNumber: '',
+        date: '',
+        time: '',
+        compType:'',
+        compValue:'',
+        amount:''
     })
 
     const handleAddFormChange = (event) => {
@@ -47,25 +49,32 @@ function DisplayData() {
     const handleAddFormSubmit = (event) => {
         event.preventDefault();
 
-        const newLaundry = {
+        const newComp = {
             resNumber: addFormData.resNumber,
-            receivedDate: addFormData.receivedDate,
-            returnDate: addFormData.returnDate,
-            load: addFormData.load,
+            roomNumber: addFormData.roomNumber,
+            date: addFormData.date,
+            time: addFormData.time,
+            compType:addFormData.compType,
+            compValue:addFormData.compValue,
+            amount: addFormData.amount
         };
 
-        const newLaun = [...laundry, newLaundry];
-        setlaundry(newLaun);
+        const newBar = [...comp, newComp];
+        setcomp(newBar);
     };
+
+
 
     return (
         <React.Fragment>
 
             <FormOne handleAddFormChange={handleAddFormChange} addFormData={addFormData} onSubmit={onSubmit}/>
           
-            <LTable listOfLaundry={listOfLaundry}  laundry={laundry} />
+            <CTable listOfComp={listOfComp}  comp={comp} />
         </React.Fragment>
 
+
     )
+
 }
 export default DisplayData;

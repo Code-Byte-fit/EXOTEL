@@ -10,7 +10,7 @@ router.get('/',async (req,res)=>{
 })
 
 router.post("/",async (req,res)=>{
-    try{const{CheckIn,CheckOut,SelectedRooms,Source,ArrivalTime,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus}=req.body
+    const{CheckIn,CheckOut,SelectedRooms,Source,ArrivalTime,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus}=req.body
     const guest = await Guests.create({ FirstName, LastName, DOB, Country, Email, PhoneNumber });
     const reservation = await Reservations.create({
         CheckIn,
@@ -28,11 +28,8 @@ router.post("/",async (req,res)=>{
           });
         }
       }
-    res.status(201).json({ reservation, guest });}
-    catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Failed to create reservation' });
-      }
+    res.status(201).json({ reservation, guest });
+  
 })
 
 router.get('/reservationTab', async (req, res) => {
@@ -136,6 +133,7 @@ router.delete("/:resId",async (req,res)=>{
     })
     res.json("Deleted Successfully")
 })
+
 
 
 

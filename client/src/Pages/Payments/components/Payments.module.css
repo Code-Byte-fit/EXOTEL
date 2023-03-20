@@ -1,70 +1,44 @@
+/* button */
 
-.formContainer {
-    display: grid;
-    flex-direction: column;
-    height: 42vh;
-    justify-content: center
-  }
-  
-  .div1 {
-    display: grid;
-    grid-template-columns:repeat(4,1fr) ;
-    gap: 4vw;
-  }
-  
-  .div2 {
-    top:7vh;
-    width: 90vw;
-  }
-  .select{
-    margin-top: 1vh;
-  }
-  
-  .labelOne {
-    font-size: 1.6rem;
-    font-weight: bold;
-    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
-  }
-  
-  .error {
-    color: red;
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
-  }
-  
-  .createBtn {
-    position: relative;
-    top: 2vh;
-    bottom: 10vh;
-    margin-left: 83vw;
-  }
-  
-  .buttonOne {
-    border: none;
-    padding: 1vh 1vw 1vh 1vw;
-    min-width: 6vw;
-    background: #4d5949;
-    color: #fcfbff;
-    border-radius: 12px;
-    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-  }
-  .lbl4 {
-  margin-bottom: 10px;
+.comb{
+ margin-left: 4vw;
 }
 
-  /* table */
-  .tableContainer {
-    position: relative;
-    bottom: 1vh;
-  }
-  .tbl {
-    background-color: white;
-    width: 88vw;
-    height: 37vh;
-    margin: 3vh 0 0 5vw;
-  
-  }
+.button-container {
+  display: flex;
+}
+
+.button-container button {
+  background-color: #fff;
+  color: #000;
+  border: 2px solid #000000;
+  padding: 5px 16px;
+  width: 100px; 
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button-container button.active {
+  background-color: #0b411b;
+  color: #fff;
+  border: 2px solid #000000;
+}
+
+.left-button {
+  border-radius: 15px 0 0 15px;
+}
+
+.right-button {
+  border-radius: 0 15px 15px 0;
+}
+.tbl{
+  margin-top: 4vh;
+}
+
+
+
+
   /* .tbl::-webkit-scrollbar {
     width: 0.5vw;
   }

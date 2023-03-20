@@ -3,18 +3,23 @@ import {createBrowserRouter,createRoutesFromElements,Route,Link,RouterProvider,O
 import Header from './Pages/General/Header/Header';
 import ReservationTab from './Pages/ReservationTab/ReservationTab';
 import Reservations from "./Pages/Reservations/Reservations"
-import Minibar from './Pages/Minibar/Minibar'
-import Laundry from './Pages/Laundry/Laundry'
+import MinibarRestocked from './Pages/MinibarRestocked/MinibarRestocked'
 import CreateRes from './Pages/CreateReservation/CreateRes';
-
+import Laundry from './Pages/Laundry/Laundry'
 import ViewRooms from './Pages/ManageRooms/ViewRoomList'
 import Rooms from './Pages/NewRooms/Rooms'
 import Promotion from './Pages/Promotions/Promotion'
 import ViewPromotions from './Pages/ViewPromotions/ViewPromotions';
 import AddOns from './Pages/AddOns/AddOn';
-import RoomTypes from './Pages/RoomTypes/Types'
+import RoomTypes from './Pages/RoomTypes/Types';
 import RegisterUser from './Pages/RegisterUser/RegisterUser';
+import Compensation from './Pages/Compensation/Compensation';
+import Payments from './Pages/Payments/Payments';
+import MinibarItems from './Pages/MinibarItems/MinibarItems';
+import Minibar from './Pages/Minibar/Minibar';
+import MinibarPackage from './Pages/MinibarPackage/MinibarPackage';
 import axios from 'axios'
+
 
 
 
@@ -33,8 +38,18 @@ export default function App() {
                 <Route path="/roomtypes" element={<RoomTypes/>}/>
                 <Route path="/reservations" element={<Reservations/>}/>
                 <Route path="/register" element={<RegisterUser/>}/>
-                {/* <Route path="/minibar" element={<Minibar/>}/> */}
-                <Route path="/minibar" element={<Laundry/>}/>
+                <Route path="/minibarRestocked" element={<MinibarRestocked/>}/>
+                <Route path="/laundry" element={<Laundry/>}/> 
+                <Route path="/compensation" element={<Compensation/>}/>
+                <Route path="/payments" element={<Payments/>}/>
+                <Route path="/minibarItems" element={<MinibarItems/>}/>
+                <Route path="/minibar" element={<Minibar/>}/>
+                <Route path="/minibarPackage" element={<MinibarPackage/>}/>
+
+                {/* <Route path="/payments" element={<Payments/>}/> */}
+
+
+
             </Route>
             
             <Route path="*" element={<>Page Not Found</>}/>

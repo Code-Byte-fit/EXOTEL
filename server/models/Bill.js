@@ -12,7 +12,10 @@ module.exports=(sequelize,Datatypes)=>{
         timestamps: false
     });
     Bill.associate = (models)=>{
-        Bill.belongsTo(models.Cashier,{foreignKey: 'employeeId'})
+        Bill.belongsTo(models.Cashier,{foreignKey: 'employeeId'});
+        Bill.belongsTo(models.Reservations, { foreignKey: 'resId' });
+        
+
     }
     return Bill;
 }

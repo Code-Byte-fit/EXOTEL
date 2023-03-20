@@ -16,9 +16,14 @@
     top:7vh;
     width: 90vw;
   }
-  .select{
-    margin-top: 1vh;
-  }
+  .div3 {
+    /* top right bottom left */
+     margin: 0 0 0 0;  }
+     .div4{
+      margin-left: 48vw;
+      margin-top:-17vh;
+
+     }
   
   .labelOne {
     font-size: 1.6rem;
@@ -49,10 +54,6 @@
     box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
     cursor: pointer;
   }
-  .lbl4 {
-  margin-bottom: 10px;
-}
-
   /* table */
   .tableContainer {
     position: relative;

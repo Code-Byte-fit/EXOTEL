@@ -27,11 +27,7 @@ app.use("/rooms",roomRouter);
 const reservationRouter=require('./routes/Reservations')
 app.use("/reservations",reservationRouter);
 
-const promotionRouter=require('./routes/Promotions')
-app.use("/promotions",promotionRouter);
 
-const roomTypenRouter=require('./routes/RoomTypes')
-app.use("/roomtypes",roomTypenRouter);
 
 // const addOnRouter=require('./routes/AddOns')
 // app.use("/addons",addOnRouter);
@@ -47,6 +43,19 @@ app.use("/roomtypes",roomTypenRouter);
 
 const minibarRouter = require ('./routes/Minibar')
 app.use("/minibar", minibarRouter);
+
+const laundryRouter = require ('./routes/Laundry')
+app.use("/laundry", laundryRouter);
+
+const compRouter = require ('./routes/Compensation')
+app.use("/compensation", compRouter);
+
+// const minibaritemsRouter = require ('./routes/MiniBarItems')
+// app.use("/minibaritems", minibaritemsRouter);
+
+// const minibarpackageRouter = require ('./routes/MinibarPackage')
+// app.use("/minibarpackage", minibarpackageRouter);
+
 
 
 db.sequelize.sync().then(()=>{

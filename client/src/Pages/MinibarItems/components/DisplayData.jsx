@@ -1,35 +1,34 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import FormOne from "../components/FormOne";
-import LTable from './LTable';
-
+import MTable from './MTable';
 
 function DisplayData() {
-    const [listOfLaundry, setListOfLaundry] = useState([]);
+    const [listOfMinibarItems, setlistOfMinibarItems] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:3001/laundry")
+        axios.get("http://localhost:3001/Minibar/minibaritems")
         .then((response) => {
-          setListOfLaundry(response.data);
+          setlistOfMinibarItems(response.data);
         });
       }, []);
 
       const onSubmit = async (fData) =>{
-        await axios.post("http://localhost:3001/laundry",fData).then(()=>{
-            axios.get("http://localhost:3001/laundry")
+        await axios.post("http://localhost:3001/Minibar/minibaritems",fData).then(()=>{
+            axios.get("http://localhost:3001/Minibar/minibaritems")
             .then((response) => {
-            setListOfLaundry(response.data);
+            setlistOfMinibarItems(response.data);
         });
         })
         console.log(fData)
     };
   
-    const [laundry, setlaundry] = useState();
+    const [minibaritems, setminibaritems] = useState();
     const [addFormData, setAddFormData] = useState({
-        resNumber: '',
-        receivedDate: '',
-        returnDate: '',
-        load: '',
+        ItemId:'',
+        ItemName: '',
+        Volume: '',
+        ItemPrice: '',
     })
 
     const handleAddFormChange = (event) => {
@@ -47,25 +46,29 @@ function DisplayData() {
     const handleAddFormSubmit = (event) => {
         event.preventDefault();
 
-        const newLaundry = {
-            resNumber: addFormData.resNumber,
-            receivedDate: addFormData.receivedDate,
-            returnDate: addFormData.returnDate,
-            load: addFormData.load,
+        const newMinibarItems = {
+            ItemId:addFormData.ItemId,
+            ItemName: addFormData.ItemName,
+            Volume: addFormData.Volume,
+            ItemPrice: addFormData.ItemPrice,
         };
 
-        const newLaun = [...laundry, newLaundry];
-        setlaundry(newLaun);
+        const newBar = [...minibaritems, newMinibarItems];
+        setminibaritems(newBar);
     };
+
+
 
     return (
         <React.Fragment>
 
             <FormOne handleAddFormChange={handleAddFormChange} addFormData={addFormData} onSubmit={onSubmit}/>
           
-            <LTable listOfLaundry={listOfLaundry}  laundry={laundry} />
+            <MTable listOfMinibarItems={listOfMinibarItems}  minibaritems={minibaritems} />
         </React.Fragment>
 
+
     )
+
 }
 export default DisplayData;

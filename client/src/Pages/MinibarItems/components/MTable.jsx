@@ -1,20 +1,27 @@
 import React, { useState } from "react";
 import Table from "../../General/Table/Table"
 import EditDelete from "../../General/Table/EditDelete";
-import style from "../components/Laundry.module.css";
+import style from "../components/Minibar.module.css";
 import axios from "axios";
 // import sort from "../../../Assets/Images/sort.png";
 // import editIcon from "../../../Assets/Images/Small FAB(1).png";
 // import deleteIcon from "../../../Assets/Images/Small FAB.png";
-import { useEffect } from "react";
 // import Popup from "./Popup";
 
-function LTable(props) {
+function MTable(props) {
+  // const [listOfMinibar, setListOfMinibar] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
-  const [selectedLaundry, setSelectedLaundry] = useState(null);
+  const [selectedMinibarItems, setSelectedMinibarItems] = useState(null);
+
+  // useEffect(() => {
+  //   axios.get("http://localhost:3001/minibar")
+  //   .then((response) => {
+  //     setListOfMinibar(response.data);
+  //   });
+  // }, []);
 
   function handleEditClick(bar) {
-    setSelectedLaundry(bar);
+    setSelectedMinibarItems(bar);
     setShowPopup(true);
   }
 
@@ -24,34 +31,24 @@ function LTable(props) {
 
   const columns = [
     {
-      name: 'Laundry Id',
-      selector: row=>row.laundryId,
+      name: 'Item Id',
+      selector: row=>row.ItemId,
       sortable: true,
     },
     {
-      name: 'Res Number',
-      selector: row=>row.resNumber,
+      name: 'Item Name',
+      selector: row=>row.ItemName,
       sortable: true,
     },
     {
-      name: 'Receive Date',
-      selector: row=>row.receivedDate,
+      name: 'Volume (ml/mg)',
+      selector: row=>row.Volume,
       sortable: true,
     },
     {
-      name: 'Return Date',
-      selector: row=>row.returnDate,
+      name: 'Item Price ($)',
+      selector: row=>row.ItemPrice,
       sortable: true,
-    },
-    {
-      name: 'Load',
-      selector: row=>row.load,
-      sortable: true,
-    },
-    {
-      name: 'Charge',
-      // selector: row=>row.load,
-      // sortable: true,
     },
    
     {
@@ -64,11 +61,11 @@ function LTable(props) {
       <label className={style.labelTwo}>Entries</label>
       <div className={style.tbl}>
         <span className={style.div3}>
-        <Table columns={columns} data = {props.listOfLaundry} height ='35vh'/>
+        <Table columns={columns} data = {props.listOfMinibarItems} height ='35vh'/>
         </span>
       </div>
     </span>
   );
 }
 
-export default LTable;
+export default MTable;

@@ -1,29 +1,40 @@
 module.exports=(sequelize,Datatypes)=>{
-    const MiniBarRestocks=sequelize.define("MiniBarRestocks",{
-        FirstName:{
-            type:Datatypes.STRING,
+    const MiniBarRestock=sequelize.define("MiniBarRestock",{
+      RestockId: {
+        type: Datatypes.INTEGER,
+        primaryKey: true,
+        autoIncrement:true
+      },  
+      ResNumber:{
+            type:Datatypes.INTEGER,
             allowNull:false,
         },
-        LastName:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        BirthDate:{
+        LastRestocked:{
             type:Datatypes.DATEONLY,
             allowNull:false,
         },
-        Country:{
+        ItemName:{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        Email:{
+        Quantity:{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        PhoneNumber:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-    })
-    return MiniBarRestocks;
+        Amount:{
+            type:Datatypes.FLOAT,
+            // allowNull:false,
+        }
+    },
+    {
+        timestamps: false
+        
+    });
+    MiniBarRestock.associate = (models) =>{
+        MiniBarRestock.belongsTo(models.TaskAllocations, { foreignKey: 'taskId' });
+        MiniBarRestock.belongsToMany(models.MiniBarItems,{through:'MRestockItem'});
+
+    }
+
+    return MiniBarRestock;
 }
