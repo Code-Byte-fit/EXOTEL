@@ -27,13 +27,18 @@ const TaskEditDeleteTableSection = () => {
       sortable: true,
     },
     {
-      name: "ROOM-NUMBER",
+      name: "ROOM-ID",
       selector: (row) => row.RoomNo,
       sortable: true,
     },
     {
-      name: "ROOM-BOY",
+      name: "USER-ID",
       selector: (row) => row.userId,
+      sortable: true,
+    },
+    {
+      name: "USER-NAME",
+      selector: (row) => row.User.FirstName,
       sortable: true,
     },
     {
