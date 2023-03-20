@@ -7,7 +7,7 @@ module.exports = (sequelize, Datatypes) => {
       primaryKey: true,
     },
     ReservationNo: {
-      type: Datatypes.STRING,
+      type: Datatypes.INTEGER,
       allowNull: false,
     },
     RoomNo: {
@@ -15,7 +15,7 @@ module.exports = (sequelize, Datatypes) => {
       allowNull: false,
     },
     userId: {
-      type: Datatypes.STRING,
+      type: Datatypes.INTEGER,
       allowNull: false,
     },
     TaskType: {

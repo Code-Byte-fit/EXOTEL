@@ -28,7 +28,7 @@ const TaskEditDeleteTableSection = () => {
     },
     {
       name: "ROOM-NUMBER",
-      selector: (row) => row.ReservationNo,
+      selector: (row) => row.RoomNo,
       sortable: true,
     },
     {

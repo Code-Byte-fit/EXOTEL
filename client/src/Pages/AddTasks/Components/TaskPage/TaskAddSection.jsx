@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import style from "../TaskPage/HKstyle.module.css";
 import { getRoomNumber, getTaskType, getRoomBoyNumber } from "./HKDummy";
@@ -11,8 +11,8 @@ const TaskAddSection = () => {
   const date = curr.toISOString().substring(0, 10); // convert date type returned from Date function to ISO type and then take the first 10 characters which includes the date
   const time = curr.toTimeString().substring(0, 5);
 
-  const [rNumber, setrNumber] = useState(getRoomNumber());
-  const [rbNumber, setrbNumber] = useState(getRoomBoyNumber());
+  const [roomNumbers, setRoomNumbers] = useState([]);
+  const [rbNumber, setrbNumber] = useState([]);
   const [taskType, settasktype] = useState(getTaskType());
   const [selectedDate, setSelectedDate] = useState(date);
   const [selectedTime, setSelectedTime] = useState(time);
@@ -59,6 +59,49 @@ const TaskAddSection = () => {
     makeReq(data);
   };
 
+  // const viewTasks = async () => {
+  //   const response = await axios.get(`http://localhost:3001/tasks/:roomNumber`);
+  //   setRoomNumbers(response.data);
+  // };
+
+  async function viewTasks() {
+    try {
+      const response = await axios.get(
+        "http://localhost:3001/tasks/taskDetails"
+      );
+      console.log(response);
+      const room = response.data.roomDetails.map((value) => {
+        return {
+          key: value.RoomNo,
+          value: value.RoomNo,
+        };
+      });
+
+      const roomBoy = response.data.roomBoyDetails.map((value) => {
+        return {
+          key: `${value.RoomBoyId} - ${value.RoomBoyName}`,
+          value: value.RoomBoyId,
+        };
+      });
+
+      setRoomNumbers(room);
+      setrbNumber(roomBoy);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    viewTasks();
+  }, []);
+
+  const Task = [
+    { key: "--None Selected --", value: "" },
+    { key: "Laundry", value: "laundry" },
+    { key: "Mini-Bar", value: "minibar" },
+    { key: "Clean", value: "clean" },
+  ];
+
   // rbNumber.map((roomboy) => console.log(roomboy));
   return (
     <div className={style.divAddTaskSection}>
@@ -76,7 +119,7 @@ const TaskAddSection = () => {
                 component={Input}
                 label="Room Number"
                 type="select"
-                options={rNumber}
+                options={roomNumbers}
                 style={{ width: "17.2vw" }}
               />
               <ErrorMessage
@@ -106,7 +149,7 @@ const TaskAddSection = () => {
                 component={Input}
                 label="Task Type"
                 type="select"
-                options={rbNumber}
+                options={Task}
                 style={{ width: "17.2vw" }}
               />
               <ErrorMessage
@@ -159,7 +202,7 @@ const TaskAddSection = () => {
             />
           </div>
           <div className={style.divBtnAddToList}>
-            <button className={style.btnaddItems}>Add Items</button>
+            <button className={style.btnaddItems}>+ Add Items </button>
             <input
               type="submit"
               className={style.btnAddToList}

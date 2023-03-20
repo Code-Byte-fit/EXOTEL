@@ -16,6 +16,10 @@ module.exports = (sequelize, Datatypes) => {
         type: Datatypes.STRING,
         allowNull: false,
       },
+      userRole: {
+        type: Datatypes.STRING,
+        allowNull: false,
+      },
       Country: {
         type: Datatypes.STRING,
         allowNull: false,
