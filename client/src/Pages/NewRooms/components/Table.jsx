@@ -8,8 +8,7 @@ import Popup from "./EditPopup";
 
 function Table(props) {
   const [listOfRooms, setlistOfRooms] = useState([]);
-  const [showPopup, setShowPopup] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState(null);
+ 
 
   useEffect(() => {
     axios.get("http://localhost:3001/rooms").then((response) => {
@@ -26,17 +25,17 @@ function Table(props) {
         selector: row => row.RoomNo,
         sortable: true,
     },
+ 
     {
-        name: 'ROOM-TYPE',
-        selector: row => row.TypeName,
-        sortable: true,
-    },
-  
-    {
-      name: 'VIEW',
-      selector: row => row.View,
+      name: 'TYPE-NAME',
+      selector: row => row.RoomTypeView,
       sortable: true,
     },
+  //   {
+  //   name: 'ROOM-TYPE-VIEW',
+  //   selector: row => `${row.TypeName}-${row.View}`,
+  //   sortable: true,
+  // },
     {
       name: 'FLOOR',
       selector: row => row.floor,

@@ -29,14 +29,14 @@ function DisplayFormData() {
 
   
     const [rooms, setRooms] = useState(data);
-    const [addFormData, setAddFormData] = useState({
-        RoomNo: '',
-        TypeName: '',
-        BaseCharge: '',
-        floor: '',
-        sqFeet: '',
-        Status: 'available'
-    })
+    // const [addFormData, setAddFormData] = useState({
+    //     RoomNo: '',
+    //     TypeName: '',
+    //     BaseCharge: '',
+    //     floor: '',
+    //     sqFeet: '',
+    //     Status: 'available'
+    // })
 
 
 
@@ -45,7 +45,7 @@ function DisplayFormData() {
         <React.Fragment>
             <FormOne 
                 makeReq={makeReq}
-                addFormData={addFormData} />
+               />
           
             <Table rooms={rooms} listOfRooms={listOfRooms}/>
            

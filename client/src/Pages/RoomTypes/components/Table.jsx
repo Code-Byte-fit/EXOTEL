@@ -31,6 +31,11 @@ function Table(props) {
         sortable: true,
     },
     {
+      name: 'VIEW',
+      selector: row => row.View,
+      sortable: true,
+    },
+    {
         name: 'No of Beds',
         selector: row => row.NoOfBeds,
         sortable: true,

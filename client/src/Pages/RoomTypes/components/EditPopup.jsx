@@ -7,7 +7,9 @@ import * as Yup from 'yup';
 
 function Popup({ handleClose }, { handleAddFormChange }) {
   const initialValues = {
+    RoomTypeID:'',
     TypeName: '',
+    View:'',
     NoOfBeds: '',
     sqFeet: '',
     BaseCharge: ''

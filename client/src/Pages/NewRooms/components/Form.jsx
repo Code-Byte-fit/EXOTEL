@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import  { useEffect } from 'react';
+import { useEffect } from 'react';
 import Input from "../../General/Inputs/Inputs";
 import style from "./Rooms.module.css";
 import axios from 'axios';
@@ -10,30 +10,29 @@ import ConfirmationPopup from '../../NewRooms/components/ConfirmationPopup';
 function FormOne(props) {
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [RoomTypes, setRoomTypes] = useState([]);
-    
+
 
     const initialValues = {
         RoomNo: '',
-        TypeName: '',
-        View:'',
+        RoomTypeView: '',
         AdditionalCharges: '',
         BaseCharge: '',
         floor: '',
         Status: 'available',
-        AddInfo:''
+        AddInfo: ''
     };
     const validationSchema = Yup.object().shape({
         RoomNo: Yup.string().required("Required")
             .matches(/^[A-Za-z0-9]+$/, 'Must only contain letters and numbers')
             .max(10, 'Must be at most 10 characters long'),
-        TypeName: Yup.string().required("Required"),
-        View: Yup.string().required("Required"),
+            RoomTypeView: Yup.string().required("Required"),
+
         AdditionalCharges: Yup.number().required("Required"),
         floor: Yup.string().required("Required"),
-         AddInfo: Yup.string()
+        AddInfo: Yup.string()
     });
 
- 
+
 
 
     const fetchRoomTypes = async () => {
@@ -51,12 +50,6 @@ function FormOne(props) {
         { key: "1st Floor", value: "1st Floor" },
         { key: "2nd Floor", value: "3rd Floor" }]
 
-    const view = [{ key: "--None Selected --", value: "" },
-    { key: "Beach View", value: "Beach View" },
-    { key: "Pool View", value: "Pool View" },
-    { key: "Graden View", value: "Graden View" },
-    { key: "Patio View", value: "Patio View" },
-    { key: "City View", value: "City View" }]
 
     return (
 
@@ -80,25 +73,24 @@ function FormOne(props) {
                         </span>
 
                         <span>
-                            <Field name="TypeName"
+                            <Field
+                                name="RoomTypeView"
                                 component={Input}
                                 label="Room Type"
                                 type="select"
-                                options={[{ key: "--None Selected --", value: "" }, ...RoomTypes.map(RoomType => ({ key: RoomType.TypeName, value: RoomType.TypeName }))]}
-                                width="13vw" />
-                            <ErrorMessage name="TypeName" component="div" className={style.error} />
+                                options={[
+                                    { key: "--None Selected --", value: "" },
+                                    ...RoomTypes.map(roomType => ({
+                                        key: `${roomType.TypeName}-${roomType.View}`,
+                                        value: `${roomType.TypeName}-${roomType.View}`
+                                    }))
+                                ]}
+                                width="13vw"
+                            />
+
+                            <ErrorMessage name="RoomTypeView" component="div" className={style.error} />
                         </span>
-                        <span>
-                            <Field name="View"
-                                component={Input}
-                                label="View"
-                                type="select"
-                                options={view}
-                             
-                                className={style.inputOne}
-                                width="13vw" />
-                            <ErrorMessage name="View" component="div" className={style.error} />
-                        </span>
+
                         <span>
                             <Field name="AdditionalCharges"
                                 component={Input}
@@ -117,10 +109,10 @@ function FormOne(props) {
                             <ErrorMessage name="floor" component="div" className={style.error} />
                         </span>
 
-                   
-                      
 
-                      
+
+
+
                     </div>
 
                     <div className={style.div2}>

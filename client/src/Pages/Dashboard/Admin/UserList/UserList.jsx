@@ -4,7 +4,7 @@ import styles from './UserList.module.css';
 const UserList = () => {
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Users</h2>
+      <h2 className={styles.title}>User Types</h2>
       <div className={styles.cardList}>
         <div className={styles.card}>
           <div className={styles.cardNumber}>1</div>

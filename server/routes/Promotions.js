@@ -8,10 +8,18 @@ router.get('/',async (req,res)=>{
     console.log(listOfPromotions)
 })
 
-router.post("/",async (req,res)=>{
-    const promotion=req.body
-    await Promotion.create(promotion)
-    res.json(promotion)
-})
-
+router.post("/", async (req, res) => {
+    try {
+      const promotion = req.body;
+      await Promotion.create(promotion);
+      res.json(promotion);
+    } catch (error) {
+      if (error.name === 'SequelizeUniqueConstraintError') {
+        return res.status(400).json({ error: 'promoNo already exists' });
+      }
+      console.error(error);
+      res.status(500).json({ error: 'Failed to create promotion' });
+    }
+  });
+  
 module.exports=router

@@ -10,7 +10,9 @@ function FormOne(props) {
     const [showConfirmation, setShowConfirmation] = useState(false);
 
     const initialValues = {
+        RoomTypeID:'',
         TypeName: '',
+        View:'',
         NoOfBeds: '',
         sqFeet: '',
         StandardCharge: '',
@@ -20,10 +22,20 @@ function FormOne(props) {
         TypeName: Yup.string().required("Required"),
         NoOfBeds: Yup.number().required("Required"),
         sqFeet: Yup.string().required("Required"),
+        View: Yup.string().required("Required"),
         StandardCharge: Yup.number().required("Required"),
     });
 
+
+
+    
   
+    const view = [{ key: "--None Selected --", value: "" },
+    { key: "Beach View", value: "Beach View" },
+    { key: "Pool View", value: "Pool View" },
+    { key: "Graden View", value: "Graden View" },
+    { key: "Patio View", value: "Patio View" },
+    { key: "City View", value: "City View" }]
 
     return (
 
@@ -46,6 +58,19 @@ function FormOne(props) {
                                 width="13vw" />
                             <ErrorMessage name="TypeName" component="div" className={style.error} />
                         </span>
+
+                        <span>
+                            <Field name="View"
+                                component={Input}
+                                label="View"
+                                type="select"
+                                options={view}
+                             
+                                className={style.inputOne}
+                                width="13vw" />
+                            <ErrorMessage name="View" component="div" className={style.error} />
+                        </span>
+
                         <span>
                             <Field name="NoOfBeds"
                                 component={Input}

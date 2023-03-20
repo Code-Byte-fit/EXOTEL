@@ -36,7 +36,8 @@ app.use("/roomtypes",roomTypenRouter);
 const addOnRouter=require('./routes/Addon')
 app.use("/addon",addOnRouter);
 
-
+const adminRouter =require('./routes/Admin')
+app.use("/admin",adminRouter);
 
 
 db.sequelize.sync().then(()=>{

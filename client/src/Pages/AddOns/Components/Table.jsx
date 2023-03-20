@@ -11,8 +11,7 @@ import EditDelete from "../../General/Table/EditDelete";
 function Table(props) {
 
     const [listOfAddons, setlistOfAddons] = useState([]);
-    const [showPopup, setShowPopup] = useState(false);
-    const [selectedAddon, setSelectedAddon] = useState(null);
+ 
 
 
    
@@ -71,7 +70,7 @@ function Table(props) {
     return (
         <span className={style.tableContainer}>
             <label className={style.labelTwo}>Edit/Delete Add Ons</label>
-            <AddOnTable columns={columns} data={listOfAddons} height="35vh" edit pagination/>
+            <AddOnTable columns={columns} data={props.listOfAddons} height="35vh" edit pagination/>
             
            
         </span>
