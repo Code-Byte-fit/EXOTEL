@@ -13,7 +13,7 @@ export default function ReservationsTable(props) {
   const [reservationDetails,setReservationDetails]=useState([]);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [checkInQuery, setCheckInQuery] = useState('');
+  const [checkInQuery, setCheckInQuery] = useState(new Date().toISOString().slice(0, 10));
   const [checkOutQuery, setCheckOutQuery] = useState('');
   const [isFilterActive, setIsFilterActive] = useState(false);
 

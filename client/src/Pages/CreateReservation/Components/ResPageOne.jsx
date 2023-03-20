@@ -31,7 +31,7 @@ const Pacakge = [
   { key: 'Half-Board', value: 'Half-Board' },
 ]
 
-const [dates,setDates]=useState({CheckIn:null,CheckOut:null,CheckInTime: null, CheckOutTime: null});
+const [dates,setDates]=useState({CheckIn:new Date().toISOString().slice(0, 10),CheckOut:null,CheckInTime: null, CheckOutTime: null});
 
 // const [dates,setDates]=useState({CheckIn:null,CheckOut:null})
 // const getDates=(event)=>{

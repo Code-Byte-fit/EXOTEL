@@ -1,7 +1,8 @@
 import {React,useState,useRef,useEffect} from 'react'
-import { NavLink,useMatch,useResolvedPath } from 'react-router-dom';
+import { NavLink} from 'react-router-dom';
+import NavElement from './Components/NavElement';
 import dashBoardIcon from "../../../../../Assets/Images/Dashboard.png"
-import style from "./NavBar.module.css"
+import style from "./Components/NavBar.module.css"
 
 export default function NavBar(props) {
   const [active,setActive]=useState(false);
@@ -56,47 +57,26 @@ export default function NavBar(props) {
       <div className={style.upperIcons}>
       {props.role==="receptionist" && 
       <>
-      <NavLink  to="/guests" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                  <img src={dashBoardIcon}/>
-                  <span>Guests</span>
-          </NavLink>
-      <NavLink  to="/createReservation" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                <img src={dashBoardIcon}/>
-                <span>Create-Reservation</span>
-          </NavLink>
-          <NavLink  to="/reservationTab" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                  <img src={dashBoardIcon}/>
-                  <span>Reservations Tab</span>
-          </NavLink>
-          <NavLink  to="/rooms" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                  <img src={dashBoardIcon}/>
-                  <span>Rooms</span>
-          </NavLink>
-          <NavLink  to="/promotion" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                  <img src={dashBoardIcon}/>
-                  <span>Promotions</span>
-          </NavLink>
-          </>}
+      <NavElement to="/receptionist" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive}/>
+      <NavElement to="/createReservation" icon={dashBoardIcon} desc="Create-Reservation" active={active} setActive={setActive}/>
+      <NavElement to="/reservationTab" icon={dashBoardIcon} desc="Reservations Tab" active={active} setActive={setActive}/>
+      <NavElement to="/rooms" icon={dashBoardIcon} desc="Rooms" active={active} setActive={setActive}/>
+      </>}
+
+      {props.role==="admin" && 
+      <>
+      <NavElement to="/receptionist" icon={dashBoardIcon} desc="a"/>
+      <NavElement to="/createReservation" icon={dashBoardIcon} desc="Create-Reservation"/>
+      <NavElement to="/reservationTab" icon={dashBoardIcon} desc="Reservations Tab"/>
+      <NavElement to="/rooms" icon={dashBoardIcon} desc="Rooms"/>
+      </>}
           
          
       </div>
       <div className={style.lowerIcons}>
-      <NavLink  to="/dashboard" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                    <img src={dashBoardIcon}/>
-                    <span>DashBoard</span>
-      </NavLink>
-          <NavLink  to="/reservationsTab" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                    <img src={dashBoardIcon}/>
-                    <span>Reservations Tab</span>
-          </NavLink>
-          <NavLink  to="/" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                    <img src={dashBoardIcon}/>
-                    <span>DashBoard</span>
-          </NavLink>
-          <NavLink  to="/" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                  <img src={dashBoardIcon}/>
-                  <span>DashBoard</span>
-          </NavLink>
+      <NavElement to="/dashboard" icon={dashBoardIcon} desc="Settings" active={active} setActive={setActive}/>
+      <NavElement to="/dashboard" icon={dashBoardIcon} desc="Help" active={active} setActive={setActive}/>
+      <NavElement to="/dashboard" icon={dashBoardIcon} desc="Log-Out" active={active} setActive={setActive}/>
       </div>
        
     </nav>

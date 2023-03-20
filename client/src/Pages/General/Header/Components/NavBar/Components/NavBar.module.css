@@ -139,10 +139,17 @@
 
 .navLink{
   display: flex;
-  justify-content:safe;
   gap: 1vw;
-  padding: 1vh 0.5vw;
   border-radius: 8px;
+}
+
+.lowerIcons .navLink{
+  gap: 6vw;
+}
+
+.lowerIcons .navLink span{
+  position: relative;
+  right: 4.5vw;
 }
 
 

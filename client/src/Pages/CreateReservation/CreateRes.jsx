@@ -17,7 +17,7 @@ export default function CreateRes() {
         RoomType:"",
         Package:"",
         PromoCode:"",
-        CheckIn:"",
+        CheckIn:new Date().toISOString().slice(0, 10),
         CheckInTime:"",
         CheckOutTime:"",
         CheckOut:"",

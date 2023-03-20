@@ -38,7 +38,7 @@ export default function App() {
                 <Route path="/register" element={<RegisterUser/>}/>
                 <Route path="/guests" element={<Guests/>}/>
             </Route>
-            <Route path="/login" element={<Login/>}/>
+            {!localStorage.getItem('accessToken') && <Route path="/login" element={<Login/>}/>}
             <Route path="*" element={<>Page Not Found</>}/>
             </>
             
@@ -46,10 +46,9 @@ export default function App() {
     )
     
     return(
-        <div>
-            <RouterProvider router={router}/>
-        </div>
-        
+            <div>
+                <RouterProvider router={router}/>
+            </div>
     )
 }
 
