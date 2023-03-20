@@ -1,0 +1,28 @@
+.container{
+margin-left: 48vw;
+   margin-top: 44vh;
+    width: 280px;
+     height: 150px;   
+      
+  position: fixed;
+}
+
+
+.myCal {
+    font-size: 14px;
+    background-color:#EEE6E2;
+    color: #333333;
+    width: 300px;
+    height: 260px;
+border: none;
+font-family: "Poppins", sans-serif;
+  }
+
+  
+
+  .title h3{
+   
+   font-size: 1rem;
+    font-weight: 700;
+  } 
+  

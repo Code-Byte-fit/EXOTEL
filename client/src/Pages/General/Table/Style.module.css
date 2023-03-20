@@ -7,7 +7,6 @@
     z-index: 2;
     position: absolute;
     bottom: 0;
-    box-shadow: -4px -1px 41px -7px rgba(0,0,0,0.75);
     border: 1px solid lightgray;
     width: 70%;
     padding: 1%;
@@ -29,6 +28,11 @@
 .delete:hover{
     background: rgb(229, 75, 75);
 }
+
+.checkIn:hover{
+    background: #4D5949;
+}
+
 
 
 .confirmModal{
@@ -57,6 +61,8 @@
     justify-content: space-between;
 }
 
+
+
 .Btn{
     align-self: center;
     padding: 0.7%;
@@ -74,9 +80,29 @@
     padding: 3%;
 }
 
-.deleteBtn{
+.okBtn{
+    border: 1px solid #4D5949;
+    background: #ffff;
+    color: black;
+    padding: 3%;
+    align-self: center;
+    margin: 9% 0 0 0;
+}
 
+.deleteBtn{
     background: #ef5252;
+    color: white;
+    padding: 3%;
+}
+
+.rebookBtn{
+    background: #4D5949;
+    color: white;
+    padding: 3%;
+}
+
+.checkInBtn{
+    background-color: #4D5949;
     color: white;
     padding: 3%;
 }

@@ -1,5 +1,4 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Arvo&family=Koulen&family=Poppins:wght@300&family=Titillium+Web:wght@300;400;700&family=Ubuntu:wght@500&display=swap%27');
 
 .container {
   width: 92vw;
@@ -65,15 +64,14 @@
   background: #4d5949;
   color: #fcfbff;
   border-radius: 12px;
-  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
+  
   cursor: pointer;
 }
 
 /*table*/
 
 .tableContainer {
-  position: relative;
-  bottom: 1vh;
+  margin: 2vh 5vw 0 0;
 }
 .tbl {
   overflow: hidden;
@@ -112,11 +110,11 @@
 .tableOne th {
   background-color: white;
   top: 0;
-  font-family: "Roboto Mono", monospace;
   font-size: 1rem;
   position: sticky;
   height: 2.5vh;
   margin-bottom: 1vh;
+  font-weight: 100;
 }
 
 .tableOne td,
@@ -135,6 +133,7 @@ th {
 .tableOne thead {
   position: relative;
   bottom: 2vh;
+  font-weight: 100;
 }
 
 tr:nth-child(even) {
@@ -227,15 +226,7 @@ padding-right: 2%;
   margin-left: 43vw;
 }
 
-/* .inputField1{
-  width: '100%';
-  flex-basis: '100%';
-  background-color: #f5f5f5;
- }
 
- .inputField{
-  background-color: #f5f5f5;
- } */
 
 /*filter*/
 
@@ -320,5 +311,37 @@ padding-right: 2%;
 
 .btn {
   border: none;
+}
+
+
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+  cursor: pointer;
+}
+
+.tooltip .tooltipText {
+  visibility: hidden;
+  width: 250px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -125px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltipText {
+  visibility: visible;
+  opacity: 1;
 }
 

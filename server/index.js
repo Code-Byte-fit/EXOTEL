@@ -38,8 +38,8 @@ app.use("/promotions",promotionRouter);
 const roomTypenRouter=require('./routes/RoomTypes')
 app.use("/roomtypes",roomTypenRouter);
 
-// const addOnRouter=require('./routes/AddOns')
-// app.use("/addons",addOnRouter);
+const addOnRouter=require('./routes/Addon')
+app.use("/addon",addOnRouter);
 
 const minibarRouter = require ('./routes/Minibar')
 app.use("/minibar", minibarRouter);

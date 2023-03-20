@@ -15,9 +15,10 @@
     text-align: center;
 }
 
- .InputContainer input[type=text]{
+ .InputContainer input[type=text],.InputContainer input[type=password]{
     padding: 0.8vh 0;
 }
+
 
 .InputContainer input[type=date]{
     padding: 0.8vh 1.7vw;  

@@ -29,9 +29,9 @@ module.exports=(sequelize,Datatypes)=>{
             type:Datatypes.DATEONLY,
             allowNull:false, 
         },
-        addInfo:{
+        AddInfo:{
             type:Datatypes.STRING,
-            allowNull:true, 
+            allowNull:true,
         } },
         {
             timestamps: false

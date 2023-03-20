@@ -32,6 +32,16 @@ export default function RegisterUser() {
     confirmPassword: '',
   }
 
+  const userGroups=[
+    {key:'none Selected',value:''},
+    {key:'Administrator',value:'Administrator'},
+    {key:'FO Manager',value:'FOManager'},
+    {key:'HK Manager',value:'HKManager'},
+    {key:'Receiptionist',value:'Receiptionist'},
+    {key:'Cashier',value:'Cashier'},
+    {key:'Room-Boy',value:'RoomBoy'},
+  ]
+
   
   
 
@@ -51,7 +61,7 @@ export default function RegisterUser() {
                   <span className={style.subHeading}>User Details</span>
                   <div className={style.row}>
                   <span className={style.inputContainer}>
-                    <Field name="firstName" component={Input} label="First Name" type="text" isRequired/>
+                    <Field name="firstName" component={Input} label="First Name" type="text"/>
                     <ErrorMessage name="firstName" component="small" className={style.errorMsg} />
                   </span>
                   <span className={style.inputContainer}>
@@ -61,8 +71,8 @@ export default function RegisterUser() {
                   </div>
                   <div>
                   <span className={style.inputContainer}>
-                    <Field name="birthDate" component={Input} label="Date of Birth" type="date" />
-                    <ErrorMessage name="birthDate" component="small" className={style.errorMsg} />
+                    <Field name="userGroup" component={Input} label="User-Group" type="select" id="userGroup" options={userGroups}/>
+                    <ErrorMessage name="userGroup" component="small" className={style.errorMsg} />
                   </span>
                   <span className={style.inputContainer}>
                     <Field name="country" component={Input} label="Country" type="text" />
@@ -91,11 +101,11 @@ export default function RegisterUser() {
                   </span>
                   <div>
                   <span className={style.inputContainer}>
-                    <Field name="password" component={Input} label="Password" type="text" />
+                    <Field name="password" component={Input} label="Password" type="password" />
                     <ErrorMessage name="password" component="small" className={style.errorMsg} />
                   </span>
                   <span className={style.inputContainer}>
-                    <Field name="confirmPassword" component={Input} label="Confirm Password" type="text" />
+                    <Field name="confirmPassword" component={Input} label="Confirm Password" type="password" />
                     <ErrorMessage name="confirmPassword" component="small" className={style.errorMsg} />
                   </span>
                   </div>

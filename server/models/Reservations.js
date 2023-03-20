@@ -13,12 +13,20 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATEONLY,
       allowNull: false
     },
+    CheckInTime: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    CheckOutTime: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     Source: {
       type: DataTypes.ENUM('Phone', 'Walk-In'),
       allowNull: false
     },
     ReservationStatus: {
-      type: DataTypes.ENUM('active', 'cancelled', 'expired'),
+      type: DataTypes.ENUM('active', 'cancelled', 'expired','Checked-In','Checked-Out'),
       allowNull: false
     },
     totalAmount: {
