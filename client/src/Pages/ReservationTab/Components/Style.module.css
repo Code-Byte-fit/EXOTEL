@@ -11,7 +11,7 @@
 }
 
 .cardContainer{
-    margin: 2vh 0 0 0;
+    margin: 2vh 0 0 5vw;
     justify-content: center;
     gap: 1.5vw;
     display: flex;
@@ -19,22 +19,26 @@
 
 .card{
     display: inline-grid;
-    padding:2vh 5vw;
+    padding:2vh;
+    width: 15vw;
     border-radius: 12px;
     background: #F0EBE2;
+    text-align: center;
 }
 
 .value{
     font-size: 3rem;
+    text-align: center;
 }
 
 .resTableContainer{
-    margin: 10vh 0 0 0;
+    margin: 8vh 0 0 0;
 }
 
 .tableHeader{
     display: flex;
     justify-content: space-between;
+    position: relative;
 }
 
 .headerLeft,.headerRight{
@@ -45,17 +49,17 @@
     margin: 0 0.8vw 0 0;
 }
 
+.headerRight{
+    position:absolute;
+    right: -3vw;
+    gap: 1vw;
+}
+
 .addIcon{
    width: 30px;
    height: 30px;
    margin: 0.2vh 0 0 0;
 }
-
-.select{
-    text-align: center;
-}
-
-
 
 .tableCont{
     margin: 2vh 0 0 0;
@@ -119,3 +123,82 @@
     background:#4D5949;
     color: white;
 }
+
+.filter{
+    z-index: 2;
+    display: flex;
+    gap: 1vw;
+}
+
+.filter input{
+    font-family: "Roboto Mono",monospace;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    text-align: center;
+}
+
+
+.filter input[type=text]{
+    width: 10vw;
+}
+
+.filter input[type=date]{
+    width: 8vw;
+}
+
+
+.filter input:focus {
+    outline: none;
+    border-color: #0398fc;
+    box-shadow: 0 0 0 1px #0398fc;
+   }
+
+.filterIcon{
+    width: 2vw;
+    height: 4vh;
+    cursor: pointer;
+    position: relative;
+    top: 1vh;
+}
+
+.select{
+    z-index: 2;
+    min-width: 16vw;
+}
+
+.select *{
+    text-align: start;
+    font-size: 0.7rem;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.menu{
+    margin: 0 2vw 0 0;
+}
+
+.inputs{
+   display: flex;
+   flex-direction: column;
+   position: relative;
+   bottom: 3.2vh;
+}
+
+.inputs input{
+    padding: 5%;
+}
+
+.inputs input[type="date"]{
+   width: 9vw;
+   padding:6%;
+}
+
+
+
+
+
+
+
+

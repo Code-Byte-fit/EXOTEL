@@ -6,31 +6,24 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
 import ConfirmationPopup from '../../NewRooms/components/ConfirmationPopup';
 
-function FormOne({ handleAddFormChange }) {
+function FormOne(props) {
     const [showConfirmation, setShowConfirmation] = useState(false);
 
     const initialValues = {
         TypeName: '',
         NoOfBeds: '',
         sqFeet: '',
-        BaseCharge: ''
+        StandardCharge: '',
+        AddInfo:''
     };
     const validationSchema = Yup.object().shape({
-        TypeName: Yup.string().required("*Room Type is Required"),
-        NoOfBeds: Yup.number().required("*Base Charge is Required"),
-        sqFeet: Yup.string().required("*Floor is Required"),
-        BaseCharge: Yup.number().required("*Square Feet is Required"),
+        TypeName: Yup.string().required("Required"),
+        NoOfBeds: Yup.number().required("Required"),
+        sqFeet: Yup.string().required("Required"),
+        StandardCharge: Yup.number().required("Required"),
     });
 
-    const makeReq = async (formData) => {
-        await axios.post("http://localhost:3001/roomtypes", formData);
-    }
-
-    const onSubmit = (data) => {
-        makeReq(data)
-
-    };
-
+  
 
     return (
 
@@ -39,7 +32,7 @@ function FormOne({ handleAddFormChange }) {
 
             <label className={style.labelOne}>Add Room Type</label>
 
-            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
+            <Formik initialValues={initialValues} onSubmit={props.makeReq} validationSchema={validationSchema} >
                 <Form>
 
                     <div className={style.div1}>
@@ -49,16 +42,16 @@ function FormOne({ handleAddFormChange }) {
                                 component={Input}
                                 label="Room Type"
                                 type="text"
-                                onBlur={handleAddFormChange}
+                            
                                 width="13vw" />
                             <ErrorMessage name="TypeName" component="div" className={style.error} />
                         </span>
                         <span>
                             <Field name="NoOfBeds"
                                 component={Input}
-                                label="No Of Beds"
+                                label="No of Beds"
                                 type="text"
-                                onBlur={handleAddFormChange}
+                               
                                 width="13vw" />
                             <ErrorMessage name="NoOfBeds" component="div" className={style.error} />
                         </span>
@@ -67,27 +60,26 @@ function FormOne({ handleAddFormChange }) {
                                 component={Input}
                                 label="Square Feet"
                                 type="text"
-                                onBlur={handleAddFormChange}
+                              
                                 width="13vw" />
                             <ErrorMessage name="sqFeet" component="div" className={style.error} />
                         </span>
                         
                         <span>
-                            <Field name="BaseCharge"
+                            <Field name="StandardCharge"
                                 component={Input}
-                                label="Base Charge"
+                                label="Standard Charge"
                                 type="text"
-                                onBlur={handleAddFormChange}
+                            
                                 width="13vw" />
-                            <ErrorMessage name="BaseCharge" component="div" className={style.error} />
+                            <ErrorMessage name="StandardCharge" component="div" className={style.error} />
                         </span>
-
 
                     </div>
 
                     <div className={style.div2}>
 
-                        <Field name="addInfo"
+                        <Field name="AddInfo"
                             component={Input}
                             label="Additional Information"
                             type="textarea"

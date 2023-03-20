@@ -7,13 +7,24 @@ module.exports = (sequelize, Datatypes) => {
         allowNull: false,
         primaryKey: true,
       },
-
+      View: {
+        type: Datatypes.STRING,
+        allowNull: true,
+      },
       floor: {
         type: Datatypes.STRING,
         allowNull: false,
       },
-      addInfo: {
+      AddInfo: {
         type: Datatypes.STRING,
+        allowNull: true,
+      },
+      AdditionalCharges: {
+        type: Datatypes.FLOAT,
+        allowNull: true,
+      },
+      BaseCharge: {
+        type: Datatypes.FLOAT,
         allowNull: true,
       },
       Status: {

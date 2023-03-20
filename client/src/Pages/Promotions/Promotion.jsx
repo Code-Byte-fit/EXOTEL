@@ -2,7 +2,7 @@ import React from "react";
 
 
 import DisplayFormData from "../Promotions/components/DisplayFormData";
-import style from '../../Pages/Promotions/components/Rooms.module.css'
+import style from '../../Pages/Promotions/components/Promotions.module.css'
 
 function Rooms(){
    return(<>

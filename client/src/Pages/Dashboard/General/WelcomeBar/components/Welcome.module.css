@@ -1,0 +1,48 @@
+/* .topSection{
+ background-color: #DACBCB;
+} */
+
+.headerSection{
+    background: rgb(221,210,188);
+    background: linear-gradient(0deg, rgba(221,210,188,1) 0%, rgba(71,67,60,1) 100%, rgba(0,0,0,1) 100%);
+    width: 70%;
+    height: 18%;
+    position: fixed;
+    bottom: 67vh;
+    left: 5vw;
+    border-radius: 0.8rem;
+   
+}
+
+.title{
+    position: relative;
+    margin-left: 20vw;
+    margin-top: 3vh;
+  
+}
+
+.head{
+    font-size: 2rem;
+    color: black;
+    font-weight: 700;
+    
+ 
+}
+
+.para{
+    font-size: medium;
+    color: black;
+    font-weight: 500;
+  
+}
+
+.cardSection{
+    position: relative;
+  margin-left: 4vw;
+  margin-top: 3vh;
+ 
+}
+
+.cardSection .img {
+    width: 13vw;
+}

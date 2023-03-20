@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import  { useEffect } from 'react';
 import Input from "../../General/Inputs/Inputs";
 import style from "./Rooms.module.css";
 import axios from 'axios';
@@ -6,43 +7,43 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
 import ConfirmationPopup from '../../NewRooms/components/ConfirmationPopup';
 
-function FormOne({ handleAddFormChange }) {
+function FormOne(props) {
     const [showConfirmation, setShowConfirmation] = useState(false);
+    const [RoomTypes, setRoomTypes] = useState([]);
+    
 
     const initialValues = {
         RoomNo: '',
-        TypeId: '',
+        TypeName: '',
+        View:'',
+        AdditionalCharges: '',
         BaseCharge: '',
         floor: '',
-        sqFeet: '',
-        Status: 'available'
+        Status: 'available',
+        AddInfo:''
     };
     const validationSchema = Yup.object().shape({
-        RoomNo: Yup.string().required("*Room Number is Required")
+        RoomNo: Yup.string().required("Required")
             .matches(/^[A-Za-z0-9]+$/, 'Must only contain letters and numbers')
-            .max(10, 'Room Number must be at most 10 characters long'),
-        TypeId: Yup.string().required("*Room Type is Required"),
-        BaseCharge: Yup.number().required("*Base Charge is Required"),
-        floor: Yup.string().required("*Floor is Required"),
-        sqFeet: Yup.number().required("*Square Feet is Required"),
+            .max(10, 'Must be at most 10 characters long'),
+        TypeName: Yup.string().required("Required"),
+        View: Yup.string().required("Required"),
+        AdditionalCharges: Yup.number().required("Required"),
+        floor: Yup.string().required("Required"),
+         AddInfo: Yup.string()
     });
 
-    const makeReq = async (formData) => {
-        await axios.post("http://localhost:3001/rooms", formData);
+ 
+
+
+    const fetchRoomTypes = async () => {
+        const response = await axios.get("http://localhost:3001/roomtypes");
+        setRoomTypes(response.data);
     }
 
-    const onSubmit = (data) => {
-        makeReq(data)
-
-    };
-
-
-
-    const baseCharge = [
-        { key: "--None Selected --", value: "" },
-        { key: "500", value: "500" },
-        { key: "1000", value: "1000" },
-        { key: "2000", value: "2000" }]
+    useEffect(() => {
+        fetchRoomTypes();
+    }, []);
 
     const Floor = [
         { key: "--None Selected --", value: "" },
@@ -50,10 +51,12 @@ function FormOne({ handleAddFormChange }) {
         { key: "1st Floor", value: "1st Floor" },
         { key: "2nd Floor", value: "3rd Floor" }]
 
-    const sqFeet = [{ key: "--None Selected --", value: "" },
-    { key: "250 cm2", value: "250" },
-    { key: "500 cm2", value: "500" },
-    { key: "550 cm2", value: "550" }]
+    const view = [{ key: "--None Selected --", value: "" },
+    { key: "Beach View", value: "Beach View" },
+    { key: "Pool View", value: "Pool View" },
+    { key: "Graden View", value: "Graden View" },
+    { key: "Patio View", value: "Patio View" },
+    { key: "City View", value: "City View" }]
 
     return (
 
@@ -62,7 +65,7 @@ function FormOne({ handleAddFormChange }) {
 
             <label className={style.labelOne}>Add Room</label>
 
-            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
+            <Formik initialValues={initialValues} onSubmit={props.makeReq} validationSchema={validationSchema} >
                 <Form>
 
                     <div className={style.div1}>
@@ -72,29 +75,37 @@ function FormOne({ handleAddFormChange }) {
                                 component={Input}
                                 label="Room Number"
                                 type="text"
-                                onBlur={handleAddFormChange}
                                 width="13vw" />
                             <ErrorMessage name="RoomNo" component="div" className={style.error} />
                         </span>
 
                         <span>
-                            <Field name="TypeId"
+                            <Field name="TypeName"
                                 component={Input}
                                 label="Room Type"
-                                type="text"
-                                onBlur={handleAddFormChange}
+                                type="select"
+                                options={[{ key: "--None Selected --", value: "" }, ...RoomTypes.map(RoomType => ({ key: RoomType.TypeName, value: RoomType.TypeName }))]}
                                 width="13vw" />
-                            <ErrorMessage name="TypeId" component="div" className={style.error} />
+                            <ErrorMessage name="TypeName" component="div" className={style.error} />
                         </span>
                         <span>
-                            <Field name="BaseCharge"
+                            <Field name="View"
                                 component={Input}
-                                label="Base Charge"
+                                label="View"
                                 type="select"
-                                options={baseCharge}
-                                onBlur={handleAddFormChange}
+                                options={view}
+                             
+                                className={style.inputOne}
                                 width="13vw" />
-                            <ErrorMessage name="BaseCharge" component="div" className={style.error} />
+                            <ErrorMessage name="View" component="div" className={style.error} />
+                        </span>
+                        <span>
+                            <Field name="AdditionalCharges"
+                                component={Input}
+                                label="Additional Charges"
+                                type="text"
+                                width="13vw" />
+                            <ErrorMessage name="AdditionalCharges" component="div" className={style.error} />
                         </span>
                         <span>
                             <Field name="floor"
@@ -102,25 +113,18 @@ function FormOne({ handleAddFormChange }) {
                                 label="Floor"
                                 type="select"
                                 options={Floor}
-                                onBlur={handleAddFormChange}
                                 width="13vw" />
                             <ErrorMessage name="floor" component="div" className={style.error} />
                         </span>
-                        <span>
-                            <Field name="sqFeet"
-                                component={Input}
-                                label="Square Feet"
-                                type="select"
-                                options={sqFeet}
-                                className={style.inpuOne}
-                                onBlur={handleAddFormChange}
-                                width="13vw" />
-                            <ErrorMessage name="sqFeet" component="div" className={style.error} />
-                        </span>
+
+                   
+                      
+
+                      
                     </div>
 
                     <div className={style.div2}>
-                        <Field name="addInfo"
+                        <Field name="AddInfo"
                             component={Input}
                             label="Additional Information"
                             type="textarea"

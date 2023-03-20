@@ -1,12 +1,31 @@
-import React, { useState } from "react";
+import React, { useState,useEffect} from "react";
 import Table from "./Table";
 import FormOne from "./Form";
 import data from "./Mock-data.json"
 import Popup from "./EditPopup";
 import { nanoid } from 'nanoid';
 import Filter from "./EditPopup";
+import axios from "axios";
 
 function DisplayFormData() {
+  const [listOfRooms, setlistOfRooms] = useState([]);
+
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/rooms").then((response) => {
+      setlistOfRooms(response.data);
+      console.log(listOfRooms)
+      
+    });
+  },[]);
+
+    const makeReq = async (formData) => {
+        await axios.post("http://localhost:3001/rooms", formData).then(()=>{
+            axios.get("http://localhost:3001/rooms").then((response) => {
+                setlistOfRooms(response.data);
+        });
+        })
+    }
 
   
     const [rooms, setRooms] = useState(data);
@@ -22,44 +41,13 @@ function DisplayFormData() {
 
 
 
-    const handleAddFormChange = (event) => {
-        event.preventDefault();
-
-        const fieldName = event.target.getAttribute('name');
-        const fieldValue = event.target.value;
-
-        const newFormData = { ...addFormData };
-        newFormData[fieldName] = fieldValue;
-
-        setAddFormData(newFormData);
-    }
-
-    const handleAddFormSubmit = (event) => {
-        event.preventDefault();
-
-        const newRoom = {
-            id: nanoid(),
-            roomNumber: addFormData.roomNumber,
-            roomType: addFormData.roomType,
-            BaseCharge: addFormData.BaseCharge,
-            floor: addFormData.floor,
-            sqFeet: addFormData.sqFeet
-        };
-
-        const newRooms = [...rooms, newRoom];
-        setRooms(newRooms);
-    };
-
-
-
-
     return (
         <React.Fragment>
-
-            <FormOne handleAddFormChange={handleAddFormChange}
+            <FormOne 
+                makeReq={makeReq}
                 addFormData={addFormData} />
           
-            <Table rooms={rooms} />
+            <Table rooms={rooms} listOfRooms={listOfRooms}/>
            
         </React.Fragment>
 
