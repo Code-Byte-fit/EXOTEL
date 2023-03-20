@@ -10,7 +10,7 @@ function Cal() {
   return (
     <div className={style.container}>
     <div className={style.title}>
-        <h3>Calendar</h3>
+        {/* <h3>Calendar</h3> */}
     </div>
       <Calendar 
         onChange={onChange} 

@@ -1,20 +1,16 @@
 /* This CSS will be applied to all screen sizes */
 .headerSection{
-    background: rgb(221,210,188);
     background: linear-gradient(0deg, rgba(221,210,188,1) 0%, rgba(153,138,71,1) 100%, rgba(0,0,0,0.7344187675070029) 100%);
-    width: 70%;
-    height: 20%;
-    position: fixed;
-    bottom: 67vh;
-    left: 5vw;
+    display: flex;
+    width: clamp(70vw,70vw,70vw);
+    padding: 2.5vh 0;
     border-radius: 0.8rem;
+    margin: 8vh 0 0 4.5vw;
+    position: relative;
+    justify-content: center;
 }
 
-.title{
-    position: relative;
-    margin-left: 20vw;
-    margin-top: 3vh;
-}
+
 
 .head{
     font-size: 2.2rem;
@@ -29,16 +25,16 @@
 }
 
 .cardSection{
-    position: relative;
-    margin-left: 4vw;
-    margin-top: 3vh;
+    position: absolute;
+    top: -6vh;
+    left: 2vw;
 }
 
 .cardSection .img {
-    width: 13vw;
+    width: 185px;
 }
 
-/* Media queries to adjust styles for smaller screen sizes */
+/* Media queries to adjust styles for smaller screen sizes
 @media (max-width: 768px) {
     .headerSection {
         width: 90%;
@@ -86,5 +82,14 @@
     }
     .cardSection .img {
         width: 30vw;
+    }
+} */
+
+@media (max-width: 1000px) {
+    .headerSection{
+        justify-content: flex-end;
+    }
+    .title{
+        margin: 0 1vw 0 0;
     }
 }
