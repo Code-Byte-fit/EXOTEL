@@ -81,6 +81,11 @@ export default function ReservationsTable(props) {
       sortable: true,
     },
     {
+      name: 'CHARGE',
+      selector: row => row.totalAmount,
+      sortable: true,
+    },
+    {
       name: 'SOURCE',
       selector: row => row.Source,
       sortable: true,

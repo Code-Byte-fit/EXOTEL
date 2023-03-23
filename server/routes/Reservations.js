@@ -7,7 +7,7 @@ const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations,GuestEmai
 
 router.get('/',async (req,res)=>{
     const listOfReservations=await Reservations.findAll({
-      attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
+      attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source','totalAmount'],
       include: [
         {
           model: Guests,
@@ -27,7 +27,7 @@ router.get('/',async (req,res)=>{
 
 
 router.post("/",async (req,res)=>{
-    try{const{CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus}=req.body
+    try{const{CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus,totalAmount}=req.body
     let isGuest = await Guests.findOne({
       where: {
         firstName: FirstName.trim(),
@@ -72,6 +72,7 @@ router.post("/",async (req,res)=>{
         CheckOutTime,
         Source,
         ReservationStatus,
+        totalAmount,
         guestId: guestId,
     });
     for (const roomNumber of SelectedRooms) {
