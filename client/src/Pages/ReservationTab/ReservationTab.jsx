@@ -10,7 +10,6 @@ export default function ReservationTab() {
   useEffect(()=>{
     axios.get("http://localhost:3001/reservations/todayStats").then((response)=>{
       setStats(response.data)
-      console.log(stats)
      })
    },[])
   
@@ -22,9 +21,9 @@ export default function ReservationTab() {
                 <StatCard value={stats.checkins} desc="Arrivals"/>
                 <StatCard value={stats.checkouts} desc="Departures"/>
                 <StatCard value={stats.stayovers} desc="Stay-overs"/>
-                <StatCard value="32" desc="Rooms Available"/>
+                <StatCard value={stats.availableRooms} desc="Rooms Available"/>
             </div>
-            <ReservationsTable/>
+            <ReservationsTable setStats={setStats}/>
         </div>
     </>
   )

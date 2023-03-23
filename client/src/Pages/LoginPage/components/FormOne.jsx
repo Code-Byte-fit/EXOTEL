@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios"; 
 import style from '../components/Login.module.css'
 import {Formik,Form,Field,ErrorMessage} from 'formik'
@@ -7,8 +7,6 @@ import * as Yup from 'yup'
 import { useNavigate } from 'react-router-dom';
 
 function FormOne(props){
-    // const [userName, setUsername] = useState([]); // define setListOfLogin
-    // const [passWord, setPassword] = useState([]); // define setListOfLogin
     
     const navigate = useNavigate();
 
@@ -22,8 +20,7 @@ function FormOne(props){
             if(response.data.error) {
                 alert(response.data.error);
             }else{
-                sessionStorage.setItem("accessToken", response.data);
-                console.log(response.data)
+                localStorage.setItem("accessToken", response.data);
                 navigate('/');
             }
             
@@ -48,10 +45,6 @@ function FormOne(props){
                 label = "User Name"
                 type = "text"
                 width = "20vw"
-                // value={userName}
-                // onChange={(event) =>{
-                //     setUsername(event.target.value);
-                // }}
                 />
                 
                 <ErrorMessage name="userName" component="span"/>
@@ -61,9 +54,6 @@ function FormOne(props){
                 label = "Password"
                 type = "text"
                 width = "20vw"
-                // onChange={(event) =>{
-                //     setPassword(event.target.value);
-                // }}
                 />
                 <ErrorMessage name="password" component="span"/>
                 </div>
@@ -75,12 +65,6 @@ function FormOne(props){
         </Formik>
 
 
-
-    {/* <label className={style.lbl2}>Welcome Back,</label>
-    <TextInput placeholder="Email" type="text"/>
-    <TextInput placeholder="Password" type="password" /> */}
-    {/* <input type="checkbox" className={style.check}/>
-    <span className={style.remember}>Remember Me</span> */}
     
 </div>
 

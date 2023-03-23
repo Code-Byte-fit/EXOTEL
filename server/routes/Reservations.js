@@ -2,12 +2,10 @@ const express=require('express')
 const router=express.Router()
 const {Sequelize,Op} = require('sequelize');
 const moment = require('moment');
-const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations}=require('../models')
+const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations,GuestEmail,GuestPhoneNumber}=require('../models')
 
 
 router.get('/',async (req,res)=>{
-    // const listOfReservations=await Reservations.findAll()
-    // res.json(listOfReservations)
     const listOfReservations=await Reservations.findAll({
       attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
       include: [
@@ -27,9 +25,46 @@ router.get('/',async (req,res)=>{
     res.json(listOfReservations)
 })
 
+
 router.post("/",async (req,res)=>{
     try{const{CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus}=req.body
-    const guest = await Guests.create({ FirstName, LastName, DOB, Country, Email, PhoneNumber });
+    let isGuest = await Guests.findOne({
+      where: {
+        firstName: FirstName.trim(),
+        lastName: LastName.trim()
+      }
+    });
+    let guestId=null;
+    if (!isGuest) {
+      const guest = await Guests.create({ FirstName, LastName, DOB, Country });
+      await GuestEmail.create({ email: Email, guestId: guest.id });
+      guestId=guest.id
+    } 
+    else {
+      guestId=isGuest.id
+      const guestEmail = await GuestEmail.findOne({
+        where: { guestId: guestId, email: Email }
+      });
+      if (!guestEmail) {
+        await GuestEmail.create({ email: Email, guestId: guestId });
+      }
+      
+       // Check if phone number already exists for guest
+       const guestPhoneNumber = await GuestPhoneNumber.findOne({
+        where: {
+          guestId,
+          phoneNumber: PhoneNumber.trim(),
+        },
+      });
+      if (!guestPhoneNumber) {
+        // Add phone number to guest phone number list
+        await GuestPhoneNumber.create({
+          guestId,
+          phoneNumber: PhoneNumber.trim(),
+        });
+      }
+
+    }
     const reservation = await Reservations.create({
         CheckIn,
         CheckOut,
@@ -37,7 +72,7 @@ router.post("/",async (req,res)=>{
         CheckOutTime,
         Source,
         ReservationStatus,
-        guestId: guest.id,
+        guestId: guestId,
     });
     for (const roomNumber of SelectedRooms) {
         const room = await Rooms.findOne({ where: { RoomNo: roomNumber.RoomNo } });
@@ -55,84 +90,84 @@ router.post("/",async (req,res)=>{
       }
 })
 
-router.get('/reservationTab', async (req, res) => {
+// router.get('/reservationTab', async (req, res) => {
   
-  const currentDate = new Date();
-  const tomorrowDate = new Date();
-  tomorrowDate.setDate(currentDate.getDate() + 1);
-
-  
-  const todaysReservations = await Reservations.findAll({
-    attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
-    include: [
-      {
-        model: Guests,
-        attributes: ['id', 'FirstName']
-      },
-      {
-        model: Rooms,
-        attributes: ['RoomNo'],
-        through: {
-          attributes: []
-        }
-      }
-    ],
-    where: {
-      CheckIn: {
-        [Op.gte]: currentDate,
-        [Op.lt]: tomorrowDate
-      }
-    }
-  });
+//   const currentDate = new Date();
+//   const tomorrowDate = new Date();
+//   tomorrowDate.setDate(currentDate.getDate() + 1);
 
   
-  const tomorrowsReservations = await Reservations.findAll({
-    attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
-    include: [
-      {
-        model: Guests,
-        attributes: ['id', 'FirstName']
-      },
-      {
-        model: Rooms,
-        attributes: ['RoomNo'],
-        through: {
-          attributes: []
-        }
-      }
-    ],
-    where: {
-      CheckIn: {
-        [Op.between]: [tomorrowDate, new Date(tomorrowDate.getTime() + 24 * 60 * 60 * 1000)]
-      }
-    }
-  });
+//   const todaysReservations = await Reservations.findAll({
+//     attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
+//     include: [
+//       {
+//         model: Guests,
+//         attributes: ['id', 'FirstName']
+//       },
+//       {
+//         model: Rooms,
+//         attributes: ['RoomNo'],
+//         through: {
+//           attributes: []
+//         }
+//       }
+//     ],
+//     where: {
+//       CheckIn: {
+//         [Op.gte]: currentDate,
+//         [Op.lt]: tomorrowDate
+//       }
+//     }
+//   });
 
-  const formattedTodaysReservations = todaysReservations.map(reservation => ({
-    id: reservation.id,
-    guestFirstName: reservation.Guest.FirstName,
-    rooms: reservation.Rooms.map(room => room.RoomNo),
-    checkIn: reservation.CheckIn,
-    checkOut: reservation.CheckOut,
-    reservationStatus: reservation.ReservationStatus,
-    source: reservation.Source
-  }));
+  
+//   const tomorrowsReservations = await Reservations.findAll({
+//     attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
+//     include: [
+//       {
+//         model: Guests,
+//         attributes: ['id', 'FirstName']
+//       },
+//       {
+//         model: Rooms,
+//         attributes: ['RoomNo'],
+//         through: {
+//           attributes: []
+//         }
+//       }
+//     ],
+//     where: {
+//       CheckIn: {
+//         [Op.between]: [tomorrowDate, new Date(tomorrowDate.getTime() + 24 * 60 * 60 * 1000)]
+//       }
+//     }
+//   });
 
-  const formattedTomorrowsReservations = tomorrowsReservations.map(reservation => ({
-    id: reservation.id,
-    guestFirstName: reservation.Guest.FirstName,
-    rooms: reservation.Rooms.map(room => room.RoomNo),
-    checkIn: reservation.CheckIn,
-    checkOut: reservation.CheckOut,
-    reservationStatus: reservation.ReservationStatus,
-    source: reservation.Source
-  }));
+//   const formattedTodaysReservations = todaysReservations.map(reservation => ({
+//     id: reservation.id,
+//     guestFirstName: reservation.Guest.FirstName,
+//     rooms: reservation.Rooms.map(room => room.RoomNo),
+//     checkIn: reservation.CheckIn,
+//     checkOut: reservation.CheckOut,
+//     reservationStatus: reservation.ReservationStatus,
+//     source: reservation.Source
+//   }));
 
-  res.json({
-    todaysReservations: formattedTodaysReservations,
-    tomorrowsReservations: formattedTomorrowsReservations
-  });
-});
+//   const formattedTomorrowsReservations = tomorrowsReservations.map(reservation => ({
+//     id: reservation.id,
+//     guestFirstName: reservation.Guest.FirstName,
+//     rooms: reservation.Rooms.map(room => room.RoomNo),
+//     checkIn: reservation.CheckIn,
+//     checkOut: reservation.CheckOut,
+//     reservationStatus: reservation.ReservationStatus,
+//     source: reservation.Source
+//   }));
+
+//   res.json({
+//     todaysReservations: formattedTodaysReservations,
+//     tomorrowsReservations: formattedTomorrowsReservations
+//   });
+// });
 
 
 router.put("/",async (req,res)=>{
@@ -145,9 +180,6 @@ router.put("/",async (req,res)=>{
   },{where:{id:id}})
   res.json("updated Successfully")
 })
-
-
-
 
 router.put("/Cancel/:resId",async (req,res)=>{
   const resID=req.params.resId;
@@ -242,17 +274,57 @@ router.put("/CheckIn/:resId",async (req,res)=>{
   }
 });
 
+
 router.get('/todayStats', async (req, res) => {
   try {
     const today = moment().startOf('day');
 
-    const checkins = await Reservations.count({
+    // Get the reservation IDs for today's check-ins
+    const checkinReservations = await Reservations.findAll({
+      attributes: ['id'],
       where: {
         CheckIn: {[Op.eq]: today.toDate()},
         ReservationStatus: 'active',
       },
     });
+    const checkinReservationIds = checkinReservations.map(r => r.id);
 
+    // Get the number of rooms associated with each check-in reservation
+    const roomsPerCheckin = await ReservationRoom.findAll({
+      attributes: ['ReservationId', [Sequelize.fn('COUNT', Sequelize.col('RoomRoomNo')), 'count']],
+      where: {
+        ReservationId: {[Op.in]: checkinReservationIds},
+      },
+      group: ['ReservationId'],
+    });
+
+    // Calculate the total number of rooms associated with today's check-ins
+    const checkinRooms = roomsPerCheckin.reduce((acc, cur) => acc + cur.dataValues.count, 0);
+
+      // Get the reservation IDs for today's check-ins
+      const stayoverReservations = await Reservations.findAll({
+      attributes: ['id'],
+      where: {
+        CheckIn: {[Op.lt]: today.toDate()},
+        CheckOut: {[Op.gt]: today.toDate()},
+        ReservationStatus: 'Checked-In',
+      },
+    });
+    const stayoverReservationIds = stayoverReservations.map(r => r.id);
+
+    // Get the number of rooms associated with each check-in reservation
+    const roomsPerStayover = await ReservationRoom.findAll({
+      attributes: ['ReservationId', [Sequelize.fn('COUNT', Sequelize.col('RoomRoomNo')), 'count']],
+      where: {
+        ReservationId: {[Op.in]: stayoverReservationIds},
+      },
+      group: ['ReservationId'],
+    });
+
+    // Calculate the total number of rooms associated with today's stayovers
+      const stayoverRooms = roomsPerStayover.reduce((acc, cur) => acc + cur.dataValues.count, 0);
+
+    // Get the number of check-outs for today
     const checkouts = await Reservations.count({
       where: {
         CheckOut: {[Op.eq]: today.toDate()},
@@ -260,35 +332,21 @@ router.get('/todayStats', async (req, res) => {
       },
     });
 
-    const stayovers = await Reservations.count({
-      where: {
-        CheckIn: {
-          [Op.lt]: today.toDate(),
-        },
-        CheckOut: {
-          [Op.gt]: today.toDate(),
-        },
-        ReservationStatus: 'Checked-In',
-      },
-    })
 
-    res.status(200).json({checkins,checkouts,stayovers,});
+    // Calculate the number of available rooms
+    const totalRooms = await Rooms.count();
+    const availableRooms = totalRooms - (checkinRooms + stayoverRooms);
+
+    res.status(200).json({checkins: checkinReservationIds.length, checkinRooms, checkouts, stayovers:stayoverReservationIds.length, availableRooms});
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error' });
   }
 });
 
+
+
+    
+
 module.exports = router;
 
-
-
-
-
-
-
-
-
-
-
-module.exports=router

@@ -1,6 +1,6 @@
 import React from 'react'
 import {Formik,Form} from "formik"
-
+import { differenceInDays } from 'date-fns';
 import ConfirmReservation from './ConfirmReservation';
 import style from "./Style.module.css"
 
@@ -32,7 +32,7 @@ export default function ResPageThree(props) {
                                     </div>
                                     <div>
                                         <span className={style.detailsLabel}>Nights</span>
-                                        <span>{props.data.CheckIn}</span>
+                                        <span className={style.nights}>{differenceInDays(new Date(props.data.CheckOut), new Date(props.data.CheckIn)).toString().padStart(2, '0')}</span>
                                     </div>
                                     <div>
                                         <span className={style.detailsLabel}>Reservation Date</span>
