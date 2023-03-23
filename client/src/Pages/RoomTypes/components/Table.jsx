@@ -5,9 +5,9 @@ import sort from "../../../Assets/Images/sort.png";
 import editIcon from "../../../Assets/Images/Small FAB(1).png";
 import deleteIcon from "../../../Assets/Images/Small FAB.png";
 import { useEffect } from "react";
-import Popup from "./EditPopup";
+// import Popup from "./EditPopup";
 import RoomTypeTable from '../../General/Table/Table'
-import EditDelete from "../../General/Table/EditDelete";
+import EditDelete from "./EditDelete";
 
 
 function Table(props) {
@@ -64,7 +64,7 @@ function Table(props) {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete/>
+      cell: (row) => <EditDelete setlistOfRoomTypes={setlistOfRoomTypes} row={row}/>
     },
 ];
   return (

@@ -3,8 +3,8 @@ import style from "./Rooms.module.css";
 import axios from "axios";
 import { useEffect } from "react";
 import RoomTable from "../../General/Table/Table";
-import EditDelete from "../../General/Table/EditDelete";
-import Popup from "./EditPopup";
+import EditDelete from "./EditDelete";
+
 
 function Table(props) {
   const [listOfRooms, setlistOfRooms] = useState([]);
@@ -21,13 +21,13 @@ function Table(props) {
  
   const columns = [
     {
-        name: 'ROOM-NO',
+        name: 'ROOM NO',
         selector: row => row.RoomNo,
         sortable: true,
     },
  
     {
-      name: 'TYPE-NAME',
+      name: 'TYPE NAME',
       selector: row => row.RoomTypeView,
       sortable: true,
     },
@@ -59,8 +59,8 @@ function Table(props) {
   },
     
     {
-      name: 'BASE CHARGE',
-      selector: row => row.BaseCharge,
+      name: 'TOTAL CHARGE($)',
+      selector: row => row.TotalCharge,
       sortable: true,
     },
     {
@@ -76,7 +76,7 @@ function Table(props) {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete/>
+      cell: (row) => <EditDelete setlistOfRooms={setlistOfRooms} row={row}/>
     },
 ];
 

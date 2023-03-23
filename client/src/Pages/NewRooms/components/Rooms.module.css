@@ -41,10 +41,16 @@
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
+.box{
+  position: relative;
+}
+
 .error {
+  position:absolute;
   color: rgb(141, 22, 22);
   font-size: 0.8rem;
-  margin-top: 0.5rem;
+  display: block;
+  right: 0;
 }
 
 .createBtn {
@@ -345,3 +351,83 @@ padding-right: 2%;
   opacity: 1;
 }
 
+/**/
+
+.inputCont,.btnCont,.confirmBtnCont{
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 3% auto;
+  
+}
+
+.editCont{
+  height: 190%;
+  width: 105%;
+  background-color:white;
+  border-radius: 8px;
+  position: relative;
+  right: 2.5%;
+  bottom: 40%;
+  
+}
+
+
+.inputCont select{
+  width: 12vw;
+}
+
+.btnCont{
+  margin: 5% auto;
+}
+
+.confirmBtnCont{
+  margin:6% auto;
+}
+
+.editBtn{
+  padding: 2.2% 2%;
+  font-size: 0.7rem;
+  color: #4D5949;
+  background: white;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  width: clamp(3vw,12.2vw,12.2vw);
+}
+
+.cancelBtn,.confirmBtn  {
+  padding: 3%;
+  font-size: 0.9rem;
+}
+
+.cancelBtn{
+  border:1px solid #4D5949;
+}
+
+.confirmBtn{
+  background:#4D5949;
+  color: white;
+}
+
+
+
+.editHeading{
+  font-size: 1.4rem;
+  padding: 2% 0 0 0;
+}
+
+.box1{
+
+  margin-left: 2vw;
+}
+
+.Editdiv2{
+
+ margin: 0 2vw 0 2vw;
+
+}
+
+.Editdiv1{
+  margin: 0 2vw 0 0;
+  
+}

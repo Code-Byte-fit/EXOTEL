@@ -22,7 +22,7 @@ module.exports=(sequelize,Datatypes)=>{
             type:Datatypes.FLOAT,
             allowNull:true,
         },
-        BaseCharge:{
+        TotalCharge:{
             type:Datatypes.FLOAT,
             allowNull:true,
         },

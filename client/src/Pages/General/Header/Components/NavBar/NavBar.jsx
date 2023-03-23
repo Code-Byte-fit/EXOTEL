@@ -55,15 +55,15 @@ export default function NavBar() {
     
     <nav className={`${style.navMenu} ${active && style.navActive}`} ref={navMenuRef}>
       <div className={style.upperIcons}>
-          <NavLink  to="/createReservation" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
+          <NavLink  to="/addon" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
                 <img src={dashBoardIcon}/>
-                <span>Create-Reservation</span>
+                <span>Add-Ons</span>
           </NavLink>
-          <NavLink  to="/reservationTab" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
+          <NavLink  to="/roomtypes" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
                   <img src={dashBoardIcon}/>
-                  <span>Reservations Tab</span>
+                  <span>Room Types</span>
           </NavLink>
-          <NavLink  to="/" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
+          <NavLink  to="/admin" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
                   <img src={dashBoardIcon}/>
                   <span>DashBoard</span>
           </NavLink>

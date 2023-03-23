@@ -5,7 +5,6 @@ import style from "./Rooms.module.css";
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
-import ConfirmationPopup from '../../NewRooms/components/ConfirmationPopup';
 
 function FormOne(props) {
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -16,24 +15,26 @@ function FormOne(props) {
         RoomNo: '',
         RoomTypeView: '',
         AdditionalCharges: '',
-        BaseCharge: '',
+        TotalCharge: '',
         floor: '',
         Status: 'available',
         AddInfo: ''
     };
     const validationSchema = Yup.object().shape({
-        RoomNo: Yup.string().required("Required")
-            .matches(/^[A-Za-z0-9]+$/, 'Must only contain letters and numbers')
-            .max(10, 'Must be at most 10 characters long'),
-            RoomTypeView: Yup.string().required("Required"),
-
-        AdditionalCharges: Yup.number().required("Required"),
-        floor: Yup.string().required("Required"),
-        AddInfo: Yup.string()
-    });
-
-
-
+        RoomNo: Yup.string()
+          .required('Required')
+          .matches(/^[A-Za-z0-9]+$/, 'Must only contain letters and numbers')
+          .max(10, 'Must be at most 10 characters long'),
+        RoomTypeView: Yup.string().required('Required'),
+        AdditionalCharges: Yup.number()
+          .required('Required')
+          .typeError('Must only contain numbers'),
+        TotalCharge: Yup.number().required('Required'),
+        floor: Yup.string().required('Required'),
+        Status: Yup.string().required('Required'),
+        AddInfo: Yup.string(),
+      });
+      
 
     const fetchRoomTypes = async () => {
         const response = await axios.get("http://localhost:3001/roomtypes");
@@ -63,16 +64,16 @@ function FormOne(props) {
 
                     <div className={style.div1}>
 
-                        <span>
+                        <span className={style.box}>
                             <Field name="RoomNo"
                                 component={Input}
                                 label="Room Number"
                                 type="text"
                                 width="13vw" />
-                            <ErrorMessage name="RoomNo" component="div" className={style.error} />
+                            <ErrorMessage name="RoomNo" component="span" className={style.error} />
                         </span>
 
-                        <span>
+                        <span className={style.box}>
                             <Field
                                 name="RoomTypeView"
                                 component={Input}
@@ -88,25 +89,25 @@ function FormOne(props) {
                                 width="13vw"
                             />
 
-                            <ErrorMessage name="RoomTypeView" component="div" className={style.error} />
+                            <ErrorMessage name="RoomTypeView" component="span" className={style.error} />
                         </span>
 
-                        <span>
+                        <span className={style.box}>
                             <Field name="AdditionalCharges"
                                 component={Input}
-                                label="Additional Charges"
+                                label="Additional Charges($)"
                                 type="text"
                                 width="13vw" />
-                            <ErrorMessage name="AdditionalCharges" component="div" className={style.error} />
+                            <ErrorMessage name="AdditionalCharges" component="span" className={style.error} />
                         </span>
-                        <span>
+                        <span className={style.box}>
                             <Field name="floor"
                                 component={Input}
                                 label="Floor"
                                 type="select"
                                 options={Floor}
                                 width="13vw" />
-                            <ErrorMessage name="floor" component="div" className={style.error} />
+                            <ErrorMessage name="floor" component="span" className={style.error} />
                         </span>
 
 

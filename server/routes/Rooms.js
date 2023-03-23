@@ -77,10 +77,10 @@ router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async 
       }
   
       // Calculate the base charge by adding the additional charge and standard charge
-      const BaseCharge = roomType.StandardCharge+ parseFloat(AdditionalCharges);
+      const TotalCharge = roomType.StandardCharge+ parseFloat(AdditionalCharges);
   
       // Create a new room with the calculated base charge
-      const room = await Rooms.create({ RoomNo, floor, View, Status, RoomTypeView, AdditionalCharges,BaseCharge ,AddInfo });
+      const room = await Rooms.create({ RoomNo, floor, View, Status, RoomTypeView, AdditionalCharges,TotalCharge ,AddInfo });
   
       res.status(201).json({ room });
     } catch (error) {
@@ -112,7 +112,7 @@ router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async 
 //           [Sequelize.Op.notIn]: reservedRooms
 //         }
 //       },
-//       attributes: ['RoomNo', 'BaseCharge'],
+//       attributes: ['RoomNo', 'TotalCharge'],
 //       include: [
 //         {
 //           model: Reservations,

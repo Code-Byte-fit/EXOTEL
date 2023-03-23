@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       sqFeet: {
-        type: DataTypes.STRING,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       StandardCharge: {

@@ -4,7 +4,6 @@ import style from "./AddOns.module.css";
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
-import ConfirmationPopup from '../../NewRooms/components/ConfirmationPopup';
 
 function FormOne(props) {
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -36,33 +35,33 @@ function FormOne(props) {
 
                     <div className={style.div1}>
                     
-                    <span>  
+                    <span className={style.box}>  
                         <Field name="AddOn"
                             component={Input}
                             label="Add-On"
                             type="text"
                        
                             width="13vw" />
-                      <ErrorMessage name="AddOn" component="div"  className={style.error}/>
+                      <ErrorMessage name="AddOn" component="span"  className={style.error}/>
                     </span>
 
-                    <span>  
+                    <span className={style.box}>
                         <Field name="Unit"
                             component={Input}
                             label="Unit"
                             type="text"
                       
                             width="13vw" />
-                              <ErrorMessage name="Unit" component="div"  className={style.error}/>
+                              <ErrorMessage name="Unit" component="span"  className={style.error}/>
 </span>
- <span>  
+   <span className={style.box}>
                         <Field name="Charge"
                             component={Input}
                             label="Charge"
                             type="text"
                        
                             width="13vw" />
-                              <ErrorMessage name="Charge" component="div"  className={style.error}/>
+                              <ErrorMessage name="Charge" component="span"  className={style.error}/>
 </span>
  
                     </div>

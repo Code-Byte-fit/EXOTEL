@@ -3,7 +3,7 @@ import style from "./AddOns.module.css"
 import axios from 'axios';
 import { useEffect } from "react";
 import AddOnTable from '../../General/Table/Table'
-import EditDelete from "../../General/Table/EditDelete";
+import EditDelete from "./EditDelete";
 
 
 
@@ -63,7 +63,7 @@ function Table(props) {
   
     {
       selector: row => row,
-      cell: (row) => <EditDelete/>
+      cell: (row) => <EditDelete setlistOfAddons={setlistOfAddons} row={row}/>
     },
 ];
 

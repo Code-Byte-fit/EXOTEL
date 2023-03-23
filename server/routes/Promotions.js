@@ -1,6 +1,10 @@
 const express=require('express')
 const router=express.Router()
 const {Promotion}=require('../models')
+const { Op } = require("sequelize");
+const cron = require('node-cron');
+
+
 
 router.get('/',async (req,res)=>{
     const listOfPromotions=await Promotion.findAll()
@@ -22,4 +26,52 @@ router.post("/", async (req, res) => {
     }
   });
   
+
+// Update status of expired promotions
+router.put('/updateExpired', async (req, res) => {
+  try {
+    const currentDate = new Date();
+    const expiredPromotions = await Promotion.findAll({
+      where: {
+        Enddate: {
+          [Op.lt]: currentDate,
+        },
+        Status: 'Active',
+      },
+    });
+    expiredPromotions.forEach(async (promotion) => {
+      promotion.Status = 'Expired';
+      await promotion.save();
+    });
+    res.json({ message: 'Expired promotions updated successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to update expired promotions' });
+  }
+});
+
+
+// Schedule promotion status update every midnight
+cron.schedule('0 0 * * *', async () => {
+  try {
+    const currentDate = new Date();
+    const expiredPromotions = await Promotion.findAll({
+      where: {
+        Enddate: {
+          [Op.lt]: currentDate,
+        },
+        Status: 'Active',
+      },
+    });
+    expiredPromotions.forEach(async (promotion) => {
+      promotion.Status = 'Expired';
+      await promotion.save();
+    });
+    console.log('Expired promotions updated successfully');
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+
 module.exports=router
