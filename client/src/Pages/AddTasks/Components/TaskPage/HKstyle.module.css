@@ -30,13 +30,13 @@
 
 .divTitleAddTask {
   width: 88vw;
-  height: 5.5vh;
+  height: 5vh;
   font-weight: 600;
 }
 
 .divInputRow1 {
   width: 88vw;
-  height: 9.5vh;
+  height: 12vh;
   /* background-color: pink; */
   display: flex;
 }
@@ -44,7 +44,7 @@
 .divInputRow2 {
   width: 88vw;
   height: 16vh;
-  margin-top: 10px;
+  margin-top: 0px;
   /* background-color: yellow; */
 }
 
@@ -211,4 +211,14 @@ tbody {
 
 .inputSize {
   width: 50vw;
+}
+
+.error {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.errInput {
+  border: 2px solid red;
 }

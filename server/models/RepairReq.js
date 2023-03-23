@@ -24,10 +24,9 @@ module.exports = (sequelize, Datatypes) => {
 
   RepairReq.associate = (models) => {
     RepairReq.belongsTo(models.Rooms, { foreignKey: "RoomNo" });
-    RepairReq.belongsToMany(models.RoomItems, {
-      through: "RepairRequestItems",
-      foreignKey: "RepairNo",
-    });
+    // RepairReq.belongsToMany(models.RoomItems, {
+    //   through: "RepairRequestItems",
+    // });
   };
 
   return RepairReq;

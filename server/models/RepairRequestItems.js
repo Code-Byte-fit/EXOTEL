@@ -1,21 +1,17 @@
-//Nethmi
-module.exports = (sequelize, Datatypes) => {
-  const RepairRequestItems = sequelize.define("RepairRequestItems", {
-    RepairNo: {
-      type: Datatypes.STRING,
-      allowNull: false,
-    },
-    RoomItemNo: {
-      type: Datatypes.STRING,
-      allowNull: false,
-    },
-  });
+module.exports = (sequelize, DataTypes) => {
+  const RepairRequestItems = sequelize.define(
+    "RepairRequestItems",
+    {},
+    {
+      timestamps: false,
+    }
+  );
 
   RepairRequestItems.associate = (models) => {
-    models.RepairReq.belongsToMany(models.RoomItem, {
+    models.RoomItems.belongsToMany(models.RepairReq, {
       through: RepairRequestItems,
     });
-    models.RoomItem.belongsToMany(models.RepairReq, {
+    models.RepairReq.belongsToMany(models.RoomItems, {
       through: RepairRequestItems,
     });
   };

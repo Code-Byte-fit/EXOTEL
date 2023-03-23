@@ -1,39 +1,45 @@
 module.exports = (sequelize, DataTypes) => {
-  const Reservations = sequelize.define('Reservations', {
+  const Reservations = sequelize.define("Reservations", {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement:true
+      autoIncrement: true,
     },
     CheckIn: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: false,
     },
     CheckOut: {
       type: DataTypes.DATEONLY,
-      allowNull: false
+      allowNull: false,
     },
     CheckInTime: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     CheckOutTime: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     Source: {
-      type: DataTypes.ENUM('Phone', 'Walk-In'),
-      allowNull: false
+      type: DataTypes.ENUM("Phone", "Walk-In"),
+      allowNull: false,
     },
     ReservationStatus: {
-      type: DataTypes.ENUM('active', 'cancelled', 'expired','Checked-In','Checked-Out'),
-      allowNull: false
+      type: DataTypes.ENUM(
+        "active",
+        "cancelled",
+        "expired",
+        "Checked-In",
+        "Checked-Out"
+      ),
+      allowNull: false,
     },
     totalAmount: {
       type: DataTypes.FLOAT,
-      allowNull: true
-    }
-  );
+      allowNull: true,
+    },
+  });
 
   Reservations.associate = (models) => {
     Reservations.belongsTo(models.Guests, { foreignKey: "guestId" });
@@ -41,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
     Reservations.belongsToMany(models.Addons, { through: "ReservationAddOn" });
     Reservations.belongsTo(models.Promotion, { foreignKey: "PromoCode" });
     Reservations.hasMany(models.TaskAllocation, {
-      foreighKey: "ReservationNo",
+      foreigKey: "ReservationNo",
     });
   };
 

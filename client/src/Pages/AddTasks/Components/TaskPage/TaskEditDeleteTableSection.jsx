@@ -43,17 +43,17 @@ const TaskEditDeleteTableSection = () => {
     },
     {
       name: "TASK-TYPE",
-      selector: (row) => row.TaskType,
+      selector: (row) => row.taskType,
       sortable: true,
     },
     {
       name: "DATE",
-      selector: (row) => row.TaskDate,
+      selector: (row) => row.taskDate,
       sortable: false,
     },
     {
       name: "TIME",
-      selector: (row) => row.TaskTime,
+      selector: (row) => row.taskTime,
       sortable: false,
     },
     {

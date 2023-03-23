@@ -11,12 +11,11 @@ module.exports = (sequelize, Datatypes) => {
     },
   });
 
-  RoomItems.associate = (models) => {
-    RoomItems.belongsToMany(models.RepairReq, {
-      through: "RepairRequestItems",
-      foreignKey: "RoomItemNo",
-    });
-  };
+  // RoomItems.associate = (models) => {
+  //   RoomItems.belongsToMany(models.RepairReq, {
+  //     through: "RepairRequestItems",
+  //   });
+  // };
 
   return RoomItems;
 };

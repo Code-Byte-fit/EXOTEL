@@ -47,7 +47,7 @@ module.exports = (sequelize, Datatypes) => {
   });
 
   Users.associate = (models) => {
-    Users.hasMany(models.TaskAllocation, { foreignKey: "userId" }); //added
+    Users.hasMany(models.TaskAllocation, { foreignKey: "userId" });
   };
 
   return Users;

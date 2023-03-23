@@ -1,6 +1,14 @@
 const express = require("express");
 const router = express.Router();
-const { TaskAllocation, Users, Rooms } = require("../models");
+const {
+  TaskAllocation,
+  Users,
+  Rooms,
+  TestTaskModel,
+  Reservations,
+  ReservationRoom,
+} = require("../models");
+const { Op } = require("sequelize");
 
 router.get("/", async (req, res) => {
   const listOfTasks = await TaskAllocation.findAll({
@@ -11,7 +19,7 @@ router.get("/", async (req, res) => {
       },
     ],
   });
-
+  console.log(listOfTasks);
   res.json(listOfTasks);
 });
 
@@ -33,14 +41,61 @@ router.get("/taskDetails", async (req, res) => {
       RoomBoyId: roomBoy.userId,
       RoomBoyName: roomBoy.FirstName,
     }));
+
     const response = {
       roomDetails: roomDetails,
       roomBoyDetails: roomBoyDetails,
     };
+
     res.json(response);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
+  }
+});
+
+router.post("/", async (req, res) => {
+  try {
+    const { RoomNo, userId, taskType, taskDate, taskTime, Notes } = req.body;
+    console.log("abc");
+    const reservation = await Reservations.findOne({
+      attributes: ["id"],
+      include: [
+        {
+          model: Rooms,
+          through: {
+            model: ReservationRoom,
+            where: { RoomNo: { [Op.eq]: RoomNo } },
+          },
+        },
+      ],
+
+      where: {
+        CheckIn: {
+          [Op.lte]: taskDate,
+        },
+        CheckOut: {
+          [Op.gte]: taskDate,
+        },
+      },
+    });
+    console.log(reservation);
+
+    const newTask = await TaskAllocation.create({
+      RoomNo,
+      userId,
+      taskType,
+      taskDate,
+      taskTime,
+      Notes,
+      ReservationId: reservation.id,
+    });
+
+    console.log(newTask);
+    res.status(201).json({ newTask });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to create task" });
   }
 });
 

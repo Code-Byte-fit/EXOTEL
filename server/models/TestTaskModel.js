@@ -1,7 +1,13 @@
 //Nethmi
 module.exports = (sequelize, Datatypes) => {
-  const TaskAllocation = sequelize.define("TaskAllocation", {
+  const TestTaskModel = sequelize.define("TestTaskModel", {
     taskNo: {
+      type: Datatypes.INTEGER,
+      autoIncrement: true,
+      allowNull: false,
+      primaryKey: true,
+    },
+    roomNumber: {
       type: Datatypes.STRING,
       allowNull: false,
       primaryKey: true,
@@ -18,19 +24,11 @@ module.exports = (sequelize, Datatypes) => {
       type: Datatypes.TIME,
       allowNull: false,
     },
-    Notes: {
+    specialNotes: {
       type: Datatypes.STRING,
       allowNull: false,
     },
   });
 
-  TaskAllocation.associate = (models) => {
-    TaskAllocation.belongsTo(models.Reservations, {
-      foreignKey: "ReservationId",
-    });
-    TaskAllocation.belongsTo(models.Rooms, { foreignKey: "RoomNo" });
-    TaskAllocation.belongsTo(models.Users, { foreignKey: "userId" });
-  };
-
-  return TaskAllocation;
+  return TestTaskModel;
 };
