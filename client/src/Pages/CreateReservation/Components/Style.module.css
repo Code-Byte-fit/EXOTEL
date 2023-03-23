@@ -224,10 +224,12 @@
     border-radius: 0 0 8px 8px;
 }
 
-.innerOtherDetailsContainer{
+.innerDetailsContainer{
     display: flex;
     justify-content: space-between;
 }
+
+
 
 
 
@@ -251,8 +253,23 @@
     flex-direction: column;
 }
 
+.Financedetails{
+    display: flex;
+    width: 20vw;
+    justify-content: space-between;
+    margin: 4vh 0 0 3vw;
+}
+
 .label{
     font-weight: bold;
+}
+
+.hr{
+    width: 90%;
+    border: 0.5px dotted rgba(0, 0, 0, 0.182);
+    margin: 0 0 0 3vw;
+    position: relative;
+    top: 2vh;
 }
 
 .roomsContainer{

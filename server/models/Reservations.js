@@ -30,8 +30,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     totalAmount: {
-      type: DataTypes.FLOAT,
-      allowNull: true
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
     timestamps: false

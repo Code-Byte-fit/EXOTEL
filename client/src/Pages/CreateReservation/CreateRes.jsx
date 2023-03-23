@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ResPageOne from './Components/ResPageOne'
 import ResPageTwo from './Components/ResPageTwo'
 import ResPageThree from './Components/ResPageThree'
@@ -34,6 +34,8 @@ export default function CreateRes() {
         Email:"",
         PhoneNumber:"",
         ReservationStatus:"active",
+        totalAmount:0.00,
+        Discounts:"",
     })
 
 
@@ -48,6 +50,7 @@ export default function CreateRes() {
       }
       setData(prev=>({...prev,...newData}))
       setCurrentStep(prev=>prev+1)
+      console.log(data)
     }
 
 
@@ -60,8 +63,8 @@ export default function CreateRes() {
 
     const steps=[
     <ResPageOne next={handleNextStep} data={data} setAmounts={setAmounts} amounts={amounts}/>,
-    <ResPageTwo next={handleNextStep} prev={handlePrevStep} data={data}/>,
-    <ResPageThree next={handleNextStep} prev={handlePrevStep} data={data}/>
+    <ResPageTwo next={handleNextStep} prev={handlePrevStep} data={data} />,
+    <ResPageThree next={handleNextStep} prev={handlePrevStep} data={data} amounts={amounts}/>
   ]
 
 

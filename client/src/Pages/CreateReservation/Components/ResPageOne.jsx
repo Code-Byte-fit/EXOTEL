@@ -105,9 +105,18 @@ const validationSchema = Yup.object().shape({
     values.SelectedRooms=SelectedRooms;
     props.next(values)
   }
-
+ 
 
 const getDates=(event)=>{
+  setAvailableRooms([])
+  setSelectedRooms([])
+  props.setAmounts(prevValue=>{
+    return({
+      subTotal:0,
+      discounts:0,
+      GrandTotal:0
+    })
+  })
   const {value,name}=event.target;
     setDates(prevValue=>{
       if(name==="CheckIn"){
@@ -154,11 +163,14 @@ useEffect(() => {
 
 
 const reqRoom=async (event) => {
-  event.preventDefault()
+    event.preventDefault()
     const response = await axios.get(`http://localhost:3001/rooms/availability/${dates.CheckIn}/${dates.CheckOut}/${dates.CheckInTime}/${dates.CheckOutTime}`);
-    setAvailableRooms(response.data);
-    setSelectedRooms([])
+    setAvailableRooms(response.data.filter(room => !SelectedRooms.some(selectedRoom => selectedRoom.RoomNo === room.RoomNo)));
 };
+
+const checkInDate = moment(dates.CheckIn);
+  const checkOutDate = moment(dates.CheckOut);
+  const days = checkOutDate.diff(checkInDate, 'days');
 
 const selectRoom=(Room)=>{
   setSelectedRooms([...SelectedRooms,Room]
@@ -166,9 +178,9 @@ const selectRoom=(Room)=>{
   setAvailableRooms(AvailableRooms.filter(room => room.RoomNo !== Room.RoomNo));
   props.setAmounts(prevValue=>{
     return({
-      subTotal:prevValue.subTotal + Room.BaseCharge,
+      subTotal:prevValue.subTotal + Room.BaseCharge*days,
       discounts:0,
-      GrandTotal:prevValue.GrandTotal + Room.BaseCharge
+      GrandTotal:prevValue.GrandTotal + Room.BaseCharge*days
     })
   })
 }
@@ -179,9 +191,9 @@ const removeRoom = (Room) => {
   setSelectedRooms(SelectedRooms.filter(room => room.RoomNo !== Room.RoomNo))
   props.setAmounts(prevValue=>{
     return({
-      subTotal:prevValue.subTotal - Room.BaseCharge,
+      subTotal:prevValue.subTotal - Room.BaseCharge*days,
       discounts:0,
-      GrandTotal:prevValue.GrandTotal - Room.BaseCharge
+      GrandTotal:prevValue.GrandTotal - Room.BaseCharge*days
     })
   })
 }
@@ -226,6 +238,8 @@ const valid=AvailableRooms.length>0 || SelectedRooms.length>0
                                      <Field name="CheckOutTime" component={Input} label="Check-Out Time" type="time" onBlur={getDates} id="CheckOutTime"/>
                                      <ErrorMessage name="CheckOutTime" component="small" className={style.dateErr}/>
                                   </span>
+                                  <Field name="totalAmount"  style={{display:"none"}}
+                                  value={props.amounts.GrandTotal} onChange={formik.values.totalAmount=props.amounts.GrandTotal}/>
                                      <button type="submit" onClick={formik.dirty && formik.isValid && reqRoom} ><img src={searchIcon} className={style.searchIcon}/></button>
                                 </div>
                           </div>

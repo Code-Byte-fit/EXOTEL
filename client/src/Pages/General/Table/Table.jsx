@@ -43,6 +43,7 @@ export default function Table(props) {
             fixedHeaderScrollHeight={props.height}
             highlightOnHover
             pagination={props.pagination}
+            customStyles={customStyles}
             onSelectedRowsChange={props.onSelectedRowsChange}
         />
     </>
