@@ -38,6 +38,7 @@ router.post("/",async (req,res)=>{
     if (!isGuest) {
       const guest = await Guests.create({ FirstName, LastName, DOB, Country });
       await GuestEmail.create({ email: Email, guestId: guest.id });
+      await GuestPhoneNumber.create({ phoneNumber: PhoneNumber, guestId: guest.id });
       guestId=guest.id
     } 
     else {
@@ -48,22 +49,13 @@ router.post("/",async (req,res)=>{
       if (!guestEmail) {
         await GuestEmail.create({ email: Email, guestId: guestId });
       }
-      
-       // Check if phone number already exists for guest
-       const guestPhoneNumber = await GuestPhoneNumber.findOne({
-        where: {
-          guestId,
-          phoneNumber: PhoneNumber.trim(),
-        },
+  
+      const guestPhoneNumber = await GuestPhoneNumber.findOne({
+        where: { guestId: guestId, phoneNumber: PhoneNumber }
       });
       if (!guestPhoneNumber) {
-        // Add phone number to guest phone number list
-        await GuestPhoneNumber.create({
-          guestId,
-          phoneNumber: PhoneNumber.trim(),
-        });
+        await GuestPhoneNumber.create({ phoneNumber: PhoneNumber, guestId: guestId });
       }
-
     }
     const reservation = await Reservations.create({
         CheckIn,
