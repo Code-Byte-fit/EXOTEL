@@ -51,21 +51,7 @@ function DisplayFormData() {
         setAddFormData(newFormData);
     }
 
-    // const handleAddFormSubmit = (event) => {
-    //     event.preventDefault();
-
-    //     const newRoom = {
-    //         id: nanoid(),
-    //         roomNumber: addFormData.roomNumber,
-    //         roomType: addFormData.roomType,
-    //         BaseCharge: addFormData.BaseCharge,
-    //         floor: addFormData.floor,
-    //         sqFeet: addFormData.sqFeet
-    //     };
-
-    //     const newRooms = [...rooms, newRoom];
-    //     setRooms(newRooms);
-    // };
+   
 
 
 

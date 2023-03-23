@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import style from "./Types.module.css";
 import axios from "axios";
-import sort from "../../../Assets/Images/sort.png";
-import editIcon from "../../../Assets/Images/Small FAB(1).png";
-import deleteIcon from "../../../Assets/Images/Small FAB.png";
 import { useEffect } from "react";
-// import Popup from "./EditPopup";
 import RoomTypeTable from '../../General/Table/Table'
 import EditDelete from "./EditDelete";
+
 
 
 function Table(props) {
