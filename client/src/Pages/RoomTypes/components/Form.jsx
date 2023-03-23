@@ -4,7 +4,7 @@ import style from "./Types.module.css";
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
-import ConfirmationPopup from '../../NewRooms/components/ConfirmationPopup';
+
 
 function FormOne(props) {
     const [showConfirmation, setShowConfirmation] = useState(false);

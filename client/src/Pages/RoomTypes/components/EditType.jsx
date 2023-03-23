@@ -4,11 +4,10 @@ import style from "./Types.module.css";
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
-import ConfirmationPopup from '../../NewRooms/components/ConfirmationPopup';
+
 
 function EditType(props) {
-    const [showConfirmation, setShowConfirmation] = useState(false);
-
+   
   
     const validationSchema = Yup.object().shape({
         TypeName: Yup.string().required('Required'),

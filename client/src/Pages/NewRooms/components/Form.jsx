@@ -7,7 +7,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
 
 function FormOne(props) {
-    const [showConfirmation, setShowConfirmation] = useState(false);
+   
     const [RoomTypes, setRoomTypes] = useState([]);
 
 

@@ -3,7 +3,7 @@ import style from "./Rooms.module.css";
 import axios from "axios";
 import { useEffect } from "react";
 import RoomTable from "../../General/Table/Table";
-import EditDelete from "./EditDelete";
+import EditDelete from "../../General/Table/EditDelete";
 
 
 function Table(props) {
@@ -76,7 +76,7 @@ function Table(props) {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete setlistOfRooms={setlistOfRooms} row={row}/>
+      cell: (row) => <EditDelete/>
     },
 ];
 

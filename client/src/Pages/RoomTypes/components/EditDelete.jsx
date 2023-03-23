@@ -7,11 +7,7 @@ export default function RTEditDelete(props) {
     const [isDone, setIsDone] = useState(false);
     const row=props.row
 
-    const handleDelete=(row)=>{
-        axios.delete("http://localhost:3001/roomtypes").then(()=>{
-          setIsDone(true)
-        })
-      }
+
 
       const handleEdit=(row)=>{
         axios.put("http://localhost:3001/roomtypes").then(()=>{
@@ -39,9 +35,7 @@ export default function RTEditDelete(props) {
     <>
         <EditDelete 
             removeOption
-            deleteHeading="Remove Room-Type"
-            deleteBody="Are you sure you want to remove this type?"
-            onDelete={()=>handleDelete(row)}
+        
             onEdit={() => handleEdit(row)} 
             onCancel={()=>handleCancel(row)}  
           
