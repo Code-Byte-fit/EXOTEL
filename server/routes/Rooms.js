@@ -70,8 +70,6 @@ router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async 
         } 
       });
       
-     
-  
       if (!roomType) {
         return res.status(404).json({ error: 'Room type not found' });
       }
