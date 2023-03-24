@@ -65,7 +65,7 @@ export default function Filter(props) {
                  
                   <div className={style.inputs}>
                       <label for="checkIn">Check-In</label>
-                      <input type="date" id="checkIn" defaultValue={new Date().toISOString().substr(0, 10)} onChange={e => props.setCheckInQuery(e.target.value)} />
+                      <input type="date" id="checkIn" defaultValue={new Date().toISOString().slice(0, 10)} onChange={e => props.setCheckInQuery(e.target.value)} />
                   </div>
                   <div className={style.inputs}>
                     <label for="checkOut">Check-Out</label>

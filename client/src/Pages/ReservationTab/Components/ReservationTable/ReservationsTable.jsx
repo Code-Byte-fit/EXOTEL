@@ -8,11 +8,12 @@ import Filter from './Filter';
 import filterIcon from "../../../../Assets/Images/mixer.png"
 import style from "../Style.module.css"
 
-export default function ReservationsTable() {
+
+export default function ReservationsTable(props) {
   const [reservationDetails,setReservationDetails]=useState([]);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [checkInQuery, setCheckInQuery] = useState('');
+  const [checkInQuery, setCheckInQuery] = useState(new Date().toISOString().slice(0, 10));
   const [checkOutQuery, setCheckOutQuery] = useState('');
   const [isFilterActive, setIsFilterActive] = useState(false);
 
@@ -80,13 +81,18 @@ export default function ReservationsTable() {
       sortable: true,
     },
     {
+      name: 'CHARGE',
+      selector: row => row.totalAmount,
+      sortable: true,
+    },
+    {
       name: 'SOURCE',
       selector: row => row.Source,
       sortable: true,
     },
     {
       selector: row => row,
-      cell: (row) => <ResEditDelete row={row} setReservationDetails={setReservationDetails}/>
+      cell: (row) => <ResEditDelete row={row} setReservationDetails={setReservationDetails} setStats={props.setStats}/>
     },
 ];
 

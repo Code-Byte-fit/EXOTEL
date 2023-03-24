@@ -7,11 +7,11 @@ import Notification from './Components/Notification/Notification'
 import UserCard from './Components/UserCard/UserCard'
 import style from './Components/Header.module.css'
 
-export default function Header() {
+export default function Header(props) {
   return (
     <>
   <header className={style.header}>
-       <NavBar/>
+       <NavBar role={props.role}/>
        <img src={LogoImg} className={style.logo}/>
        <SearchBar/>
        <div className={style.headerRight}>

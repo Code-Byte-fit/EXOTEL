@@ -14,6 +14,10 @@ module.exports=(sequelize,Datatypes)=>{
             type:Datatypes.STRING,
             allowNull:false,
         },
+        Role:{
+            type:Datatypes.STRING,
+            allowNull:false,
+        },
         Country:{
             type:Datatypes.STRING,
             allowNull:false,
