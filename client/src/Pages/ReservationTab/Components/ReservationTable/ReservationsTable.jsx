@@ -1,11 +1,11 @@
 import React, { useEffect, useState ,useMemo} from 'react'
 import { Link} from 'react-router-dom';
 import axios from "axios"
-import addIcon from "../../../../Assets/Images/Add.png"
+import addIcon from "../../../../Assets/Images/Add small.png"
 import Table from '../../../General/Table/Table';
 import ResEditDelete from './ResEditDelete';
 import Filter from './Filter';
-import filterIcon from "../../../../Assets/Images/mixer.png"
+import filterIcon from "../../../../Assets/Images/mixer (2).png"
 import style from "../Style.module.css"
 
 

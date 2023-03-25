@@ -37,14 +37,15 @@ export default function Input({
 export function FileInput({ field, form: { touched, errors }, ...props }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
 
+ 
   const handleFileSelect = (e) => {
     setSelectedFiles(Array.from(e.target.files));
   };
 
   return (
     <>
-    <div className={style.mainCont}>
-      <div className={style.fileInputContainer}>
+      <div className={style.mainCont}>
+        <div className={style.fileInputContainer}>
           <label htmlFor={props.id} className={style.fileInputLabel}>
             <img src={props.img} />
             {props.label}
@@ -57,22 +58,21 @@ export function FileInput({ field, form: { touched, errors }, ...props }) {
             className={style.fileInput}
             onChange={handleFileSelect}
           />
+        </div>
+        {selectedFiles.length > 0 && (
+          <div className={style.selectedFilesContainer}>
+            <span className={style.selectedFilesLabel}>Selected Files:</span>
+            {selectedFiles.map((file, index) => (
+              <span key={index} className={style.selectedFile}>
+                {file.name}
+              </span>
+            ))}
           </div>
-          {selectedFiles.length > 0 && (
-            <div className={style.selectedFilesContainer}>
-              <span className={style.selectedFilesLabel}>Selected Files:</span>
-              {selectedFiles.map((file, index) => (
-                <span key={index} className={style.selectedFile}>
-                  {file.name}
-                </span>
-              ))}
-            </div>
-          )}
-    </div>
-      
-      
+        )}
+      </div>
     </>
   );
 }
+
 
 
