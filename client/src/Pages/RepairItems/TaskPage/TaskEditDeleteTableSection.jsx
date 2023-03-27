@@ -5,7 +5,7 @@ import axios from "axios";
 import Table from "../../../General/Table/Table";
 import { BsPencil, BsTrash } from "react-icons/bs";
 
-const TaskEditDeleteTableSection = ({ refresh, onEditTask }) => {
+const TaskEditDeleteTableSection = ({ onEditTask }) => {
   const [taskData, setTaskData] = useState([]);
 
   const viewTasks = async () => {
@@ -14,6 +14,7 @@ const TaskEditDeleteTableSection = ({ refresh, onEditTask }) => {
   };
 
   const handleEdit = (data) => {
+    console.log(data);
     onEditTask(data);
   };
 
@@ -22,10 +23,6 @@ const TaskEditDeleteTableSection = ({ refresh, onEditTask }) => {
   useEffect(() => {
     viewTasks();
   }, []);
-
-  useEffect(() => {
-    viewTasks();
-  }, [refresh]);
 
   const getTaskList = () => {
     return taskData;
@@ -90,7 +87,7 @@ const TaskEditDeleteTableSection = ({ refresh, onEditTask }) => {
 
   return (
     <div className={style.divEditDeleteTableSection}>
-      <div className={style.divTitleEditDelete}>EDIT/CANCEL TASK</div>
+      <div className={style.divTitleEditDelete}>EDIT/DELETE TASK</div>
 
       <div class="class=table-responsive-lg" className={style.divTblEditDelete}>
         <Table

@@ -2,7 +2,8 @@
 module.exports = (sequelize, Datatypes) => {
   const TaskAllocation = sequelize.define("TaskAllocation", {
     taskNo: {
-      type: Datatypes.STRING,
+      type: Datatypes.INTEGER,
+      autoIncrement: true,
       allowNull: false,
       primaryKey: true,
     },

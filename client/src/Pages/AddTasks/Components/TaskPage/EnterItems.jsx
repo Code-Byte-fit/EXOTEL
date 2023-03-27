@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import style from "../TaskPage/HKstyle.module.css";
+import style from "./HKstyle.module.css";
 import Input from "../../../General/Inputs/Inputs";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";

@@ -28,6 +28,8 @@ router.get("/taskDetails", async (req, res) => {
     const rooms = await Rooms.findAll({
       attributes: ["RoomNo"],
     });
+    console.log("rooghc");
+    console.log(rooms);
 
     const roomBoy = await Users.findAll({
       attributes: ["userId", "FirstName"],
@@ -57,7 +59,6 @@ router.get("/taskDetails", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const { RoomNo, userId, taskType, taskDate, taskTime, Notes } = req.body;
-    console.log("abc");
     const reservation = await Reservations.findOne({
       attributes: ["id"],
       include: [
@@ -65,11 +66,10 @@ router.post("/", async (req, res) => {
           model: Rooms,
           through: {
             model: ReservationRoom,
-            where: { RoomNo: { [Op.eq]: RoomNo } },
+            where: { RoomRoomNo: { [Op.eq]: RoomNo } },
           },
         },
       ],
-
       where: {
         CheckIn: {
           [Op.lte]: taskDate,
@@ -79,7 +79,8 @@ router.post("/", async (req, res) => {
         },
       },
     });
-    console.log(reservation);
+
+    const { id } = reservation;
 
     const newTask = await TaskAllocation.create({
       RoomNo,
@@ -88,14 +89,61 @@ router.post("/", async (req, res) => {
       taskDate,
       taskTime,
       Notes,
-      ReservationId: reservation.id,
+      ReservationId: id,
     });
 
-    console.log(newTask);
     res.status(201).json({ newTask });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to create task" });
+  }
+});
+
+router.put("/", async (req, res) => {
+  try {
+    const { taskNo, RoomNo, userId, taskType, taskDate, taskTime, Notes } =
+      req.body;
+
+    const reservation = await Reservations.findOne({
+      attributes: ["id"],
+      include: [
+        {
+          model: Rooms,
+          through: {
+            model: ReservationRoom,
+            where: { RoomRoomNo: { [Op.eq]: RoomNo } },
+          },
+        },
+      ],
+      where: {
+        CheckIn: {
+          [Op.lte]: taskDate,
+        },
+        CheckOut: {
+          [Op.gte]: taskDate,
+        },
+      },
+    });
+
+    const { id } = reservation;
+
+    await TaskAllocation.update(
+      {
+        RoomNo,
+        userId,
+        taskType,
+        taskDate,
+        taskTime,
+        Notes,
+        ReservationId: id,
+      },
+      { where: { taskNo: taskNo } }
+    );
+
+    res.status(201).json("Updated Successfully.");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to update task" });
   }
 });
 

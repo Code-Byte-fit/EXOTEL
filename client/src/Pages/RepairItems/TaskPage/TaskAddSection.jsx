@@ -5,28 +5,19 @@ import Input from "../../../General/Inputs/Inputs";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-const TaskAddSection = ({ taskToEdit, onRefresh }) => {
+const TaskAddSection = ({ taskToEdit }) => {
   const curr = new Date();
   const date = curr.toISOString().substring(0, 10); // convert date type returned from Date function to ISO type and then take the first 10 characters which includes the date
   const time = curr.toTimeString().substring(0, 5);
 
-  const initialValues = {
-    RoomNo: "",
-    userId: "",
-    taskType: "",
-    taskDate: date,
-    taskTime: time,
-    Notes: "",
-  };
   const [roomNumbers, setRoomNumbers] = useState([]);
   const [rbNumber, setrbNumber] = useState([]);
-  const [initValues, setInitValues] = useState(initialValues);
+
+  let initialValues;
 
   useEffect(() => {
     if (taskToEdit) {
-      console.log(taskToEdit);
-      const updatedValues = {
-        taskNo: taskToEdit.taskNo,
+      initialValues = {
         RoomNo: taskToEdit.RoomNo,
         userId: taskToEdit.userId,
         taskType: taskToEdit.taskType,
@@ -34,9 +25,17 @@ const TaskAddSection = ({ taskToEdit, onRefresh }) => {
         taskTime: taskToEdit.taskTime,
         Notes: taskToEdit.Notes,
       };
-      setInitValues(updatedValues);
+    } else {
+      initialValues = {
+        RoomNo: "",
+        userId: "",
+        taskType: "",
+        taskDate: date,
+        taskTime: time,
+        Notes: "",
+      };
     }
-    console.log(initValues);
+    console.log(initialValues);
   }, [taskToEdit]);
 
   // const [taskType, settasktype] = useState(getTaskType());
@@ -60,21 +59,13 @@ const TaskAddSection = ({ taskToEdit, onRefresh }) => {
   // };
 
   const makeReq = async (formData) => {
+    console.log(formData);
     await axios.post("http://localhost:3001/tasks/", formData);
-    onRefresh();
-  };
-
-  const updateReq = async (formData) => {
-    await axios.put("http://localhost:3001/tasks/", formData);
-    onRefresh();
   };
 
   const onSubmit = (data) => {
-    if (taskToEdit) {
-      updateReq(data);
-    } else {
-      makeReq(data);
-    }
+    console.log(data);
+    makeReq(data);
   };
 
   //Retrieve data from room and user tables for the drop downs in the forms
@@ -136,7 +127,7 @@ const TaskAddSection = ({ taskToEdit, onRefresh }) => {
     // taskDate: Yup.date().min(new Date(), "Date cannot be before today"),
     //   .required("Date is required"),
     taskTime: Yup.string().required("Task time is required"),
-    // Notes: Yup.string(),
+    Notes: Yup.string(),
   });
 
   // const onSubmit = (values, { setSubmitting }) => {
@@ -148,8 +139,7 @@ const TaskAddSection = ({ taskToEdit, onRefresh }) => {
     <div className={style.divAddTaskSection}>
       <div className={style.divTitleAddTask}>ADD TASKS</div>
       <Formik
-        initialValues={initValues}
-        enableReinitialize={true}
+        initialValues={initialValues}
         onSubmit={onSubmit}
         validationSchema={validationSchema}
       >
