@@ -25,9 +25,8 @@ function DisplayData() {
   
     const [minibaritems, setminibaritems] = useState();
     const [addFormData, setAddFormData] = useState({
-        ItemId:'',
         ItemName: '',
-        Volume: '',
+        addInfo: '',
         ItemPrice: '',
     })
 
@@ -47,9 +46,8 @@ function DisplayData() {
         event.preventDefault();
 
         const newMinibarItems = {
-            ItemId:addFormData.ItemId,
             ItemName: addFormData.ItemName,
-            Volume: addFormData.Volume,
+            addInfo: addFormData.addInfo,
             ItemPrice: addFormData.ItemPrice,
         };
 

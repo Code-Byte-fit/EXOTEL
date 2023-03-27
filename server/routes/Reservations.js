@@ -28,7 +28,7 @@ router.get('/',async (req,res)=>{
 })
 
 router.post("/",async (req,res)=>{
-    try{const{CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus}=req.body
+    const{CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus}=req.body
     const guest = await Guests.create({ FirstName, LastName, DOB, Country, Email, PhoneNumber });
     const reservation = await Reservations.create({
         CheckIn,

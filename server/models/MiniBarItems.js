@@ -1,21 +1,17 @@
 module.exports=(sequelize,Datatypes)=>{
     const MiniBarItems=sequelize.define("MiniBarItems",{
-        ItemId:{
-            type:Datatypes.STRING,
-            primaryKey: true,
-        },
         ItemName:{
             type:Datatypes.STRING,
-            allowNull:false,
-        },
-        Volume:{
-            type:Datatypes.FLOAT,
-            allowNull:false,
+            primaryKey: true,
         },
         ItemPrice:{
             type:Datatypes.FLOAT,
             allowNull:false,
-        }
+        },
+        addInfo:{
+            type:Datatypes.STRING,
+            allowNull:false,
+        },
     },
     {
         timestamps: false

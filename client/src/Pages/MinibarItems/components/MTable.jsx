@@ -30,24 +30,21 @@ function MTable(props) {
   }
 
   const columns = [
-    {
-      name: 'Item Id',
-      selector: row=>row.ItemId,
-      sortable: true,
-    },
+   
     {
       name: 'Item Name',
       selector: row=>row.ItemName,
       sortable: true,
     },
     {
-      name: 'Volume (ml/mg)',
-      selector: row=>row.Volume,
-      sortable: true,
-    },
-    {
       name: 'Item Price ($)',
       selector: row=>row.ItemPrice,
+      sortable: true,
+    },
+
+    {
+      name: 'Description',
+      selector: row=>row.addInfo,
       sortable: true,
     },
    
@@ -60,10 +57,8 @@ function MTable(props) {
     <span className={style.tableContainer}>
       <label className={style.labelTwo}>Entries</label>
       <div className={style.tbl}>
-        <span className={style.div3}>
         <Table columns={columns} data = {props.listOfMinibarItems} height ='35vh'/>
-        </span>
-      </div>
+        </div>
     </span>
   );
 }

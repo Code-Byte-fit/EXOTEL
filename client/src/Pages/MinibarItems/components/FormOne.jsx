@@ -10,10 +10,9 @@ import style from '../components/Minibar.module.css'
 export default function FormOne(props) {
   const today = new Date();
     const initialValues = {
-      ItemId:'',
       ItemName: '',
-      Volume: '',
       ItemPrice: '',
+      addInfo:''
     };
 
     // const validationSchema = Yup.object().shape({
@@ -33,11 +32,6 @@ export default function FormOne(props) {
                 {({values})=>(
                  <Form>
                  <div className={style.div1}>
-                      <Field name="ItemId" 
-                         component={Input} 
-                         label="Item Id"
-                         type="text"
-                         width="20vw" />
 
                      <Field name="ItemName" 
                          component={Input} 
@@ -45,11 +39,6 @@ export default function FormOne(props) {
                          type="text"
                          width="20vw" />
 
-                      <Field name="Volume"
-                         component={Input}
-                         label="Volume (ml/mg)"
-                         type="text"
-                         width="20vw" />
 
                       <Field name="ItemPrice" 
                          component={Input} 

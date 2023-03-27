@@ -16,7 +16,7 @@ export default function FormOne(props) {
         LastRestocked: today.toISOString().slice(0, 10),
         ItemName: '',
         Quantity: ''
-    };
+    }; 
 
     const validationSchema = Yup.object().shape({
       RoomNumber: Yup.string().required("Required"),
@@ -74,7 +74,9 @@ export default function FormOne(props) {
                  <div className={style.div1}>
                      {/* <ErrorMessage name="RoomNo" component="span"/> */}
                      <span className={style.select}>
-                     <div className={style.lbl4}><label className={style.lbl3} for="resNumber">Reservation Number</label><br/></div>
+                     <div className={style.lbl4}>
+                      <label className={style.lbl3} for="resNumber">Reservation Number</label><br/></div>
+                      
                      <Field name="ResNumber"
                         render={({ field, form }) => (
                           <Select

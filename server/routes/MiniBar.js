@@ -25,23 +25,24 @@ router.post("/minibaritems", async (req, res) => {
 });
 
 router.get("/minibarpackage", async (req, res) => {
-    try{
-        const listOfpackages=await MinibarPackage.findAll({
-            include:[{
-                model: MiniBarItems,
-                through: {
-                  model: MItemPackage,
-                }
-              }]
-        })
-        res.json(listOfpackages)
+    try {
+      const listOfMinibarPackage = await MinibarPackage.findAll({
+        include: [
+          {
+            model: MiniBarItems,
+            through: {
+              model: MItemPackage,
+            },
+          },
+        ],
+      });
+      res.json(listOfMinibarPackage);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to retrieve packages" });
     }
-    catch(error){
-        console.log(error);
-        res.status(500).json({error:'failed to retrieve packages'})
-    }
-});
-
+  });
+  
 router.post("/minibarpackage", async (req, res) => {
         const {PackageName,PackagePrice,PackageItems}=req.body;
         const package=await MinibarPackage.create({PackageName,PackagePrice})
@@ -51,12 +52,26 @@ router.post("/minibarpackage", async (req, res) => {
             if (pacItem) {
                 await MItemPackage.create({
                   MinibarPackagePackageName: package.PackageName,
-                  MiniBarItemItemId: pacItem.ItemId,
+                  MiniBarItemItemName: pacItem.ItemName,
                 });
               }
         }
         res.status(201).json({package}); 
 });
+
+router.put('/minibar/minibarpackage/:name', async (req, res) => {
+  try {
+    const PackageName = req.params.name;
+    const { PackagePrice } = req.body;
+    const result = await MinibarPackage.update({ PackagePrice }, { where: { PackageName } });
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Failed to update package price' });
+  }
+});
+
+  
 
 
 module.exports = router;

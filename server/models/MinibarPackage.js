@@ -5,7 +5,7 @@ module.exports=(sequelize,Datatypes)=>{
             primaryKey:true,
         },
         PackagePrice:{
-            type:Datatypes.FLOAT,
+            type:Datatypes.DOUBLE,
             allowNull:false,
         },
        

@@ -7,7 +7,7 @@ module.exports=(sequelize,Datatypes)=>{
       },  
       ResNumber:{
             type:Datatypes.INTEGER,
-            allowNull:false,
+            // allowNull:false,
         },
         LastRestocked:{
             type:Datatypes.DATEONLY,
