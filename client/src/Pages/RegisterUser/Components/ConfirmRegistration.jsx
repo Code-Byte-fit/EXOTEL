@@ -14,7 +14,11 @@ export default function ConfirmRegistration(props) {
   
   const handleSubmit = async (values) => {
     try {
-      const response=await axios.post('http://localhost:3001/register', values);
+      const response=await axios.post(`http://localhost:3001/register/${values.userName}`, values, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       setIsUserNameValid(true);
       setIsConfirmed(true)
       

@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import FormOne from "./Form";
 import data from "./Mock-data.json"
-import Popup from "./EditPopup";
-import { nanoid } from 'nanoid';
 import axios from "axios";
 
 function DisplayFormData() {

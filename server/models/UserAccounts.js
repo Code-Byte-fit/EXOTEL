@@ -12,6 +12,10 @@ module.exports=(sequelize,Datatypes)=>{
         password:{
             type:Datatypes.STRING,
             allowNull:false,
+        },
+        proPic:{
+            type:Datatypes.STRING,
+            allowNull:true,
         }
     },{
         timestamps: false

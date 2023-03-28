@@ -51,6 +51,9 @@ export default function ResEditDelete(props) {
         axios.get("http://localhost:3001/reservations").then((response)=>{
           props.setReservationDetails(response.data)
         })
+        axios.get("http://localhost:3001/reservations/todayStats").then((response)=>{
+          props.setStats(response.data)
+     })
       }
 
 

@@ -9,16 +9,16 @@ router.get('/',async (req,res)=>{
     res.json(listOUserAccounts)
 })
 
-router.post("/",async (req,res)=>{
-    const {userName,password}=req.body
-    bcrypt.hash(password,10).then((hash)=>{
-        UserAccounts.create({
-            userName:userName,
-            password:hash,
-        })
-        res.json("Success")
-    })
-});
+// router.post("/",async (req,res)=>{
+//     const {userName,password}=req.body
+//     bcrypt.hash(password,10).then((hash)=>{
+//         UserAccounts.create({
+//             userName:userName,
+//             password:hash,
+//         })
+//         res.json("Success")
+//     })
+// });
 
 router.post("/login", async (req,res) =>{
     const { userName, password} = req.body;
@@ -27,7 +27,7 @@ router.post("/login", async (req,res) =>{
     bcrypt.compare(password,user.password).then((match) =>{
         if(!match) return res.json({error: "Wrong username and password combination"}); 
         
-        const accessToken = sign({ userName: user.userName, userAccountId:user.userAccountId}, "your-secret-key-here");
+        const accessToken = sign({ userName: user.userName, userAccountId:user.userAccountId}, "secret");
         res.json(accessToken);
     });
 });

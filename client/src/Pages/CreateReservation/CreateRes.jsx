@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ResPageOne from './Components/ResPageOne'
 import ResPageTwo from './Components/ResPageTwo'
 import ResPageThree from './Components/ResPageThree'
@@ -8,17 +8,21 @@ import axios from 'axios'
 import style from './Components/Common/Style.module.css'
 
 export default function CreateRes() {
+  const [amounts,setAmounts]=useState({subTotal:0.00,discounts:0.00,GrandTotal:0.00})
   const makeReq=async(formData)=>{
-    const response =await axios.post(`http://localhost:3001/reservations`,formData);
-    console.log(response.data);
+    await axios.post(`http://localhost:3001/reservations`,formData);
   }
+
+  const currentHour = new Date().getHours().toString().padStart(2, '0');
+  const currentMinute = new Date().getMinutes().toString().padStart(2, '0');
+  const currentTime = `${currentHour}:${currentMinute}`;
 
     const [data,setData]=useState({
         RoomType:"",
         Package:"",
         PromoCode:"",
-        CheckIn:"",
-        CheckInTime:"",
+        CheckIn:new Date().toISOString().slice(0, 10),
+        CheckInTime:currentTime,
         CheckOutTime:"",
         CheckOut:"",
         AvailableRooms:[],
@@ -30,7 +34,10 @@ export default function CreateRes() {
         Email:"",
         PhoneNumber:"",
         ReservationStatus:"active",
+        totalAmount:0.00,
+        Discounts:"",
     })
+
 
     
 
@@ -43,6 +50,7 @@ export default function CreateRes() {
       }
       setData(prev=>({...prev,...newData}))
       setCurrentStep(prev=>prev+1)
+      console.log(data)
     }
 
 
@@ -54,9 +62,9 @@ export default function CreateRes() {
     console.log("data",data)
 
     const steps=[
-    <ResPageOne next={handleNextStep} data={data}/>,
-    <ResPageTwo next={handleNextStep} prev={handlePrevStep} data={data}/>,
-    <ResPageThree next={handleNextStep} prev={handlePrevStep} data={data}/>
+    <ResPageOne next={handleNextStep} data={data} setAmounts={setAmounts} amounts={amounts}/>,
+    <ResPageTwo next={handleNextStep} prev={handlePrevStep} data={data} />,
+    <ResPageThree next={handleNextStep} prev={handlePrevStep} data={data} amounts={amounts}/>
   ]
 
 
@@ -70,7 +78,7 @@ export default function CreateRes() {
           completedThree={currentStep>=2 && true}/>
           {steps[currentStep]}
         </div>
-        {currentStep<2 && <AmountBar/>}
+        {currentStep<2 && <AmountBar subTotal={amounts.subTotal} discounts={amounts.discounts} GrandTotal={amounts.GrandTotal}/>}
       </div>
     </>
   )

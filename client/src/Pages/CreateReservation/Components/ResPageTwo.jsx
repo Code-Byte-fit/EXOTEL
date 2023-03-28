@@ -3,6 +3,9 @@ import {Formik,Form,Field,ErrorMessage} from "formik"
 import * as yup from 'yup';
 import Input from "../../General/Inputs/Inputs"
 import { FileInput } from '../../General/Inputs/Inputs'
+import Combobox from "react-widgets/Combobox";
+import options from "./CountryList.json"
+import "react-widgets/styles.css";
 import uploadIcon from "../../../Assets/Images/Upload.png"
 import style from "./Style.module.css"
 
@@ -23,6 +26,8 @@ export default function ResPageTwo(props) {
     props.next(values)
   }
 
+  
+
   const Sources = [
     { key: 'None Selected', value: '' },
     { key: 'Phone', value: 'Phone' },
@@ -31,14 +36,14 @@ export default function ResPageTwo(props) {
   return (
     <>
         <Formik initialValues={props.data} onSubmit={handleSubmit} validationSchema={schema}>
-                {({values})=>(
+                {({values,setFieldValue})=>(
                   <Form>
                   <div className={style.formContainer}>
                   <div>
                     <div className={style.heading}>RESERVATION DETAILS</div>
                     <div className={style.inputContainer}>
                     <span className={style.innerinputContainer}>
-                      <Field name="Source" component={Input} label="Source" type="select" options={Sources}/>
+                      <Field name="Source" component={Input} label="Booking Method" type="select" options={Sources}/>
                       <ErrorMessage name="Source" component="small" className={style.errorMsg} />
                     </span>
                     </div>
@@ -47,15 +52,21 @@ export default function ResPageTwo(props) {
                     <div className={style.heading}>MAIN GUEST</div>
                     <div className={style.inputContainer}>
                     <span className={style.innerinputContainer}>
-                        <Field name="FirstName" component={Input} label="First-Name" type="text"/>
+                        <Field name="FirstName" component={Input} label="First Name" type="text"/>
                         <ErrorMessage name="FirstName" component="small" className={style.errorMsg} />
                     </span>
                     <span className={style.innerinputContainer}>
-                        <Field name="LastName" component={Input} label="Last-Name" type="text"/>
+                        <Field name="LastName" component={Input} label="Last Name" type="text"/>
                         <ErrorMessage name="LastName" component="small" className={style.errorMsg} />
                     </span>
-                    <span className={style.innerinputContainer}>
-                        <Field name="Country" component={Input} label="Country" type="text"/>
+                    <span className={`${style.innerinputContainer} ${style.country}`}>
+                        <label for="Country">Country</label>
+                        <Field name="Country" id="Country" component={Combobox}  defaultValue="Sri Lanka" data={options} hideEmptyPopup
+                          value={values.Country}
+                          onChange={(value) => {
+                            setFieldValue("Country", value);
+                          }}
+                        />
                         <ErrorMessage name="Country" component="small" className={style.errorMsg} />
                     </span>        
                     </div>
