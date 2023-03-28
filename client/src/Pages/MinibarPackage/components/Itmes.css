@@ -1,0 +1,8 @@
+.react-select-container{
+    width: 50vw;
+    margin-left: 5vw;
+    z-index: 99;
+}
+.react-select__menu-list {
+    height: 20vh;
+  }

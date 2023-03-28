@@ -7,7 +7,6 @@ export default function Input({
   form: { touched, errors },
   ...props
 }) {
-
   return (
     <>
         <div className={style.InputContainer}>
@@ -17,7 +16,7 @@ export default function Input({
           </div>
             {props.type!=="select" &&  props.type!=="textarea" && <input {...field} {...props} type={props.type} id={props.id} className={`${style.Input}`} style={{width:props.width}}/>}
             {props.type==="select" && 
-              <select {...field} {...props} className={style.Input} id={props.id} style={props.style}>
+              <select {...field} {...props} className={style.Input}>
                   {props.options.map((option) => {
                         return (
                             <option key={option.value} value={option.value}>
@@ -37,14 +36,15 @@ export default function Input({
 export function FileInput({ field, form: { touched, errors }, ...props }) {
   const [selectedFiles, setSelectedFiles] = useState([]);
 
+ 
   const handleFileSelect = (e) => {
     setSelectedFiles(Array.from(e.target.files));
   };
 
   return (
     <>
-    <div className={style.mainCont}>
-      <div className={style.fileInputContainer}>
+      <div className={style.mainCont}>
+        <div className={style.fileInputContainer}>
           <label htmlFor={props.id} className={style.fileInputLabel}>
             <img src={props.img} />
             {props.label}
@@ -57,22 +57,21 @@ export function FileInput({ field, form: { touched, errors }, ...props }) {
             className={style.fileInput}
             onChange={handleFileSelect}
           />
+        </div>
+        {selectedFiles.length > 0 && (
+          <div className={style.selectedFilesContainer}>
+            <span className={style.selectedFilesLabel}>Selected Files:</span>
+            {selectedFiles.map((file, index) => (
+              <span key={index} className={style.selectedFile}>
+                {file.name}
+              </span>
+            ))}
           </div>
-          {selectedFiles.length > 0 && (
-            <div className={style.selectedFilesContainer}>
-              <span className={style.selectedFilesLabel}>Selected Files:</span>
-              {selectedFiles.map((file, index) => (
-                <span key={index} className={style.selectedFile}>
-                  {file.name}
-                </span>
-              ))}
-            </div>
-          )}
-    </div>
-      
-      
+        )}
+      </div>
     </>
   );
 }
+
 
 

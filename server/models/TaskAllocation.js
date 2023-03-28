@@ -1,29 +1,31 @@
 module.exports=(sequelize,Datatypes)=>{
-    const TaskAllocation=sequelize.define("TaskAllocation",{
-        FirstName:{
+    const TaskAllocations=sequelize.define("TaskAllocations",{
+        taskId:{
+            type:Datatypes.INTEGER,
+            primaryKey: true,
+            autoIncrement:true
+        },
+        description:{
             type:Datatypes.STRING,
             allowNull:false,
         },
-        LastName:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        BirthDate:{
+        taskDate:{
             type:Datatypes.DATEONLY,
             allowNull:false,
         },
-        Country:{
+        completeStatus:{
             type:Datatypes.STRING,
             allowNull:false,
-        },
-        Email:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        PhoneNumber:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-    })
-    return TaskAllocation;
+        }
+    },
+    {
+        timestamps: false
+        
+    });
+    TaskAllocations.associate = (models) =>{
+        TaskAllocations.belongsTo(models.Reservations, { foreignKey: 'Id' });
+        TaskAllocations.hasMany(models.Laundry, { foreignKey: 'taskId' });
+        TaskAllocations.hasMany(models.MiniBarRestock, { foreignKey: 'taskId' });
+    }
+    return TaskAllocations;
 }

@@ -6,10 +6,13 @@ module.exports=(sequelize,Datatypes)=>{
             primaryKey:true,
           
         },
-      
-    })
-
-
-    
+    },
+    {
+        timestamps: false
+        
+    });
+    MiniBar.associate = (models) =>{
+        MiniBar.belongsTo(models.MinibarPackage, { foreignKey: 'PackageName' });
+    }
     return MiniBar;
 }
