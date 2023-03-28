@@ -2,7 +2,6 @@ import {React} from 'react'
 import {createBrowserRouter,createRoutesFromElements,Route,RouterProvider,Outlet} from "react-router-dom";
 import Header from './Pages/General/Header/Header';
 import ReservationTab from './Pages/ReservationTab/ReservationTab';
-import Reservations from "./Pages/Reservations/Reservations"
 import MinibarRestocked from './Pages/MinibarRestocked/MinibarRestocked'
 import CreateRes from './Pages/CreateReservation/CreateRes';
 import Laundry from './Pages/Laundry/Laundry'

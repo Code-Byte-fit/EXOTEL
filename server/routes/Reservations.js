@@ -76,8 +76,11 @@ router.post("/",async (req,res)=>{
           });
         }
       }
-    res.status(201).json({ reservation, guest });
-  
+    res.status(201).json({ reservation, guest });}
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to create reservation' });
+      }
 })
 
 // router.get('/reservationTab', async (req, res) => {
@@ -339,4 +342,3 @@ router.get('/todayStats', async (req, res) => {
     
 
 module.exports = router;
-
