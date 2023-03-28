@@ -1,29 +1,17 @@
 module.exports=(sequelize,Datatypes)=>{
     const MiniBar=sequelize.define("MiniBar",{
-        FirstName:{
-            type:Datatypes.STRING,
-            allowNull:false,
+        MinibarId:{
+            type:Datatypes.INTEGER,
+            primaryKey: true,
+            autoIncrement:true
         },
-        LastName:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        BirthDate:{
-            type:Datatypes.DATEONLY,
-            allowNull:false,
-        },
-        Country:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        Email:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        PhoneNumber:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-    })
+    },
+    {
+        timestamps: false
+        
+    });
+    MiniBar.associate = (models) =>{
+        MiniBar.belongsTo(models.MinibarPackage, { foreignKey: 'PackageName' });
+    }
     return MiniBar;
 }

@@ -1,29 +1,38 @@
 module.exports=(sequelize,Datatypes)=>{
     const Laundry=sequelize.define("Laundry",{
-        FirstName:{
-            type:Datatypes.STRING,
-            allowNull:false,
+        laundryId: {
+            type: Datatypes.INTEGER,
+            primaryKey: true,
+            autoIncrement:true
+          },  
+        resNumber:{
+                type:Datatypes.STRING,
+                allowNull:false,
+            },
+        receivedDate:{
+                type:Datatypes.DATEONLY,
+                allowNull:false,
+            },
+        returnDate:{
+                type:Datatypes.DATEONLY,
+                allowNull:false,
+            },
+        load:{
+                type:Datatypes.INTEGER,
+                allowNull:false,
+            },
+        charge:{
+                type:Datatypes.FLOAT,
+                // allowNull:false,
+            }
         },
-        LastName:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        BirthDate:{
-            type:Datatypes.DATEONLY,
-            allowNull:false,
-        },
-        Country:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        Email:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-        PhoneNumber:{
-            type:Datatypes.STRING,
-            allowNull:false,
-        },
-    })
+        {
+            timestamps: false
+    });
+   Laundry.associate = (models) =>{
+        Laundry.belongsTo(models.TaskAllocations, { foreignKey: 'taskId' });
+
+
+    }
     return Laundry;
 }
