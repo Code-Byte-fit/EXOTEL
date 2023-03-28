@@ -5,10 +5,9 @@ const upload=require('../middleware/Upload')
 const router = express.Router();
 
 
-router.post('/:nameFile',upload('proPic',(req)=>req.body.userName), async (req, res) => {
+router.post('/:nameFile',upload('proPic'), async (req, res) => {
   try {
-    const existingUser = await UserAccounts.findOne({ where: { userName: req.body.userName } });
-
+    const existingUser = await UserAccounts.findOne({ where: { userName: req.body.userName } });//check if userName is already taken
     if (existingUser) {
       res.status(400).json({ message: 'Username is already taken' });
     } else {

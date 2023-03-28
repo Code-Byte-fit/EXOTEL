@@ -9,16 +9,6 @@ router.get('/',async (req,res)=>{
     res.json(listOUserAccounts)
 })
 
-// router.post("/",async (req,res)=>{
-//     const {userName,password}=req.body
-//     bcrypt.hash(password,10).then((hash)=>{
-//         UserAccounts.create({
-//             userName:userName,
-//             password:hash,
-//         })
-//         res.json("Success")
-//     })
-// });
 
 router.post("/login", async (req,res) =>{
     const { userName, password} = req.body;

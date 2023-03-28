@@ -15,10 +15,7 @@ router.get('/',async (req,res)=>{
         },
         {
           model: Rooms,
-          attributes: ['RoomNo'],
-          through: {
-            attributes: []
-          }
+          attributes: ['RoomNo']
         }
       ],
     });
@@ -27,7 +24,11 @@ router.get('/',async (req,res)=>{
 
 
 router.post("/",async (req,res)=>{
-    try{const{CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus,totalAmount}=req.body
+    try{
+      const {CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,
+             Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus,totalAmount}=req.body
+
+    //find if the guest is already existing in the db
     let isGuest = await Guests.findOne({
       where: {
         firstName: FirstName.trim(),
@@ -43,6 +44,7 @@ router.post("/",async (req,res)=>{
     } 
     else {
       guestId=isGuest.id
+      //check if the provided email is already present
       const guestEmail = await GuestEmail.findOne({
         where: { guestId: guestId, email: Email }
       });
@@ -50,6 +52,7 @@ router.post("/",async (req,res)=>{
         await GuestEmail.create({ email: Email, guestId: guestId });
       }
   
+      //check if the provided phone number is already present
       const guestPhoneNumber = await GuestPhoneNumber.findOne({
         where: { guestId: guestId, phoneNumber: PhoneNumber }
       });
@@ -57,6 +60,7 @@ router.post("/",async (req,res)=>{
         await GuestPhoneNumber.create({ phoneNumber: PhoneNumber, guestId: guestId });
       }
     }
+
     const reservation = await Reservations.create({
         CheckIn,
         CheckOut,
@@ -67,6 +71,8 @@ router.post("/",async (req,res)=>{
         totalAmount,
         guestId: guestId,
     });
+
+
     for (const roomNumber of SelectedRooms) {
         const room = await Rooms.findOne({ where: { RoomNo: roomNumber.RoomNo } });
         if (room) {
@@ -76,7 +82,7 @@ router.post("/",async (req,res)=>{
           });
         }
       }
-    res.status(201).json({ reservation, guest });}
+    res.status(201).json({ reservation, guestId });}
     catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Failed to create reservation' });
@@ -99,10 +105,7 @@ router.post("/",async (req,res)=>{
 //       },
 //       {
 //         model: Rooms,
-//         attributes: ['RoomNo'],
-//         through: {
-//           attributes: []
-//         }
+//         attributes: ['RoomNo']
 //       }
 //     ],
 //     where: {
@@ -240,6 +243,7 @@ router.put("/Rebook/:resId", async (req, res) => {
     // Set the status of the reservation to active
     reservation.ReservationStatus = "active";
     await reservation.save();
+
     // Delete the cancelled reservation from the CancelledReservations table
     await CancelledReservations.destroy({ where: { reservationId: reservation.id } });
     res.status(200).json({ message: "Reservation has been rebooked" });
@@ -272,7 +276,7 @@ router.get('/todayStats', async (req, res) => {
   try {
     const today = moment().startOf('day');
 
-    // Get the reservation IDs for today's check-ins
+    //the reservation IDs for today's check-ins
     const checkinReservations = await Reservations.findAll({
       attributes: ['id'],
       where: {
@@ -282,7 +286,7 @@ router.get('/todayStats', async (req, res) => {
     });
     const checkinReservationIds = checkinReservations.map(r => r.id);
 
-    // Get the number of rooms associated with each check-in reservation
+    //the number of rooms associated with each check-in reservation
     const roomsPerCheckin = await ReservationRoom.findAll({
       attributes: ['ReservationId', [Sequelize.fn('COUNT', Sequelize.col('RoomRoomNo')), 'count']],
       where: {
@@ -291,21 +295,21 @@ router.get('/todayStats', async (req, res) => {
       group: ['ReservationId'],
     });
 
-    // Calculate the total number of rooms associated with today's check-ins
+    // the total number of rooms associated with today's check-ins
     const checkinRooms = roomsPerCheckin.reduce((acc, cur) => acc + cur.dataValues.count, 0);
 
-      // Get the reservation IDs for today's check-ins
+      //  the reservation IDs for today's check-ins
       const stayoverReservations = await Reservations.findAll({
       attributes: ['id'],
       where: {
-        CheckIn: {[Op.lt]: today.toDate()},
+        CheckIn: {[Op.lte]: today.toDate()},
         CheckOut: {[Op.gt]: today.toDate()},
         ReservationStatus: 'Checked-In',
       },
     });
     const stayoverReservationIds = stayoverReservations.map(r => r.id);
 
-    // Get the number of rooms associated with each check-in reservation
+    // number of rooms associated with each check-in reservation
     const roomsPerStayover = await ReservationRoom.findAll({
       attributes: ['ReservationId', [Sequelize.fn('COUNT', Sequelize.col('RoomRoomNo')), 'count']],
       where: {
@@ -314,7 +318,7 @@ router.get('/todayStats', async (req, res) => {
       group: ['ReservationId'],
     });
 
-    // Calculate the total number of rooms associated with today's stayovers
+    // the total number of rooms associated with today's stayovers
       const stayoverRooms = roomsPerStayover.reduce((acc, cur) => acc + cur.dataValues.count, 0);
 
     // Get the number of check-outs for today

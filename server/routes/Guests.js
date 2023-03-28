@@ -15,11 +15,11 @@ router.get('/', async (req, res) => {
   });
   
 
-router.post("/",async (req,res)=>{
-    const guest=req.body
-    await Guests.create(guest)
-    res.json(guest)
-})
+// router.post("/",async (req,res)=>{
+//     const guest=req.body
+//     await Guests.create(guest)
+//     res.json(guest)
+// })
 
 
 module.exports=router
