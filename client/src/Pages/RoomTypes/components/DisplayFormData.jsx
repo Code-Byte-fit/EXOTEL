@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import FormOne from "./Form";
 import data from "./Mock-data.json"
+
 import axios from "axios";
 
 function DisplayFormData() {
 
-    
+
     const [RoomTypes, setRoomTypes] = useState(data);
     const [listOfRoomTypes, setlistOfRoomTypes] = useState([]);
     const [addFormData, setAddFormData] = useState({
@@ -19,21 +20,21 @@ function DisplayFormData() {
 
     useEffect(() => {
         axios.get("http://localhost:3001/roomtypes").then((response) => {
-          setlistOfRoomTypes(response.data);
-          console.log(listOfRoomTypes)
-          
+            setlistOfRoomTypes(response.data);
+            console.log(listOfRoomTypes)
+
         });
-      },[]);
-    
-        const makeReq = async (formData) => {
-            await axios.post("http://localhost:3001/roomtypes", formData).then(()=>{
-                axios.get("http://localhost:3001/roomtypes").then((response) => {
-                    setlistOfRoomTypes(response.data);
+    }, []);
+
+    const makeReq = async (formData) => {
+        await axios.post("http://localhost:3001/roomtypes", formData).then(() => {
+            axios.get("http://localhost:3001/roomtypes").then((response) => {
+                setlistOfRoomTypes(response.data);
             });
-            })
-        }
-    
-  
+        })
+    }
+
+
 
 
 
@@ -50,21 +51,7 @@ function DisplayFormData() {
         setAddFormData(newFormData);
     }
 
-    // const handleAddFormSubmit = (event) => {
-    //     event.preventDefault();
 
-    //     const newRoom = {
-    //         id: nanoid(),
-    //         roomNumber: addFormData.roomNumber,
-    //         roomType: addFormData.roomType,
-    //         BaseCharge: addFormData.BaseCharge,
-    //         floor: addFormData.floor,
-    //         sqFeet: addFormData.sqFeet
-    //     };
-
-    //     const newRooms = [...rooms, newRoom];
-    //     setRooms(newRooms);
-    // };
 
 
 
@@ -72,11 +59,11 @@ function DisplayFormData() {
     return (
         <React.Fragment>
 
-            <FormOne 
-                addFormData={addFormData}     makeReq={makeReq}/>
-          
-            <Table RoomTypes={RoomTypes}  listOfRoomTypes={listOfRoomTypes}/>
-           
+            <FormOne
+                addFormData={addFormData} makeReq={makeReq} />
+
+            <Table RoomTypes={RoomTypes} listOfRoomTypes={listOfRoomTypes} />
+
         </React.Fragment>
 
 

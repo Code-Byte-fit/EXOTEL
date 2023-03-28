@@ -29,8 +29,7 @@ app.use("/reservations",reservationRouter);
 
 
 
-// const addOnRouter=require('./routes/AddOns')
-// app.use("/addons",addOnRouter);
+
 
 const promotionRouter=require('./routes/Promotions')
 app.use("/promotions",promotionRouter);
@@ -55,7 +54,8 @@ app.use("/compensation", compRouter);
 
 // const minibarpackageRouter = require ('./routes/MinibarPackage')
 // app.use("/minibarpackage", minibarpackageRouter);
-
+const adminRouter =require('./routes/Admin')
+app.use("/admin",adminRouter);
 
 
 db.sequelize.sync().then(()=>{

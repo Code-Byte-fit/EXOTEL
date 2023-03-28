@@ -4,39 +4,38 @@ import axios from "axios";
 import { useEffect } from "react";
 import RoomTable from "../../General/Table/Table";
 import EditDelete from "../../General/Table/EditDelete";
-import Popup from "./EditPopup";
+
 
 function Table(props) {
   const [listOfRooms, setlistOfRooms] = useState([]);
-  const [showPopup, setShowPopup] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState(null);
+
 
   useEffect(() => {
     axios.get("http://localhost:3001/rooms").then((response) => {
       setlistOfRooms(response.data);
       console.log(listOfRooms)
-      
-    });
-  },[]);
 
- 
+    });
+  }, []);
+
+
   const columns = [
     {
-        name: 'ROOM-NO',
-        selector: row => row.RoomNo,
-        sortable: true,
-    },
-    {
-        name: 'ROOM-TYPE',
-        selector: row => row.TypeName,
-        sortable: true,
-    },
-  
-    {
-      name: 'VIEW',
-      selector: row => row.View,
+      name: 'ROOM NO',
+      selector: row => row.RoomNo,
       sortable: true,
     },
+
+    {
+      name: 'TYPE NAME',
+      selector: row => row.RoomTypeView,
+      sortable: true,
+    },
+    //   {
+    //   name: 'ROOM-TYPE-VIEW',
+    //   selector: row => `${row.TypeName}-${row.View}`,
+    //   sortable: true,
+    // },
     {
       name: 'FLOOR',
       selector: row => row.floor,
@@ -47,21 +46,21 @@ function Table(props) {
       selector: row => row.Status,
       sortable: true,
       cell: row => (
-          <div 
-              style={{ 
-                  backgroundColor: row.Status === "Available" ? "blue" : "pink",
-                  borderRadius: "8px",
-                  padding: "5px",
-              }}
-          >
-              {row.Status}
-          </div>
+        <div
+          style={{
+            backgroundColor: row.Status === "Available" ? "blue" : "pink",
+            borderRadius: "8px",
+            padding: "5px",
+          }}
+        >
+          {row.Status}
+        </div>
       ),
-  },
-    
+    },
+
     {
-      name: 'BASE CHARGE',
-      selector: row => row.BaseCharge,
+      name: 'TOTAL CHARGE($)',
+      selector: row => row.TotalCharge,
       sortable: true,
     },
     {
@@ -77,15 +76,15 @@ function Table(props) {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete/>
+      cell: (row) => <EditDelete />
     },
-];
+  ];
 
 
   return (
     <div className={style.tableContainer}>
-    <label className={style.labelTwo}>Edit/Delete Room</label>
-      <RoomTable columns={columns} data={props.listOfRooms} height="30vh" edit pagination/>
+      <label className={style.labelTwo}>Edit/Delete Room</label>
+      <RoomTable columns={columns} data={props.listOfRooms} height="30vh" edit pagination />
 
     </div>
   );

@@ -22,6 +22,10 @@ import Login from '../src/Pages/LoginPage/Login'
 import ViewRoomTypes from './Pages/RoomTypes/ViewRoomTypes/ViewRoomTypes';
 import Guests from './Pages/Guests/Guests';
 import AdminDash from './Pages/Dashboard/Admin/Admin'
+import Receptionist from './Pages/Dashboard/Receptionist/Receptionist';
+import HKmanager from './Pages/Dashboard/HKManager/HKmanager';
+import FOmanager from './Pages/Dashboard/FrontOffice/FOmanager';
+import Cashier from './Pages/Dashboard/Cashier/Cashier';
 
 
 
@@ -36,6 +40,10 @@ export default function App() {
                 <Route path="/viewPromotions" element={<ViewPromotions/>}/>
                 <Route path="/rooms" element={<Rooms/>}/>
                 <Route path="/admin" element={<AdminDash/>}/>
+                <Route path="/receptionist" element={<Receptionist/>}/>
+                <Route path="/HKmanager" element={<HKmanager/>}/>
+                <Route path="/FOmanager" element={<FOmanager/>}/>
+                <Route path="/cashier" element={<Cashier/>}/>
                 <Route path="/promotion" element={<Promotion/>}/>
                 <Route path="/addons" element={<AddOns/>}/>
                 <Route path="/roomtypes" element={<RoomTypes/>}/>

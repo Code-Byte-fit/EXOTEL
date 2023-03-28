@@ -1,5 +1,3 @@
-
-
 .container {
   width: 92vw;
   height: 80vh;
@@ -7,7 +5,6 @@
   top: 14vh;
   left: 7vw;
   box-sizing: border-box;
- 
 }
 
 .cover {
@@ -41,10 +38,16 @@
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
+.box {
+  position: relative;
+}
+
 .error {
+  position: absolute;
   color: rgb(141, 22, 22);
   font-size: 0.8rem;
-  margin-top: 0.5rem;
+  display: block;
+  right: 0;
 }
 
 .createBtn {
@@ -54,9 +57,6 @@
   margin-left: 80vw;
 }
 
-
-
-
 .buttonOne {
   border: none;
   padding: 1vh 1vw 1vh 1vw;
@@ -64,7 +64,7 @@
   background: #4d5949;
   color: #fcfbff;
   border-radius: 12px;
-  
+
   cursor: pointer;
 }
 
@@ -80,7 +80,6 @@
   width: 88vw;
   height: 37vh;
   margin: 3vh 0 0 0;
-
 }
 .tbl::-webkit-scrollbar {
   width: 0.5vw;
@@ -172,7 +171,6 @@ tr:nth-child(even) {
 }
 
 .popup {
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -187,18 +185,17 @@ tr:nth-child(even) {
   right: 0;
 }
 
-
 .popupContent {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   height: 65vh;
   width: 55vw;
-padding-top: 3%;
-padding-bottom: 2%;
-padding-left: 2%;
-padding-right: 2%;
+  padding-top: 3%;
+  padding-bottom: 2%;
+  padding-left: 2%;
+  padding-right: 2%;
 }
 
 .fieldGroup {
@@ -207,7 +204,6 @@ padding-right: 2%;
   align-items: center;
   position: relative;
   left: 20vw;
-
 }
 
 .fieldGroup1 {
@@ -216,7 +212,6 @@ padding-right: 2%;
   align-items: center;
   position: relative;
   left: 0vw;
-
 }
 
 .createBtn1 {
@@ -225,8 +220,6 @@ padding-right: 2%;
   bottom: 10vh;
   margin-left: 43vw;
 }
-
-
 
 /*filter*/
 
@@ -313,9 +306,6 @@ padding-right: 2%;
   border: none;
 }
 
-
-
-
 .tooltip {
   position: relative;
   display: inline-block;
@@ -345,3 +335,77 @@ padding-right: 2%;
   opacity: 1;
 }
 
+/**/
+
+.inputCont,
+.btnCont,
+.confirmBtnCont {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 3% auto;
+}
+
+.editCont {
+  height: 190%;
+  width: 105%;
+  background-color: white;
+  border-radius: 8px;
+  position: relative;
+  right: 2.5%;
+  bottom: 40%;
+}
+
+.inputCont select {
+  width: 12vw;
+}
+
+.btnCont {
+  margin: 5% auto;
+}
+
+.confirmBtnCont {
+  margin: 6% auto;
+}
+
+.editBtn {
+  padding: 2.2% 2%;
+  font-size: 0.7rem;
+  color: #4d5949;
+  background: white;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  width: clamp(3vw, 12.2vw, 12.2vw);
+}
+
+.cancelBtn,
+.confirmBtn {
+  padding: 3%;
+  font-size: 0.9rem;
+}
+
+.cancelBtn {
+  border: 1px solid #4d5949;
+}
+
+.confirmBtn {
+  background: #4d5949;
+  color: white;
+}
+
+.editHeading {
+  font-size: 1.4rem;
+  padding: 2% 0 0 0;
+}
+
+.box1 {
+  margin-left: 2vw;
+}
+
+.Editdiv2 {
+  margin: 0 2vw 0 2vw;
+}
+
+.Editdiv1 {
+  margin: 0 2vw 0 0;
+}
