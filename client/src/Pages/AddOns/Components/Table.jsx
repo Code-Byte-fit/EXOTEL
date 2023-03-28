@@ -10,37 +10,37 @@ import EditDelete from "./EditDelete";
 
 function Table(props) {
 
-    const [listOfAddons, setlistOfAddons] = useState([]);
- 
-
-
-   
-
-    useEffect(() => {
-        axios.get("http://localhost:3001/addon").then((response) => {
-            setlistOfAddons(response.data);
-        });
-    }, []);
+  const [listOfAddons, setlistOfAddons] = useState([]);
 
 
 
-    
+
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/addon").then((response) => {
+      setlistOfAddons(response.data);
+    });
+  }, []);
+
+
+
+
   const columns = [
     {
-        name: 'AddOn No',
-        selector: row => row.addonID,
-        sortable: true,
+      name: 'AddOn No',
+      selector: row => row.addonID,
+      sortable: true,
     },
     {
-        name: 'AddOn',
-        selector: row => row.AddOn,
-        sortable: true,
+      name: 'AddOn',
+      selector: row => row.AddOn,
+      sortable: true,
     },
     {
       name: 'Unit',
       selector: row => row.Unit,
       sortable: true,
-  },
+    },
 
     {
       name: 'Charge',
@@ -58,24 +58,24 @@ function Table(props) {
         </div>
       ),
     },
-    
-    
-  
+
+
+
     {
       selector: row => row,
-      cell: (row) => <EditDelete setlistOfAddons={setlistOfAddons} row={row}/>
+      cell: (row) => <EditDelete setlistOfAddons={setlistOfAddons} row={row} />
     },
-];
+  ];
 
-    return (
-        <span className={style.tableContainer}>
-            <label className={style.labelTwo}>Edit/Delete Add Ons</label>
-            <AddOnTable columns={columns} data={props.listOfAddons} height="35vh" edit pagination/>
-            
-           
-        </span>
+  return (
+    <span className={style.tableContainer}>
+      <label className={style.labelTwo}>Edit/Delete Add Ons</label>
+      <AddOnTable columns={columns} data={props.listOfAddons} height="35vh" edit pagination />
 
-    )
+
+    </span>
+
+  )
 }
 
 

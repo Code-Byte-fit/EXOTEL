@@ -1,4 +1,4 @@
-import React, { useState ,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import FormOne from "./Form";
 import axios from "axios";
@@ -8,7 +8,7 @@ import data from "./Mock-data.json"
 
 function DisplayFormData() {
 
-  
+
     const [addOns, setAddOns] = useState(data);
     const [addFormData, setAddFormData] = useState({
         AddOn: '',
@@ -24,28 +24,28 @@ function DisplayFormData() {
     useEffect(() => {
         axios.get("http://localhost:3001/addon").then((response) => {
             setlistOAddons(response.data);
-          console.log(listOfAddons)
-          
+            console.log(listOfAddons)
+
         });
-      },[]);
-    
-        const makeReq = async (formData) => {
-            await axios.post("http://localhost:3001/addon", formData).then(()=>{
-                axios.get("http://localhost:3001/addon").then((response) => {
-                    setlistOAddons(response.data);
+    }, []);
+
+    const makeReq = async (formData) => {
+        await axios.post("http://localhost:3001/addon", formData).then(() => {
+            axios.get("http://localhost:3001/addon").then((response) => {
+                setlistOAddons(response.data);
             });
-            })
-        }
+        })
+    }
 
 
 
     return (
         <React.Fragment>
 
-            <FormOne  makeReq={makeReq}
+            <FormOne makeReq={makeReq}
                 addFormData={addFormData} />
-          
-        <Table rooms={addOns} listOfAddons={listOfAddons} />
+
+            <Table rooms={addOns} listOfAddons={listOfAddons} />
         </React.Fragment>
 
 

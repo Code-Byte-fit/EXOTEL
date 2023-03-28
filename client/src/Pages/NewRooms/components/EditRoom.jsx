@@ -13,19 +13,19 @@ function EditRoom(props) {
 
     const validationSchema = Yup.object().shape({
         RoomNo: Yup.string()
-          .required('Required')
-          .matches(/^[A-Za-z0-9]+$/, 'Must only contain letters and numbers')
-          .max(10, 'Must be at most 10 characters long'),
+            .required('Required')
+            .matches(/^[A-Za-z0-9]+$/, 'Must only contain letters and numbers')
+            .max(10, 'Must be at most 10 characters long'),
         RoomTypeView: Yup.string().required('Required'),
         AdditionalCharges: Yup.number()
-          .required('Required')
-          .typeError('Must only contain numbers'),
+            .required('Required')
+            .typeError('Must only contain numbers'),
         TotalCharge: Yup.number().required('Required'),
         floor: Yup.string().required('Required'),
         Status: Yup.string().required('Required'),
         AddInfo: Yup.string(),
-      });
-      
+    });
+
 
     const fetchRoomTypes = async () => {
         const response = await axios.get("http://localhost:3001/roomtypes");
@@ -48,7 +48,7 @@ function EditRoom(props) {
         <div className={style.editCont}>
 
 
-        <div className={style.editHeading}>Edit Room</div>
+            <div className={style.editHeading}>Edit Room</div>
 
             <Formik initialValues={props.values} onSubmit={null} validationSchema={validationSchema} >
                 <Form>
@@ -118,7 +118,7 @@ function EditRoom(props) {
                     <div className={style.confirmBtnCont}>
                         <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
                         <button type='button' className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
-                      </div>
+                    </div>
 
 
 

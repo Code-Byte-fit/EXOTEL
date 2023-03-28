@@ -5,12 +5,12 @@ import DisplayFormData from "../NewRooms/components/DisplayFormData";
 
 
 
-function Rooms(){
-   return(<>
-        <div className={style.cover}>
-      <DisplayFormData />
+function Rooms() {
+   return (<>
+      <div className={style.cover}>
+         <DisplayFormData />
       </div>
-   </>) 
+   </>)
 }
 
 export default Rooms;

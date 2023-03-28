@@ -18,14 +18,14 @@ function Table(props) {
     });
   }, []);
 
- 
 
-  
+
+
   const columns = [
     {
-        name: 'Type Name',
-        selector: row => row.TypeName,
-        sortable: true,
+      name: 'Type Name',
+      selector: row => row.TypeName,
+      sortable: true,
     },
     {
       name: 'VIEW',
@@ -33,9 +33,9 @@ function Table(props) {
       sortable: true,
     },
     {
-        name: 'No of Beds',
-        selector: row => row.NoOfBeds,
-        sortable: true,
+      name: 'No of Beds',
+      selector: row => row.NoOfBeds,
+      sortable: true,
     },
 
     {
@@ -61,14 +61,14 @@ function Table(props) {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete setlistOfRoomTypes={setlistOfRoomTypes} row={row}/>
+      cell: (row) => <EditDelete setlistOfRoomTypes={setlistOfRoomTypes} row={row} />
     },
-];
+  ];
   return (
     <span className={style.tableContainer}>
       <label className={style.labelTwo}>Edit/Delete Room Types</label>
       <RoomTypeTable columns={columns} data={props.listOfRoomTypes} height="35vh" edit pagination />
-    
+
     </span>
   );
 }

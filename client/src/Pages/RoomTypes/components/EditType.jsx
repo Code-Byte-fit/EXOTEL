@@ -7,23 +7,23 @@ import * as Yup from 'yup';
 
 
 function EditType(props) {
-   
-  
+
+
     const validationSchema = Yup.object().shape({
         TypeName: Yup.string().required('Required'),
         NoOfBeds: Yup.number()
-          .required('Required')
-          .typeError('Must contain only numbers'),
+            .required('Required')
+            .typeError('Must contain only numbers'),
         sqFeet: Yup.string()
-          .required('Required')
-          .matches(/^[0-9]+$/, 'Must contain only numbers'),
+            .required('Required')
+            .matches(/^[0-9]+$/, 'Must contain only numbers'),
         View: Yup.string().required('Required'),
         StandardCharge: Yup.string()
-          .required('Required')
-          .typeError('Must contain only numbers'),
+            .required('Required')
+            .typeError('Must contain only numbers'),
         AddInfo: Yup.string(),
-      });
-      
+    });
+
     const view = [{ key: "--None Selected --", value: "" },
     { key: "Beach View", value: "Beach View" },
     { key: "Pool View", value: "Pool View" },
@@ -36,7 +36,7 @@ function EditType(props) {
         <div className={style.editCont}>
 
 
-<div className={style.editHeading}>Edit Room Type</div>
+            <div className={style.editHeading}>Edit Room Type</div>
 
             <Formik initialValues={props.values} onSubmit={null} validationSchema={validationSchema} >
                 <Form>
@@ -48,7 +48,7 @@ function EditType(props) {
                                 component={Input}
                                 label="Room Type"
                                 type="text"
-                            
+
                                 width="13vw" />
                             <ErrorMessage name="TypeName" component="span" className={style.error} />
                         </span>
@@ -59,7 +59,7 @@ function EditType(props) {
                                 label="View"
                                 type="select"
                                 options={view}
-                             
+
                                 className={style.inputOne}
                                 width="13vw" />
                             <ErrorMessage name="View" component="span" className={style.error} />
@@ -70,7 +70,7 @@ function EditType(props) {
                                 component={Input}
                                 label="No of Beds"
                                 type="text"
-                               
+
                                 width="13vw" />
                             <ErrorMessage name="NoOfBeds" component="span" className={style.error} />
                         </span>
@@ -79,17 +79,17 @@ function EditType(props) {
                                 component={Input}
                                 label="Square Feet(Sqft)"
                                 type="text"
-                              
+
                                 width="13vw" />
                             <ErrorMessage name="sqFeet" component="span" className={style.error} />
                         </span>
-                        
+
                         <span className={style.box1}>
                             <Field name="StandardCharge"
                                 component={Input}
                                 label="Standard Charge($)"
                                 type="text"
-                            
+
                                 width="13vw" />
                             <ErrorMessage name="StandardCharge" component="span" className={style.error} />
                         </span>
@@ -104,14 +104,14 @@ function EditType(props) {
                             type="textarea"
                             rows="3"
                             cols="70" />
-                       
+
                     </div>
 
 
                     <div className={style.confirmBtnCont}>
                         <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
                         <button type='button' className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
-                      </div>
+                    </div>
 
 
 

@@ -10,29 +10,29 @@ function FormOne(props) {
     const [showConfirmation, setShowConfirmation] = useState(false);
 
     const initialValues = {
-        RoomTypeID:'',
+        RoomTypeID: '',
         TypeName: '',
-        View:'',
+        View: '',
         NoOfBeds: '',
         sqFeet: '',
         StandardCharge: '',
-        AddInfo:''
+        AddInfo: ''
     };
     const validationSchema = Yup.object().shape({
         TypeName: Yup.string().required('Required'),
         NoOfBeds: Yup.number()
-          .required('Required')
-          .typeError('Must contain only numbers'),
+            .required('Required')
+            .typeError('Must contain only numbers'),
         sqFeet: Yup.string()
-          .required('Required')
-          .matches(/^[0-9]+$/, 'Must contain only numbers'),
+            .required('Required')
+            .matches(/^[0-9]+$/, 'Must contain only numbers'),
         View: Yup.string().required('Required'),
         StandardCharge: Yup.string()
-          .required('Required')
-          .typeError('Must contain only numbers'),
+            .required('Required')
+            .typeError('Must contain only numbers'),
         AddInfo: Yup.string(),
-      });
-      
+    });
+
     const view = [{ key: "--None Selected --", value: "" },
     { key: "Beach View", value: "Beach View" },
     { key: "Pool View", value: "Pool View" },
@@ -57,7 +57,7 @@ function FormOne(props) {
                                 component={Input}
                                 label="Room Type"
                                 type="text"
-                            
+
                                 width="13vw" />
                             <ErrorMessage name="TypeName" component="span" className={style.error} />
                         </span>
@@ -68,7 +68,7 @@ function FormOne(props) {
                                 label="View"
                                 type="select"
                                 options={view}
-                             
+
                                 className={style.inputOne}
                                 width="13vw" />
                             <ErrorMessage name="View" component="span" className={style.error} />
@@ -79,7 +79,7 @@ function FormOne(props) {
                                 component={Input}
                                 label="No of Beds"
                                 type="text"
-                               
+
                                 width="13vw" />
                             <ErrorMessage name="NoOfBeds" component="span" className={style.error} />
                         </span>
@@ -88,17 +88,17 @@ function FormOne(props) {
                                 component={Input}
                                 label="Square Feet(Sqft)"
                                 type="text"
-                              
+
                                 width="13vw" />
                             <ErrorMessage name="sqFeet" component="span" className={style.error} />
                         </span>
-                        
+
                         <span className={style.box}>
                             <Field name="StandardCharge"
                                 component={Input}
                                 label="Standard Charge($)"
                                 type="text"
-                            
+
                                 width="13vw" />
                             <ErrorMessage name="StandardCharge" component="span" className={style.error} />
                         </span>

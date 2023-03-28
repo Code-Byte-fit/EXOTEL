@@ -7,7 +7,7 @@ import axios from "axios";
 
 function DisplayFormData() {
 
-    
+
     const [RoomTypes, setRoomTypes] = useState(data);
     const [listOfRoomTypes, setlistOfRoomTypes] = useState([]);
     const [addFormData, setAddFormData] = useState({
@@ -20,21 +20,21 @@ function DisplayFormData() {
 
     useEffect(() => {
         axios.get("http://localhost:3001/roomtypes").then((response) => {
-          setlistOfRoomTypes(response.data);
-          console.log(listOfRoomTypes)
-          
+            setlistOfRoomTypes(response.data);
+            console.log(listOfRoomTypes)
+
         });
-      },[]);
-    
-        const makeReq = async (formData) => {
-            await axios.post("http://localhost:3001/roomtypes", formData).then(()=>{
-                axios.get("http://localhost:3001/roomtypes").then((response) => {
-                    setlistOfRoomTypes(response.data);
+    }, []);
+
+    const makeReq = async (formData) => {
+        await axios.post("http://localhost:3001/roomtypes", formData).then(() => {
+            axios.get("http://localhost:3001/roomtypes").then((response) => {
+                setlistOfRoomTypes(response.data);
             });
-            })
-        }
-    
-  
+        })
+    }
+
+
 
 
 
@@ -51,7 +51,7 @@ function DisplayFormData() {
         setAddFormData(newFormData);
     }
 
-   
+
 
 
 
@@ -59,11 +59,11 @@ function DisplayFormData() {
     return (
         <React.Fragment>
 
-            <FormOne 
-                addFormData={addFormData}     makeReq={makeReq}/>
-          
-            <Table RoomTypes={RoomTypes}  listOfRoomTypes={listOfRoomTypes}/>
-           
+            <FormOne
+                addFormData={addFormData} makeReq={makeReq} />
+
+            <Table RoomTypes={RoomTypes} listOfRoomTypes={listOfRoomTypes} />
+
         </React.Fragment>
 
 

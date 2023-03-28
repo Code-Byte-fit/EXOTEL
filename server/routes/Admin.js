@@ -11,12 +11,52 @@ router.get('/todayStats', async (req, res) => {
         Status: 'Active'
       }
     });
+
+    const houseKeepingManagerCount = await Users.count({
+      where: {
+        Role: 'HKManager'
+      }
+    });
+
+    const foManagerCount = await Users.count({
+      where: {
+        Role: 'FOManager'
+      }
+    });
+    const adminCount = await Users.count({
+      where: {
+        Role: 'Administrator'
+      }
+    });
+    const roomBoyCount = await Users.count({
+      where: {
+        Role: 'RoomBoy'
+      }
+    });
+
+    const cashierCount = await Users.count({
+      where: {
+        Role: 'Cashier'
+      }
+    });
+    const receptionistCount = await Users.count({
+      where: {
+        Role: 'Receiptionist'
+      }
+    });
+
     const availableUsers = await Users.count();
 
     res.status(200).json({
       roomCount: availableRooms,
       promoCount: availablePromos,
       usersCount: availableUsers,
+      houseKeepingManagerCount,
+      foManagerCount,
+      adminCount,
+      roomBoyCount,
+      cashierCount,
+      receptionistCount
     });
   } catch (error) {
     console.error(error);
@@ -25,5 +65,3 @@ router.get('/todayStats', async (req, res) => {
 });
 
 module.exports = router;
-
-  

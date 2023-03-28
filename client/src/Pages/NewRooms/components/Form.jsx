@@ -7,7 +7,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
 
 function FormOne(props) {
-   
+
     const [RoomTypes, setRoomTypes] = useState([]);
 
 
@@ -22,9 +22,9 @@ function FormOne(props) {
     };
     const validationSchema = Yup.object().shape({
         RoomNo: Yup.string()
-          .required('Required')
-          .matches(/^[A-Za-z0-9]+$/, 'Must only contain letters and numbers')
-          .max(10, 'Must be at most 10 characters long'),
+            .required('Required')
+            .matches(/^[A-Za-z0-9]+$/, 'Must only contain letters and numbers')
+            .max(10, 'Must be at most 10 characters long'),
         RoomTypeView: Yup.string().required('Required'),
         // AdditionalCharges: Yup.number()
         //   .required('Required'),
@@ -32,8 +32,8 @@ function FormOne(props) {
         floor: Yup.string().required('Required'),
         Status: Yup.string().required('Required'),
         AddInfo: Yup.string(),
-      });
-      
+    });
+
 
     const fetchRoomTypes = async () => {
         const response = await axios.get("http://localhost:3001/roomtypes");
@@ -58,7 +58,7 @@ function FormOne(props) {
 
             <label className={style.labelOne}>Add Room</label>
 
-            <Formik initialValues={initialValues} onSubmit={props.makeReq}  validationSchema={validationSchema} >
+            <Formik initialValues={initialValues} onSubmit={props.makeReq} validationSchema={validationSchema} >
                 <Form>
 
                     <div className={style.div1}>

@@ -5,12 +5,12 @@ import DisplayFormData from "../AddOns/Components/DisplayFormData";
 
 
 
-function AddOns(){
-   return(<>
-        <div className={style.cover}>
-      <DisplayFormData />
+function AddOns() {
+   return (<>
+      <div className={style.cover}>
+         <DisplayFormData />
       </div>
-   </>) 
+   </>)
 }
 
 export default AddOns;
