@@ -2,6 +2,7 @@ const express=require('express')
 const router=express.Router()
 const {Sequelize,Op} = require('sequelize');
 const moment = require('moment');
+const upload=require('../middleware/Upload')
 const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations,GuestEmail,GuestPhoneNumber}=require('../models')
 
 
@@ -23,11 +24,12 @@ router.get('/',async (req,res)=>{
 })
 
 
-router.post("/",async (req,res)=>{
+router.post("/:nameFile",upload('Identification'),async (req,res)=>{
     try{
       const {CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,
              Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus,totalAmount}=req.body
-
+      console.log(req.file)
+      console.log(req.body)
     //find if the guest is already existing in the db
     let isGuest = await Guests.findOne({
       where: {
@@ -37,7 +39,7 @@ router.post("/",async (req,res)=>{
     });
     let guestId=null;
     if (!isGuest) {
-      const guest = await Guests.create({ FirstName, LastName, DOB, Country });
+      const guest = await Guests.create({ FirstName, LastName, DOB, Country,Identification:req.file.path});
       await GuestEmail.create({ email: Email, guestId: guest.id });
       await GuestPhoneNumber.create({ phoneNumber: PhoneNumber, guestId: guest.id });
       guestId=guest.id

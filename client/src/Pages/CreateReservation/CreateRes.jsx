@@ -10,7 +10,11 @@ import style from './Components/Common/Style.module.css'
 export default function CreateRes() {
   const [amounts,setAmounts]=useState({subTotal:0.00,discounts:0.00,GrandTotal:0.00})
   const makeReq=async(formData)=>{
-    await axios.post(`http://localhost:3001/reservations`,formData);
+    await axios.post(`http://localhost:3001/reservations/${data.FirstName+data.LastName}`,formData,{
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   }
 
   const currentHour = new Date().getHours().toString().padStart(2, '0');
@@ -36,6 +40,7 @@ export default function CreateRes() {
         ReservationStatus:"active",
         totalAmount:0.00,
         Discounts:"",
+        Identification:'',
     })
 
 
