@@ -35,8 +35,11 @@ app.use("/roomtypes", roomTypenRouter);
 const taskRouter = require("./routes/Tasks");
 app.use("/tasks", taskRouter);
 
-const addOnRouter=require('./routes/Addon')
-app.use("/addon",addOnRouter);
+const addOnRouter = require("./routes/Addon");
+app.use("/addon", addOnRouter);
+
+const roomItemRouter = require("./routes/RoomItems");
+app.use("/roomItems", roomItemRouter);
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {

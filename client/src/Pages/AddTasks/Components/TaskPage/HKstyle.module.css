@@ -171,44 +171,6 @@
   font-weight: 600;
 }
 
-.divTblEditDeleteRoom {
-  height: 44.5vh;
-}
-
-.bodyTblTaskEditDelete {
-  height: 36.5vh;
-}
-
-table {
-  padding: 20px;
-}
-
-td,
-th {
-  text-align: center;
-  font-size: 12px;
-  /* border-radius: 10px; */
-  padding: 10px;
-}
-
-th {
-  border-bottom: 2pc solid black;
-}
-
-thead {
-  font-weight: 0;
-  /* background-color: #576670; */
-  display: inline-block;
-  text-align: center;
-}
-
-tbody {
-  background-color: white;
-  text-align: center;
-  display: inline-block;
-  overflow-y: scroll;
-}
-
 .inputSize {
   width: 50vw;
 }

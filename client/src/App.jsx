@@ -23,6 +23,7 @@ import ViewRoomTypes from "./Pages/RoomTypes/ViewRoomTypes/ViewRoomTypes";
 import AdminDash from "./Pages/Dashboard/Admin/Admin";
 import TaskPage from "./Pages/AddTasks/TaskPage";
 import ViewTaskPage from "./Pages/ViewTasks/ViewTaskPage";
+import RepairItems from "./Pages/RepairItems/RepairItemsPage";
 
 export default function App() {
   const router = createBrowserRouter(
@@ -46,6 +47,7 @@ export default function App() {
           <Route path="/register" element={<RegisterUser />} />
           <Route path="/addTasks" element={<TaskPage />} />
           <Route path="/viewTasks" element={<ViewTaskPage />} />
+          <Route path="/repairItems" element={<RepairItems />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="*" element={<>Page Not Found</>} />

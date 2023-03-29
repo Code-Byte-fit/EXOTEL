@@ -21,14 +21,8 @@
   height: 86vh;
 }
 
-.divAddTaskSection {
-  width: 88vw;
-  height: 36vh;
-  margin-bottom: 20px;
-  /* background-color: blue; */
-}
-
-.divTitleAddTask {
+/* 
+.divTitleAddItems {
   width: 88vw;
   height: 5vh;
   font-weight: 600;
@@ -36,24 +30,25 @@
 
 .divInputRow1 {
   width: 88vw;
-  height: 12vh;
-  /* background-color: pink; */
+  height: fit-content;
   display: flex;
+  flex-direction: row;
 }
 
 .divInputRow2 {
   width: 88vw;
-  height: 16vh;
+  height: fit-content;
   margin-top: 0px;
-  /* background-color: yellow; */
+  display: flex;
+  justify-content: flex-end;
 }
 
 .labelRow1 {
-  /* background-color: black; */
   width: 88vw;
   height: 1.5vh;
-  margin-bottom: 0;
-  font-size: 12px;
+  margin: 0 0.5rem 0 0;
+  display: flex;
+  flex-direction: row;
 }
 
 .labelRow1Text {
@@ -106,13 +101,13 @@
   height: 11.5vh;
   resize: none;
 }
-
+*/
 .divBtnAddToList {
   width: 88vw;
-  height: 5vh;
+  height: fit-content;
   /* background-color: pink; */
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .btnaddItems {
@@ -162,51 +157,12 @@
 .divEditDeleteTableSection {
   width: 88vw;
   height: 50vh;
-  /* background-color: white; */
 }
 
 .divTitleEditDelete {
   width: 88vw;
   height: 5.5vh;
   font-weight: 600;
-}
-
-.divTblEditDeleteRoom {
-  height: 44.5vh;
-}
-
-.bodyTblTaskEditDelete {
-  height: 36.5vh;
-}
-
-table {
-  padding: 20px;
-}
-
-td,
-th {
-  text-align: center;
-  font-size: 12px;
-  /* border-radius: 10px; */
-  padding: 10px;
-}
-
-th {
-  border-bottom: 2pc solid black;
-}
-
-thead {
-  font-weight: 0;
-  /* background-color: #576670; */
-  display: inline-block;
-  text-align: center;
-}
-
-tbody {
-  background-color: white;
-  text-align: center;
-  display: inline-block;
-  overflow-y: scroll;
 }
 
 .inputSize {
@@ -221,4 +177,70 @@ tbody {
 
 .errInput {
   border: 2px solid red;
+}
+/* 
+.inputFields {
+
+  width: 17vw;
+}
+
+.divcol1 {
+  display: flex;
+  justify-content: flex-start;
+
+  flex-direction: row;
+  margin-bottom: 10px;
+  width: 80vw;
+}
+
+.formLegend {
+  font-size: 1rem;
+  margin: 0.5rem 0 0 0;
+}
+
+.formFieldSet {
+  font-size: 1rem;
+}
+
+.divInputContent {
+  display: flex;
+  flex-direction: column;
+} */
+
+.divInputContent {
+  background-color: black;
+  height: 20vh;
+}
+
+.divAddItemsSection {
+  width: 88vw;
+  height: fit-content;
+  margin-bottom: 10px;
+  height: fit-content;
+  /* background-color: pink; */
+}
+
+.divTitleAddItems {
+  width: 88vw;
+  height: 5vh;
+  font-weight: 600;
+}
+
+.divFormRow1,
+.divFormRow2,
+.divFormRow3 {
+  display: flex;
+  flex-direction: row;
+  width: 88vw;
+  margin-bottom: 2vh;
+}
+
+.divInputField1,
+.divInputField2 {
+  margin-right: 0.5vw;
+}
+
+.formLegend {
+  font-size: 1rem;
+  margin: 0.5rem 0;
 }
