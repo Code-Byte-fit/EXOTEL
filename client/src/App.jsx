@@ -1,5 +1,6 @@
-import {React} from 'react'
+import {React, useState, useEffect} from 'react'
 import {createBrowserRouter,createRoutesFromElements,Route,RouterProvider,Outlet} from "react-router-dom";
+import jwt_decode from "jwt-decode";
 import Header from './Pages/General/Header/Header';
 import ReservationTab from './Pages/ReservationTab/ReservationTab';
 import CreateRes from './Pages/CreateReservation/CreateRes';
@@ -18,10 +19,19 @@ import AdminDash from './Pages/Dashboard/Admin/Admin'
 
 
 export default function App() {
+    const [userRole, setUserRole] = useState(null);
+    useEffect(() => {
+        const accessToken = localStorage.getItem("accessToken");
+        if (accessToken) {
+            const decodedToken = jwt_decode(accessToken);
+            setUserRole(decodedToken.userRole);
+        }
+    }, []);
+
     const router=createBrowserRouter(
         createRoutesFromElements( 
             <>
-            <Route path="/" element={<Root/>}>
+            <Route path="/" element={<Root userRole={userRole}/>}>
                 <Route path="/createReservation" element={<CreateRes/>}/>
                 <Route path="/reservationTab" element={<ReservationTab/>}/>
                 <Route path="/viewRooms" element={<ViewRooms/>}/>
@@ -44,6 +54,7 @@ export default function App() {
             
         )
     )
+
     
     return(
             <div>
@@ -52,10 +63,10 @@ export default function App() {
     )
 }
 
-const Root=()=>{
+const Root=(props)=>{
     return(
         <>
-        <Header role="receptionist"/>
+        <Header role={props.userRole}/>
         <div><Outlet/></div>
         </>
     )
