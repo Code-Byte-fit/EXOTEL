@@ -7,7 +7,9 @@ import * as Yup from "yup";
 
 const roomTypeOptions = ["single", "double", "suite"];
 
-const TaskAddSection = ({ taskToEdit, onRefresh }) => {
+const ItemAddSection = ({ taskToEdit, onRefresh }) => {
+  const [roomType, setRoomType] = useState([]);
+
   const initialValues = {
     roomTypes: [],
   };
@@ -20,6 +22,38 @@ const TaskAddSection = ({ taskToEdit, onRefresh }) => {
     console.log("Selected room types:", values.roomTypes);
     setSubmitting(false);
   };
+
+  async function viewRoomTypes() {
+    try {
+      const response = await axios.get(
+        "http://localhost:3001/roomItems/roomTypes/"
+      );
+      console.log(response);
+      // const room = response.data.roomDetails.map((value) => {
+      //   return {
+      //     key: value.RoomNo,
+      //     value: value.RoomNo,
+      //   };
+      // });
+
+      // const roomBoy = response.data.roomBoyDetails.map((value) => {
+      //   return {
+      //     key: `${value.RoomBoyId} - ${value.RoomBoyName}`,
+      //     value: value.RoomBoyId,
+      //   };
+      // });
+
+      // setRoomNumbers(room);
+      // setrbNumber(roomBoy);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    viewRoomTypes();
+    // console.log(roomNumbers);
+  }, []);
 
   return (
     <div className={style.divAddItemsSection}>
@@ -198,4 +232,4 @@ const TaskAddSection = ({ taskToEdit, onRefresh }) => {
   );
 };
 
-export default TaskAddSection;
+export default ItemAddSection;

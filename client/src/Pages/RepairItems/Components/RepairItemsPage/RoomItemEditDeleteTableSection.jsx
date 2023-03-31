@@ -8,7 +8,9 @@ const ItemEditDeleteTableSection = ({ refresh, onEditItems }) => {
   const [itemData, setItemData] = useState([]);
 
   const viewItems = async () => {
-    const response = await axios.get(`http://localhost:3001/roomItems/`);
+    const response = await axios.get(
+      `http://localhost:3001/roomItems/itemdetails/`
+    );
     setItemData(response.data);
   };
 

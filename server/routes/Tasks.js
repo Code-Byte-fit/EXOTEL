@@ -28,7 +28,6 @@ router.get("/taskDetails", async (req, res) => {
     const rooms = await Rooms.findAll({
       attributes: ["RoomNo"],
     });
-    console.log("rooghc");
     console.log(rooms);
 
     const roomBoy = await Users.findAll({
@@ -50,6 +49,45 @@ router.get("/taskDetails", async (req, res) => {
     };
 
     res.json(response);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+router.get("/autoSchedule", async (req, res) => {
+  try {
+    const curr = new Date();
+    const date = curr.toISOString().substring(0, 10);
+
+    const checkOuts = await Reservations.findAll({
+      attributes: ["id"],
+      where: {
+        CheckOut: { [Op.eq]: date },
+      },
+    });
+    console.log(checkOuts);
+
+    checkOuts.map(async (room) => {
+      const checkOutRooms = await ReservationRoom.findAll({
+        attributes: ["RoomRoomNo"],
+        where: {
+          ReservationId: { [Op.eq]: room.id },
+        },
+      });
+      console.log(checkOutRooms);
+    });
+
+    const roomBoys = await Users.findAll({
+      attributes: ["userId"],
+      where: {
+        Role: { [Op.eq]: "Room Boy" },
+      },
+    });
+
+    // console.log(roomBoys);
+
+    // res.json(response);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");

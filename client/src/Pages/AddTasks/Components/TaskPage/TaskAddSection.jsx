@@ -77,6 +77,16 @@ const TaskAddSection = ({ taskToEdit, onRefresh }) => {
     }
   };
 
+  async function handleSchedule() {
+    try {
+      const response = await axios.get(
+        "http://localhost:3001/tasks/autoSchedule"
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   //Retrieve data from room and user tables for the drop downs in the forms
   async function viewTasks() {
     try {
@@ -146,7 +156,15 @@ const TaskAddSection = ({ taskToEdit, onRefresh }) => {
 
   return (
     <div className={style.divAddTaskSection}>
-      <div className={style.divTitleAddTask}>ADD TASKS</div>
+      <div className={style.divTitleAddTask}>
+        ADD TASKS
+        <input
+          type="button"
+          className={style.btnAutoSchedule}
+          value="Auto Schedule"
+          onClick={handleSchedule}
+        />
+      </div>
       <Formik
         initialValues={initValues}
         enableReinitialize={true}
