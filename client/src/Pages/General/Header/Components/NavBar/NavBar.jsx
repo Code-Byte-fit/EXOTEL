@@ -86,7 +86,7 @@ export default function NavBar(props) {
       <div className={style.lowerIcons}>
         <NavElement to="/dashboard" icon={dashBoardIcon} desc="Settings" active={active} setActive={setActive}/>
         <NavElement to="/dashboard" icon={dashBoardIcon} desc="Help" active={active} setActive={setActive}/>
-        <div onClick={logout}>
+        <div onClick={logout} className={style.logout}>
           <img src={dashBoardIcon}/>
           <span>Logout</span>
         </div>

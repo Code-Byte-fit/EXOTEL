@@ -158,6 +158,24 @@
   color: #ffff;
 }
 
+.logout{
+  display: flex;
+  gap: 1vw;
+  border-radius: 8px;
+  color: #ffff;
+  margin: 1%;
+  width: 100%;
+  font-size: 0.85rem;
+  padding: 1vh 1vw;
+  text-decoration: none;
+}
+
+.logout:hover{
+  outline: 1px solid #22311E;
+  color: #ffff;
+  cursor: pointer;
+}
+
 
 
 
