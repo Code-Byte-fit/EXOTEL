@@ -1,15 +1,21 @@
 //Nethmi
 module.exports = (sequelize, Datatypes) => {
-  const TaskCount = sequelize.define("TaskCount", {
-    userId: {
-      type: Datatypes.INTEGER,
-      primaryKey: true,
+  const TaskCount = sequelize.define(
+    "TaskCount",
+    {
+      userId: {
+        type: Datatypes.INTEGER,
+        primaryKey: true,
+      },
+      taskCount: {
+        type: Datatypes.INTEGER,
+        defaultValue: 0,
+      },
     },
-    taskCount: {
-      type: Datatypes.INTEGER,
-      defaultValue: 0,
-    },
-  });
+    {
+      timestamps: false,
+    }
+  );
 
   TaskCount.associate = (models) => {
     TaskCount.belongsTo(models.Users, {
