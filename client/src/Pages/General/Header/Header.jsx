@@ -11,7 +11,7 @@ export default function Header(props) {
   return (
     <>
   <header className={style.header}>
-       <NavBar role={props.role}/>
+       <NavBar/>
        <img src={LogoImg} className={style.logo}/>
        <SearchBar/>
        <div className={style.headerRight}>

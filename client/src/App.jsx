@@ -1,6 +1,8 @@
 import {React, useState, useEffect} from 'react'
 import {createBrowserRouter,createRoutesFromElements,Route,RouterProvider,Outlet} from "react-router-dom";
-import jwt_decode from "jwt-decode";
+import { AppContext } from './Helpers/AppContext';
+import jwtDecode from 'jwt-decode';
+import axios from 'axios';
 import Header from './Pages/General/Header/Header';
 import ReservationTab from './Pages/ReservationTab/ReservationTab';
 import CreateRes from './Pages/CreateReservation/CreateRes';
@@ -19,37 +21,68 @@ import AdminDash from './Pages/Dashboard/Admin/Admin'
 
 
 export default function App() {
-    const [userRole, setUserRole] = useState(null);
-    useEffect(() => {
+    const [authState,setAuthState]=useState({
+        userAccountId:0,
+        userName:"",
+        FirstName:"",
+        LastName:"",
+        userRole:"",
+        proPic:"",
+        status:true,
+    });
+
+    useEffect (()=>{
         const accessToken = localStorage.getItem("accessToken");
-        if (accessToken) {
-            const decodedToken = jwt_decode(accessToken);
-            setUserRole(decodedToken.userRole);
-        }
-    }, []);
+        if (!accessToken) {
+            setAuthState({ ...authState, status: false });
+            router.navigate("/login");
+        } else {
+                    const decodedToken = jwtDecode(accessToken)
+                    axios.get(`http://localhost:3001/userAccounts/${decodedToken.userAccountId}`).then((response)=>{
+                        setAuthState({
+                            userAccountId:response.data.userAccountId,
+                            userName:response.data.userName,
+                            FirstName:response.data.User.FirstName,
+                            LastName:response.data.User.LastName,
+                            userRole:response.data.User.Role,
+                            proPic:response.data.proPic,
+                            status:true,
+                        })
+                    })
+                }
+            },[])
+    
 
     const router=createBrowserRouter(
         createRoutesFromElements( 
             <>
-            <Route path="/" element={<Root userRole={userRole}/>}>
-                <Route path="/createReservation" element={<CreateRes/>}/>
-                <Route path="/reservationTab" element={<ReservationTab/>}/>
-                <Route path="/viewRooms" element={<ViewRooms/>}/>
-                <Route path="/viewPromotions" element={<ViewPromotions/>}/>
-                <Route path="/rooms" element={<Rooms/>}/>
-                <Route path="/admin" element={<AdminDash/>}/>
-                <Route path="/promotion" element={<Promotion/>}/>
-                <Route path="/addons" element={<AddOns/>}/>
-                <Route path="/roomtypes" element={<RoomTypes/>}/>
-                <Route path="/viewRooms" element={<ViewRooms/>}/>
-                <Route path="/viewPromotions" element={<ViewPromotions/>}/>
-                <Route path="/viewaddons" element={<ViewAddOns/>}/>
-                <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/>
-                <Route path="/register" element={<RegisterUser/>}/>
-                <Route path="/guests" element={<Guests/>}/>
-            </Route>
-            {!localStorage.getItem('accessToken') && <Route path="/login" element={<Login/>}/>}
-            <Route path="*" element={<>Page Not Found</>}/>
+                <Route path="/" element={<Root/>}>
+                {authState.status && authState.userRole === 'Administrator' && (
+                        <>
+                            <Route path="/dashBoard" element={<AdminDash/>}/>
+                            <Route path="/rooms" element={<Rooms/>}/>
+                            <Route path="/promotion" element={<Promotion/>}/>
+                            <Route path="/addons" element={<AddOns/>}/>
+                            <Route path="/roomtypes" element={<RoomTypes/>}/>
+                            <Route path="/register" element={<RegisterUser/>}/>
+                        </>
+                )}
+                {authState.status && authState.userRole === 'Receptionist' && (
+                        <>
+                            <Route path="/dashBoard" element={<Rooms/>}/>
+                            <Route path="/createReservation" element={<CreateRes/>}/>
+                            <Route path="/guests" element={<Guests/>}/>
+                            <Route path="/reservationTab" element={<ReservationTab/>}/>
+                            <Route path="/viewRooms" element={<ViewRooms/>}/>
+                            <Route path="/viewPromotions" element={<ViewPromotions/>}/>
+                            <Route path="/viewaddons" element={<ViewAddOns/>}/>
+                            <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/> 
+                        </>
+                )}
+                </Route>
+                {!authState.status && <Route path="/login" element={<Login/>}/>}
+                <Route path="*" element={<>Page Not Found</>}/>
+            
             </>
             
         )
@@ -57,16 +90,16 @@ export default function App() {
 
     
     return(
-            <div>
-                <RouterProvider router={router}/>
-            </div>
+        <AppContext.Provider value={{authState,setAuthState}}>
+            <RouterProvider router={router}/>
+        </AppContext.Provider>
     )
 }
 
-const Root=(props)=>{
+const Root=()=>{
     return(
         <>
-        <Header role={props.userRole}/>
+        <Header/>
         <div><Outlet/></div>
         </>
     )

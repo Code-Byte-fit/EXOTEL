@@ -38,7 +38,7 @@ export default function RegisterUser() {
     {key:'Administrator',value:'Administrator'},
     {key:'FO Manager',value:'FOManager'},
     {key:'HK Manager',value:'HKManager'},
-    {key:'Receiptionist',value:'Receiptionist'},
+    {key:'Receptionist',value:'Receptionist'},
     {key:'Cashier',value:'Cashier'},
     {key:'Room-Boy',value:'RoomBoy'},
   ]

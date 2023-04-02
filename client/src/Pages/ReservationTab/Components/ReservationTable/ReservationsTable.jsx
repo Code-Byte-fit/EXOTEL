@@ -107,12 +107,12 @@ return (
                      <Link to="/createReservation"><img src={addIcon} className={style.addIcon}/></Link> 
                     
                 </div>
-              <div className={style.headerRight}>
+              {reservationDetails.length>0 && <div className={style.headerRight}>
                 <span className={`${!isFilterActive && style.hidden}`}>
                     <Filter  setSelectedFilters={setSelectedFilters} setSearchQuery={setSearchQuery}  setCheckInQuery={setCheckInQuery} setCheckOutQuery={setCheckOutQuery}/>
                 </span>
                 <img src={filterIcon} className={style.filterIcon} onClick={()=>setIsFilterActive(!isFilterActive)}/>
-                </div>
+                </div>}
            </div>
            <div className={style.tableCont}>
             <Table columns={columns} data={filteredData} height='40vh' pagination/>           

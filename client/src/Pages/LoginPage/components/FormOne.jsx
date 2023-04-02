@@ -1,27 +1,35 @@
-import React from "react";
+import React,{useContext} from "react";
 import axios from "axios"; 
 import style from '../components/Login.module.css'
 import {Formik,Form,Field,ErrorMessage} from 'formik'
 import Input from '../../General/Inputs/Inputs'
 import * as Yup from 'yup' 
 import { useNavigate } from 'react-router-dom';
+import {AppContext} from "../../../Helpers/AppContext"
+import jwt_decode from 'jwt-decode';
+
 
 function FormOne(props){
-    
     const navigate = useNavigate();
-
-    const initialValues = {
-        userName: "",
-        password: "",
-    };
+    const {setAuthState}=useContext(AppContext)
+    const initialValues = {userName: "",password: ""};
 
     const onSubmit = (data) => {
         axios.post("http://localhost:3001/userAccounts/login",data).then((response) =>{
             if(response.data.error) {
                 alert(response.data.error);
             }else{
-                localStorage.setItem("accessToken", response.data);
-                navigate('/');
+                localStorage.setItem("accessToken", response.data.token);
+                setAuthState({
+                    userAccountId:response.data.userAccountId,
+                    userName:response.data.userName,
+                    FirstName:response.data.FirstName,
+                    LastName:response.data.LastName,
+                    userRole:response.data.userRole,
+                    proPic:response.data.proPic,
+                    status:true,
+                })
+                navigate('/dashBoard');
             }
             
         });
