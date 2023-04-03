@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 
 
 function FormOne(props) {
-    const [showConfirmation, setShowConfirmation] = useState(false);
+   
 
     const initialValues = {
         RoomTypeID: '',
@@ -34,108 +34,111 @@ function FormOne(props) {
     });
 
     const view = [{ key: "--None Selected --", value: "" },
-    { key: "Beach View", value: "Beach View" },
-    { key: "Pool View", value: "Pool View" },
-    { key: "Graden View", value: "Graden View" },
-    { key: "Patio View", value: "Patio View" },
-    { key: "City View", value: "City View" }]
+     { key: "Beach View", value: "Beach View" }, 
+     { key: "Pool View", value: "Pool View" }, 
+     { key: "Graden View", value: "Graden View" },
+      { key: "Patio View", value: "Patio View" }, 
+      { key: "City View", value: "City View" }]
+
+    const handleSubmit = (values, { resetForm }) => {
+        props.makeReq(values);
+        resetForm({ values: initialValues });
+    };
 
     return (
-
         <span className={style.formContainer}>
-
-
             <label className={style.labelOne}>Add Room Type</label>
+            <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
+              
+                    <Form>
 
-            <Formik initialValues={initialValues} onSubmit={props.makeReq} validationSchema={validationSchema} >
-                <Form>
+                        <div className={style.div1}>
 
-                    <div className={style.div1}>
+                            <span className={style.box}>
+                                <Field name="TypeName"
+                                    component={Input}
+                                    label="Room Type"
+                                    type="text"
 
-                        <span className={style.box}>
-                            <Field name="TypeName"
-                                component={Input}
-                                label="Room Type"
-                                type="text"
+                                    width="13vw" />
+                                <ErrorMessage name="TypeName" component="span" className={style.error} />
+                            </span>
 
-                                width="13vw" />
-                            <ErrorMessage name="TypeName" component="span" className={style.error} />
-                        </span>
+                            <span className={style.box}>
+                                <Field name="View"
+                                    component={Input}
+                                    label="View"
+                                    type="select"
+                                    options={view}
 
-                        <span className={style.box}>
-                            <Field name="View"
-                                component={Input}
-                                label="View"
-                                type="select"
-                                options={view}
+                                    className={style.inputOne}
+                                    width="13vw" />
+                                <ErrorMessage name="View" component="span" className={style.error} />
+                            </span>
 
-                                className={style.inputOne}
-                                width="13vw" />
-                            <ErrorMessage name="View" component="span" className={style.error} />
-                        </span>
+                            <span className={style.box}>
+                                <Field name="NoOfBeds"
+                                    component={Input}
+                                    label="No of Beds"
+                                    type="text"
 
-                        <span className={style.box}>
-                            <Field name="NoOfBeds"
-                                component={Input}
-                                label="No of Beds"
-                                type="text"
+                                    width="13vw" />
+                                <ErrorMessage name="NoOfBeds" component="span" className={style.error} />
+                            </span>
+                            <span className={style.box}>
+                                <Field name="sqFeet"
+                                    component={Input}
+                                    label="Square Feet(Sqft)"
+                                    type="text"
 
-                                width="13vw" />
-                            <ErrorMessage name="NoOfBeds" component="span" className={style.error} />
-                        </span>
-                        <span className={style.box}>
-                            <Field name="sqFeet"
-                                component={Input}
-                                label="Square Feet(Sqft)"
-                                type="text"
+                                    width="13vw" />
+                                <ErrorMessage name="sqFeet" component="span" className={style.error} />
+                            </span>
 
-                                width="13vw" />
-                            <ErrorMessage name="sqFeet" component="span" className={style.error} />
-                        </span>
+                            <span className={style.box}>
+                                <Field name="StandardCharge"
+                                    component={Input}
+                                    label="Standard Charge($)"
+                                    type="text"
 
-                        <span className={style.box}>
-                            <Field name="StandardCharge"
-                                component={Input}
-                                label="Standard Charge($)"
-                                type="text"
+                                    width="13vw" />
+                                <ErrorMessage name="StandardCharge" component="span" className={style.error} />
+                            </span>
 
-                                width="13vw" />
-                            <ErrorMessage name="StandardCharge" component="span" className={style.error} />
-                        </span>
-
-                    </div>
-
-                    <div className={style.div2}>
-
-                        <Field name="AddInfo"
-                            component={Input}
-                            label="Additional Information"
-                            type="textarea"
-                            rows="4"
-                            cols="150" />
-                        <div className={style.cardContainer}>
-                            <div className={style.card}>
-
-                            </div>
-                            <div className={style.card}>
-
-                            </div>
-                            <div className={style.card}>
-
-                            </div>
                         </div>
 
-                    </div>
+                        <div className={style.div2}>
+
+                            <Field name="AddInfo"
+                                component={Input}
+                                label="Additional Information"
+                                type="textarea"
+                                rows="4"
+                                cols="150" />
+                            <div className={style.cardContainer}>
+                                <div className={style.card}>
+
+                                </div>
+                                <div className={style.card}>
+
+                                </div>
+                                <div className={style.card}>
+
+                                </div>
+                            </div>
+
+                        </div>
 
 
-                    <span className={style.createBtn}>
-                        <button className={style.buttonOne} type="submit">Create Room Type</button>
+                        <span className={style.createBtn}>
+                            <button className={style.buttonOne} type="submit">Create Room Type</button>
 
-                    </span>
+                        </span>
 
 
 
-                </Form>
+                    </Form>
+               
             </Formik>
 
 

@@ -24,7 +24,7 @@ function ViewRooms() {
         },
         {
             name: 'ROOM-TYPE',
-            selector: row => row.TypeName,
+            selector: row => row.RoomTypeView,
             sortable: true,
         },
         {
@@ -49,8 +49,8 @@ function ViewRooms() {
             ),
         },
         {
-            name: 'BASE CHARGE',
-            selector: row => row.BaseCharge,
+            name: 'TOTAL CHARGE',
+            selector: row => row.TotalCharge,
             sortable: true,
         },
     ];

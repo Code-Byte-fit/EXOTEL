@@ -75,9 +75,13 @@ export default function EditDelete(props) {
 
   };
 
-  // const handleConfirm=()=>{
-  //   props.onDelete()
-  // }
+  const handleConfirm=()=>{
+    props.onDelete();
+    setDeleteOpen(true);
+    setIsOpen(false);
+    
+
+  }
 
 
   const handleDone=()=>{
@@ -114,7 +118,7 @@ export default function EditDelete(props) {
           <span className={style.confirmBody}>{props.deleteBody}</span>
           <div className={style.modalBtnContainer}>
               <button onClick={closeModal} className={`${style.Btn} ${style.cancelBtn}`}>Cancel</button>
-              {/* <button onClick={props.onDelete()} className={`${style.Btn} ${style.deleteBtn}`}>Remove</button> */}
+              <button onClick={handleConfirm} className={`${style.Btn} ${style.deleteBtn}`}>Remove</button>
           </div>
         </div>:
         <>

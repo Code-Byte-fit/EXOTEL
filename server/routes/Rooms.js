@@ -61,14 +61,18 @@ router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async 
   router.post("/", async (req, res) => {
     try {
       const { RoomNo, floor, View, Status, RoomTypeView, AdditionalCharges ,  AddInfo} = req.body;
+
       const typeView = RoomTypeView.split('-') 
       // Find the room type with the given TypeName to get the standard charge
       const roomType = await RoomTypes.findOne({ 
+        attributes:['RoomTypeID'],
         where: { 
           TypeName: typeView[0],
           View : typeView[1]
         } 
       });
+
+      console.log(roomType)
       
       if (!roomType) {
         return res.status(404).json({ error: 'Room type not found' });
@@ -78,7 +82,7 @@ router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async 
       const TotalCharge = roomType.StandardCharge+ parseFloat(AdditionalCharges);
   
       // Create a new room with the calculated base charge
-      const room = await Rooms.create({ RoomNo, floor, View, Status, RoomTypeView, AdditionalCharges,TotalCharge ,AddInfo });
+      const room = await Rooms.create({ RoomNo, floor, View, Status, RoomTypeView, AdditionalCharges,TotalCharge ,AddInfo,RoomTypeID:roomType.RoomTypeID });
   
       res.status(201).json({ room });
     } catch (error) {

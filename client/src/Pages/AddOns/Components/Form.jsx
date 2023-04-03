@@ -21,6 +21,10 @@ function FormOne(props) {
         AddInfo: Yup.string(),
     });
 
+    const handleSubmit = (values, { resetForm }) => {
+        props.makeReq(values);
+        resetForm({ values: initialValues });
+    };
 
 
     return (
@@ -30,7 +34,7 @@ function FormOne(props) {
 
             <label className={style.labelOne}>Add Add-On</label>
 
-            <Formik initialValues={initialValues} onSubmit={props.makeReq} validationSchema={validationSchema} >
+            <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema} >
                 <Form>
 
                     <div className={style.div1}>

@@ -50,6 +50,10 @@ function FormOne(props) {
         { key: "1st Floor", value: "1st Floor" },
         { key: "2nd Floor", value: "3rd Floor" }]
 
+        const handleSubmit = (values, { resetForm }) => {
+            props.makeReq(values);
+            resetForm({ values: initialValues });
+        };
 
     return (
 
@@ -58,7 +62,7 @@ function FormOne(props) {
 
             <label className={style.labelOne}>Add Room</label>
 
-            <Formik initialValues={initialValues} onSubmit={props.makeReq} validationSchema={validationSchema} >
+            <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema} >
                 <Form>
 
                     <div className={style.div1}>
