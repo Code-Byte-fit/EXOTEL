@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios"
 import Table from '../General/Table/Table'
 import EditDelete from '../General/Table/EditDelete'
-import Edit from './Components/Edit'
+import Edit from './Components/Edit/Edit'
 import Filter from './Components/Filter'
 import filterIcon from "../../Assets/Images/mixer (2).png"
 import style from "./Components/Style.module.css"

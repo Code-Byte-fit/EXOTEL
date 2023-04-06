@@ -1,21 +1,13 @@
 import React from 'react'
 import {Formik,Form,Field} from "formik"
-import axios from "axios"
 import Combobox from "react-widgets/Combobox";
-import countries from "../../RegisterUser/Components/CountryList.json"
-import Input from "../../General/Inputs/Inputs"
-import style from "./Style.module.css"
+import countries from "../../../RegisterUser/Components/CountryList.json"
+import Input from "../../../General/Inputs/Inputs"
+import style from "../Style.module.css"
 
-export default function Edit(props) {
-    const handleEdit=(data)=>{
-        axios.put("http://localhost:3001/guests",data).then((res)=>{
-          props.setIsDone(true)
-        })
-      }
+export default function Details(props) {
   return (
     <>
-        <div className={style.editCont}>
-          <div className={style.editHeading}>Edit Reservation</div>
             <Formik initialValues={props.values} onSubmit={null} validationSchema={null}>
                 {(formikValues)=>(
                   <Form>
@@ -44,13 +36,12 @@ export default function Edit(props) {
                      
                       <div className={style.confirmBtnCont}>
                         <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
-                        <button type='button' className={`${style.editBtn} ${style.confirmBtn}`} onClick={()=>{handleEdit(formikValues.values)}}>Confirm</button>
+                        <button type='button' className={`${style.editBtn} ${style.confirmBtn}`} onClick={()=>{props.handleEdit(formikValues.values)}}>Confirm</button>
                       </div>
                       </div> 
                   </Form>
                 )}
       </Formik> 
-            </div>
     </>
   )
 }
