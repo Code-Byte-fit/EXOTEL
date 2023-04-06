@@ -1,5 +1,5 @@
 import React from 'react'
-import {Formik,Form,Field} from "formik"
+    import {Formik,Form,Field} from "formik"
 import Combobox from "react-widgets/Combobox";
 import countries from "../../../RegisterUser/Components/CountryList.json"
 import Input from "../../../General/Inputs/Inputs"
@@ -30,7 +30,7 @@ export default function Details(props) {
                         />
                       </div>
                       <div className={style.btnCont}>
-                        <button type='button' className={style.editBtn}>E-mail</button>
+                        <button type='button' className={style.editBtn} onClick={()=>{props.handleStep(props.values,"email")}}>E-mail</button>
                         <button type='button' className={style.editBtn}>Phone-No</button>
                       </div>
                      
