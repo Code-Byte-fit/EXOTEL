@@ -42,7 +42,12 @@ module.exports = (sequelize, DataTypes) => {
     Reservations.belongsToMany(models.Rooms, { through: 'ReservationRoom' });
     Reservations.belongsToMany(models.Addons, { through: 'ReservationAddOn' });
     Reservations.belongsTo(models.Promotion, { foreignKey: 'PromoCode' });
+    Reservations.hasMany(models.TaskAllocations, { foreignKey: 'Id' });
+    Reservations.belongsTo(models.Bill, { foreignKey: 'billNumber' });
   };
 
   return Reservations;
 };
+
+
+    

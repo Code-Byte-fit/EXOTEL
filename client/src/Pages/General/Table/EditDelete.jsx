@@ -100,7 +100,7 @@ export default function EditDelete(props) {
       <div className={style.optionCont} ref={ref}>
         {props.checkinOption && <div className={`${style.options} ${style.checkIn}`} onClick={handleCheckIn}>Check-In</div>}
         {props.editOption && <div className={`${style.options} ${style.edit}`} onClick={handleEdit}>Edit</div>}
-        {props.deleteOption && <div className={`${style.options} ${style.delete}`} onClick={handleDelete}>Delete</div>}
+        {props.removeOption && <div className={`${style.options} ${style.delete}`} onClick={handleDelete}>Remove</div>}
         {props.cancelOption && <div className={`${style.options} ${style.delete}`} onClick={handleCancel}>Cancel</div>}
         {props.reBookOption && <div className={`${style.options} ${style.delete}`} onClick={handleReBook}>Re-Book</div>}  
       </div>

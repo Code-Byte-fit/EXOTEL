@@ -7,7 +7,6 @@ export default function Input({
   form: { touched, errors },
   ...props
 }) {
-
   return (
     <>
         <div className={style.InputContainer}>
@@ -17,7 +16,7 @@ export default function Input({
           </div>
             {props.type!=="select" &&  props.type!=="textarea" && <input {...field} {...props} type={props.type} id={props.id} className={`${style.Input}`} style={{width:props.width}}/>}
             {props.type==="select" && 
-              <select {...field} {...props} className={style.Input} id={props.id} style={props.style}>
+              <select {...field} {...props} className={style.Input}>
                   {props.options.map((option) => {
                         return (
                             <option key={option.value} value={option.value}>

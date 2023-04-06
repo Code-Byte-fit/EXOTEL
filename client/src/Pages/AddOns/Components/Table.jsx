@@ -3,45 +3,44 @@ import style from "./AddOns.module.css"
 import axios from 'axios';
 import { useEffect } from "react";
 import AddOnTable from '../../General/Table/Table'
-import EditDelete from "../../General/Table/EditDelete";
+import EditDelete from "./EditDelete";
 
 
 
 
 function Table(props) {
 
-    const [listOfAddons, setlistOfAddons] = useState([]);
-    const [showPopup, setShowPopup] = useState(false);
-    const [selectedAddon, setSelectedAddon] = useState(null);
-
-
-   
-
-    useEffect(() => {
-        axios.get("http://localhost:3001/addon").then((response) => {
-            setlistOfAddons(response.data);
-        });
-    }, []);
+  const [listOfAddons, setlistOfAddons] = useState([]);
 
 
 
-    
+
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/addon").then((response) => {
+      setlistOfAddons(response.data);
+    });
+  }, []);
+
+
+
+
   const columns = [
     {
-        name: 'AddOn No',
-        selector: row => row.addonID,
-        sortable: true,
+      name: 'AddOn No',
+      selector: row => row.addonID,
+      sortable: true,
     },
     {
-        name: 'AddOn',
-        selector: row => row.AddOn,
-        sortable: true,
+      name: 'AddOn',
+      selector: row => row.AddOn,
+      sortable: true,
     },
     {
       name: 'Unit',
       selector: row => row.Unit,
       sortable: true,
-  },
+    },
 
     {
       name: 'Charge',
@@ -59,24 +58,24 @@ function Table(props) {
         </div>
       ),
     },
-    
-    
-  
+
+
+
     {
       selector: row => row,
-      cell: (row) => <EditDelete/>
+      cell: (row) => <EditDelete setlistOfAddons={setlistOfAddons} row={row} />
     },
-];
+  ];
 
-    return (
-        <span className={style.tableContainer}>
-            <label className={style.labelTwo}>Edit/Delete Add Ons</label>
-            <AddOnTable columns={columns} data={listOfAddons} height="35vh" edit pagination/>
-            
-           
-        </span>
+  return (
+    <span className={style.tableContainer}>
+      <label className={style.labelTwo}>Edit/Delete Add Ons</label>
+      <AddOnTable columns={columns} data={props.listOfAddons} height="35vh" edit pagination />
 
-    )
+
+    </span>
+
+  )
 }
 
 
