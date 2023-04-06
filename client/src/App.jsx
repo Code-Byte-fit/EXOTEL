@@ -18,6 +18,10 @@ import Login from '../src/Pages/LoginPage/Login'
 import ViewRoomTypes from './Pages/RoomTypes/ViewRoomTypes/ViewRoomTypes';
 import Guests from './Pages/Guests/Guests';
 import AdminDash from './Pages/Dashboard/Admin/Admin'
+import FODash from "./Pages/Dashboard/FrontOffice/FOmanager"
+import ReceptionDash from "./Pages/Dashboard/Receptionist/Receptionist"
+import CashierDash from "./Pages/Dashboard/Cashier/Cashier"
+import HKDash from "./Pages/Dashboard/HKManager/HKmanager"
 
 
 export default function App() {
@@ -67,10 +71,42 @@ export default function App() {
                             <Route path="/register" element={<RegisterUser/>}/>
                         </>
                 )}
+                {authState.status && authState.userRole === 'FOManager' && (
+                        <>
+                            <Route path="/dashBoard" element={<FODash/>}/>
+                            <Route path="/viewRooms" element={<ViewRooms/>}/>
+                            <Route path="/viewPromotions" element={<ViewPromotions/>}/>
+                            <Route path="/viewaddons" element={<ViewAddOns/>}/>
+                            <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/>
+                            <Route path="/reservationTab" element={<ReservationTab/>}/>
+                        </>
+                )}
                 {authState.status && authState.userRole === 'Receptionist' && (
                         <>
-                            <Route path="/dashBoard" element={<Rooms/>}/>
+                            <Route path="/dashBoard" element={<ReceptionDash/>}/>
                             <Route path="/createReservation" element={<CreateRes/>}/>
+                            <Route path="/guests" element={<Guests/>}/>
+                            <Route path="/reservationTab" element={<ReservationTab/>}/>
+                            <Route path="/viewRooms" element={<ViewRooms/>}/>
+                            <Route path="/viewPromotions" element={<ViewPromotions/>}/>
+                            <Route path="/viewaddons" element={<ViewAddOns/>}/>
+                            <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/> 
+                        </>
+                )}
+                {authState.status && authState.userRole === 'Cashier' && (
+                        <>
+                            <Route path="/dashBoard" element={<CashierDash/>}/>
+                            <Route path="/guests" element={<Guests/>}/>
+                            <Route path="/reservationTab" element={<ReservationTab/>}/>
+                            <Route path="/viewRooms" element={<ViewRooms/>}/>
+                            <Route path="/viewPromotions" element={<ViewPromotions/>}/>
+                            <Route path="/viewaddons" element={<ViewAddOns/>}/>
+                            <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/> 
+                        </>
+                )}
+                {authState.status && authState.userRole === 'HKManager' && (
+                        <>
+                            <Route path="/dashBoard" element={<HKDash/>}/>
                             <Route path="/guests" element={<Guests/>}/>
                             <Route path="/reservationTab" element={<ReservationTab/>}/>
                             <Route path="/viewRooms" element={<ViewRooms/>}/>

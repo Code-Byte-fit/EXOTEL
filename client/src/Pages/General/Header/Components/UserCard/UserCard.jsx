@@ -5,6 +5,7 @@ import style from './UserCard.module.css';
 export default function UserCard() {
   const { authState } = useContext(AppContext);
   const server='localhost:3001'
+  console.log(authState.proPic)
   const avatar=authState.proPic.split('\\')[2];
 
 
