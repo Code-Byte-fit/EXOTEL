@@ -1,8 +1,142 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+
 .heading{
     font-size: 2.5rem;
     margin: 0 0 0 2vw;
 }
 
-.tableCont{
-    margin: 2vh 0 0 0;
+.headerRight{
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+    margin: 2vh 1vw 0 0;
+}
+
+.filterIcon{
+    width: 2vw;
+    height: 4vh;
+    cursor: pointer;
+    position: relative;
+}
+
+.filter{
+    display:flex;
+    gap: 1vw;
+    position: relative;
+    bottom: 1.7vh;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+}
+
+.filter input{
+    font-family: "Roboto Mono",monospace;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.filter input[type=text]{
+    width: 10vw;
+    height: 5vh;
+}
+
+.filter input:focus {
+    outline: none;
+    border-color: #0398fc;
+    box-shadow: 0 0 0 1px #0398fc;
+   }
+   
+   .country{
+    position: relative;
+   }
+
+.country input[type=text]{
+    height: 5.1vh;
+}
+
+.hidden{
+    visibility: hidden;
+}
+
+.clear{
+    border: 1px solid lightgray;
+    border-radius:  0 4px 4px 0;
+    background: white;
+    padding: 0.8vh 0.65vw ;
+    position: absolute;
+    right: 0;
+    bottom: 0vh;
+    z-index: 2;
+}
+
+.editCont{
+    height: 180%;
+    width: 105%;
+    background-color:white;
+    border-radius: 8px;
+    position: relative;
+    right: 2.5%;
+    bottom: 40%;
+}
+
+.editHeading{
+    font-size: 1.4rem;
+    padding: 2% 0 0 0;
+}
+
+.inputCont,.btnCont,.confirmBtnCont{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 3% auto;
+}
+
+.countryCont{
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.countryCont label{
+    align-self: flex-start;
+}
+
+.btnCont{
+    margin: 5% auto;
+}
+
+.editBtn{
+    padding: 2.2% 2%;
+    font-size: 0.7rem;
+    color: #4D5949;
+    background: white;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    width: clamp(3vw,12.2vw,12.2vw);
+}
+
+.cancelBtn,.confirmBtn  {
+    padding: 3%;
+    font-size: 0.9rem;
+}
+
+.cancelBtn{
+    border:1px solid #4D5949;
+}
+
+.confirmBtnCont{
+    margin:10% auto;
+}
+
+.confirmBtn{
+    background:#4D5949;
+    color: white;
 }
