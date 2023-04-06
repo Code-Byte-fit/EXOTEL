@@ -47,7 +47,7 @@ function FormOne(props) {
 
     return (
         <span className={style.formContainer}>
-            <label className={style.labelOne}>Add Room Type</label>
+            <label className={style.labelOne}>Create Room Type</label>
             <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
               
                     <Form>

@@ -61,7 +61,7 @@ router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async 
   router.post("/", async (req, res) => {
     try {
       const { RoomNo, floor, View, Status, RoomTypeView, AdditionalCharges ,  AddInfo} = req.body;
-
+       // Split the RoomTypeView into TypeName and View
       const typeView = RoomTypeView.split('-') 
       // Find the room type with the given TypeName to get the standard charge
       const roomType = await RoomTypes.findOne({ 
@@ -78,10 +78,10 @@ router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async 
         return res.status(404).json({ error: 'Room type not found' });
       }
   
-      // Calculate the base charge by adding the additional charge and standard charge
+      // Calculate the total charge by adding the additional charge and standard charge
       const TotalCharge = roomType.StandardCharge+ parseFloat(AdditionalCharges);
   
-      // Create a new room with the calculated base charge
+      // Create a new room with the calculated total charge
       const room = await Rooms.create({ RoomNo, floor, View, Status, RoomTypeView, AdditionalCharges,TotalCharge ,AddInfo,RoomTypeID:roomType.RoomTypeID });
   
       res.status(201).json({ room });
@@ -98,77 +98,5 @@ router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async 
 
 
 
-
-
-
-
-
-// router.get('/availablity/:checkIn/:checkOut',async (req,res)=>{
-//     const checkIn = req.params.checkIn;
-//     const checkOut = req.params.checkOut;
-
-//     const availableRooms = await Rooms.findAll({
-//       where: {
-//         Status: 'available',
-//         RoomNo: {
-//           [Sequelize.Op.notIn]: reservedRooms
-//         }
-//       },
-//       attributes: ['RoomNo', 'TotalCharge'],
-//       include: [
-//         {
-//           model: Reservations,
-//           required: false,
-//           where: {
-//             [Sequelize.Op.or]: [
-//               {
-//                 checkIn: {
-//                   [Sequelize.Op.gte]: checkOut
-//                 }
-//               },
-//               {
-//                 checkOut: {
-//                   [Sequelize.Op.lte]: checkIn
-//                 }
-//               }
-//             ]
-//           },
-//           attributes: []
-//         }
-//       ]
-//     });
-   
-//     try {
-//         const availableRooms = await Rooms.findAll({
-//           where: {
-//             [Op.or]: [
-//               {
-//                 checkOut: {
-//                   [Op.lt]: checkIn
-//                 }
-//               },
-//               {
-//                 checkIn: {
-//                   [Op.gt]: checkOut
-//                 }
-//               }
-//             ]
-//           },
-//           order: ['RoomNo']
-//         });
-    
-//         res.json(availableRooms);
-//       } catch (err) {
-//         console.error(err);
-//         res.status(500).send('An error occurred while fetching the available rooms.');
-//       }
-// })
-
-
-// router.post("/",async (req,res)=>{
-//     const room=req.body
-//     await Rooms.create(room)
-//     res.json(room)
-// })
 
 module.exports=router

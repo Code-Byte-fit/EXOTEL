@@ -6,24 +6,14 @@ import AddOnTable from '../../General/Table/Table'
 import EditDelete from "./EditDelete";
 
 
-
-
 function Table(props) {
-
   const [listOfAddons, setlistOfAddons] = useState([]);
-
-
-
-
 
   useEffect(() => {
     axios.get("http://localhost:3001/addon").then((response) => {
       setlistOfAddons(response.data);
     });
   }, []);
-
-
-
 
   const columns = [
     {
@@ -58,8 +48,6 @@ function Table(props) {
         </div>
       ),
     },
-
-
 
     {
       selector: row => row,

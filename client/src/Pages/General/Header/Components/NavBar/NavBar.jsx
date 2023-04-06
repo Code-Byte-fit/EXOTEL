@@ -57,10 +57,11 @@ export default function NavBar(props) {
         <div className={style.upperIcons}>
           {props.role === "receptionist" &&
             <>
-              <NavElement to="/receptionist" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive} />
-              <NavElement to="/createReservation" icon={dashBoardIcon} desc="Create-Reservation" active={active} setActive={setActive} />
-              <NavElement to="/reservationTab" icon={dashBoardIcon} desc="Reservations Tab" active={active} setActive={setActive} />
+              <NavElement to="/admin" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive} />
+              <NavElement to="/promotion" icon={dashBoardIcon} desc="Promotions" active={active} setActive={setActive} />
+              <NavElement to="/roomtypes" icon={dashBoardIcon} desc="Room Types" active={active} setActive={setActive} />
               <NavElement to="/rooms" icon={dashBoardIcon} desc="Rooms" active={active} setActive={setActive} />
+              <NavElement to="/addons" icon={dashBoardIcon} desc="Add-Ons" active={active} setActive={setActive} />
             </>}
 
           {props.role === "admin" &&

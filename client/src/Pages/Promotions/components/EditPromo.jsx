@@ -8,8 +8,6 @@ import React, { useState } from 'react';
 
 function EditPromo(props) {
 
- 
-
 
   const [Promotions, setPromotions] = useState([]);
   const validationSchema = Yup.object().shape({

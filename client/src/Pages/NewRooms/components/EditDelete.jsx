@@ -22,11 +22,11 @@ export default function REditDelete(props) {
   };
 
 
-  // const handleDelete=(row)=>{
-  //   axios.delete("http://localhost:3001/rooms").then(()=>{
-  //     setIsDone(true)
-  //   })
-  // }
+  const handleDelete=(row)=>{
+    axios.delete("http://localhost:3001/rooms").then(()=>{
+      setIsDone(true)
+    })
+  }
 
   const handleDone = () => {
     setIsDone(false)
@@ -42,11 +42,9 @@ export default function REditDelete(props) {
         removeOption
         deleteHeading="Remove Room"
         deleteBody="Are you sure you want to remove this room?"
-
         isDone={isDone}
         editComponent={<EditRoom values={row} />}
-
-        // onDelete={()=>handleDelete(row)}
+        onDelete={()=>handleDelete(row)}
         onEdit={() => handleEdit(row)}
         onCancel={() => handleCancel(row)}
 

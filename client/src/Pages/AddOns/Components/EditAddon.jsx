@@ -15,13 +15,9 @@ function EditAddon(props) {
         AddInfo: Yup.string(),
     });
 
-
-
     return (
 
         <div className={style.editCont}>
-
-
             <div className={style.editHeading}>Edit Add-On</div>
             <Formik initialValues={props.values} onSubmit={null} validationSchema={validationSchema} >
                 <Form>
@@ -71,9 +67,6 @@ function EditAddon(props) {
                         <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
                         <button type='button' className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
                     </div>
-
-
-
 
                 </Form>
             </Formik>

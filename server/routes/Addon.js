@@ -2,11 +2,13 @@ const express=require('express')
 const router=express.Router()
 const {Addons}=require('../models')
 
+// Get all addons
 router.get('/',async (req,res)=>{
     const listOfAddons=await Addons.findAll()
     res.json(listOfAddons)
 })
 
+// Create a new addon
 router.post("/", async (req, res) => {
     try {
       const addon = req.body;

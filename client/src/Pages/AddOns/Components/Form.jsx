@@ -32,7 +32,7 @@ function FormOne(props) {
         <span className={style.formContainer}>
 
 
-            <label className={style.labelOne}>Add Add-On</label>
+            <label className={style.labelOne}>Create Add-On</label>
 
             <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema} >
                 <Form>

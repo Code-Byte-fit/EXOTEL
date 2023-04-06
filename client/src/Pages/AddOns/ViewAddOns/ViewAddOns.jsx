@@ -17,8 +17,6 @@ function ViewAddOns() {
     })
   }, [])
 
-
-
   const columns = [
     {
       name: 'AddOn No',

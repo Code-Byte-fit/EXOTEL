@@ -26,8 +26,8 @@ function FormOne(props) {
             .matches(/^[A-Za-z0-9]+$/, 'Must only contain letters and numbers')
             .max(10, 'Must be at most 10 characters long'),
         RoomTypeView: Yup.string().required('Required'),
-        // AdditionalCharges: Yup.number()
-        //   .required('Required'),
+        AdditionalCharges: Yup.string()
+          .required('Required'),
         // TotalCharge: Yup.number().required('Required'),
         floor: Yup.string().required('Required'),
         Status: Yup.string().required('Required'),
@@ -60,7 +60,7 @@ function FormOne(props) {
         <span className={style.formContainer}>
 
 
-            <label className={style.labelOne}>Add Room</label>
+            <label className={style.labelOne}>Create Room</label>
 
             <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema} >
                 <Form>
