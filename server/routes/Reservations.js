@@ -91,93 +91,21 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
       }
 })
 
-// router.get('/reservationTab', async (req, res) => {
-  
-//   const currentDate = new Date();
-//   const tomorrowDate = new Date();
-//   tomorrowDate.setDate(currentDate.getDate() + 1);
-
-  
-//   const todaysReservations = await Reservations.findAll({
-//     attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
-//     include: [
-//       {
-//         model: Guests,
-//         attributes: ['id', 'FirstName']
-//       },
-//       {
-//         model: Rooms,
-//         attributes: ['RoomNo']
-//       }
-//     ],
-//     where: {
-//       CheckIn: {
-//         [Op.gte]: currentDate,
-//         [Op.lt]: tomorrowDate
-//       }
-//     }
-//   });
-
-  
-//   const tomorrowsReservations = await Reservations.findAll({
-//     attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source'],
-//     include: [
-//       {
-//         model: Guests,
-//         attributes: ['id', 'FirstName']
-//       },
-//       {
-//         model: Rooms,
-//         attributes: ['RoomNo'],
-//         through: {
-//           attributes: []
-//         }
-//       }
-//     ],
-//     where: {
-//       CheckIn: {
-//         [Op.between]: [tomorrowDate, new Date(tomorrowDate.getTime() + 24 * 60 * 60 * 1000)]
-//       }
-//     }
-//   });
-
-//   const formattedTodaysReservations = todaysReservations.map(reservation => ({
-//     id: reservation.id,
-//     guestFirstName: reservation.Guest.FirstName,
-//     rooms: reservation.Rooms.map(room => room.RoomNo),
-//     checkIn: reservation.CheckIn,
-//     checkOut: reservation.CheckOut,
-//     reservationStatus: reservation.ReservationStatus,
-//     source: reservation.Source
-//   }));
-
-//   const formattedTomorrowsReservations = tomorrowsReservations.map(reservation => ({
-//     id: reservation.id,
-//     guestFirstName: reservation.Guest.FirstName,
-//     rooms: reservation.Rooms.map(room => room.RoomNo),
-//     checkIn: reservation.CheckIn,
-//     checkOut: reservation.CheckOut,
-//     reservationStatus: reservation.ReservationStatus,
-//     source: reservation.Source
-//   }));
-
-//   res.json({
-//     todaysReservations: formattedTodaysReservations,
-//     tomorrowsReservations: formattedTomorrowsReservations
-//   });
-// });
-
 
 router.put("/",async (req,res)=>{
-  const {id,checkIn,checkOut,reservationStatus,source,guestFirstName,rooms}=req.body
+  try{
+  const {id,CheckIn,CheckOut,ReservationStatus,Source,guestFirstName,rooms}=req.body
   await Reservations.update({
-    CheckIn:checkIn,
-    CheckOut:checkOut,
-    Source:source,
-    ReservationStatus:reservationStatus
+    Source:Source,
+    ReservationStatus:ReservationStatus
   },{where:{id:id}})
   res.json("updated Successfully")
+}
+catch(error){
+  res.json(error)
+}
 })
+
 
 router.put("/Cancel/:resId",async (req,res)=>{
   const resID=req.params.resId;

@@ -6,13 +6,7 @@ import axios from 'axios';
 export default function ResEditDelete(props) {
     const [isDone, setIsDone] = useState(false);
     const [isReBookValid, setIsReBookValid] =useState(true);
-
-    const handleEdit=(row)=>{
-        axios.put("http://localhost:3001/reservations").then(()=>{
-          setIsDone(true)
-          
-        })
-      }
+    const row=props.row;
 
     const handleCancel = (row) => {
         axios.put(`http://localhost:3001/reservations/Cancel/${row.id}`).then(() => {
@@ -56,23 +50,13 @@ export default function ResEditDelete(props) {
      })
       }
 
-
-
-
-      const row=props.row;
-
-
-
-
-
-
   return (
     <>
         <EditDelete 
                       cancelOption={row.ReservationStatus==="active"}
                       reBookOption={row.ReservationStatus==="cancelled"} 
                       checkinOption={row.ReservationStatus==="active"}
-                      onEdit={() => handleEdit(row)} 
+                      editOption
                       onCancel={()=>handleCancel(row)}  
                       onRebook={()=>handleRebook(row)}
                       onCheckIn={()=>handleCheckIn(row)}
@@ -80,7 +64,7 @@ export default function ResEditDelete(props) {
                       isReBookValid={isReBookValid}
                       handleDone={handleDone} 
                       handleReBookError={handleRebookError}
-                      editComponent={<EditRes values={row}/>} 
+                      editComponent={<EditRes values={row} setIsDone={setIsDone}/>} 
                       cancelHeading="Confirm Cancellation"
                       cancelBody="Are you sure that you want to cancel this reservation?"
                       />
