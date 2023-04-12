@@ -22,6 +22,8 @@ import MinibarPackage from './Pages/MinibarPackage/MinibarPackage';
 import Login from '../src/Pages/LoginPage/Login'
 import ViewRoomTypes from './Pages/RoomTypes/ViewRoomTypes/ViewRoomTypes';
 import AdminDash from './Pages/Dashboard/Admin/Admin'
+import Bill from './Pages/Bill/Bill'
+
 
 
 
@@ -52,6 +54,8 @@ export default function App() {
                 <Route path="/minibarItems" element={<MinibarItems/>}/>
                 <Route path="/minibar" element={<Minibar/>}/>
                 <Route path="/minibarPackage" element={<MinibarPackage/>}/>
+                <Route path="/bill" element={<Bill/>}/>
+                
 
                 {/* <Route path="/payments" element={<Payments/>}/> */}
 

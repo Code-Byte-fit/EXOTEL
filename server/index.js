@@ -27,8 +27,6 @@ app.use("/rooms",roomRouter);
 const reservationRouter=require('./routes/Reservations')
 app.use("/reservations",reservationRouter);
 
-
-
 // const addOnRouter=require('./routes/AddOns')
 // app.use("/addons",addOnRouter);
 
@@ -49,14 +47,6 @@ app.use("/laundry", laundryRouter);
 
 const compRouter = require ('./routes/Compensation')
 app.use("/compensation", compRouter);
-
-// const minibaritemsRouter = require ('./routes/MiniBarItems')
-// app.use("/minibaritems", minibaritemsRouter);
-
-// const minibarpackageRouter = require ('./routes/MinibarPackage')
-// app.use("/minibarpackage", minibarpackageRouter);
-
-
 
 db.sequelize.sync().then(()=>{
     app.listen(3001,()=>{

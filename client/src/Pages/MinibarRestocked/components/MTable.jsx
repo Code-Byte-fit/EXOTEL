@@ -9,25 +9,8 @@ import axios from "axios";
 // import Popup from "./Popup";
 
 function MTable(props) {
-  // const [listOfMinibar, setListOfMinibar] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const [selectedMinibar, setSelectedMinibar] = useState(null);
-
-  // useEffect(() => {
-  //   axios.get("http://localhost:3001/minibar")
-  //   .then((response) => {
-  //     setListOfMinibar(response.data);
-  //   });
-  // }, []);
-
-  function handleEditClick(bar) {
-    setSelectedMinibar(bar);
-    setShowPopup(true);
-  }
-
-  function handleDeleteClick() {
-    // Handle delete logic here
-  }
 
   const columns = [
     {

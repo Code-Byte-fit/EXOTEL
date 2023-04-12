@@ -15,8 +15,18 @@
     width: 90vw;
   }
   .select{
-    margin-top: 1vh;
+    margin-top: 1vh; 
     width: 20vw;
+  }
+  .cont{
+    position: relative;
+  }
+  .error {
+    position: absolute;
+    color: rgb(141, 22, 22);
+    font-size: 0.8rem;
+    display: block;
+    right: 0;
   }
   
   .labelOne {
@@ -45,7 +55,6 @@
     background: #4d5949;
     color: #fcfbff;
     border-radius: 12px;
-    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
     cursor: pointer;
   }
   .lbl4 {

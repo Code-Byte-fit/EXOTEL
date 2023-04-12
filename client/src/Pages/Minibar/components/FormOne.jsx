@@ -24,15 +24,6 @@ export default function FormOne(props) {
       Quantity:Yup.number().required("Required") 
     });
     
-
-    // const ResNumber = [
-    //     {key:"--None Selected--", value:""},
-    //     {key: "1", value:"1"},  
-    //     {key: "2", value:"2"},
-    //     {key: "3", value:"3"},
-    //     {key: "4", value:"4"}
-    //   ]
-
     const minibarOptions = [
       { label: "-- None Selected --", value: "" },
       { label: "Hard Liquor", value: "Hard Liquor" },

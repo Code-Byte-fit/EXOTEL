@@ -5,14 +5,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      resNumber: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      roomNumber: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       date: {
         type: DataTypes.DATEONLY,
         allowNull: false,

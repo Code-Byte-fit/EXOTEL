@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import FormOne from "../components/FormOne";
 import MTable from './PTable';
+import Button from "./Button";
 // import { nanoid } from 'nanoid';
 // import Filter from "./Popup";
 
@@ -63,9 +64,8 @@ function DisplayData() {
 
     return (
         <React.Fragment>
-
+            <Button/>
             <FormOne handleAddFormChange={handleAddFormChange} addFormData={addFormData} onSubmit={onSubmit}/>
-          
             <MTable listOfMinibar={listOfMinibar}  minibar={minibar} />
         </React.Fragment>
 
