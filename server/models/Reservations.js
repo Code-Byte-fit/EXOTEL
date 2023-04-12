@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Reservations = sequelize.define('Reservations', {
-    Id: {
+    id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement:true
@@ -30,8 +30,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     totalAmount: {
-      type: DataTypes.FLOAT,
-      allowNull: true
+      type: DataTypes.STRING,
+      allowNull: false
     }
   }, {
     timestamps: false
@@ -44,9 +44,10 @@ module.exports = (sequelize, DataTypes) => {
     Reservations.belongsTo(models.Promotion, { foreignKey: 'PromoCode' });
     Reservations.hasMany(models.TaskAllocations, { foreignKey: 'Id' });
     Reservations.belongsTo(models.Bill, { foreignKey: 'billNumber' });
-
-
   };
 
   return Reservations;
 };
+
+
+    

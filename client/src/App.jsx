@@ -2,7 +2,6 @@ import {React} from 'react'
 import {createBrowserRouter,createRoutesFromElements,Route,RouterProvider,Outlet} from "react-router-dom";
 import Header from './Pages/General/Header/Header';
 import ReservationTab from './Pages/ReservationTab/ReservationTab';
-import Reservations from "./Pages/Reservations/Reservations"
 import MinibarRestocked from './Pages/MinibarRestocked/MinibarRestocked'
 import CreateRes from './Pages/CreateReservation/CreateRes';
 import Laundry from './Pages/Laundry/Laundry'
@@ -21,6 +20,7 @@ import Minibar from './Pages/Minibar/Minibar';
 import MinibarPackage from './Pages/MinibarPackage/MinibarPackage';
 import Login from '../src/Pages/LoginPage/Login'
 import ViewRoomTypes from './Pages/RoomTypes/ViewRoomTypes/ViewRoomTypes';
+import Guests from './Pages/Guests/Guests';
 import AdminDash from './Pages/Dashboard/Admin/Admin'
 import Bill from './Pages/Bill/Bill'
 
@@ -45,8 +45,8 @@ export default function App() {
                 <Route path="/viewPromotions" element={<ViewPromotions/>}/>
                 <Route path="/viewaddons" element={<ViewAddOns/>}/>
                 <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/>
-                <Route path="/reservations" element={<Reservations/>}/>
                 <Route path="/register" element={<RegisterUser/>}/>
+                <Route path="/guests" element={<Guests/>}/>
                 <Route path="/minibarRestocked" element={<MinibarRestocked/>}/>
                 <Route path="/laundry" element={<Laundry/>}/> 
                 <Route path="/compensation" element={<Compensation/>}/>
@@ -62,7 +62,7 @@ export default function App() {
 
 
             </Route>
-            <Route path="/login" element={<Login/>}/>
+            {!localStorage.getItem('accessToken') && <Route path="/login" element={<Login/>}/>}
             <Route path="*" element={<>Page Not Found</>}/>
 
             </>
@@ -71,17 +71,16 @@ export default function App() {
     )
     
     return(
-        <div>
-            <RouterProvider router={router}/>
-        </div>
-        
+            <div>
+                <RouterProvider router={router}/>
+            </div>
     )
 }
 
 const Root=()=>{
     return(
         <>
-        <Header/>
+        <Header role="receptionist"/>
         <div><Outlet/></div>
         </>
     )

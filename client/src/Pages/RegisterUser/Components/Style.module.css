@@ -46,9 +46,48 @@
     width: 12.2vw;
 }
 
-.fileInputCont{
-    margin:3vh 0 0 9vw;
+.country {
+    display: inline-flex;
+    flex-direction: column;
+    position: relative;
+    width: 35%;
+    margin: 0 0 0 2vw;
 }
+
+.fileInputCont{
+    display: inline-flex;
+    gap: 0.7vw;
+    margin: 4vh 0 0 0;
+    position: relative;
+    left: 11vw;
+}
+
+.proPicCont{
+    display: inline-flex;
+    border: 1px solid lightgrey;
+    gap: 0.5vw;
+    padding: 0.5vh 0.5vw;
+    border-radius: 8px;
+    cursor: pointer;
+    align-items: center;
+}
+
+.selectFileCont{
+    display: flex;
+    flex-direction: column;
+}
+
+.proPicCont img{
+    width: 1.5vw;
+    margin: 0.7vh 0 0 0;
+    align-self:flex-end;
+}
+
+.fileName{
+    font-size: 0.8rem;
+}
+
+
 
 .errorMsg{
     color: red;
@@ -63,6 +102,7 @@
     margin: 5vh 2vw 0 2vw;
     
   }
+
 
 .Btn{
     align-self: center;

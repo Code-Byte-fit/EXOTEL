@@ -4,7 +4,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 69vh;
-    margin: 1.5vh 0 0 0;
+    margin: 2vh 0 0 0;
 }
 
 .innerContainer{
@@ -29,7 +29,7 @@
 .topContainer button{
     width: 2vw;
     height: 5vh;
-    align-self:self-end;
+    align-self:end;
     border: none;
     background: transparent;
 }
@@ -39,10 +39,17 @@
     height: 80%;
 }
 
-.dateRange{
-    margin:7vh 0 0 0;
+.datesCont{
+    position: relative;
 }
 
+.dateErr{
+    position: absolute;
+    color: red;
+    bottom: -3vh;
+    right: 0;
+    
+}
 
 .middleContainer{
     display: flex;
@@ -58,11 +65,17 @@
     border-radius: 8px 8px 0 0;
 }
 .Available{
-    width: 30vw;
+    width: 50vw;
 }
 
 .Selected{
-    width: 15vw;
+    width: 25vw;
+}
+
+.deleteIcon{
+    width: 1.2vw;
+    margin: 0 0 0 1vw;
+    cursor: pointer;
 }
 
 
@@ -95,15 +108,20 @@
   
   }
 
+ 
+
 .add{
     border: none;
     width: 1.2vw;
+    margin: 0 0 0 0.7vw;
     background: transparent;
 }
 
 .add img{
     width: 100%;
 }
+
+
 
 .Btn{
     padding: 0.7%;
@@ -133,6 +151,12 @@
     display: flex;
     gap: 2vw;
 }
+
+.country{
+    gap: 0.4vw;
+}
+
+
 
 .btnContainer{
     margin: 2vh 0 0 auto;
@@ -185,6 +209,10 @@
     font-weight: bold;
 }
 
+.nights{
+    text-align: center;
+}
+
 .DetailsContainer{
     display: flex;  
     justify-content: space-between;
@@ -196,10 +224,12 @@
     border-radius: 0 0 8px 8px;
 }
 
-.innerOtherDetailsContainer{
+.innerDetailsContainer{
     display: flex;
     justify-content: space-between;
 }
+
+
 
 
 
@@ -223,8 +253,23 @@
     flex-direction: column;
 }
 
+.Financedetails{
+    display: flex;
+    width: 20vw;
+    justify-content: space-between;
+    margin: 4vh 0 0 3vw;
+}
+
 .label{
     font-weight: bold;
+}
+
+.hr{
+    width: 90%;
+    border: 0.5px dotted rgba(0, 0, 0, 0.182);
+    margin: 0 0 0 3vw;
+    position: relative;
+    top: 2vh;
 }
 
 .roomsContainer{
@@ -294,12 +339,7 @@
 }
 
 
-.deleteIcon{
-    width: 1vw;
-    position: relative;
-    left: 5vw;
-    cursor: pointer;
-}
+
 
 
 

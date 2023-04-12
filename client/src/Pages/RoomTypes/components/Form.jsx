@@ -42,7 +42,6 @@ function FormOne(props) {
                                 component={Input}
                                 label="Room Type"
                                 type="text"
-                            
                                 width="13vw" />
                             <ErrorMessage name="TypeName" component="div" className={style.error} />
                         </span>
