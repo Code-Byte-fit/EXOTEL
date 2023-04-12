@@ -20,5 +20,11 @@ module.exports=(sequelize,Datatypes)=>{
     },{
         timestamps: false
     })
+
+    UserAccounts.associate = (models) => {
+        UserAccounts.belongsTo(models.Users, {foreignKey: 'userId'});
+      };
+
+
     return UserAccounts;
 }

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import style from '../Calendar/components/Cal.module.css'
+// import 'react-calendar/dist/Calendar.css';
+import style from '../Calendar/components/Cal.module.css.css'
+
 
 function Cal() {
   const [value, onChange] = useState(new Date());
@@ -9,7 +10,7 @@ function Cal() {
   return (
     <div className={style.container}>
     <div className={style.title}>
-        <h3>Calendar</h3>
+        {/* <h3>Calendar</h3> */}
     </div>
       <Calendar 
         onChange={onChange} 

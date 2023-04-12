@@ -1,9 +1,11 @@
 const express=require("express")
+const app=express()
 const cors=require('cors')
 
-const app=express();
-app.use(express.json());
-app.use(cors());
+app.use(express.json())
+app.use(express.static("./Assets"))
+app.use(cors())
+
 
 const db=require('./models')
 
@@ -27,9 +29,6 @@ app.use("/rooms",roomRouter);
 const reservationRouter=require('./routes/Reservations')
 app.use("/reservations",reservationRouter);
 
-// const addOnRouter=require('./routes/AddOns')
-// app.use("/addons",addOnRouter);
-
 const promotionRouter=require('./routes/Promotions')
 app.use("/promotions",promotionRouter);
 
@@ -48,12 +47,14 @@ app.use("/laundry", laundryRouter);
 const compRouter = require ('./routes/Compensation')
 app.use("/compensation", compRouter);
 
+
+
+
 db.sequelize.sync().then(()=>{
     app.listen(3001,()=>{
         console.log("server running on port 3001")
     })
 })
-
 
 
 

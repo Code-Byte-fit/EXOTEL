@@ -20,7 +20,7 @@ export default function ConfirmReservation(props) {
   const navigate = useNavigate();
   const handleDone=()=>{
     closeModal();
-    navigate('/reservationTab');
+    navigate('/reservationTab',{replace:true});
   }
 
   return (

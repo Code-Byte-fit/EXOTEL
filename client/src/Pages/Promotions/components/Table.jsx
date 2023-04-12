@@ -3,7 +3,7 @@ import style from "./Promotions.module.css"
 import { useEffect } from "react";
 import axios from 'axios';
 import PromotionTable from '../../General/Table/Table'
-import EditDelete from "../../General/Table/EditDelete";
+import EditDelete from "./EditDelete";
 import styled from 'styled-components';
 
 function Table(props) {
@@ -12,10 +12,16 @@ function Table(props) {
     const [listOfPromotions, setlistOfPromotions] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:3001/promotions").then((response) => {
-            setlistOfPromotions(response.data);
+      axios.get('http://localhost:3001/promotions')
+        .then((response) => {
+          setlistOfPromotions(response.data);
         })
-    }, [])
+        .catch((error) => {
+          console.error(error);
+        });
+      updateExpiredPromotions(); // Call the updateExpiredPromotions function here
+    }, []);
+  
 
     const StatusCell = styled.div`
     padding: 5px;
@@ -36,6 +42,17 @@ function Table(props) {
       }
     }}
   `;
+
+  function updateExpiredPromotions() {
+    axios.put("http://localhost:3001/promotions/updateExpired")
+      .then((response) => {
+        console.log(response.data.message);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
 
     const columns = [
         {
@@ -88,7 +105,7 @@ function Table(props) {
           },
         {
           selector: row => row,
-          cell: (row) => <EditDelete/>
+          cell: (row) => <EditDelete setlistOfPromotions={setlistOfPromotions} row={row}/>
         },
     ];
     

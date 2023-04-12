@@ -1,39 +1,38 @@
 import React, { useState } from 'react';
-import  { useEffect } from 'react';
+import { useEffect } from 'react';
 import Input from "../../General/Inputs/Inputs";
 import style from "./Rooms.module.css";
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
-import ConfirmationPopup from '../../NewRooms/components/ConfirmationPopup';
 
 function FormOne(props) {
-    const [showConfirmation, setShowConfirmation] = useState(false);
+
     const [RoomTypes, setRoomTypes] = useState([]);
-    
+
 
     const initialValues = {
         RoomNo: '',
-        TypeName: '',
-        View:'',
+        RoomTypeView: '',
         AdditionalCharges: '',
-        BaseCharge: '',
+        TotalCharge: '',
         floor: '',
         Status: 'available',
-        AddInfo:''
+        AddInfo: ''
     };
     const validationSchema = Yup.object().shape({
-        RoomNo: Yup.string().required("Required")
+        RoomNo: Yup.string()
+            .required('Required')
             .matches(/^[A-Za-z0-9]+$/, 'Must only contain letters and numbers')
             .max(10, 'Must be at most 10 characters long'),
-        TypeName: Yup.string().required("Required"),
-        View: Yup.string().required("Required"),
-        AdditionalCharges: Yup.number().required("Required"),
-        floor: Yup.string().required("Required"),
-         AddInfo: Yup.string()
+        RoomTypeView: Yup.string().required('Required'),
+        // AdditionalCharges: Yup.number()
+        //   .required('Required'),
+        // TotalCharge: Yup.number().required('Required'),
+        floor: Yup.string().required('Required'),
+        Status: Yup.string().required('Required'),
+        AddInfo: Yup.string(),
     });
-
- 
 
 
     const fetchRoomTypes = async () => {
@@ -51,12 +50,6 @@ function FormOne(props) {
         { key: "1st Floor", value: "1st Floor" },
         { key: "2nd Floor", value: "3rd Floor" }]
 
-    const view = [{ key: "--None Selected --", value: "" },
-    { key: "Beach View", value: "Beach View" },
-    { key: "Pool View", value: "Pool View" },
-    { key: "Graden View", value: "Graden View" },
-    { key: "Patio View", value: "Patio View" },
-    { key: "City View", value: "City View" }]
 
     return (
 
@@ -70,57 +63,56 @@ function FormOne(props) {
 
                     <div className={style.div1}>
 
-                        <span>
+                        <span className={style.box}>
                             <Field name="RoomNo"
                                 component={Input}
                                 label="Room Number"
                                 type="text"
                                 width="13vw" />
-                            <ErrorMessage name="RoomNo" component="div" className={style.error} />
+                            <ErrorMessage name="RoomNo" component="span" className={style.error} />
                         </span>
 
-                        <span>
-                            <Field name="TypeName"
+                        <span className={style.box}>
+                            <Field
+                                name="RoomTypeView"
                                 component={Input}
                                 label="Room Type"
                                 type="select"
-                                options={[{ key: "--None Selected --", value: "" }, ...RoomTypes.map(RoomType => ({ key: RoomType.TypeName, value: RoomType.TypeName }))]}
-                                width="13vw" />
-                            <ErrorMessage name="TypeName" component="div" className={style.error} />
+                                options={[
+                                    { key: "--None Selected --", value: "" },
+                                    ...RoomTypes.map(roomType => ({
+                                        key: `${roomType.TypeName}-${roomType.View}`,
+                                        value: `${roomType.TypeName}-${roomType.View}`
+                                    }))
+                                ]}
+                                width="13vw"
+                            />
+
+                            <ErrorMessage name="RoomTypeView" component="span" className={style.error} />
                         </span>
-                        <span>
-                            <Field name="View"
-                                component={Input}
-                                label="View"
-                                type="select"
-                                options={view}
-                             
-                                className={style.inputOne}
-                                width="13vw" />
-                            <ErrorMessage name="View" component="div" className={style.error} />
-                        </span>
-                        <span>
+
+                        <span className={style.box}>
                             <Field name="AdditionalCharges"
                                 component={Input}
-                                label="Additional Charges"
+                                label="Additional Charges($)"
                                 type="text"
                                 width="13vw" />
-                            <ErrorMessage name="AdditionalCharges" component="div" className={style.error} />
+                            <ErrorMessage name="AdditionalCharges" component="span" className={style.error} />
                         </span>
-                        <span>
+                        <span className={style.box}>
                             <Field name="floor"
                                 component={Input}
                                 label="Floor"
                                 type="select"
                                 options={Floor}
                                 width="13vw" />
-                            <ErrorMessage name="floor" component="div" className={style.error} />
+                            <ErrorMessage name="floor" component="span" className={style.error} />
                         </span>
 
-                   
-                      
 
-                      
+
+
+
                     </div>
 
                     <div className={style.div2}>

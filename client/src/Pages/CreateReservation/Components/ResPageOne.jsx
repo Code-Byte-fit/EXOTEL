@@ -19,6 +19,8 @@ export default function ResPageOne(props) {
   const [AvailableRooms,setAvailableRooms]=useState(props.data.AvailableRooms)
   const [SelectedRooms,setSelectedRooms]=useState(props.data.SelectedRooms)
 
+  console.log(AvailableRooms)
+
   const currentHour = new Date().getHours().toString().padStart(2, '0');
   const currentMinute = new Date().getMinutes().toString().padStart(2, '0');
   const currentTime = `${currentHour}:${currentMinute}`;
@@ -40,7 +42,7 @@ const validationSchema = Yup.object().shape({
   const filteredData = AvailableRooms.filter((item) => {
     let matchesFilter = true;
     if (filters) {
-      matchesFilter = matchesFilter && item.TypeName.includes(filters);
+      matchesFilter = matchesFilter && item.RoomTypeView.split('-')[0].includes(filters);
     }
     return matchesFilter;
   });
@@ -58,12 +60,12 @@ const validationSchema = Yup.object().shape({
     },
     {
       name: 'TYPE',
-      selector: row => row.TypeName,
+      selector: row => row.RoomTypeView.split('-')[0],
       sortable: true,
     },
     {
       name: 'VIEW',
-      selector: row => row.View.split(' ')[0],
+      selector: row => row.RoomTypeView.split('-')[1].split(' ')[0],
       sortable: true,
     },
     {
@@ -73,7 +75,7 @@ const validationSchema = Yup.object().shape({
     },
     {
       name: 'CHARGE($)',
-      selector: row => row.BaseCharge,
+      selector: row => row.TotalCharge,
     },
     {
       name: 'SELECT',
@@ -90,7 +92,7 @@ const validationSchema = Yup.object().shape({
     },
     {
       name: 'TYPE',
-      selector: row => row.TypeName,
+      selector: row => row.RoomTypeView.split('-')[0],
       sortable: true,
     },
     {
@@ -178,9 +180,9 @@ const selectRoom=(Room)=>{
   setAvailableRooms(AvailableRooms.filter(room => room.RoomNo !== Room.RoomNo));
   props.setAmounts(prevValue=>{
     return({
-      subTotal:prevValue.subTotal + Room.BaseCharge*days,
+      subTotal:prevValue.subTotal + Room.TotalCharge*days,
       discounts:0,
-      GrandTotal:prevValue.GrandTotal + Room.BaseCharge*days
+      GrandTotal:prevValue.GrandTotal + Room.TotalCharge*days
     })
   })
 }
@@ -191,9 +193,9 @@ const removeRoom = (Room) => {
   setSelectedRooms(SelectedRooms.filter(room => room.RoomNo !== Room.RoomNo))
   props.setAmounts(prevValue=>{
     return({
-      subTotal:prevValue.subTotal - Room.BaseCharge*days,
+      subTotal:prevValue.subTotal - Room.TotalCharge*days,
       discounts:0,
-      GrandTotal:prevValue.GrandTotal - Room.BaseCharge*days
+      GrandTotal:prevValue.GrandTotal - Room.TotalCharge*days
     })
   })
 }

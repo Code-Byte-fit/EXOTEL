@@ -10,12 +10,12 @@ const Common = (props) => {
     <div className={style.LeftPanel}>
      <WelcomeBar />
      <div className={style.otherCont}>
-      {props.children}
+        {props.children}
      </div>
-     
     </div>
     <div className={style.RightPanel}>
       <NotificationBox />
+      
       <Cal />
 
     </div>

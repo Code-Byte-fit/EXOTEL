@@ -4,26 +4,41 @@ import style from "./Types.module.css";
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
-import ConfirmationPopup from '../../NewRooms/components/ConfirmationPopup';
+
 
 function FormOne(props) {
     const [showConfirmation, setShowConfirmation] = useState(false);
 
     const initialValues = {
+        RoomTypeID: '',
         TypeName: '',
+        View: '',
         NoOfBeds: '',
         sqFeet: '',
         StandardCharge: '',
-        AddInfo:''
+        AddInfo: ''
     };
     const validationSchema = Yup.object().shape({
-        TypeName: Yup.string().required("Required"),
-        NoOfBeds: Yup.number().required("Required"),
-        sqFeet: Yup.string().required("Required"),
-        StandardCharge: Yup.number().required("Required"),
+        TypeName: Yup.string().required('Required'),
+        NoOfBeds: Yup.number()
+            .required('Required')
+            .typeError('Must contain only numbers'),
+        sqFeet: Yup.string()
+            .required('Required')
+            .matches(/^[0-9]+$/, 'Must contain only numbers'),
+        View: Yup.string().required('Required'),
+        StandardCharge: Yup.string()
+            .required('Required')
+            .typeError('Must contain only numbers'),
+        AddInfo: Yup.string(),
     });
 
-  
+    const view = [{ key: "--None Selected --", value: "" },
+    { key: "Beach View", value: "Beach View" },
+    { key: "Pool View", value: "Pool View" },
+    { key: "Graden View", value: "Graden View" },
+    { key: "Patio View", value: "Patio View" },
+    { key: "City View", value: "City View" }]
 
     return (
 
@@ -37,41 +52,55 @@ function FormOne(props) {
 
                     <div className={style.div1}>
 
-                        <span>
+                        <span className={style.box}>
                             <Field name="TypeName"
                                 component={Input}
                                 label="Room Type"
                                 type="text"
+
                                 width="13vw" />
-                            <ErrorMessage name="TypeName" component="div" className={style.error} />
+                            <ErrorMessage name="TypeName" component="span" className={style.error} />
                         </span>
-                        <span>
+
+                        <span className={style.box}>
+                            <Field name="View"
+                                component={Input}
+                                label="View"
+                                type="select"
+                                options={view}
+
+                                className={style.inputOne}
+                                width="13vw" />
+                            <ErrorMessage name="View" component="span" className={style.error} />
+                        </span>
+
+                        <span className={style.box}>
                             <Field name="NoOfBeds"
                                 component={Input}
                                 label="No of Beds"
                                 type="text"
-                               
+
                                 width="13vw" />
-                            <ErrorMessage name="NoOfBeds" component="div" className={style.error} />
+                            <ErrorMessage name="NoOfBeds" component="span" className={style.error} />
                         </span>
-                        <span>
+                        <span className={style.box}>
                             <Field name="sqFeet"
                                 component={Input}
-                                label="Square Feet"
+                                label="Square Feet(Sqft)"
                                 type="text"
-                              
+
                                 width="13vw" />
-                            <ErrorMessage name="sqFeet" component="div" className={style.error} />
+                            <ErrorMessage name="sqFeet" component="span" className={style.error} />
                         </span>
-                        
-                        <span>
+
+                        <span className={style.box}>
                             <Field name="StandardCharge"
                                 component={Input}
-                                label="Standard Charge"
+                                label="Standard Charge($)"
                                 type="text"
-                            
+
                                 width="13vw" />
-                            <ErrorMessage name="StandardCharge" component="div" className={style.error} />
+                            <ErrorMessage name="StandardCharge" component="span" className={style.error} />
                         </span>
 
                     </div>

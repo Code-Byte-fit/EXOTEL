@@ -1,0 +1,52 @@
+version: "3.8"
+
+services:
+  api:
+    build: 
+      dockerfile: Dockerfile.dev
+      context: './server'
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    image: my-server:1.0
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - db
+    links:
+      - db
+
+  nginx:
+    depends_on:
+      - api
+      - client
+    restart: always
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./nginx
+    ports:
+      - "3050:80"
+    links:
+      - api
+
+  client:
+    stdin_open: true
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./client
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: Exotel
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: CodeByte2
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"

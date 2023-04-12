@@ -1,9 +1,10 @@
 module.exports=(sequelize,Datatypes)=>{
     const MiniBar=sequelize.define("MiniBar",{
-        MinibarId:{
-            type:Datatypes.INTEGER,
-            primaryKey: true,
-            autoIncrement:true
+        MiniBarID:{
+            type:Datatypes.STRING,
+            allowNull:true,
+            primaryKey:true,
+          
         },
     },
     {
