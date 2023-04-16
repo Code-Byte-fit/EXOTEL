@@ -1,0 +1,158 @@
+.components{
+    display: flex;
+    flex-direction: column;
+}
+
+.row1 h3{
+    font-weight: bolder;
+    font-family: system-ui;
+    text-align: center;
+    margin-top:11vh;
+    margin-bottom: 10vh;
+}
+
+.row2{
+    display: flex;
+    flex-direction: row;
+    margin: 5%;
+    gap: 3.5vw;
+    justify-content: center;
+}
+
+.box{
+    justify-content: center;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    width: 50%;
+    height: 35vh;
+    background-color:rgb(115, 114, 114);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.head{
+    display: flex;
+    flex-direction: row;
+    color: rgb(229, 231, 232);
+    font-family: system-ui;
+    text-align: center;
+    justify-content: center;
+    margin-top: 1.5vh;
+    font-size: large;
+}
+
+.survey {
+    display: flex;
+    gap: 5vw;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    
+    
+    
+  }
+
+  
+  .angryFace2, .happyFace2, .neutralFace2, .poorFace2, .veryhappyFace2{
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
+    color: #ffffff;
+    margin-top: 1vh;
+    margin-bottom: 7vh;
+  }
+
+  .angryFace2{
+    margin-left: 0.5vw;
+  }
+  
+  .happyFace2{
+    margin-left: 1.3vw;
+  } 
+  
+  .neutralFace2{
+    margin-left: 0.7vw;
+  }
+
+  .poorFace2{
+    margin-left: 1.6vw;
+  } 
+  
+  .veryhappyFace2{
+    margin-left: 1vw;
+  }
+
+
+
+  .angryFace:hover, .neutralFace:hover, .happyFace:hover, .poorFace:hover, .veryhappyFace:hover {
+    opacity: 0.75;
+  }
+
+  .veryhappyFace.clicked,.poorFace.clicked, .angryFace.clicked, .neutralFace.clicked, .happyFace.clicked {
+    position: relative;
+    box-shadow: inset 2vmin 2vmin 2vmin rgba(0, 0, 0, 0.3);
+    animation: pushbtn 100ms ease-in-out;
+  }
+  
+
+
+
+.buttons{
+    margin: -2.5vh auto;
+    display: flex;
+    flex-direction: row;
+    gap: 25vw;
+}
+
+
+
+   /*.................Back Button Css................*/
+   .backbtn {
+    font-size: 16px;
+    padding: 5px;
+    width: 90px;
+    background: #000;
+    color: #EEEEEE;
+    border: none;
+    border-radius: 8px !important;
+    font-size: 17px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    
+    margin-top:0.3vh;
+    
+  }
+  
+  .backbtn:hover {
+    box-shadow: #bababa 0px 0px 0px 2px, #3a3a3a 0px 0px 0px 5px;
+    background: #000000;
+    color: #ffffff;
+  }
+
+  /*........end of back btn css */
+
+   /*.................Cancel Button Css................*/
+   .nextbtn {
+    font-size: 16px;
+    padding: 5px;
+    width: 90px;
+    background: #000;
+    color: #EEEEEE;
+    border: none;
+    border-radius: 8px !important;
+    font-size: 17px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+    
+    margin-top:0.3vh;
+    
+  }
+  
+  .nextbtn:hover {
+    box-shadow: #bababa 0px 0px 0px 2px, #3a3a3a 0px 0px 0px 5px;
+    background: #000000;
+    color: #ffffff;
+  }

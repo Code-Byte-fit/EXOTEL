@@ -36,6 +36,8 @@ app.use("/roomtypes",roomTypenRouter);
 const addOnRouter=require('./routes/Addon')
 app.use("/addon",addOnRouter);
 
+const feedbackRouter=require('./routes/Feedback')
+app.use("/feedback",feedbackRouter);
 
 
 

@@ -15,6 +15,8 @@ import RegisterUser from './Pages/RegisterUser/RegisterUser';
 import Login from '../src/Pages/LoginPage/Login'
 import ViewRoomTypes from './Pages/RoomTypes/ViewRoomTypes/ViewRoomTypes';
 import AdminDash from './Pages/Dashboard/Admin/Admin'
+import FeedBackthree from './Pages/FeedbackOne/FeedBack';
+import ViewFeedbacks from './Pages/ViewFeedbacks/ViewFeedbacks';
 
 
 export default function App() {
@@ -37,8 +39,10 @@ export default function App() {
                 <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/>
                 <Route path="/reservations" element={<Reservations/>}/>
                 <Route path="/register" element={<RegisterUser/>}/>
+                <Route path="/viewfeedbacks" element={<ViewFeedbacks/>}/>
             </Route>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/feedbackthree" element={<FeedBackthree/>}/>
             <Route path="*" element={<>Page Not Found</>}/>
             </>
             

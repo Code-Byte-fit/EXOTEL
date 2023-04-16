@@ -1,0 +1,32 @@
+/* mainPage */
+.mainCont{
+  background-image: url(../../../Assets/Images/feedbackBg.jpg.png);
+  height: 100vh;
+}
+
+.innerCont{
+  display: flex;
+  justify-content: center;
+}
+.topCont{
+  margin: 7vh 0 0 0;
+  width: 15vw;
+}
+.logo{
+  width: 10vw;
+  margin: -2vh 0 0 3vw;
+}
+
+.middleCont{
+  background-color: rgba(5, 54, 17, 0.595);
+  width: 70vw;
+  height: 65vh;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+
+.terms{
+  font-size:larger ;
+  font-weight: bolder;
+  color: blueviolet;
+}

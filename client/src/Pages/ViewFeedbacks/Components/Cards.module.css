@@ -1,0 +1,42 @@
+.boxOne {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .slideShow {
+    width: 80%;
+    max-width: 1000px;
+    position: relative;
+    margin: 0 auto;
+  }
+  
+  .cardImage {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .cardContent {
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .leftArrow,
+  .rightArrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 3rem;
+  }
+  
+  .leftArrow {
+    left: 0;
+  }
+  
+  .rightArrow {
+    right: 0;
+  }
+  
