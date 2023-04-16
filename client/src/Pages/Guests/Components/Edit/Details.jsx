@@ -20,18 +20,17 @@ export default function Details(props) {
                           <Field name="LastName" component={Input} label="Last Name" type="text"/>
                         </span>
                       </div>
-                      <div className={style.countryCont}>
-                         <label for="Country">Country</label>
-                        <Field name="Country" id="Country" component={Combobox}  defaultValue="Sri Lanka" data={countries} hideEmptyPopup
-                          value={formikValues.values.Country}
-                          onChange={(value) => {
-                            formikValues.setFieldValue("Country", value);
-                          }}
-                        />
-                      </div>
-                      <div className={style.btnCont}>
-                        <button type='button' className={style.editBtn} onClick={()=>{props.handleStep(props.values,"email")}}>E-mail</button>
-                        <button type='button' className={style.editBtn}>Phone-No</button>
+                      <div className={style.lowerCont}>
+                          <span className={style.country}>
+                            <label for="Country">Country</label>
+                            <Field name="Country" id="Country" component={Combobox}  defaultValue="Sri Lanka" data={countries} hideEmptyPopup
+                              value={formikValues.values.Country}
+                              onChange={(value) => {
+                                formikValues.setFieldValue("Country", value);
+                              }}
+                            />
+                          </span>
+                          <button type='button' className={`${style.editBtn} ${style.emailbtn}`} onClick={()=>{props.handleStep(props.values,"email")}}>E-mail / Phone number</button>
                       </div>
                      
                       <div className={style.confirmBtnCont}>

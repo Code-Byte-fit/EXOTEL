@@ -1,12 +1,14 @@
-import React,{useState} from 'react'
+import React, { useState,useContext} from 'react'
+import {AppContext} from "../../../../Helpers/AppContext"
 import axios from "axios"
 import Details from './Details'
 import Email from './Email'
 import style from "../Style.module.css"
 
 export default function Edit(props) {
+  const {host}=useContext(AppContext)
   const handleEdit=(data)=>{
-    axios.put("http://localhost:3001/guests",data).then((res)=>{
+    axios.put(`${host}/guests`,data).then((res)=>{
       props.setIsDone(true)
     })
   }
@@ -28,13 +30,13 @@ export default function Edit(props) {
   const [currentView,setCurrentView]=useState(0)
   const views=[
     <Details values={data} handleStep={handleStep}/>,
-    <Email values={data} handleStep={handleStep}/>
+    <Email values={data} setValues={setData} handleStep={handleStep}/>
   ];
 
   return (
     <>
       <div className={style.editCont}>
-          <div className={style.editHeading}>Edit Reservation</div>
+          <div className={style.editHeading}>Edit Guest</div>
           {views[currentView]}
       </div>
     </>

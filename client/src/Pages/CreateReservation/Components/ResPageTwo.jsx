@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {Formik,Form,Field,ErrorMessage} from "formik"
 import * as yup from 'yup';
 import Input from "../../General/Inputs/Inputs"
-import { FileInput } from '../../General/Inputs/Inputs'
 import Combobox from "react-widgets/Combobox";
 import options from "./CountryList.json"
 import "react-widgets/styles.css";

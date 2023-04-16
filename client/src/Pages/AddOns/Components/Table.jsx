@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect,useContext } from "react";
+import {AppContext} from "../../../Helpers/AppContext"
 import style from "./AddOns.module.css"
 import axios from 'axios';
-import { useEffect } from "react";
 import AddOnTable from '../../General/Table/Table'
 import EditDelete from "./EditDelete";
 
@@ -9,20 +9,13 @@ import EditDelete from "./EditDelete";
 
 
 function Table(props) {
-
+  const {host}=useContext(AppContext)
   const [listOfAddons, setlistOfAddons] = useState([]);
-
-
-
-
-
   useEffect(() => {
-    axios.get("http://localhost:3001/addon").then((response) => {
+    axios.get(`${host}/addon`).then((response) => {
       setlistOfAddons(response.data);
     });
   }, []);
-
-
 
 
   const columns = [
@@ -71,8 +64,6 @@ function Table(props) {
     <span className={style.tableContainer}>
       <label className={style.labelTwo}>Edit/Delete Add Ons</label>
       <AddOnTable columns={columns} data={props.listOfAddons} height="35vh" edit pagination />
-
-
     </span>
 
   )

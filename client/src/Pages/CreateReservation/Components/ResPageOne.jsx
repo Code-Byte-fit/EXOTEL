@@ -1,4 +1,5 @@
-import React, { useState,useEffect} from 'react'
+import React, { useState,useEffect,useContext} from 'react'
+import {AppContext} from "../../../Helpers/AppContext"
 import {Formik,Form,Field, ErrorMessage} from "formik"
 import axios from 'axios'
 import * as Yup from 'yup';
@@ -14,6 +15,7 @@ import moment from 'moment';
 
 
 export default function ResPageOne(props) {
+  const {host}=useContext(AppContext)
   const [RoomTypes, setRoomTypes] = useState([]);
   const [filters,setFilters]=useState('');
   const [AvailableRooms,setAvailableRooms]=useState(props.data.AvailableRooms)
@@ -154,7 +156,7 @@ const getDates=(event)=>{
 }
 
 const fetchRoomTypes = async () => {
-  const response = await axios.get("http://localhost:3001/roomtypes");
+  const response = await axios.get(`${host}/roomtypes`);
   setRoomTypes(response.data);
 }
 useEffect(() => {
@@ -166,7 +168,7 @@ useEffect(() => {
 
 const reqRoom=async (event) => {
     event.preventDefault()
-    const response = await axios.get(`http://localhost:3001/rooms/availability/${dates.CheckIn}/${dates.CheckOut}/${dates.CheckInTime}/${dates.CheckOutTime}`);
+    const response = await axios.get(`${host}/rooms/availability/${dates.CheckIn}/${dates.CheckOut}/${dates.CheckInTime}/${dates.CheckOutTime}`);
     setAvailableRooms(response.data.filter(room => !SelectedRooms.some(selectedRoom => selectedRoom.RoomNo === room.RoomNo)));
 };
 

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState,useContext } from 'react'
+import {AppContext} from "../../Helpers/AppContext"
 import ResPageOne from './Components/ResPageOne'
 import ResPageTwo from './Components/ResPageTwo'
 import ResPageThree from './Components/ResPageThree'
@@ -8,9 +9,10 @@ import axios from 'axios'
 import style from './Components/Common/Style.module.css'
 
 export default function CreateRes() {
+  const {host}=useContext(AppContext)
   const [amounts,setAmounts]=useState({subTotal:0.00,discounts:0.00,GrandTotal:0.00})
   const makeReq=async(formData)=>{
-    await axios.post(`http://localhost:3001/reservations/${data.FirstName+data.LastName}`,formData,{
+    await axios.post(`${host}/reservations/${data.FirstName+data.LastName}`,formData,{
       headers: {
         'Content-Type': 'multipart/form-data',
       },

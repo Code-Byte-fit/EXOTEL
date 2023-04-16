@@ -76,7 +76,7 @@
 }
 
 .editCont{
-    height: 180%;
+    height: 150%;
     width: 105%;
     background-color:white;
     border-radius: 8px;
@@ -90,28 +90,31 @@
     padding: 2% 0 0 0;
 }
 
-.inputCont,.btnCont,.confirmBtnCont{
+.inputCont,.lowerCont,.confirmBtnCont{
     display: flex;
     justify-content: space-between;
     width: 80%;
     margin: 3% auto;
 }
 
-.countryCont{
-    display: flex;
-    flex-direction: column;
+.lowerCont{
     gap: 1vh;
-    width: 80%;
-    margin: 0 auto;
-}
-
-.countryCont label{
-    align-self: flex-start;
-}
-
-.btnCont{
     margin: 5% auto;
+    position: relative;
+    
 }
+
+.country{
+    text-align: left;
+    width: 43%;
+}
+
+.emailbtn{    
+    height: 6vh;
+    margin: 3vh 0 0 0;
+}
+
+
 
 .editBtn{
     padding: 2.2% 2%;
