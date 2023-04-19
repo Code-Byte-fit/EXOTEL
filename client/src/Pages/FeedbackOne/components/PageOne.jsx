@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import style from './PageOne.module.css'                        // Importing CSS 
 import veryBad from '../../../Assets/Images/veryBad.png'        // Importing images 
 import poor from '../../../Assets/Images/poor.png'
@@ -6,7 +6,13 @@ import medium from '../../../Assets/Images/medium.png'
 import good from '../../../Assets/Images/good.png'
 import exellent from '../../../Assets/Images/exellent.png'
 
-export default function PageOne({ handleNextStep }) { 
+export default function PageOne(props) { 
+  const [data,setData] = useState(props.data)
+  const [emoji,setEmoji] = useState("")
+  const handleSubmit = (values) =>{
+    // props.handleNextStep(values)
+  }
+  console.log(data)
    return (
      <>
        <div class={style.components}> 
@@ -28,7 +34,7 @@ export default function PageOne({ handleNextStep }) {
 
                <span class={style.neutralFace}>               {/* A span for neutralFace */}
                  <img src={medium} className={style.neutralFace1} /> 
-                 <p class={style.neutralFace2}>Medium</p> 
+                 <p class={style.neutralFace2}>Average</p> 
                </span>
 
                <span class={style.happyFace}>                 {/* A span for happyFace */}
@@ -46,7 +52,7 @@ export default function PageOne({ handleNextStep }) {
          </div>
          
          <div class={style.buttons}>                          {/* A div with including the next button */}
-           <button class={style.nextbtn} onClick={() => handleNextStep({})}> 
+           <button class={style.nextbtn} type='button' onClick={props.handleNextStep}> 
              Next
            </button>
          </div>

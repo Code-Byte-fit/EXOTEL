@@ -13,8 +13,6 @@ export default function FeedBack() {
     };
     const [feedbackData, setFeedBackData] = useState({
       guest: "",
-      feedback: "",
-      complaints: "",
       emoji: "",
       stat: [],
     });
@@ -32,8 +30,8 @@ export default function FeedBack() {
       setCurrentStep((prev) => prev - 1);
     };
     const steps = [
-      <PageOne handleNextStep={handleNextStep} />,
-      <PageTwo handlePrevStep={handlePrevStep} />,
+      <PageOne handleNextStep={handleNextStep} data={feedbackData}/>,
+      <PageTwo handlePrevStep={handlePrevStep} handleNextStep={handleNextStep} data={feedbackData} />,
     ];
     return (
       <>
@@ -52,4 +50,3 @@ export default function FeedBack() {
       </>
     );
   }
-  
