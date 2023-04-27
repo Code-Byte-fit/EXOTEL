@@ -1,112 +1,59 @@
 import React, { useState } from 'react';
-import { Formik, Form, Field } from 'formik';
 
 export default function Email(props) {
-  const emails = props.values.GuestEmails;
-  const phones = props.values.GuestPhoneNumbers;
+  const [emails,setEmails] = useState(props.values.GuestEmails);
+  const [phones,setPhones] = useState(props.values.GuestPhoneNumbers);
+  const [editEmailOpts, setEditEmailOpts] = useState(emails.map(() => false));
+  const [editPhoneOpts, setEditPhoneOpts] = useState(phones.map(() => false));
+  const [emailValue,setEmailValue]=useState("")
+  
+  const EditEmailOpt=(index)=>{
+    const newEditEmailOpts = editEmailOpts.map((currentElement, i) => i === index);
+    setEditEmailOpts(newEditEmailOpts);
+  }
 
-  const [emailEditValue, setEmailEditValue] = useState('');
-  const [phoneEditValue, setPhoneEditValue] = useState('');
+  const EditPhoneOpt=(index)=>{
+    const newEditPhoneOpts = editPhoneOpts.map((currentElement, i) => i === index);
+    setEditPhoneOpts(newEditPhoneOpts);
+  }
 
-  const handleRemoveEmail = (id) => {
-    // Remove the email with the specified id from the list
-    props.setValues((values) => ({
-      ...values,
-      GuestEmails: values.GuestEmails.filter((email) => email.id !== id),
-    }));
-  };
+  const handleEmailEdit=(index,value)=>{
+          const newEmails = [...emails];
+          newEmails[index].email = value;
+          setEmails(newEmails)
+          const newEditOpts = [...editEmailOpts];
+          newEditOpts[index] = false;
+          setEditEmailOpts(newEditOpts);
+  }
 
-  const handleEditEmail = (id, newValue) => {
-    // Update the email with the specified id to the new value
-    props.setValues((values) => ({
-      ...values,
-      GuestEmails: values.GuestEmails.map((email) =>
-        email.id === id ? { ...email, email: newValue } : email
-      ),
-    }));
-  };
+  
 
-  const handleRemovePhone = (id) => {
-    // Remove the phone number with the specified id from the list
-    props.setValues((values) => ({
-      ...values,
-      GuestPhoneNumbers: values.GuestPhoneNumbers.filter(
-        (phone) => phone.id !== id
-      ),
-    }));
-  };
-
-  const handleEditPhone = (id, newValue) => {
-    // Update the phone number with the specified id to the new value
-    props.setValues((values) => ({
-      ...values,
-      GuestPhoneNumbers: values.GuestPhoneNumbers.map((phone) =>
-        phone.id === id ? { ...phone, phoneNumber: newValue } : phone
-      ),
-    }));
-  };
 
   return (
     <>
       <div>E-mails</div>
-      {emails.map((email) => {
+      {emails.map((email,index) => {
         return (
           <div key={email.id}>
-            {email.id === emailEditValue ? (
-              <>
-                <input
-                  type="text"
-                  value={email.email}
-                  onChange={(e) => setEmailEditValue(e.target.value)}
-                />
-                <button
-                  onClick={() => handleEditEmail(email.id, emailEditValue)}
-                >
-                  Save
-                </button>
-              </>
-            ) : (
-              <>
-                <span>{email.email}</span>
-                <button onClick={() => handleRemoveEmail(email.id)}>
-                  Remove
-                </button>
-                <button onClick={() => setEmailEditValue(email.id)}>
-                  Edit
-                </button>
-              </>
-            )}
+            {!editEmailOpts[index]?<span>{email.email}</span>:<input defaultValue={emailValue} onChange={(e)=>setEmailValue(e.target.value)} />}
+            {!editEmailOpts[index]?
+              <><button onClick={() => EditEmailOpt(index)}>edit</button>
+              <button>remove</button></>:
+              (<>
+              <button onClick={() =>handleEmailEdit(index,emailValue)}>done</button>
+              <button>cancel</button>
+              </>)
+            }
           </div>
         );
       })}
       <div>Phone-Nos</div>
-      {phones.map((phone) => {
+      {phones.map((phone,index) => {
         return (
           <div key={phone.id}>
-            {phone.id === phoneEditValue ? (
-              <>
-                <input
-                  type="text"
-                  value={phone.phoneNumber}
-                  onChange={(e) => setPhoneEditValue(e.target.value)}
-                />
-                <button
-                  onClick={() => handleEditPhone(phone.id, phoneEditValue)}
-                >
-                  Save
-                </button>
-              </>
-            ) : (
-              <>
-                <span>{phone.phoneNumber}</span>
-                <button onClick={() => handleRemovePhone(phone.id)}>
-                  Remove
-                </button>
-                <button onClick={() => setPhoneEditValue(phone.id)}>
-                  Edit
-                </button>
-              </>
-            )}
+            {!editPhoneOpts[index]?<span>{phone.phoneNumber}</span>:<input defaultValue={phone.phoneNumber}/>}
+            <button onClick={() => EditPhoneOpt(index)}>edit</button>
+            <button>remove</button>
           </div>
         );
       })}

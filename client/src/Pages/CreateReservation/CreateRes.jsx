@@ -23,6 +23,7 @@ export default function CreateRes() {
   const currentMinute = new Date().getMinutes().toString().padStart(2, '0');
   const currentTime = `${currentHour}:${currentMinute}`;
 
+  //initial values
     const [data,setData]=useState({
         RoomType:"",
         Package:"",
@@ -51,6 +52,7 @@ export default function CreateRes() {
     const [currentStep,setCurrentStep]=useState(0)
 
     const handleNextStep=(newData,final=false)=>{
+      //run after the third step
       if(final){
           makeReq(newData)
           return
@@ -66,8 +68,7 @@ export default function CreateRes() {
       setCurrentStep(prev=>prev-1)
     }
     
-    console.log("data",data)
-
+    //pages for creating reservation
     const steps=[
     <ResPageOne next={handleNextStep} data={data} setAmounts={setAmounts} amounts={amounts}/>,
     <ResPageTwo next={handleNextStep} prev={handlePrevStep} data={data} />,

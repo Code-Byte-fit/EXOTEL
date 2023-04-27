@@ -9,6 +9,8 @@ import style from "./Components/Style.module.css"
 export default function ReservationTab() {
   const {host}=useContext(AppContext)
   const [stats,setStats]=useState({});
+
+  //obtain stats for today
   useEffect(()=>{
     axios.get(`${host}/reservations/todayStats`).then((response)=>{
       setStats(response.data)

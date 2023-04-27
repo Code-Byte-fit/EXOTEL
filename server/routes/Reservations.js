@@ -6,30 +6,35 @@ const upload=require('../middleware/Upload')
 const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations,GuestEmail,GuestPhoneNumber}=require('../models')
 
 
+//get all reservation details
 router.get('/',async (req,res)=>{
-    const listOfReservations=await Reservations.findAll({
-      attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source','totalAmount'],
-      include: [
-        {
-          model: Guests,
-          attributes: ['id', 'FirstName']
-        },
-        {
-          model: Rooms,
-          attributes: ['RoomNo']
-        }
-      ],
-    });
-    res.json(listOfReservations)
+    try{
+      const listOfReservations=await Reservations.findAll({
+        attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source','totalAmount'],
+        include: [
+          {
+            model: Guests,
+            attributes: ['id', 'FirstName']
+          },
+          {
+            model: Rooms,
+            attributes: ['RoomNo']
+          }
+        ],
+      });
+      res.json(listOfReservations)
+    }
+    catch(error){
+      res.status(500).json({error: "occured when retrieving reservations"})
+    }
+    
 })
 
-
+//used to create a new reservation
 router.post("/:nameFile",upload('Identification'),async (req,res)=>{
     try{
       const {CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,
              Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus,totalAmount}=req.body
-      console.log(req.file)
-      console.log(req.body)
     //find if the guest is already existing in the db
     let isGuest = await Guests.findOne({
       where: {
@@ -38,7 +43,7 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
       }
     });
     let guestId=null;
-    if (!isGuest) {
+    if (!isGuest) { //if guest is not present,create new record in the Guest table
       const guest = await Guests.create({ FirstName, LastName, DOB, Country,Identification:req.file.path});
       await GuestEmail.create({ email: Email, guestId: guest.id });
       await GuestPhoneNumber.create({ phoneNumber: PhoneNumber, guestId: guest.id });
@@ -46,16 +51,14 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
     } 
     else {
       guestId=isGuest.id
-      //check if the provided email is already present
-      const guestEmail = await GuestEmail.findOne({
+      const guestEmail = await GuestEmail.findOne({//check if the provided email is already present
         where: { guestId: guestId, email: Email }
       });
       if (!guestEmail) {
         await GuestEmail.create({ email: Email, guestId: guestId });
       }
   
-      //check if the provided phone number is already present
-      const guestPhoneNumber = await GuestPhoneNumber.findOne({
+      const guestPhoneNumber = await GuestPhoneNumber.findOne({ //check if the provided phone number is already present
         where: { guestId: guestId, phoneNumber: PhoneNumber }
       });
       if (!guestPhoneNumber) {
@@ -63,7 +66,7 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
       }
     }
 
-    const reservation = await Reservations.create({
+    const reservation = await Reservations.create({//create new reservation record
         CheckIn,
         CheckOut,
         CheckInTime,
@@ -74,7 +77,7 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
         guestId: guestId,
     });
 
-
+    //create record in ReservationRoom table
     for (const roomNumber of SelectedRooms) {
         const room = await Rooms.findOne({ where: { RoomNo: roomNumber.RoomNo } });
         if (room) {
@@ -91,7 +94,7 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
       }
 })
 
-
+//edit reservation details
 router.put("/",async (req,res)=>{
   try{
   const {id,CheckIn,CheckOut,ReservationStatus,Source,guestFirstName,rooms}=req.body
@@ -107,6 +110,7 @@ catch(error){
 })
 
 
+//cancel resevration
 router.put("/Cancel/:resId",async (req,res)=>{
   const resID=req.params.resId;
   const reservation = await Reservations.findOne({
@@ -117,7 +121,7 @@ router.put("/Cancel/:resId",async (req,res)=>{
     reservation.ReservationStatus = "cancelled";
     await reservation.save();
 
-    // create a new cancelled reservation record in the CancelledReservations table
+    // Create a new cancelled reservation record in the CancelledReservations table
     const cancelledReservation = await CancelledReservations.create({
       reservationId: reservation.id,
     });
@@ -133,6 +137,8 @@ router.put("/Cancel/:resId",async (req,res)=>{
   }
 });
 
+
+//Rebook a cancelled reservation
 router.put("/Rebook/:resId", async (req, res) => {
   const resID = req.params.resId;
   const reservation = await Reservations.findOne({
@@ -182,6 +188,7 @@ router.put("/Rebook/:resId", async (req, res) => {
   }
 });
 
+//Checkin a reservation
 router.put("/CheckIn/:resId",async (req,res)=>{
   const resID=req.params.resId;
   const reservation = await Reservations.findOne({
@@ -191,13 +198,9 @@ router.put("/CheckIn/:resId",async (req,res)=>{
   if(reservation.ReservationStatus==="active"){
     reservation.ReservationStatus = "Checked-In";
     await reservation.save();
-    res.status(200).json({ 
-      message: "Guest Checked-In",
-    });
-  } else {
-    res.status(400).json({ 
-      message: "Cannot Check-In",
-    });
+    res.status(200).json({ message: "Guest Checked-In",});
+    } else {
+    res.status(400).json({ message: "Cannot Check-In",});
   }
 });
 

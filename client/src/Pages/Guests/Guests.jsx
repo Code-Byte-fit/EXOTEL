@@ -28,6 +28,7 @@ export default function Guests() {
     })
   }
 
+  //obtain filtered guest data
    const filteredData = guestList.filter((item) => {
     let matchesFilter = true;
     if (searchQuery.fname) {

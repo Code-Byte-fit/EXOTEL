@@ -59,7 +59,7 @@ function FormOne(props){
                 <Field name="password"
                 component = {Input}
                 label = "Password"
-                type = "text"
+                type = "password"
                 width = "20vw"
                 />
                 <ErrorMessage name="password" component="span"/>

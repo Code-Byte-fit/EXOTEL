@@ -102,10 +102,10 @@ export default function NavBar(props) {
       <NavElement to="/dashBoard" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive}/>
       <NavElement to="/createReservation" icon={dashBoardIcon} desc="Create-Reservation" active={active} setActive={setActive}/>
       <NavElement to="/reservationTab" icon={dashBoardIcon} desc="Reservations Tab" active={active} setActive={setActive}/>
-      <NavElement to="/viewaddons" icon={dashBoardIcon} desc="Add-Ons" active={active} setActive={setActive}/>
+      {/* <NavElement to="/viewaddons" icon={dashBoardIcon} desc="Add-Ons" active={active} setActive={setActive}/>
       <NavElement to="/viewroomtypes" icon={dashBoardIcon} desc="Room-Types" active={active} setActive={setActive}/>
       <NavElement to="/viewRooms" icon={dashBoardIcon} desc="Rooms" active={active} setActive={setActive}/>
-      <NavElement to="/viewPromotions" icon={dashBoardIcon} desc="Promotions" active={active} setActive={setActive}/>
+      <NavElement to="/viewPromotions" icon={dashBoardIcon} desc="Promotions" active={active} setActive={setActive}/> */}
       <NavElement to="/guests" icon={dashBoardIcon} desc="Guests" active={active} setActive={setActive}/>
       </>}
 

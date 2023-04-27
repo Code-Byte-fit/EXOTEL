@@ -2,6 +2,7 @@ const express=require('express')
 const router=express.Router()
 const {Guests,GuestEmail,GuestPhoneNumber}=require('../models')
 
+//retireve guest records
 router.get('/', async (req, res) => {
     try {
       const listOfGuests = await Guests.findAll({
@@ -13,6 +14,7 @@ router.get('/', async (req, res) => {
     }
   });
 
+  //edit guest records
   router.put("/",async (req,res)=>{
     const {id,FirstName,LastName,Country}=req.body
     try{
@@ -24,7 +26,7 @@ router.get('/', async (req, res) => {
       res.json("updated successfully")
     }
     catch(error){
-      res.json(error)
+      res.status(500).json({ error: 'Failed to edit guest' });
     }
   })
 

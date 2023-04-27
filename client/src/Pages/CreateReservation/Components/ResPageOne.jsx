@@ -21,13 +21,12 @@ export default function ResPageOne(props) {
   const [AvailableRooms,setAvailableRooms]=useState(props.data.AvailableRooms)
   const [SelectedRooms,setSelectedRooms]=useState(props.data.SelectedRooms)
 
-  console.log(AvailableRooms)
 
   const currentHour = new Date().getHours().toString().padStart(2, '0');
   const currentMinute = new Date().getMinutes().toString().padStart(2, '0');
   const currentTime = `${currentHour}:${currentMinute}`;
   const [dates,setDates]=useState(
-    {CheckIn:new Date().toISOString().slice(0, 10),
+    {CheckIn:new Date().toISOString().slice(0, 10), 
     CheckOut:null,
     CheckInTime: currentTime, 
     CheckOutTime: null});
@@ -40,7 +39,7 @@ const validationSchema = Yup.object().shape({
   CheckOutTime: Yup.string().required('required'),
 });
 
-
+  //available rooms after filtering
   const filteredData = AvailableRooms.filter((item) => {
     let matchesFilter = true;
     if (filters) {
@@ -122,7 +121,9 @@ const getDates=(event)=>{
     })
   })
   const {value,name}=event.target;
-    setDates(prevValue=>{
+    
+  //capture checkin and checkout details
+  setDates(prevValue=>{
       if(name==="CheckIn"){
         return{
           CheckIn:value,
@@ -155,6 +156,7 @@ const getDates=(event)=>{
     })
 }
 
+//fetch room types needed for the select field
 const fetchRoomTypes = async () => {
   const response = await axios.get(`${host}/roomtypes`);
   setRoomTypes(response.data);
@@ -165,7 +167,7 @@ useEffect(() => {
 
 
 
-
+//retrieve available rooms
 const reqRoom=async (event) => {
     event.preventDefault()
     const response = await axios.get(`${host}/rooms/availability/${dates.CheckIn}/${dates.CheckOut}/${dates.CheckInTime}/${dates.CheckOutTime}`);
@@ -244,7 +246,7 @@ const valid=AvailableRooms.length>0 || SelectedRooms.length>0
                                   </span>
                                   <Field name="totalAmount"  style={{display:"none"}}
                                   value={props.amounts.GrandTotal} onChange={formik.values.totalAmount=props.amounts.GrandTotal}/>
-                                     <button type="submit" onClick={formik.dirty && formik.isValid && reqRoom} ><img src={searchIcon} className={style.searchIcon}/></button>
+                                  <button type="submit" onClick={formik.dirty && formik.isValid && reqRoom} ><img src={searchIcon} className={style.searchIcon}/></button>
                                 </div>
                           </div>
                           {valid &&
