@@ -11,7 +11,7 @@ router.get('/',async (req,res)=>{
 })
 
 
-
+//get free rooms for booking
 router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async (req, res) => {
   const checkin = req.params.checkIn;
   const checkout = req.params.checkOut;
@@ -48,11 +48,10 @@ router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async 
       }
     });
     
-    // return the available rooms to the user
     res.json(availableRooms);
     } catch (err) {
       console.error(err);
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json({ message: 'Error occured while retrieving rooms' });
     }
   });
 

@@ -25,6 +25,7 @@ import HKDash from "./Pages/Dashboard/HKManager/HKmanager"
 
 
 export default function App() {
+    const host=`${window.location.protocol}//${window.location.hostname}:3001`
     const [authState,setAuthState]=useState({
         userAccountId:0,
         userName:"",
@@ -126,7 +127,7 @@ export default function App() {
 
     
     return(
-        <AppContext.Provider value={{authState,setAuthState}}>
+        <AppContext.Provider value={{host,authState,setAuthState}}>
             <RouterProvider router={router}/>
         </AppContext.Provider>
     )

@@ -1,22 +1,24 @@
-import React,{useState} from 'react'
+import React, { useState,useContext} from 'react'
+import {AppContext} from "../../../../Helpers/AppContext"
 import EditDelete from '../../../General/Table/EditDelete';
 import EditRes from './EditRes';
 import axios from 'axios';
 
 export default function ResEditDelete(props) {
+  const {host}=useContext(AppContext)
     const [isDone, setIsDone] = useState(false);
     const [isReBookValid, setIsReBookValid] =useState(true);
     const row=props.row;
 
     const handleCancel = (row) => {
-        axios.put(`http://localhost:3001/reservations/Cancel/${row.id}`).then(() => {
+        axios.put(`${host}/reservations/Cancel/${row.id}`).then(() => {
           setIsDone(true)
         });
       };
 
 
     const handleRebook = (row) => {
-        axios.put(`http://localhost:3001/reservations/Rebook/${row.id}`)
+        axios.put(`${host}/reservations/Rebook/${row.id}`)
           .then(() => {
             setIsDone(true);
           })
@@ -30,7 +32,7 @@ export default function ResEditDelete(props) {
       }
 
       const handleCheckIn = (row) => {
-        axios.put(`http://localhost:3001/reservations/CheckIn/${row.id}`)
+        axios.put(`${host}/reservations/CheckIn/${row.id}`)
           .then(() => {
             setIsDone(true);
             setIsReBookValid(true);
@@ -42,10 +44,10 @@ export default function ResEditDelete(props) {
 
       const handleDone=()=>{
         setIsDone(false)
-        axios.get("http://localhost:3001/reservations").then((response)=>{
+        axios.get(`${host}/reservations`).then((response)=>{
           props.setReservationDetails(response.data)
         })
-        axios.get("http://localhost:3001/reservations/todayStats").then((response)=>{
+        axios.get(`${host}/reservations/todayStats`).then((response)=>{
           props.setStats(response.data)
      })
       }

@@ -6,16 +6,15 @@ import Input from '../../General/Inputs/Inputs'
 import * as Yup from 'yup' 
 import { useNavigate } from 'react-router-dom';
 import {AppContext} from "../../../Helpers/AppContext"
-import jwt_decode from 'jwt-decode';
 
 
 function FormOne(props){
     const navigate = useNavigate();
-    const {setAuthState}=useContext(AppContext)
+    const {host,setAuthState}=useContext(AppContext)
     const initialValues = {userName: "",password: ""};
 
     const onSubmit = (data) => {
-        axios.post("http://localhost:3001/userAccounts/login",data).then((response) =>{
+        axios.post(`${host}/userAccounts/login`,data).then((response) =>{
             if(response.data.error) {
                 alert(response.data.error);
             }else{
@@ -60,7 +59,7 @@ function FormOne(props){
                 <Field name="password"
                 component = {Input}
                 label = "Password"
-                type = "text"
+                type = "password"
                 width = "20vw"
                 />
                 <ErrorMessage name="password" component="span"/>

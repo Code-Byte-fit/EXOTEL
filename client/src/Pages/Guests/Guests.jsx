@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState,useEffect,useContext} from 'react'
+import {AppContext} from "../../Helpers/AppContext"
 import axios from "axios"
 import Table from '../General/Table/Table'
 import EditDelete from '../General/Table/EditDelete'
@@ -8,24 +9,26 @@ import filterIcon from "../../Assets/Images/mixer (2).png"
 import style from "./Components/Style.module.css"
 
 export default function Guests() {
+  const {host,authState}=useContext(AppContext)
   const [guestList,setGuestList]=useState([]);
   const [isDone, setIsDone] = useState(false);
   const [isFilterActive, setIsFilterActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState({fname:"",lname:"",country:""});
 
   useEffect(()=>{
-    axios.get("http://localhost:3001/guests").then((response)=>{
+    axios.get(`${host}/guests`).then((response)=>{
       setGuestList(response.data)
      })
    },[])
 
    const handleDone=()=>{
     setIsDone(false)
-    axios.get("http://localhost:3001/guests").then((response)=>{
+    axios.get(`${host}/guests`).then((response)=>{
       setGuestList(response.data)
     })
   }
 
+  //obtain filtered guest data
    const filteredData = guestList.filter((item) => {
     let matchesFilter = true;
     if (searchQuery.fname) {

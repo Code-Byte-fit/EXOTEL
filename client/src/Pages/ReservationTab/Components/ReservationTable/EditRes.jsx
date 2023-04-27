@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useContext} from 'react'
+import {AppContext} from "../../../../Helpers/AppContext"
 import {Formik,Form,Field} from "formik"
 import axios from "axios"
 import Input from "../../../General/Inputs/Inputs"
 import style from "../Style.module.css"
 
 export default function EditRes(props) {
+  const {host}=useContext(AppContext)
   const handleEdit=(data)=>{
-    axios.put("http://localhost:3001/reservations",data).then((res)=>{
+    axios.put(`${host}/reservations`,data).then((res)=>{
       props.setIsDone(true)
     })
   }

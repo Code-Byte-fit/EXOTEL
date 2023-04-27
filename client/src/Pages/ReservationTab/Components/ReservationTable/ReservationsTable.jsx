@@ -17,10 +17,10 @@ export default function ReservationsTable(props) {
   const [checkInQuery, setCheckInQuery] = useState(new Date().toISOString().slice(0, 10));
   const [checkOutQuery, setCheckOutQuery] = useState('');
   const [isFilterActive, setIsFilterActive] = useState(false);
-  const {authState}=useContext(AppContext)
+  const {host,authState}=useContext(AppContext)
    
   useEffect(()=>{
-   axios.get("http://localhost:3001/reservations").then((response)=>{
+   axios.get(`${host}/reservations`).then((response)=>{
       setReservationDetails(response.data)
     })
   },[])

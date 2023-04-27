@@ -1,23 +1,22 @@
+import React, { useState, useEffect,useContext } from "react";
+import {AppContext} from "../../../Helpers/AppContext"
 import axios from "axios";
-import React, { useState, useEffect } from "react";
 import FormOne from "../components/FormOne";
 import MTable from './MTable';
-// import { nanoid } from 'nanoid';
-// import Filter from "./Popup";
 
 function DisplayData() {
+    const {host}=useContext(AppContext)
     const [listOfMinibar, setListOfMinibar] = useState([]);
-
     useEffect(() => {
-        axios.get("http://localhost:3001/Minibar/minibarrestocks")
+        axios.get(`${host}/Minibar/minibarrestocks`)
         .then((response) => {
           setListOfMinibar(response.data);
         });
       }, []);
 
       const onSubmit = async (fData) =>{
-        await axios.post("http://localhost:3001/Minibar/minibarrestocks",fData).then(()=>{
-            axios.get("http://localhost:3001/Minibar/minibarrestocks")
+        await axios.post(`${host}/Minibar/minibarrestocks`,fData).then(()=>{
+            axios.get(`${host}/Minibar/minibarrestocks`)
             .then((response) => {
             setListOfMinibar(response.data);
         });

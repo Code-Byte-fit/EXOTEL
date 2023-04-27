@@ -1,7 +1,6 @@
-
-
+import React, { useState, useEffect,useContext } from "react";
+import {AppContext} from "../../../../Helpers/AppContext"
 import Rooms from '../../../../Assets/Images/Bedroom.png'
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import style from './CardSection.module.css';
 import add from '../../../../Assets/Images/pluss.png'
@@ -9,6 +8,7 @@ import Dis from '../../../../Assets/Images/Discount.png'
 import User from '../../../../Assets/Images/Users.png'
 
 function CardSection() {
+  const{host}=useContext(AppContext)
   const [roomCount, setRoomCount] = useState(0);
   const [promoCount, setPromoCount] = useState(0);
   const [userCount, setUserCount] = useState(0);
@@ -17,13 +17,10 @@ function CardSection() {
     async function fetchData() {
       try {
         
-        const response = await axios.get('http://localhost:3001/admin/todayStats');
+        const response = await axios.get(`${host}/admin/todayStats`);
         setRoomCount(response.data.roomCount);
         setPromoCount(response.data.promoCount);
-        setUserCount(response.data.usersCount);
-console.log(roomCount,promoCount, userCount)
-console.log(response.data)
-       
+        setUserCount(response.data.usersCount);       
       } catch (error) {
         console.error(error);
       }

@@ -1,22 +1,20 @@
-import React from "react";
+import React, { useState, useEffect,useContext } from "react";
+import {AppContext} from "../../../Helpers/AppContext"
 import axios from 'axios';
 import style from "./components/AddOns.module.css";
 import RoomTable from "../../General/Table/Table";
-import { useEffect, useState } from "react";
-
 
 function ViewAddOns() {
-
+  const {host}=useContext(AppContext)
   const [listOfAddons, setlistOfAddons] = useState([]);
 
 
   useEffect(() => {
-    axios.get("http://localhost:3001/addon").then((response) => {
+    axios.get(`${host}/addon`).then((response) => {
       setlistOfAddons(response.data);
       console.log(listOfAddons)
     })
   }, [])
-
 
 
   const columns = [
