@@ -7,7 +7,7 @@ import "./Popup.css"
 import style from "./Style.module.css"
 
 export default function ConfirmReservation(props) {
-  const [open, setOpen] =useState(false);
+  const [open, setOpen] =useState(false); //open popup
   const closeModal = () => setOpen(false);
 
   const [isConfirmed,setIsConfirmed]=useState(false);
@@ -20,7 +20,7 @@ export default function ConfirmReservation(props) {
   const navigate = useNavigate();
   const handleDone=()=>{
     closeModal();
-    navigate('/reservationTab');
+    navigate('/reservationTab',{replace:true}); //redirect to reservations tab after creating reservation
   }
 
   return (
@@ -37,7 +37,7 @@ export default function ConfirmReservation(props) {
             </div>
         </div>
         :
-        <div className={style.confirmModal}>
+        <div className={style.confirmModal}> 
            <img src={successIcon} className={style.successIcon}/>
            <span className={`${style.confirmHeading} ${style.success}`}>Success!</span>
            <span className={style.confirmBody}>Successfully added the reservation</span>

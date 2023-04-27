@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {Formik,Form,Field,ErrorMessage} from "formik"
 import * as yup from 'yup';
 import Input from "../../General/Inputs/Inputs"
-import { FileInput } from '../../General/Inputs/Inputs'
 import Combobox from "react-widgets/Combobox";
 import options from "./CountryList.json"
 import "react-widgets/styles.css";
@@ -11,6 +10,7 @@ import style from "./Style.module.css"
 
 
 export default function ResPageTwo(props) {
+  const [selectedFile,setSelectedFile]=useState(null)
   const schema = yup.object().shape({
     Source: yup.string().required('required'),
     FirstName: yup.string().required('required'),
@@ -37,7 +37,7 @@ export default function ResPageTwo(props) {
     <>
         <Formik initialValues={props.data} onSubmit={handleSubmit} validationSchema={schema}>
                 {({values,setFieldValue})=>(
-                  <Form>
+                  <Form encType="multipart/form-data">
                   <div className={style.formContainer}>
                   <div>
                     <div className={style.heading}>RESERVATION DETAILS</div>
@@ -84,7 +84,23 @@ export default function ResPageTwo(props) {
 
                   <div>
                     <div className={style.heading}>IDENTIFICATION</div>
-                    <Field name="Identification" component={FileInput} label="Upload Identification" id="Identification" img={uploadIcon}/>
+                    <div className={style.fileInputCont}>
+                      <label for="Identification" className={style.identifyCont}>
+                            <img src={uploadIcon}/>
+                            <span>Identification</span>
+                      </label>
+                      {selectedFile!==null &&
+                        <div className={style.selectFileCont}>
+                          <span>Selected File:</span>
+                          <span className={style.fileName}>{selectedFile.name}</span>
+                        </div>
+                      }
+                        <input id="Identification" name="Identification" type="file" style={{display:'none'}}
+                        onChange={(event) => {
+                        setFieldValue("Identification", event.target.files[0]);
+                        setSelectedFile(event.target.files[0])
+                        }}/>
+                    </div>
                   </div>
                   <div className={style.btnContainer}>
                     <button type="button" onClick={()=>props.prev(values)} className={style.Btn}>Back</button>

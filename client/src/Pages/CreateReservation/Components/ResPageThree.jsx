@@ -13,8 +13,7 @@ export default function ResPageThree(props) {
         handleSubmit(props.data);
       };
 
-      console.log(props.data.SelectedRooms)
-
+      //calculate number of nights booked
       const nights=differenceInDays(new Date(props.data.CheckOut), new Date(props.data.CheckIn))
   return (
     <>

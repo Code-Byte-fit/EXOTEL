@@ -1,21 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from "react";
+import {AppContext} from "../../../Helpers/AppContext"
 import EditDelete from '../../General/Table/EditDelete'
 import axios from 'axios';
 import EditAddon from './EditAddon';
 
 export default function RTEditDelete(props) {
+  const {host}=useContext(AppContext)
   const [isDone, setIsDone] = useState(false);
   const row = props.row
 
   const handleDelete = (row) => {
-    axios.delete("http://localhost:3001/addon").then(() => {
+    axios.delete(`${host}/addon`).then(() => {
       setIsDone(true)
     })
   }
 
   const handleDone = () => {
     setIsDone(false)
-    axios.get("http://localhost:3001/addon").then((response) => {
+    axios.get(`${host}/addon`).then((response) => {
       props.setlistOfAddons(response.data)
     })
   }

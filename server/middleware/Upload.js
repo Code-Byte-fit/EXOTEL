@@ -4,7 +4,13 @@ const path = require('path');
 const uploadFile = (fileField) => {
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, 'images');
+      let destinationFolder = 'uploads';
+      if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        destinationFolder = 'Assets/Images';
+      } else if (file.mimetype === 'application/pdf') {
+        destinationFolder = 'Assets/Pdf';
+      }
+      cb(null, destinationFolder);
     },
     filename: (req, file, cb) => {
       const name=req.params.nameFile

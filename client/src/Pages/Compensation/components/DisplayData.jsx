@@ -1,26 +1,26 @@
+import React, { useState, useEffect,useContext } from "react";
+import {AppContext} from "../../../Helpers/AppContext"
 import axios from "axios";
-import React, { useState, useEffect } from "react";
 import FormOne from "../components/FormOne";
 import CTable from './CTable';
 
 function DisplayData() {
+    const {host}=useContext(AppContext)
     const [listOfComp, setListOfComp] = useState([]);
-
     useEffect(() => {
-        axios.get("http://localhost:3001/compensation")
+        axios.get(`${host}/compensation`)
         .then((response) => {
           setListOfComp(response.data);
         });
       }, []);
 
       const onSubmit = async (fData) =>{
-        await axios.post("http://localhost:3001/compensation",fData).then(()=>{
-            axios.get("http://localhost:3001/compensation")
+        await axios.post(`${host}/compensation`,fData).then(()=>{
+            axios.get(`${host}/compensation`)
             .then((response) => {
             setListOfComp(response.data);
         });
         })
-        console.log(fData)
     };
   
     const [comp, setcomp] = useState();

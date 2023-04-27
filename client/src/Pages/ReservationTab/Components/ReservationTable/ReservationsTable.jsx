@@ -1,6 +1,7 @@
-import React, { useEffect, useState ,useMemo} from 'react'
+import React, { useEffect, useState ,useContext} from 'react'
 import { Link} from 'react-router-dom';
 import axios from "axios"
+import { AppContext } from '../../../../Helpers/AppContext';
 import addIcon from "../../../../Assets/Images/Add small.png"
 import Table from '../../../General/Table/Table';
 import ResEditDelete from './ResEditDelete';
@@ -16,12 +17,10 @@ export default function ReservationsTable(props) {
   const [checkInQuery, setCheckInQuery] = useState(new Date().toISOString().slice(0, 10));
   const [checkOutQuery, setCheckOutQuery] = useState('');
   const [isFilterActive, setIsFilterActive] = useState(false);
-
-
-  
+  const {host,authState}=useContext(AppContext)
    
   useEffect(()=>{
-   axios.get("http://localhost:3001/reservations").then((response)=>{
+   axios.get(`${host}/reservations`).then((response)=>{
       setReservationDetails(response.data)
     })
   },[])
@@ -104,15 +103,15 @@ return (
       <div className={style.tableHeader}>
                 <div className={style.headerLeft}>
                       <span className={style.heading}>RESERVATIONS</span>
-                     <Link to="/createReservation"><img src={addIcon} className={style.addIcon}/></Link> 
-                    
+                     {(authState.userRole==="Administrator" || authState.userRole==="Receptionist") &&
+                      <Link to="/createReservation"><img src={addIcon} className={style.addIcon}/></Link>}      
                 </div>
-              <div className={style.headerRight}>
+              {reservationDetails.length>0 && <div className={style.headerRight}>
                 <span className={`${!isFilterActive && style.hidden}`}>
                     <Filter  setSelectedFilters={setSelectedFilters} setSearchQuery={setSearchQuery}  setCheckInQuery={setCheckInQuery} setCheckOutQuery={setCheckOutQuery}/>
                 </span>
                 <img src={filterIcon} className={style.filterIcon} onClick={()=>setIsFilterActive(!isFilterActive)}/>
-                </div>
+                </div>}
            </div>
            <div className={style.tableCont}>
             <Table columns={columns} data={filteredData} height='40vh' pagination/>           

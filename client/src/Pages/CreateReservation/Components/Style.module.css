@@ -176,6 +176,38 @@
     position: relative;
 }
 
+.fileInputCont{
+    display: inline-flex;
+    gap: 0.7vw;
+    margin: 1vh 0 0 1vw;
+}
+
+.identifyCont{
+    display: inline-flex;
+    border: 1px solid lightgrey;
+    gap: 0.5vw;
+    padding: 0.5vh 0.5vw;
+    border-radius: 8px;
+    cursor: pointer;
+    align-items: center;
+}
+
+.selectFileCont{
+    display: flex;
+    flex-direction: column;
+}
+
+.identifyCont img{
+    width: 1.5vw;
+    margin: 0.7vh 0 0 0;
+    align-self:flex-end;
+}
+
+.fileName{
+    font-size: 0.8rem;
+}
+
+
 .errorMsg{
     color: red;
     align-self:flex-end;

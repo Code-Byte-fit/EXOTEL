@@ -1,28 +1,24 @@
-import React,{useState} from 'react'
+import React, { useState,useContext} from 'react'
+import {AppContext} from "../../../../Helpers/AppContext"
 import EditDelete from '../../../General/Table/EditDelete';
 import EditRes from './EditRes';
 import axios from 'axios';
 
 export default function ResEditDelete(props) {
+  const {host}=useContext(AppContext)
     const [isDone, setIsDone] = useState(false);
     const [isReBookValid, setIsReBookValid] =useState(true);
-
-    const handleEdit=(row)=>{
-        axios.put("http://localhost:3001/reservations").then(()=>{
-          setIsDone(true)
-          
-        })
-      }
+    const row=props.row;
 
     const handleCancel = (row) => {
-        axios.put(`http://localhost:3001/reservations/Cancel/${row.id}`).then(() => {
+        axios.put(`${host}/reservations/Cancel/${row.id}`).then(() => {
           setIsDone(true)
         });
       };
 
 
     const handleRebook = (row) => {
-        axios.put(`http://localhost:3001/reservations/Rebook/${row.id}`)
+        axios.put(`${host}/reservations/Rebook/${row.id}`)
           .then(() => {
             setIsDone(true);
           })
@@ -36,7 +32,7 @@ export default function ResEditDelete(props) {
       }
 
       const handleCheckIn = (row) => {
-        axios.put(`http://localhost:3001/reservations/CheckIn/${row.id}`)
+        axios.put(`${host}/reservations/CheckIn/${row.id}`)
           .then(() => {
             setIsDone(true);
             setIsReBookValid(true);
@@ -48,23 +44,13 @@ export default function ResEditDelete(props) {
 
       const handleDone=()=>{
         setIsDone(false)
-        axios.get("http://localhost:3001/reservations").then((response)=>{
+        axios.get(`${host}/reservations`).then((response)=>{
           props.setReservationDetails(response.data)
         })
-        axios.get("http://localhost:3001/reservations/todayStats").then((response)=>{
+        axios.get(`${host}/reservations/todayStats`).then((response)=>{
           props.setStats(response.data)
      })
       }
-
-
-
-
-      const row=props.row;
-
-
-
-
-
 
   return (
     <>
@@ -72,7 +58,7 @@ export default function ResEditDelete(props) {
                       cancelOption={row.ReservationStatus==="active"}
                       reBookOption={row.ReservationStatus==="cancelled"} 
                       checkinOption={row.ReservationStatus==="active"}
-                      onEdit={() => handleEdit(row)} 
+                      editOption
                       onCancel={()=>handleCancel(row)}  
                       onRebook={()=>handleRebook(row)}
                       onCheckIn={()=>handleCheckIn(row)}
@@ -80,7 +66,7 @@ export default function ResEditDelete(props) {
                       isReBookValid={isReBookValid}
                       handleDone={handleDone} 
                       handleReBookError={handleRebookError}
-                      editComponent={<EditRes values={row}/>} 
+                      editComponent={<EditRes values={row} setIsDone={setIsDone}/>} 
                       cancelHeading="Confirm Cancellation"
                       cancelBody="Are you sure that you want to cancel this reservation?"
                       />

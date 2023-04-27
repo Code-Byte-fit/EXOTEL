@@ -1,4 +1,5 @@
-import React, { useState,useEffect} from 'react'
+import React, { useState,useEffect,useContext} from 'react'
+import {AppContext} from "../../../Helpers/AppContext"
 import {Formik,Form,Field, ErrorMessage} from "formik"
 import axios from 'axios'
 import * as Yup from 'yup';
@@ -14,16 +15,18 @@ import moment from 'moment';
 
 
 export default function ResPageOne(props) {
+  const {host}=useContext(AppContext)
   const [RoomTypes, setRoomTypes] = useState([]);
   const [filters,setFilters]=useState('');
   const [AvailableRooms,setAvailableRooms]=useState(props.data.AvailableRooms)
   const [SelectedRooms,setSelectedRooms]=useState(props.data.SelectedRooms)
 
+
   const currentHour = new Date().getHours().toString().padStart(2, '0');
   const currentMinute = new Date().getMinutes().toString().padStart(2, '0');
   const currentTime = `${currentHour}:${currentMinute}`;
   const [dates,setDates]=useState(
-    {CheckIn:new Date().toISOString().slice(0, 10),
+    {CheckIn:new Date().toISOString().slice(0, 10), 
     CheckOut:null,
     CheckInTime: currentTime, 
     CheckOutTime: null});
@@ -36,11 +39,11 @@ const validationSchema = Yup.object().shape({
   CheckOutTime: Yup.string().required('required'),
 });
 
-
+  //available rooms after filtering
   const filteredData = AvailableRooms.filter((item) => {
     let matchesFilter = true;
     if (filters) {
-      matchesFilter = matchesFilter && item.TypeName.includes(filters);
+      matchesFilter = matchesFilter && item.RoomTypeView.split('-')[0].includes(filters);
     }
     return matchesFilter;
   });
@@ -58,12 +61,12 @@ const validationSchema = Yup.object().shape({
     },
     {
       name: 'TYPE',
-      selector: row => row.TypeName,
+      selector: row => row.RoomTypeView.split('-')[0],
       sortable: true,
     },
     {
       name: 'VIEW',
-      selector: row => row.View.split(' ')[0],
+      selector: row => row.RoomTypeView.split('-')[1].split(' ')[0],
       sortable: true,
     },
     {
@@ -73,7 +76,7 @@ const validationSchema = Yup.object().shape({
     },
     {
       name: 'CHARGE($)',
-      selector: row => row.BaseCharge,
+      selector: row => row.TotalCharge,
     },
     {
       name: 'SELECT',
@@ -90,7 +93,7 @@ const validationSchema = Yup.object().shape({
     },
     {
       name: 'TYPE',
-      selector: row => row.TypeName,
+      selector: row => row.RoomTypeView.split('-')[0],
       sortable: true,
     },
     {
@@ -118,7 +121,9 @@ const getDates=(event)=>{
     })
   })
   const {value,name}=event.target;
-    setDates(prevValue=>{
+    
+  //capture checkin and checkout details
+  setDates(prevValue=>{
       if(name==="CheckIn"){
         return{
           CheckIn:value,
@@ -151,8 +156,9 @@ const getDates=(event)=>{
     })
 }
 
+//fetch room types needed for the select field
 const fetchRoomTypes = async () => {
-  const response = await axios.get("http://localhost:3001/roomtypes");
+  const response = await axios.get(`${host}/roomtypes`);
   setRoomTypes(response.data);
 }
 useEffect(() => {
@@ -161,10 +167,10 @@ useEffect(() => {
 
 
 
-
+//retrieve available rooms
 const reqRoom=async (event) => {
     event.preventDefault()
-    const response = await axios.get(`http://localhost:3001/rooms/availability/${dates.CheckIn}/${dates.CheckOut}/${dates.CheckInTime}/${dates.CheckOutTime}`);
+    const response = await axios.get(`${host}/rooms/availability/${dates.CheckIn}/${dates.CheckOut}/${dates.CheckInTime}/${dates.CheckOutTime}`);
     setAvailableRooms(response.data.filter(room => !SelectedRooms.some(selectedRoom => selectedRoom.RoomNo === room.RoomNo)));
 };
 
@@ -178,9 +184,9 @@ const selectRoom=(Room)=>{
   setAvailableRooms(AvailableRooms.filter(room => room.RoomNo !== Room.RoomNo));
   props.setAmounts(prevValue=>{
     return({
-      subTotal:prevValue.subTotal + Room.BaseCharge*days,
+      subTotal:prevValue.subTotal + Room.TotalCharge*days,
       discounts:0,
-      GrandTotal:prevValue.GrandTotal + Room.BaseCharge*days
+      GrandTotal:prevValue.GrandTotal + Room.TotalCharge*days
     })
   })
 }
@@ -191,9 +197,9 @@ const removeRoom = (Room) => {
   setSelectedRooms(SelectedRooms.filter(room => room.RoomNo !== Room.RoomNo))
   props.setAmounts(prevValue=>{
     return({
-      subTotal:prevValue.subTotal - Room.BaseCharge*days,
+      subTotal:prevValue.subTotal - Room.TotalCharge*days,
       discounts:0,
-      GrandTotal:prevValue.GrandTotal - Room.BaseCharge*days
+      GrandTotal:prevValue.GrandTotal - Room.TotalCharge*days
     })
   })
 }
@@ -240,7 +246,7 @@ const valid=AvailableRooms.length>0 || SelectedRooms.length>0
                                   </span>
                                   <Field name="totalAmount"  style={{display:"none"}}
                                   value={props.amounts.GrandTotal} onChange={formik.values.totalAmount=props.amounts.GrandTotal}/>
-                                     <button type="submit" onClick={formik.dirty && formik.isValid && reqRoom} ><img src={searchIcon} className={style.searchIcon}/></button>
+                                  <button type="submit" onClick={formik.dirty && formik.isValid && reqRoom} ><img src={searchIcon} className={style.searchIcon}/></button>
                                 </div>
                           </div>
                           {valid &&
