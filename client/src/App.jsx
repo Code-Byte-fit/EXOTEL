@@ -22,6 +22,8 @@ import FODash from "./Pages/Dashboard/FrontOffice/FOmanager"
 import ReceptionDash from "./Pages/Dashboard/Receptionist/Receptionist"
 import CashierDash from "./Pages/Dashboard/Cashier/Cashier"
 import HKDash from "./Pages/Dashboard/HKManager/HKmanager"
+import Users from './Pages/Users/Users';
+import Profile from './Pages/Profile/Profile';
 
 
 export default function App() {
@@ -33,6 +35,9 @@ export default function App() {
         LastName:"",
         userRole:"",
         proPic:"",
+        country:"",
+        email:"",
+        phone:"",
         status:false,
     });
 
@@ -51,6 +56,9 @@ export default function App() {
                             LastName:response.data.User.LastName,
                             userRole:response.data.User.Role,
                             proPic:response.data.proPic,
+                            country:response.data.User.Country,
+                            email:response.data.User.Email,
+                            phone:response.data.User.PhoneNumber,
                             status:true,
                         })
                     })
@@ -70,6 +78,8 @@ export default function App() {
                             <Route path="/addons" element={<AddOns/>}/>
                             <Route path="/roomtypes" element={<RoomTypes/>}/>
                             <Route path="/register" element={<RegisterUser/>}/>
+                            <Route path="/userlist" element={<Users/>}/>
+                            <Route path="/profile" element={<Profile/>}/>
                         </>
                 )}
                 {authState.status && authState.userRole === 'FOManager' && (
@@ -80,6 +90,7 @@ export default function App() {
                             <Route path="/viewaddons" element={<ViewAddOns/>}/>
                             <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/>
                             <Route path="/reservationTab" element={<ReservationTab/>}/>
+                            <Route path="/profile" element={<Profile/>}/>
                         </>
                 )}
                 {authState.status && authState.userRole === 'Receptionist' && (
@@ -92,6 +103,7 @@ export default function App() {
                             <Route path="/viewPromotions" element={<ViewPromotions/>}/>
                             <Route path="/viewaddons" element={<ViewAddOns/>}/>
                             <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/> 
+                            <Route path="/profile" element={<Profile/>}/>
                         </>
                 )}
                 {authState.status && authState.userRole === 'Cashier' && (
@@ -103,6 +115,7 @@ export default function App() {
                             <Route path="/viewPromotions" element={<ViewPromotions/>}/>
                             <Route path="/viewaddons" element={<ViewAddOns/>}/>
                             <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/> 
+                            <Route path="/profile" element={<Profile/>}/>
                         </>
                 )}
                 {authState.status && authState.userRole === 'HKManager' && (
@@ -114,6 +127,7 @@ export default function App() {
                             <Route path="/viewPromotions" element={<ViewPromotions/>}/>
                             <Route path="/viewaddons" element={<ViewAddOns/>}/>
                             <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/> 
+                            <Route path="/profile" element={<Profile/>}/>
                         </>
                 )}
                 </Route>
