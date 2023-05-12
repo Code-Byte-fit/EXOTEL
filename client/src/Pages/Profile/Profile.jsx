@@ -1,19 +1,21 @@
 import React,{useState,useContext} from 'react'
 import {Formik,Form,Field} from "formik"
+import Spinner from '../General/Spinner/Spinner'
 import axios from "axios"
 import {AppContext} from "../../Helpers/AppContext"
 import coverImg from "../../Assets/Images/DP2.png"
 import editIcon from "../../Assets/Images/edittransparent.png"
 import Detail from './Components/Detail'
-import Confirm from './Components/Confirm'
 import style from "./Components/Style.module.css"
 
 export default function Profile() {
   const {host,authState,setAuthState}=useContext(AppContext);
   const avatar=authState.proPic.split('\\')[2];
   const [isEdit,setIsEdit]=useState(false);
+  const [loading, setLoading] = useState(false); 
 
   const handleSubmit=(values)=>{
+        setLoading(true);
         axios.put(`${host}/userAccounts/profile`,values).then((response)=>{
             setAuthState({
                 ...authState,
@@ -25,6 +27,7 @@ export default function Profile() {
                 phone:response.data.user.PhoneNumber,
             })
             setIsEdit(false)
+            setLoading(false);
         })  
   }
 
@@ -47,6 +50,7 @@ export default function Profile() {
             </div>
             <div className={style.detailsCont}>
             <div className={style.line}></div>
+                {loading && <Spinner loading={loading}/>}
                 {!isEdit?
                 <div className={style.detailsSecondCont}>
                     <div className={style.detailsInnerCont}>
@@ -98,7 +102,9 @@ export default function Profile() {
               
             </Form>
             )}
+        
           </Formik>
+         
 
                 }
             </div>

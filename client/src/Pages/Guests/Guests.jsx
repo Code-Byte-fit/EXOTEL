@@ -1,6 +1,7 @@
 import React, { useState,useEffect,useContext} from 'react'
 import {AppContext} from "../../Helpers/AppContext"
 import axios from "axios"
+import Spinner from '../General/Spinner/Spinner'
 import Table from '../General/Table/Table'
 import EditDelete from '../General/Table/EditDelete'
 import Edit from './Components/Edit/Edit'
@@ -14,17 +15,22 @@ export default function Guests() {
   const [isDone, setIsDone] = useState(false);
   const [isFilterActive, setIsFilterActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState({fname:"",lname:"",country:""});
+  const [loading, setLoading] = useState(false); 
 
   useEffect(()=>{
+    setLoading(true)
     axios.get(`${host}/guests`).then((response)=>{
       setGuestList(response.data)
+      setLoading(false)
      })
    },[])
 
    const handleDone=()=>{
     setIsDone(false)
+    setLoading(true)
     axios.get(`${host}/guests`).then((response)=>{
       setGuestList(response.data)
+      setLoading(false)
     })
   }
 
@@ -82,6 +88,7 @@ export default function Guests() {
 
   return (
     <>
+    {loading && <Spinner loading={loading}/>}
       <div className={style.header}>
         <span className={style.heading}>Guests</span>
         {guestList.length>0 && <div className={style.headerRight}>

@@ -43,12 +43,14 @@ export default function ResEditDelete(props) {
       };
 
       const handleDone=()=>{
+        props.setLoading(true)
         setIsDone(false)
         axios.get(`${host}/reservations`).then((response)=>{
           props.setReservationDetails(response.data)
         })
         axios.get(`${host}/reservations/todayStats`).then((response)=>{
           props.setStats(response.data)
+          props.setLoading(false)
      })
       }
 
