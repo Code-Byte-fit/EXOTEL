@@ -12,7 +12,7 @@ function ViewRooms() {
 
     useEffect(() => {
         axios.get("http://localhost:3001/rooms").then((response) => {
-          setlistOfRooms(response.data);          
+            setlistOfRooms(response.data);
         });
     }, []);
 
@@ -37,8 +37,8 @@ function ViewRooms() {
             selector: row => row.Status,
             sortable: true,
             cell: row => (
-                <div 
-                    style={{ 
+                <div
+                    style={{
                         backgroundColor: row.Status === "Available" ? "blue" : "pink",
                         borderRadius: "8px",
                         padding: "5px",

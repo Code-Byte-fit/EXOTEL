@@ -1,12 +1,16 @@
-import {React,useState,useRef,useEffect} from 'react'
-import { NavLink,useMatch,useResolvedPath } from 'react-router-dom';
+import {React,useState,useRef,useEffect,useContext} from 'react'
+import {useNavigate} from "react-router-dom"
+import { AppContext } from '../../../../../Helpers/AppContext';
+import NavElement from './Components/NavElement';
 import dashBoardIcon from "../../../../../Assets/Images/Dashboard.png"
-import style from "./NavBar.module.css"
+import style from "./Components/NavBar.module.css"
 
-export default function NavBar() {
+export default function NavBar(props) {
   const [active,setActive]=useState(false);
   const navMenuRef = useRef(null);
   const navContainerRef = useRef(null);
+  const {authState,setAuthState}=useContext(AppContext)
+  const navigate=useNavigate()
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -26,20 +30,24 @@ export default function NavBar() {
     };
   }, [navContainerRef, navMenuRef]);
 
-
-  const navLinkActive=({isActive}) => {
-    return {
-      color: isActive && "white",
-      background:isActive && "#577e79"
-    };
+  const logout=()=>{
+    localStorage.removeItem("accessToken");
+    setAuthState({userAccountId:0,
+      userName:"",
+      FirstName:"",
+      LastName:"",
+      userRole:"",
+      proPic:"",
+      status:false,});
+    navigate("/login")
   }
-  
+
+
     
   return (
     <>
     <div className={`${style.navContainer} ${active && style.active}`}>
-          <div className={`${style.navIcon} ${active && style.open}`} onClick={()=>setActive(!active)} ref={navContainerRef}
->
+          <div className={`${style.navIcon} ${active && style.open}`} onClick={()=>setActive(!active)} ref={navContainerRef}>
                   <span></span>
                   <span></span>
                   <span></span>
@@ -55,45 +63,60 @@ export default function NavBar() {
     
     <nav className={`${style.navMenu} ${active && style.navActive}`} ref={navMenuRef}>
       <div className={style.upperIcons}>
-          <NavLink  to="/createReservation" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                <img src={dashBoardIcon}/>
-                <span>Create-Reservation</span>
-          </NavLink>
-          <NavLink  to="/reservationTab" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                  <img src={dashBoardIcon}/>
-                  <span>Reservations Tab</span>
-          </NavLink>
-          <NavLink  to="/" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                  <img src={dashBoardIcon}/>
-                  <span>DashBoard</span>
-          </NavLink>
-          <NavLink  to="/rooms" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                  <img src={dashBoardIcon}/>
-                  <span>Rooms</span>
-          </NavLink>
-          <NavLink  to="/promotion" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                  <img src={dashBoardIcon}/>
-                  <span>Promotions</span>
-          </NavLink>
-         
+      {authState.userRole==="Administrator" && 
+      <>
+      <NavElement to="/dashBoard" icon={dashBoardIcon} desc="DashBoard" active={active} setActive={setActive}/>
+      <NavElement to="/register" icon={dashBoardIcon} desc="Register User" active={active} setActive={setActive}/>
+      <NavElement to="/roomtypes" icon={dashBoardIcon} desc="Room Types" active={active} setActive={setActive}/>
+      <NavElement to="/rooms" icon={dashBoardIcon} desc="Rooms" active={active} setActive={setActive}/>
+      <NavElement to="/promotion" icon={dashBoardIcon} desc="Promotions" active={active} setActive={setActive}/>
+      <NavElement to="/addons" icon={dashBoardIcon} desc="Add-Ons" active={active} setActive={setActive}/>
+      <NavElement to="/guests" icon={dashBoardIcon} desc="Guests" active={active} setActive={setActive}/>
+      <NavElement to="/reservationTab" icon={dashBoardIcon} desc="Reservations Tab" active={active} setActive={setActive}/>
+      </>}
+
+      {authState.userRole==="FOManager" && 
+      <>
+      <NavElement to="/dashBoard" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive}/>
+      <NavElement to="/reservationTab" icon={dashBoardIcon} desc="Reservations Tab" active={active} setActive={setActive}/>
+      <NavElement to="/viewRooms" icon={dashBoardIcon} desc="Rooms" active={active} setActive={setActive}/>
+      <NavElement to="/viewPromotions" icon={dashBoardIcon} desc="Promotions" active={active} setActive={setActive}/>
+      <NavElement to="/viewaddons" icon={dashBoardIcon} desc="Add-Ons" active={active} setActive={setActive}/>
+      <NavElement to="/viewroomtypes" icon={dashBoardIcon} desc="Room-Types" active={active} setActive={setActive}/>
+      <NavElement to="/guests" icon={dashBoardIcon} desc="Guests" active={active} setActive={setActive}/>
+      </>}
+
+      {authState.userRole==="Cashier" && 
+      <>
+      <NavElement to="/dashBoard" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive}/>
+      <NavElement to="/reservationTab" icon={dashBoardIcon} desc="Reservations Tab" active={active} setActive={setActive}/>
+      <NavElement to="/viewRooms" icon={dashBoardIcon} desc="Rooms" active={active} setActive={setActive}/>
+      <NavElement to="/viewPromotions" icon={dashBoardIcon} desc="Promotions" active={active} setActive={setActive}/>
+      <NavElement to="/viewaddons" icon={dashBoardIcon} desc="Add-Ons" active={active} setActive={setActive}/>
+      <NavElement to="/viewroomtypes" icon={dashBoardIcon} desc="Room-Types" active={active} setActive={setActive}/>
+      <NavElement to="/guests" icon={dashBoardIcon} desc="Guests" active={active} setActive={setActive}/>
+      </>}
+
+      {authState.userRole==="Receptionist" && 
+      <>
+      <NavElement to="/dashBoard" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive}/>
+      <NavElement to="/createReservation" icon={dashBoardIcon} desc="Create-Reservation" active={active} setActive={setActive}/>
+      <NavElement to="/reservationTab" icon={dashBoardIcon} desc="Reservations Tab" active={active} setActive={setActive}/>
+      {/* <NavElement to="/viewaddons" icon={dashBoardIcon} desc="Add-Ons" active={active} setActive={setActive}/>
+      <NavElement to="/viewroomtypes" icon={dashBoardIcon} desc="Room-Types" active={active} setActive={setActive}/>
+      <NavElement to="/viewRooms" icon={dashBoardIcon} desc="Rooms" active={active} setActive={setActive}/>
+      <NavElement to="/viewPromotions" icon={dashBoardIcon} desc="Promotions" active={active} setActive={setActive}/> */}
+      <NavElement to="/guests" icon={dashBoardIcon} desc="Guests" active={active} setActive={setActive}/>
+      </>}
+
       </div>
       <div className={style.lowerIcons}>
-      <NavLink  to="/dashboard" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                    <img src={dashBoardIcon}/>
-                    <span>DashBoard</span>
-      </NavLink>
-          <NavLink  to="/reservationsTab" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                    <img src={dashBoardIcon}/>
-                    <span>Reservations Tab</span>
-          </NavLink>
-          <NavLink  to="/" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                    <img src={dashBoardIcon}/>
-                    <span>DashBoard</span>
-          </NavLink>
-          <NavLink  to="/" style={navLinkActive} className={style.navLink} onClick={()=>setActive(!active)}>
-                  <img src={dashBoardIcon}/>
-                  <span>DashBoard</span>
-          </NavLink>
+        <NavElement to="/dashboard" icon={dashBoardIcon} desc="Settings" active={active} setActive={setActive}/>
+        <NavElement to="/dashboard" icon={dashBoardIcon} desc="Help" active={active} setActive={setActive}/>
+        <div onClick={logout} className={style.logout}>
+          <img src={dashBoardIcon}/>
+          <span>Logout</span>
+        </div>
       </div>
        
     </nav>

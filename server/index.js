@@ -3,7 +3,9 @@ const app=express()
 const cors=require('cors')
 
 app.use(express.json())
+app.use(express.static("./Assets"))
 app.use(cors())
+
 
 const db=require('./models')
 
@@ -46,7 +48,6 @@ db.sequelize.sync().then(()=>{
         console.log("server running on port 3001")
     })
 })
-
 
 
 

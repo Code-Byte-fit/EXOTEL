@@ -14,6 +14,10 @@ module.exports=(sequelize,Datatypes)=>{
             type:Datatypes.STRING,
             allowNull:false,
         },
+        Role:{
+            type:Datatypes.STRING,
+            allowNull:false,
+        },
         Country:{
             type:Datatypes.STRING,
             allowNull:false,
@@ -30,13 +34,11 @@ module.exports=(sequelize,Datatypes)=>{
         timestamps:false
     })
 
-    Users.hasOne(sequelize.models.UserAccounts, {
-        foreignKey: {
-          name: "userId",
-          unique: true
-        },
-        as: "userAccount"
-      });
+
+    Users.associate = (models) => {
+        Users.hasOne(models.UserAccounts, {foreignKey: {name: "userId",unique: true}});
+      };
+
 
     
     

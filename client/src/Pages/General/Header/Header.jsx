@@ -7,7 +7,7 @@ import Notification from './Components/Notification/Notification'
 import UserCard from './Components/UserCard/UserCard'
 import style from './Components/Header.module.css'
 
-export default function Header() {
+export default function Header(props) {
   return (
     <>
   <header className={style.header}>

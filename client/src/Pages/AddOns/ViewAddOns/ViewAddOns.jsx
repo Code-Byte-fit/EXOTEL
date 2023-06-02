@@ -1,40 +1,38 @@
-import React from "react";
+import React, { useState, useEffect,useContext } from "react";
+import {AppContext} from "../../../Helpers/AppContext"
 import axios from 'axios';
 import style from "./components/AddOns.module.css";
 import RoomTable from "../../General/Table/Table";
-import { useEffect, useState } from "react";
-
 
 function ViewAddOns() {
+  const {host}=useContext(AppContext)
+  const [listOfAddons, setlistOfAddons] = useState([]);
 
-    const [listOfAddons, setlistOfAddons] = useState([]);
- 
 
-    useEffect(() => {
-        axios.get("http://localhost:3001/addon").then((response) => {
-            setlistOfAddons(response.data);
-            console.log(listOfAddons)
-        })
-    }, [])
+  useEffect(() => {
+    axios.get(`${host}/addon`).then((response) => {
+      setlistOfAddons(response.data);
+      console.log(listOfAddons)
+    })
+  }, [])
 
-   
-    
+
   const columns = [
     {
-        name: 'AddOn No',
-        selector: row => row.addonID,
-        sortable: true,
+      name: 'AddOn No',
+      selector: row => row.addonID,
+      sortable: true,
     },
     {
-        name: 'AddOn',
-        selector: row => row.AddOn,
-        sortable: true,
+      name: 'AddOn',
+      selector: row => row.AddOn,
+      sortable: true,
     },
     {
       name: 'Unit',
       selector: row => row.Unit,
       sortable: true,
-  },
+    },
 
     {
       name: 'Charge',
@@ -52,19 +50,19 @@ function ViewAddOns() {
         </div>
       ),
     },
-    
-  
-];
 
 
-    return (
-        <div className={style.tableContainer}>
-            <div className={style.heading}>
-                <h1>Available Add-Ons</h1>
-            </div>
-            <RoomTable columns={columns} data={listOfAddons} height="150vh" pagination />
-        </div>
-    );
+  ];
+
+
+  return (
+    <div className={style.tableContainer}>
+      <div className={style.heading}>
+        <h1>Available Add-Ons</h1>
+      </div>
+      <RoomTable columns={columns} data={listOfAddons} height="150vh" pagination />
+    </div>
+  );
 }
 
 export default ViewAddOns;

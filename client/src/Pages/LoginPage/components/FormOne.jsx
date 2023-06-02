@@ -1,29 +1,34 @@
-import React, { useState } from "react";
+import React,{useContext} from "react";
 import axios from "axios"; 
 import style from '../components/Login.module.css'
 import {Formik,Form,Field,ErrorMessage} from 'formik'
 import Input from '../../General/Inputs/Inputs'
 import * as Yup from 'yup' 
-import ForgotPassword from "../../ForgotPassword/ForgotPassword";
-import { useNavigate ,Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import {AppContext} from "../../../Helpers/AppContext"
 
-function FormOne(props){ 
-    
-    const navigate = useNavigate(); 
 
-    const initialValues = {                                         // Defining the initial values for form fields
-        userName: "",
-        password: "",
-    };
+function FormOne(props){
+    const navigate = useNavigate();
+    const {host,setAuthState}=useContext(AppContext)
+    const initialValues = {userName: "",password: ""};
 
-    const onSubmit = (data) => {                                    // Defining a function 'onSubmit' to handle form submission
-        axios.post("http://localhost:3001/userAccounts/login",data).then((response) =>{
-            if(response.data.error) {                               // Checking if there is any error in the response data
-                alert(response.data.error);                         
+    const onSubmit = (data) => {
+        axios.post(`${host}/userAccounts/login`,data).then((response) =>{
+            if(response.data.error) {
+                alert(response.data.error);
             }else{
-                sessionStorage.setItem("accessToken", response.data); // Setting the 'accessToken' key in session storage with the response data
-                console.log(response.data)                            // Logging the response data to console
-                navigate('/'); 
+                localStorage.setItem("accessToken", response.data.token);
+                setAuthState({
+                    userAccountId:response.data.userAccountId,
+                    userName:response.data.userName,
+                    FirstName:response.data.FirstName,
+                    LastName:response.data.LastName,
+                    userRole:response.data.userRole,
+                    proPic:response.data.proPic,
+                    status:true,
+                })
+                navigate('/dashBoard');
             }
             
         });
@@ -52,12 +57,12 @@ function FormOne(props){
                 <ErrorMessage name="userName" component="span"/> <br></br>     {/* Displaying error message for user name field*/}
 
                 <Field name="password"
-                 component = {Input}
-                 label = "Password"
-                 type = "password"  
-                 width = "20vw"   
-/>              <br></br>
-                <ErrorMessage name="password" component="span"/>  <br></br>    {/* Displaying error message for password field */}
+                component = {Input}
+                label = "Password"
+                type = "password"
+                width = "20vw"
+                />
+                <ErrorMessage name="password" component="span"/>
                 </div>
                 <Link to="../../ForgotPassword/ForgotPassword" className={style.forgot}>Forgot Password</Link> {/* Link to navigate to forgot password page */}
                 {/* <a href={props.forgotlink} className={style.forgot}>Forgot Password</a> Link to navigate to forgot password page */}
@@ -67,6 +72,7 @@ function FormOne(props){
 
             </Form>
         </Formik>
+
 
     
 </div>

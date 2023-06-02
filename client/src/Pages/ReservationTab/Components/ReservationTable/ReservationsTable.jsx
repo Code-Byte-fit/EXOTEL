@@ -1,26 +1,26 @@
-import React, { useEffect, useState ,useMemo} from 'react'
+import React, { useEffect, useState ,useContext} from 'react'
 import { Link} from 'react-router-dom';
 import axios from "axios"
-import addIcon from "../../../../Assets/Images/Add.png"
+import { AppContext } from '../../../../Helpers/AppContext';
+import addIcon from "../../../../Assets/Images/Add small.png"
 import Table from '../../../General/Table/Table';
 import ResEditDelete from './ResEditDelete';
 import Filter from './Filter';
-import filterIcon from "../../../../Assets/Images/mixer.png"
+import filterIcon from "../../../../Assets/Images/mixer (2).png"
 import style from "../Style.module.css"
 
-export default function ReservationsTable() {
+
+export default function ReservationsTable(props) {
   const [reservationDetails,setReservationDetails]=useState([]);
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [checkInQuery, setCheckInQuery] = useState('');
+  const [checkInQuery, setCheckInQuery] = useState(new Date().toISOString().slice(0, 10));
   const [checkOutQuery, setCheckOutQuery] = useState('');
   const [isFilterActive, setIsFilterActive] = useState(false);
-
-
-  
+  const {host,authState}=useContext(AppContext)
    
   useEffect(()=>{
-   axios.get("http://localhost:3001/reservations").then((response)=>{
+   axios.get(`${host}/reservations`).then((response)=>{
       setReservationDetails(response.data)
     })
   },[])
@@ -80,13 +80,18 @@ export default function ReservationsTable() {
       sortable: true,
     },
     {
+      name: 'CHARGE',
+      selector: row => row.totalAmount,
+      sortable: true,
+    },
+    {
       name: 'SOURCE',
       selector: row => row.Source,
       sortable: true,
     },
     {
       selector: row => row,
-      cell: (row) => <ResEditDelete row={row} setReservationDetails={setReservationDetails}/>
+      cell: (row) => <ResEditDelete row={row} setReservationDetails={setReservationDetails} setStats={props.setStats}/>
     },
 ];
 
@@ -98,15 +103,15 @@ return (
       <div className={style.tableHeader}>
                 <div className={style.headerLeft}>
                       <span className={style.heading}>RESERVATIONS</span>
-                     <Link to="/createReservation"><img src={addIcon} className={style.addIcon}/></Link> 
-                    
+                     {(authState.userRole==="Administrator" || authState.userRole==="Receptionist") &&
+                      <Link to="/createReservation"><img src={addIcon} className={style.addIcon}/></Link>}      
                 </div>
-              <div className={style.headerRight}>
+              {reservationDetails.length>0 && <div className={style.headerRight}>
                 <span className={`${!isFilterActive && style.hidden}`}>
                     <Filter  setSelectedFilters={setSelectedFilters} setSearchQuery={setSearchQuery}  setCheckInQuery={setCheckInQuery} setCheckOutQuery={setCheckOutQuery}/>
                 </span>
                 <img src={filterIcon} className={style.filterIcon} onClick={()=>setIsFilterActive(!isFilterActive)}/>
-                </div>
+                </div>}
            </div>
            <div className={style.tableCont}>
             <Table columns={columns} data={filteredData} height='40vh' pagination/>           
@@ -117,5 +122,4 @@ return (
     </>
   )
 }
-
 

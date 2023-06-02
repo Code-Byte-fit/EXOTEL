@@ -5,10 +5,11 @@ module.exports=(sequelize,Datatypes)=>{
             allowNull:false,
             primaryKey:true,
         },
-        View:{
-            type:Datatypes.STRING,
-            allowNull:true,
-        },
+        
+     RoomTypeView:{
+        type:Datatypes.STRING,
+        allowNull:false,
+     },
         floor:{
             type:Datatypes.STRING,
             allowNull:false,
@@ -21,7 +22,7 @@ module.exports=(sequelize,Datatypes)=>{
             type:Datatypes.FLOAT,
             allowNull:true,
         },
-        BaseCharge:{
+        TotalCharge:{
             type:Datatypes.FLOAT,
             allowNull:true,
         },
@@ -31,12 +32,38 @@ module.exports=(sequelize,Datatypes)=>{
         }
     },
     {
-        timestamps: false
-    })
+        timestamps: false,
+        hooks: {
+            async afterCreate(room, options) {
+              // Generate a new minibar ID
+              const lastMiniBar = await sequelize.models.MiniBar.findOne({ order: [ [ 'MiniBarID', 'DESC' ] ] });
+              const lastMiniBarID = lastMiniBar ? lastMiniBar.MiniBarID : '0';
+              const newMiniBarID = String(parseInt(lastMiniBarID) + 1);
+              
+              // Create a new minibar instance with the generated ID
+              const minibar = await sequelize.models.MiniBar.create({
+                MiniBarID: newMiniBarID,
+              });
+          
+              // Associate the new minibar with the newly created room
+              await room.setMinibar(minibar);
+            },
+          },
+          
+    });
 
     Rooms.associate = (models) => {
         Rooms.belongsToMany(models.Reservations, { through: 'ReservationRoom' });
-        Rooms.belongsTo(models.RoomTypes, { foreignKey: 'TypeName' });
+        Rooms.belongsTo(models.RoomTypes, { foreignKey: 'RoomTypeID' });
+        Rooms.hasOne(sequelize.models.MiniBar, {
+            foreignKey: {
+              name: "RoomNo",
+              unique: true
+            },
+            as: "minibar"
+          });
+    
+  
       };
 
     

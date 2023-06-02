@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import ResCalender from './Components/ResCalender'
 import StatCard from './Components/StatCard'
 import ReservationsTable from './Components/ReservationTable/ReservationsTable'
+import {AppContext} from '../../Helpers/AppContext'
 import axios from 'axios'
 import style from "./Components/Style.module.css"
 
 export default function ReservationTab() {
+  const {host}=useContext(AppContext)
   const [stats,setStats]=useState({});
+
+  //obtain stats for today
   useEffect(()=>{
-    axios.get("http://localhost:3001/reservations/todayStats").then((response)=>{
+    axios.get(`${host}/reservations/todayStats`).then((response)=>{
       setStats(response.data)
-      console.log(stats)
      })
    },[])
   
@@ -22,9 +25,9 @@ export default function ReservationTab() {
                 <StatCard value={stats.checkins} desc="Arrivals"/>
                 <StatCard value={stats.checkouts} desc="Departures"/>
                 <StatCard value={stats.stayovers} desc="Stay-overs"/>
-                <StatCard value="32" desc="Rooms Available"/>
+                <StatCard value={stats.availableRooms} desc="Rooms Available"/>
             </div>
-            <ReservationsTable/>
+            <ReservationsTable setStats={setStats}/>
         </div>
     </>
   )

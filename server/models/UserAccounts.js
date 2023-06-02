@@ -12,9 +12,19 @@ module.exports=(sequelize,Datatypes)=>{
         password:{
             type:Datatypes.STRING,
             allowNull:false,
+        },
+        proPic:{
+            type:Datatypes.STRING,
+            allowNull:true,
         }
     },{
         timestamps: false
     })
+
+    UserAccounts.associate = (models) => {
+        UserAccounts.belongsTo(models.Users, {foreignKey: 'userId'});
+      };
+
+
     return UserAccounts;
 }

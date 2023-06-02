@@ -1,30 +1,16 @@
-// verify function from the jsonwebtoken module
-const { verify } = require("jsonwebtoken");
+const { verify } = require ("jsonwebtoken");
 
-// middleware function
 const validateToken = (req, res, next) => {
-  
-  // Extracting the access token from the request header
-  const accessToken = req.header("accessToken");
-  
-  // Checking if the access token is missing
-  if (!accessToken) {
-    return res.json({ Error: "User not logged in!" });
-  }
+    const accessToken = req.header("accessToken");
+    if(!accessToken) return res.json({error:"user not logged in"});
 
-  try {
-    // Verifying the access token using the secret key
-    const validatedToken = verify(accessToken, "Importantsecret");
-    
-    // If the token is valid, call the next middleware function
-    if (validatedToken) {
-      return next();
+    try {
+        const validateToken = verify(accessToken,"secret");
+        if(validateToken){
+            return next();
+        }
+    } catch (error) {
+        return res.json({ error:Error});
     }
-  } catch (error) {
-    // If there is an error verifying the token, return an error response
-    return res.json({ error: Error });
-  }
 };
-
-// Exporting the middleware function for use in other parts of the application
-module.exports = { validateToken };
+module.exports={validateToken};
