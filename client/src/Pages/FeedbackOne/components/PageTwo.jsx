@@ -1,143 +1,45 @@
-import React, { useState } from 'react';
+import React,{useState} from 'react';
+import { Formik, Form, Field } from "formik"
+import Slider from './Slider';
+import backBtn from "../../../Assets/Images/back.png"
 import style from "../components/PageTwo.module.css"
-import axios from 'axios';
 
-function PageTwo() {
-  const MIN_VALUE = 0;
-  const MAX_VALUE = 100;
-
-  const initialValues = {
-    hospitality: 0,
-    hygiene: 0,
-    food: 0,
-    facilities: 0,
-    rooms: 0,
-  };
-  
-  const [value, setValue] = useState(initialValues);
-  
-  const handleSliderChange = (event, sliderName) => {
-    setValue(prevState => ({ ...prevState, [sliderName]: parseInt(event.target.value, 10) }));
-  };
-  
-
-
-  // Define a function that sends the slider values to the server via a POST request
-  const onSubmit = (event) => {
-    event.preventDefault(); // prevent the form from being submitted via browser
-  
-    // Check that all slider values are not null
-    if (
-      value.hospitality === null ||
-      value.hygiene === null ||
-      value.food === null || 
-      value.facilities === null ||
-      value.rooms === null
-    ) {
-      alert('Please rate all categories before submitting');
-      return;
-    }
-  
-    axios.post("http://localhost:3001/feedback", value)
-      .then(() => {
-        alert('Rating saved');
-      })
-      .catch((err) => {
-        console.error(err);
-        alert('Error saving rating');
-      });
-  };
+function PageTwo(props) {
+  useState(()=>{
+   console.log(props.data) 
+  },[])
+ 
+  const onSubmit=(values)=>{
+    props.next(values,true)
+  }
   
 
   return (
     <>
-    <div className={style.row1}>
-      <h3>Rate our service</h3>
-    </div>
-    <div className={style.box}>
-      <form onSubmit={onSubmit}>
-        <div className={style.container}>
-          <label htmlFor="hospitality" className={style.label}>Hospitality</label>
-          <div className={style.slider}>
-            <input
-              type="range"
-              min={MIN_VALUE}
-              max={MAX_VALUE}
-              value={value.hospitality}
-              onChange={(event) => handleSliderChange(event, 'hospitality')}
-              className={style.rangeInput}
-              style={{ '--value': value.hospitality }}
-            />
-          </div>
-        </div>
-  
-        <div className={style.container}>
-          <label htmlFor="hygiene" className={style.label}>Hygiene</label>
-          <div className={style.slider}>
-            <input
-              type="range"
-              min={MIN_VALUE}
-              max={MAX_VALUE}
-              value={value.hygiene}
-              onChange={(event) => handleSliderChange(event, 'hygiene')}
-              className={style.rangeInput}
-              style={{ '--value': value.hygiene }}
-            />
-          </div>
-        </div>
-  
-        <div className={style.container}>
-          <label htmlFor="food" className={style.label}>Food</label>
-          <div className={style.slider}>
-            <input
-              type="range"
-              min={MIN_VALUE}
-              max={MAX_VALUE}
-              value={value.food}
-              onChange={(event) => handleSliderChange(event, 'food')}
-              className={style.rangeInput}
-              style={{ '--value': value.food }}
-            />
-          </div>
-        </div>
-  
-        <div className={style.container}>
-          <label htmlFor="facilities" className={style.label}>Facilities</label>
-          <div className={style.slider}>
-            <input
-              type="range"
-              min={MIN_VALUE}
-              max={MAX_VALUE}
-              value={value.facilities}
-              onChange={(event) => handleSliderChange(event, 'facilities')}
-              className={style.rangeInput}
-              style={{ '--value': value.facilities }}
-            />
-          </div>
-        </div>
-  
-        <div className={style.container}>
-          <label htmlFor="rooms" className={style.label}>Rooms</label>
-          <div className={style.slider}>
-            <input
-              type="range"
-              min={MIN_VALUE}
-              max={MAX_VALUE}
-              value={value.rooms}
-              onChange={(event) => handleSliderChange(event, 'rooms')}
-              className={style.rangeInput}
-              style={{ '--value': value.rooms }}
-            />
-          </div>
-        </div>
-  
-        <div className={style.buttons}>
-          <button type="submit" className={style.submitButton}>
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
+    <div className={style.mainCont}>
+      <div className={style.heading}>Rate our service</div>
+          <Formik initialValues={props.data} onSubmit={onSubmit}>
+            {(formik) => (
+              <Form>
+                <div className={style.box}>
+                  <Field component={Slider} desc="Hospitality" defaultValue={props.data.stat.hospitality}
+                  onChange={(event) => {formik.setFieldValue("stat", {...formik.values.stat,hospitality: event.target.value})}}/>
+                  <Field component={Slider} desc="Hygiene" defaultValue={props.data.stat.hygiene}
+                  onChange={(event) => {formik.setFieldValue("stat", {...formik.values.stat,hygiene: event.target.value})}}/>
+                  <Field component={Slider} desc="Food" defaultValue={props.data.stat.food}
+                  onChange={(event) => {formik.setFieldValue("stat", {...formik.values.stat,food: event.target.value})}}/>
+                  <Field component={Slider} desc="Facilities" defaultValue={props.data.stat.facilities}
+                  onChange={(event) => {formik.setFieldValue("stat", {...formik.values.stat,facilities: event.target.value})}}/>
+                  <Field component={Slider} desc="Rooms" defaultValue={props.data.stat.rooms}
+                  onChange={(event) => {formik.setFieldValue("stat", {...formik.values.stat,rooms: event.target.value})}}/>
+                  <div className={style.buttonCont}>
+                    <img src={backBtn} onClick={()=>props.prev(formik.values)} className={style.backBtn}/>
+                    <button type="submit" className={style.submitButton}>Submit</button>
+                  </div>
+                </div>
+              </Form>)}
+          </Formik>
+      </div>
     </>
   );
   };

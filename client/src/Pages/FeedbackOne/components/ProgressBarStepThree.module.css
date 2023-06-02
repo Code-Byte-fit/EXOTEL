@@ -6,6 +6,7 @@
   
 }
 
+
 .step{
   background-color: transparent;
   border: 2px solid black;
@@ -15,11 +16,11 @@
   display: block;
   width: 2vw;
   border-radius: 30%;
+  cursor: pointer;
 }
 
 .stepCompleted{
   background-color: black;
-  
   color: white;
   border: 2px solid black;
 }

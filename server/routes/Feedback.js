@@ -8,14 +8,16 @@ router.get("/", async (req,  res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { hospitality, hygiene, food, facilities, rooms } = req.body;
+ data= req.body;
   try {
     const newFeedback = await Feedback.create({
-      hospitality: parseInt(hospitality),
-      hygiene: parseInt(hygiene),
-      food: parseInt(food),
-      facilities: parseInt(facilities),
-      rooms: parseInt(rooms),
+      emoji:data.emoji,
+      hospitality: parseInt(data.stat.hospitality),
+      hygiene: parseInt(data.stat.hygiene),
+      food: parseInt(data.stat.food),
+      facilities: parseInt(data.stat.facilities),
+      rooms: parseInt(data.stat.rooms),
+      guestId:data.guest,
     });
     res.status(201).json(newFeedback);
   } catch (error) {

@@ -5,6 +5,10 @@ module.exports=(sequelize, Datatypes)=>{
             primaryKey: true,
             autoIncrement:true
           },
+        emoji: {
+            type: Datatypes.STRING,
+            allowNull: false
+        },
         hospitality: {
           type: Datatypes.INTEGER,
           allowNull: false
@@ -27,6 +31,10 @@ module.exports=(sequelize, Datatypes)=>{
           allowNull: false
         }
       });
+
+      Feedback.associate = (models) => {
+        Feedback.belongsTo(models.Guests, { foreignKey: 'guestId' });
+      };
 
       return Feedback;
     };

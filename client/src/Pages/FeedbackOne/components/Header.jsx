@@ -6,8 +6,8 @@ export default function Header(props) {
   return (
     <>
     <div className={style.stepsCont}>
-        <ProgressBarStepThree step="1" completed={props.one}/>
-        <ProgressBarStepThree step="2" completed={props.two}/>
+        <ProgressBarStepThree step="1" completed={props.one} onClick={props.onClickone}/>
+        <ProgressBarStepThree step="2" completed={props.two} onClick={props.onClicktwo}/>
     </div>
     </>
   )

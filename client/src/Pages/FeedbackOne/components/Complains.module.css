@@ -11,10 +11,18 @@
 .topCont{
   margin: 7vh 0 0 0;
   width: 15vw;
+  position: relative;
 }
 .logo{
   width: 10vw;
   margin: -2vh 0 0 3vw;
+}
+
+.guest{
+  position: absolute;
+  top: 60%;
+  left: 26vw;
+  width: 15vw;
 }
 
 .middleCont{
