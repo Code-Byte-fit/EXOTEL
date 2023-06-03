@@ -10,10 +10,10 @@ const Receptionist = () => {
      <Common>
       
             <div className={style.leftPanel}> 
-               
+               hi
             </div>
             <div className={style.rightPanel}>
-                
+                hi
             </div>
        
      </Common>

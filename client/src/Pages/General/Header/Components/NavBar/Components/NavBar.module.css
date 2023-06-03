@@ -97,7 +97,7 @@
   position: fixed;
   display: none;
   top: 8vh;
-  width: 15vw;
+  width: 14vw;
   height: 92%;  
   text-align: center;
   background-color: #a19b81;
@@ -107,13 +107,36 @@
   border-top: 0.5px solid #ffffff55;
 }
 
-.navMenu a{
+.navLink,.cato,.logout{
   color: #ffff;
-  margin: 1%;
-  width: 100%;
+  width: 13vw;
   font-size: 0.85rem;
-  padding: 1vh 1vw;
   text-decoration: none;
+  padding: 1vh 0;
+  display: flex;
+  cursor: pointer;
+  position: relative;
+}
+
+.navLink img,.cato img,.logout img{
+  margin: 0 0 0 1vw;
+}
+
+.navLink span,.cato span,.logout span{
+  width: clamp(7vw,7vw,7vw);
+  align-self: center;
+}
+
+.arrow{
+  width: 25px;
+  height: 15px;
+  margin: 0 0.5vw 0 0;
+  align-self: center;
+}
+
+
+.activeArrow{
+  transform: rotate(180deg);
 }
 
 .navActive{
@@ -137,10 +160,21 @@
   margin: 0 0 5vh 0;
 }
 
-.navLink{
+.navLink,.cato{
   display: flex;
   gap: 1vw;
   border-radius: 8px;
+}
+
+.navPopupHidden{
+  display: none;
+}
+
+
+.navPopup{
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  margin: 1vh 0 0 0;
 }
 
 .lowerIcons .navLink{
@@ -153,21 +187,13 @@
 }
 
 
-.navLink:hover{
+.navLink:hover,.cato:hover{
   outline: 1px solid #22311E;
   color: #ffff;
 }
 
 .logout{
-  display: flex;
-  gap: 1vw;
   border-radius: 8px;
-  color: #ffff;
-  margin: 1%;
-  width: 100%;
-  font-size: 0.85rem;
-  padding: 1vh 1vw;
-  text-decoration: none;
 }
 
 .logout:hover{

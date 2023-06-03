@@ -1,4 +1,5 @@
 import React, { useState, useEffect,useContext } from "react";
+import {Link} from 'react-router-dom';
 import {AppContext} from "../../../../Helpers/AppContext"
 import Rooms from '../../../../Assets/Images/Bedroom.png'
 import axios from 'axios';
@@ -55,10 +56,7 @@ function CardSection() {
         </div>
         <div className={style.rightContainer}>
           <div className={style.addButton}>
-          <a href="http://localhost:3000/register">
-  <img src={add} className={style.plus} alt="Add user"></img>
-</a>
-
+          <Link to="/register"><img src={add} className={style.plus} alt="Add user"/></Link>
           </div>
         </div>
       </div>
