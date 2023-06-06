@@ -2,6 +2,7 @@ const express = require('express');
 const { Users, UserAccounts } = require('../models');
 const bcrypt = require('bcryptjs');
 const upload=require('../middleware/Upload')
+const sendEmail=require('../middleware/Email')
 const router = express.Router();
 
 //register a new user
@@ -26,6 +27,12 @@ router.post('/:nameFile',upload('proPic'), async (req, res) => {
         proPic:req.file.path,
         userId:user.userId
       })
+      const EmailContent = `
+      <h2>User Account Details</h2>
+      <p>User Name:${userAccount.userName}</p>
+      <p>Password: ${req.body.password}</p>
+  `;
+      sendEmail(user.Email,EmailContent)
       res.json({user,userAccount}); 
     }
   } catch (error) {

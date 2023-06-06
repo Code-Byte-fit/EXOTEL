@@ -24,6 +24,8 @@ import CashierDash from "./Pages/Dashboard/Cashier/Cashier"
 import HKDash from "./Pages/Dashboard/HKManager/HKmanager"
 import Users from './Pages/Users/Users';
 import Profile from './Pages/Profile/Profile';
+import Calender from './Pages/Calender/Calender';
+import Calender2 from './Pages/Calender/Calender2';
 
 
 export default function App() {
@@ -80,6 +82,7 @@ export default function App() {
                             <Route path="/register" element={<RegisterUser/>}/>
                             <Route path="/userlist" element={<Users/>}/>
                             <Route path="/profile" element={<Profile/>}/>
+                            <Route path="/calender" element={<Calender/>}/>
                         </>
                 )}
                 {authState.status && authState.userRole === 'FOManager' && (
@@ -104,6 +107,7 @@ export default function App() {
                             <Route path="/viewaddons" element={<ViewAddOns/>}/>
                             <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/> 
                             <Route path="/profile" element={<Profile/>}/>
+                            <Route path="/calender" element={<Calender/>}/>
                         </>
                 )}
                 {authState.status && authState.userRole === 'Cashier' && (
