@@ -1,6 +1,8 @@
 import React from 'react'
 import style from './components/Welcome.module.css'
 import image from '../../../../Assets/Images/Banner-Image.png'
+
+
 const WelcomeBar = () => {
     return (
             <div className={style.headerSection}>

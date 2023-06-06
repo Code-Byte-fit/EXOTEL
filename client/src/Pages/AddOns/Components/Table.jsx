@@ -3,11 +3,23 @@ import {AppContext} from "../../../Helpers/AppContext"
 import style from "./AddOns.module.css"
 import axios from 'axios';
 import AddOnTable from '../../General/Table/Table'
-import EditDelete from "./EditDelete";
+import EditDelete from "../../General/Table/EditDelete";
+import EditAddon from "./EditAddon";
 
 
 function Table(props) {
-  const {host}=useContext(AppContext)
+  const {host}=useContext(AppContext);
+
+  const [isDone, setIsDone] = useState(false);
+
+  const handleDone=()=>{
+    setIsDone(false)
+    axios.get(`${host}/addon`).then((response)=>{
+      setlistOfAddons(response.data)
+    })
+  }
+
+
   const [listOfAddons, setlistOfAddons] = useState([]);
   useEffect(() => {
     axios.get(`${host}/addon`).then((response) => {
@@ -52,7 +64,7 @@ function Table(props) {
 
     {
       selector: row => row,
-      cell: (row) => <EditDelete setlistOfAddons={setlistOfAddons} row={row} />
+      cell: (row) => <EditDelete editComponent={<EditAddon  values={row} setIsDone={setIsDone}   />} setlistOfAddons={setlistOfAddons} row={row} editOption  isDone={isDone} handleDone={handleDone}/>
     },
   ];
 

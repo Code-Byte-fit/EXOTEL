@@ -7,12 +7,20 @@ import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
 
 function EditRoom(props) {
-    const [showConfirmation, setShowConfirmation] = useState(false);
+    
     const [RoomTypes, setRoomTypes] = useState([]);
 
+    const handleEdit=(data)=>{
+        axios.put("http://localhost:3001/rooms",data).then((res)=>{
+          props.setIsDone(true)
+        })
+       
+      }
+    
+      const [initialValues , setInitialValues] = useState({...props.values,NewRoomNo:props.values.RoomNo})
 
     const validationSchema = Yup.object().shape({
-        RoomNo: Yup.string()
+        NewRoomNo: Yup.string()
             .required('Required')
             .matches(/^[A-Za-z0-9]+$/, 'Must only contain letters and numbers')
             .max(10, 'Must be at most 10 characters long'),
@@ -50,81 +58,84 @@ function EditRoom(props) {
 
             <div className={style.editHeading}>Edit Room</div>
 
-            <Formik initialValues={props.values} onSubmit={null} validationSchema={validationSchema} >
+            <Formik initialValues={initialValues} onSubmit={handleEdit} validationSchema={validationSchema} >
+            {(formik)=>(
                 <Form>
 
-                    <div className={style.Editdiv1}>
+<div className={style.Editdiv1}>
 
-                        <span className={style.box1}>
-                            <Field name="RoomNo"
-                                component={Input}
-                                label="Room Number"
-                                type="text"
-                                width="13vw" />
-                            <ErrorMessage name="RoomNo" component="span" className={style.error} />
-                        </span>
+    <span className={style.box1}>
+        <Field name="NewRoomNo"
+            component={Input}
+            label="Room Number"
+            type="text"
+            width="13vw" />
+        <ErrorMessage name="NewRoomNo" component="span" className={style.error} />
+    </span>
 
-                        <span className={style.box1}>
-                            <Field
-                                name="RoomTypeView"
-                                component={Input}
-                                label="Room Type"
-                                type="select"
-                                options={[
-                                    { key: "--None Selected --", value: "" },
-                                    ...RoomTypes.map(roomType => ({
-                                        key: `${roomType.TypeName}-${roomType.View}`,
-                                        value: `${roomType.TypeName}-${roomType.View}`
-                                    }))
-                                ]}
-                                width="13vw"
-                            />
+    <span className={style.box1}>
+        <Field
+            name="RoomTypeView"
+            component={Input}
+            label="Room Type"
+            type="select"
+            options={[
+                { key: "--None Selected --", value: "" },
+                ...RoomTypes.map(roomType => ({
+                    key: `${roomType.TypeName}-${roomType.View}`,
+                    value: `${roomType.TypeName}-${roomType.View}`
+                }))
+            ]}
+            width="13vw"
+        />
 
-                            <ErrorMessage name="RoomTypeView" component="span" className={style.error} />
-                        </span>
+        <ErrorMessage name="RoomTypeView" component="span" className={style.error} />
+    </span>
 
-                        <span className={style.box1}>
-                            <Field name="AdditionalCharges"
-                                component={Input}
-                                label="Additional Charges($)"
-                                type="text"
-                                width="13vw" />
-                            <ErrorMessage name="AdditionalCharges" component="span" className={style.error} />
-                        </span>
-                        <span className={style.box1}>
-                            <Field name="floor"
-                                component={Input}
-                                label="Floor"
-                                type="select"
-                                options={Floor}
-                                width="13vw" />
-                            <ErrorMessage name="floor" component="span" className={style.error} />
-                        </span>
-
-
-
-
-
-                    </div>
-
-                    <div className={style.Editdiv2}>
-                        <Field name="AddInfo"
-                            component={Input}
-                            label="Additional Information"
-                            type="textarea"
-                            rows="4"
-                            cols="150" />
-                    </div>
-                    <div className={style.confirmBtnCont}>
-                        <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
-                        <button type='button' className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
-                    </div>
+    <span className={style.box1}>
+        <Field name="AdditionalCharges"
+            component={Input}
+            label="Additional Charges($)"
+            type="text"
+            width="13vw" />
+        <ErrorMessage name="AdditionalCharges" component="span" className={style.error} />
+    </span>
+    <span className={style.box1}>
+        <Field name="floor"
+            component={Input}
+            label="Floor"
+            type="select"
+            options={Floor}
+            width="13vw" />
+        <ErrorMessage name="floor" component="span" className={style.error} />
+    </span>
 
 
 
 
 
-                </Form>
+</div>
+
+<div className={style.Editdiv2}>
+    <Field name="AddInfo"
+        component={Input}
+        label="Additional Information"
+        type="textarea"
+        rows="4"
+        cols="150" />
+</div>
+<div className={style.confirmBtnCont}>
+    <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
+    <button type='submit'  className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
+</div>
+
+
+
+
+
+</Form>
+            )}
+               
             </Formik>
 
 

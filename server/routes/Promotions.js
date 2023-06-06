@@ -74,4 +74,24 @@ cron.schedule('0 0 * * *', async () => {
 });
 
 
+
+router.put("/",async (req,res)=>{
+  const {PromoCode,NewPromoCode, PromoType, Value, MaxUses, Status , Startdate,Enddate, AddInfo}=req.body
+  
+    await Promotion.update({
+      PromoCode:NewPromoCode,
+      PromoType:PromoType,
+      Value:Value,
+      MaxUses:MaxUses,
+      Status:Status,
+      Startdate:Startdate,
+      Enddate:Enddate,
+      AddInfo:AddInfo
+    },{where:{PromoCode:PromoCode}})
+    res.json("updated successfully")
+ 
+  
+})
+
+
 module.exports = router

@@ -94,7 +94,21 @@ router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async 
   });
   
 
-
+  router.put("/",async (req,res)=>{
+    const {NewRoomNo,RoomNo, floor, Status, RoomTypeView, AdditionalCharges ,  AddInfo}=req.body
+    
+      await Rooms.update({
+        RoomNo:NewRoomNo,
+        floor:floor,
+        Status:Status,
+        RoomTypeView:RoomTypeView,
+        AdditionalCharges:AdditionalCharges,
+        AddInfo:AddInfo
+      },{where:{RoomNo:RoomNo}})
+      res.json("updated successfully")
+   
+    
+  })
 
 
 

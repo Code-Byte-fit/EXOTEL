@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import FormOne from "./Form";
-import data from "./Mock-data.json"
+
 import axios from "axios";
 
 function DisplayFormData() {
@@ -25,14 +25,14 @@ function DisplayFormData() {
   }
 
 
-  const [rooms, setRooms] = useState(data);
+
 
   return (
     <React.Fragment>
       <FormOne
         makeReq={makeReq}
       />
-      <Table rooms={rooms} listOfRooms={listOfRooms} />
+      <Table listOfRooms={listOfRooms} setlistOfRooms={setlistOfRooms}/>
 
     </React.Fragment>
 

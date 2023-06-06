@@ -12,6 +12,7 @@ function FormOne(props) {
 
 
     const initialValues = {
+      
         RoomNo: '',
         RoomTypeView: '',
         AdditionalCharges: '',

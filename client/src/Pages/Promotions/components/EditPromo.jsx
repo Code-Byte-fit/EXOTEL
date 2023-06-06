@@ -10,6 +10,16 @@ function EditPromo(props) {
 
 
   const [Promotions, setPromotions] = useState([]);
+
+  const handleEdit=(data)=>{
+    axios.put("http://localhost:3001/promotions",data).then((res)=>{
+      props.setIsDone(true)
+    })
+   
+  }
+
+  const [initialValues , setInitialValues] = useState({...props.values,NewPromoCode:props.values.PromoCode})
+
   const validationSchema = Yup.object().shape({
     PromoCode: Yup.string().required('Required'),
     PromoType: Yup.string().required('Required'),
@@ -56,7 +66,7 @@ function EditPromo(props) {
 
 
         <div className={style.editHeading}>Edit Promo</div>
-      <Formik initialValues={props.values} onSubmit={null} validationSchema={validationSchema}>
+      <Formik initialValues={initialValues} onSubmit={handleEdit} validationSchema={validationSchema}>
         <Form>
           <div className={style.Editdiv1}>
             <div className={style.top}>
@@ -146,7 +156,7 @@ function EditPromo(props) {
           </div>
           <div className={style.confirmBtnCont}>
                         <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
-                        <button type='button' className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
+                        <button type='submit' className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
                       </div>
 
 

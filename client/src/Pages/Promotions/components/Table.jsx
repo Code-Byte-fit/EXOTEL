@@ -3,13 +3,23 @@ import style from "./Promotions.module.css"
 import { useEffect } from "react";
 import axios from 'axios';
 import PromotionTable from '../../General/Table/Table'
-import EditDelete from "./EditDelete";
+import EditDelete from "../../General/Table/EditDelete";
 import styled from 'styled-components';
+import EditPromo from "./EditPromo";
 
 function Table(props) {
 
     
     const [listOfPromotions, setlistOfPromotions] = useState([]);
+    const [isDone, setIsDone] = useState(false);
+
+    const handleDone=()=>{
+      setIsDone(false)
+      axios.get("http://localhost:3001/promotions").then((response)=>{
+        setlistOfPromotions(response.data)
+      })
+    }
+  
 
     useEffect(() => {
       axios.get('http://localhost:3001/promotions')
@@ -105,7 +115,7 @@ function Table(props) {
           },
         {
           selector: row => row,
-          cell: (row) => <EditDelete setlistOfPromotions={setlistOfPromotions} row={row}/>
+          cell: (row) => <EditDelete editComponent={<EditPromo  values={row} setIsDone={setIsDone}   />}  setlistOfPromotions={setlistOfPromotions} row={row} editOption  isDone={isDone} handleDone={handleDone}/>
         },
     ];
     

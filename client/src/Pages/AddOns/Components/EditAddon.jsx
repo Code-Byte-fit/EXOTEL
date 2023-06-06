@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState , useContext} from 'react';
 import Input from "../../General/Inputs/Inputs";
 import style from "./AddOns.module.css";
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
-
+import {AppContext} from "../../../Helpers/AppContext"
 function EditAddon(props) {
-    const [showConfirmation, setShowConfirmation] = useState(false);
+    
+    const {host}=useContext(AppContext);
 
+    const handleEdit=(data)=>{
+        axios.put(`${host}/addon`,data).then((res)=>{
+          props.setIsDone(true)
+        })
+       
+      }
+    
+      const [initialValues , setInitialValues] = useState({...props.values,NewAddOn:props.values.AddOn})
     const validationSchema = Yup.object().shape({
         AddOn: Yup.string().required("Required"),
         Charge: Yup.number().required("Required"),
@@ -65,7 +74,7 @@ function EditAddon(props) {
                     </div>
                     <div className={style.confirmBtnCont}>
                         <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
-                        <button type='button' className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
+                        <button type='submit' className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
                     </div>
 
                 </Form>
