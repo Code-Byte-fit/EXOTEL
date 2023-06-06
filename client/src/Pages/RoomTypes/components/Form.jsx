@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import Input from "../../General/Inputs/Inputs";
 import style from "./Types.module.css";
 import axios from 'axios';
@@ -8,6 +9,7 @@ import * as Yup from 'yup';
 
 function FormOne(props) {
    
+    const [RoomTypes, setRoomTypes] = useState([]);
 
     const initialValues = {
         RoomTypeID: '',
@@ -16,6 +18,7 @@ function FormOne(props) {
         NoOfBeds: '',
         sqFeet: '',
         StandardCharge: '',
+        MiniBarPack:'',
         AddInfo: ''
     };
     const validationSchema = Yup.object().shape({
@@ -30,6 +33,7 @@ function FormOne(props) {
         StandardCharge: Yup.string()
             .required('Required')
             .typeError('Must contain only numbers'),
+         MiniBarPack:Yup.string().required('Required'),
         AddInfo: Yup.string(),
     });
 
@@ -44,6 +48,16 @@ function FormOne(props) {
         props.makeReq(values);
         resetForm({ values: initialValues });
     };
+
+    const fetchRoomTypes = async () => {
+        const response = await axios.get("http://localhost:3001/roomtypes");
+        setRoomTypes(response.data);
+    }
+
+    useEffect(() => {
+        fetchRoomTypes();
+    }, []);
+
 
     return (
         <span className={style.formContainer}>
@@ -104,6 +118,25 @@ function FormOne(props) {
                                     width="13vw" />
                                 <ErrorMessage name="StandardCharge" component="span" className={style.error} />
                             </span>
+                               
+                            <span className={style.box}>
+                            <Field
+                                name="RoomTypeView"
+                                component={Input}
+                                label="Room Type"
+                                type="select"
+                                options={[
+                                    { key: "--None Selected --", value: "" },
+                                    ...RoomTypes.map(roomType => ({
+                                        key: `${roomType.TypeName}-${roomType.View}`,
+                                        value: `${roomType.TypeName}-${roomType.View}`
+                                    }))
+                                ]}
+                                width="13vw"
+                            />
+
+                            <ErrorMessage name="RoomTypeView" component="span" className={style.error} />
+                        </span>
 
                         </div>
 

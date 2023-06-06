@@ -8,11 +8,12 @@
   top: 14vh;
   left: 7vw;
   box-sizing: border-box;
- 
+
 }
 
 .cover {
   margin-left: 5vw;
+ 
 }
 
 /* form
@@ -23,12 +24,14 @@
   display: flex;
   flex-direction: column;
   height: 42vh;
+ 
 }
 
 .div1 {
   display: flex;
-  gap: 4vw;
+  gap: 2vw;
   margin-top: 2vh;
+   
 }
 
 .div2 {
