@@ -3,16 +3,17 @@ import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
 import style from "./Promotions.module.css";
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 
 
 function EditPromo(props) {
 
 
   const [Promotions, setPromotions] = useState([]);
-
+  const { host } = useContext(AppContext);
   const handleEdit=(data)=>{
-    axios.put("http://localhost:3001/promotions",data).then((res)=>{
+    axios.put(`${host}/promotions`,data).then((res)=>{
       props.setIsDone(true)
     })
    

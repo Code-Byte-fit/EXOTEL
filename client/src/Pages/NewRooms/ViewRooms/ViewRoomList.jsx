@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import axios from 'axios';
 import style from "../ViewRooms/components/ViewRooms.module.css";
 import RoomTable from "../../General/Table/Table";
 import EditDelete from "../../General/Table/EditDelete";
-import { useEffect, useState } from "react";
+
 
 function ViewRooms() {
-
+    const { host } = useContext(AppContext);
     const [listOfRooms, setlistOfRooms] = useState([]);
-    const [filter, setFilter] = useState("");
+    
 
     useEffect(() => {
-        axios.get("http://localhost:3001/rooms").then((response) => {
+        axios.get(`${host}/rooms`).then((response) => {
             setlistOfRooms(response.data);
         });
     }, []);

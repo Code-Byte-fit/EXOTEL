@@ -10,15 +10,15 @@ function DisplayFormData() {
 
   const { host } = useContext(AppContext)
   useEffect(() => {
-    axios.get("http://localhost:3001/rooms").then((response) => {
+    axios.get(`${host}/rooms`).then((response) => {
       setlistOfRooms(response.data);
       console.log(listOfRooms)
     });
   }, []);
 
   const makeReq = async (formData) => {
-    await axios.post("http://localhost:3001/rooms", formData).then(() => {
-      axios.get("http://localhost:3001/rooms").then((response) => {
+    await axios.post(`${host}/rooms`, formData).then(() => {
+      axios.get(`${host}/rooms`).then((response) => {
         setlistOfRooms(response.data);
       });
     })

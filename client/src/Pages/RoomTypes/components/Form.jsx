@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import Input from "../../General/Inputs/Inputs";
 import style from "./Types.module.css";
 import axios from 'axios';
@@ -10,7 +10,7 @@ import * as Yup from 'yup';
 function FormOne(props) {
    
     const [RoomTypes, setRoomTypes] = useState([]);
-
+    const { host } = useContext(AppContext);
     const initialValues = {
         RoomTypeID: '',
         TypeName: '',
@@ -50,7 +50,7 @@ function FormOne(props) {
     };
 
     const fetchRoomTypes = async () => {
-        const response = await axios.get("http://localhost:3001/roomtypes");
+        const response = await axios.get(`${host}/roomtypes`);
         setRoomTypes(response.data);
     }
 

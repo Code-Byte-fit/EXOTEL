@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import style from "./Types.module.css";
 import axios from "axios";
-import { useEffect } from "react";
 import RoomTypeTable from '../../General/Table/Table'
 import EditDelete from "../../General/Table/EditDelete";
 import EditAddon from "../../AddOns/Components/EditAddon";
@@ -11,25 +11,22 @@ import EditType from "./EditType";
 
 function Table(props) {
   const [listOfRoomTypes, setlistOfRoomTypes] = useState([]);
- 
+  const { host } = useContext(AppContext);
 
   const [isDone, setIsDone] = useState(false);
   
   const handleDone=()=>{
     setIsDone(false)
-    axios.get("http://localhost:3001/roomtypes").then((response)=>{
+    axios.get(`${host}/roomtypes`).then((response)=>{
       setlistOfRoomTypes(response.data)
     })
   }
 
   useEffect(() => {
-    axios.get("http://localhost:3001/roomtypes").then((response) => {
+    axios.get(`${host}/roomtypes`).then((response) => {
       setlistOfRoomTypes(response.data);
     });
   }, []);
-
-
-
 
   const columns = [
     {

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect,useContext } from "react";
+import {AppContext} from "../../../Helpers/AppContext"
 import style from "./Rooms.module.css";
 import axios from "axios";
-import { useEffect } from "react";
 import RoomTable from "../../General/Table/Table";
 import EditDelete from "../../General/Table/EditDelete";
 import EditRoom from "./EditRoom";
@@ -9,18 +9,18 @@ import EditRoom from "./EditRoom";
 
 function Table(props) {
   const [listOfRooms, setlistOfRooms] = useState([]);
-
+  const {host}=useContext(AppContext);
   const [isDone, setIsDone] = useState(false);
   
   const handleDone=()=>{
     setIsDone(false)
-    axios.get("http://localhost:3001/rooms").then((response)=>{
+    axios.get(`${host}/rooms`).then((response)=>{
       setlistOfRooms(response.data)
     })
   }
 
   useEffect(() => {
-    axios.get("http://localhost:3001/rooms").then((response) => {
+    axios.get(`${host}/rooms`).then((response) => {
       setlistOfRooms(response.data);
       // console.log(listOfRooms)
 

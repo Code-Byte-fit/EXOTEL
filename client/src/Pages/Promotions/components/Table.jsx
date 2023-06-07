@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import style from "./Promotions.module.css"
-import { useEffect } from "react";
 import axios from 'axios';
 import PromotionTable from '../../General/Table/Table'
 import EditDelete from "../../General/Table/EditDelete";
@@ -12,17 +12,17 @@ function Table(props) {
     
     const [listOfPromotions, setlistOfPromotions] = useState([]);
     const [isDone, setIsDone] = useState(false);
-
+    const { host } = useContext(AppContext);
     const handleDone=()=>{
       setIsDone(false)
-      axios.get("http://localhost:3001/promotions").then((response)=>{
+      axios.get(`${host}/promotions`).then((response)=>{
         setlistOfPromotions(response.data)
       })
     }
   
 
     useEffect(() => {
-      axios.get('http://localhost:3001/promotions')
+      axios.get(`${host}/promotions`)
         .then((response) => {
           setlistOfPromotions(response.data);
         })
@@ -54,7 +54,7 @@ function Table(props) {
   `;
 
   function updateExpiredPromotions() {
-    axios.put("http://localhost:3001/promotions/updateExpired")
+    axios.put(`${host}/promotions/updateExpired`)
       .then((response) => {
         console.log(response.data.message);
       })

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import Input from "../../General/Inputs/Inputs";
 import style from "./Types.module.css";
 import axios from 'axios';
@@ -8,10 +9,10 @@ import * as Yup from 'yup';
 
 function EditType(props) {
 
-
+    const { host } = useContext(AppContext);
 
     const handleEdit = (data) => {
-        axios.put("http://localhost:3001/roomtypes", data).then((res) => {
+        axios.put(`${host}/roomtypes`, data).then((res) => {
             props.setIsDone(true)
         })
 

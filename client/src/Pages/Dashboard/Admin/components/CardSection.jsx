@@ -1,5 +1,6 @@
-import React, { useState, useEffect,useContext } from "react";
-import {AppContext} from "../../../../Helpers/AppContext"
+import React, { useState, useEffect, useContext } from "react";
+import { Link } from 'react-router-dom';
+import { AppContext } from "../../../../Helpers/AppContext"
 import Rooms from '../../../../Assets/Images/Bedroom.png'
 import axios from 'axios';
 import style from './CardSection.module.css';
@@ -8,7 +9,7 @@ import Dis from '../../../../Assets/Images/Discount.png'
 import User from '../../../../Assets/Images/Users.png'
 
 function CardSection() {
-  const{host}=useContext(AppContext)
+  const { host } = useContext(AppContext)
   const [roomCount, setRoomCount] = useState(0);
   const [promoCount, setPromoCount] = useState(0);
   const [userCount, setUserCount] = useState(0);
@@ -16,11 +17,11 @@ function CardSection() {
   useEffect(() => {
     async function fetchData() {
       try {
-        
+
         const response = await axios.get(`${host}/admin/todayStats`);
         setRoomCount(response.data.roomCount);
         setPromoCount(response.data.promoCount);
-        setUserCount(response.data.usersCount);       
+        setUserCount(response.data.usersCount);
       } catch (error) {
         console.error(error);
       }
@@ -55,9 +56,9 @@ function CardSection() {
         </div>
         <div className={style.rightContainer}>
           <div className={style.addButton}>
-          <a href="http://localhost:3000/register">
-  <img src={add} className={style.plus} alt="Add user"></img>
-</a>
+            <Link to='/register'>
+              <img src={add} className={style.plus} alt="Add user"></img>
+            </Link>
 
           </div>
         </div>

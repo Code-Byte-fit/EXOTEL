@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
   
   
   router.put("/",async (req,res)=>{
-    const {addonID,NewAddOn,AddOn, Unit, Charge, AddInfo}=req.body
+    const {addonID,NewAddOn, Unit, Charge, AddInfo}=req.body
     
       await Addons.update({
         AddOn:NewAddOn,
