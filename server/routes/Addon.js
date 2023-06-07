@@ -23,5 +23,22 @@ router.post("/", async (req, res) => {
     }
   });
   
+  
+  router.put("/",async (req,res)=>{
+    const {addonID,NewAddOn,AddOn, Unit, Charge, AddInfo}=req.body
+    
+      await Addons.update({
+        AddOn:NewAddOn,
+        Unit:Unit,
+        Charge: Charge,
+        AddInfo:AddInfo
+      },{where:{addonID:addonID}})
+      res.json("updated successfully")
+   
+    
+  })
+
+
+
 
 module.exports=router

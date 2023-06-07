@@ -34,7 +34,10 @@ function FormOne(props) {
         Status: Yup.string().required('Required'),
         AddInfo: Yup.string(),
     });
-
+    const handleSubmit = (values, { resetForm }) => {
+        props.makeReq(values);
+        resetForm({ values: initialValues });
+    };
 
     const fetchRoomTypes = async () => {
         const response = await axios.get("http://localhost:3001/roomtypes");
@@ -51,10 +54,7 @@ function FormOne(props) {
         { key: "1st Floor", value: "1st Floor" },
         { key: "2nd Floor", value: "3rd Floor" }]
 
-        const handleSubmit = (values, { resetForm }) => {
-            props.makeReq(values);
-            resetForm({ values: initialValues });
-        };
+      
 
     return (
 

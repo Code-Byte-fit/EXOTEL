@@ -3,14 +3,24 @@ import style from "./Types.module.css";
 import axios from "axios";
 import { useEffect } from "react";
 import RoomTypeTable from '../../General/Table/Table'
-import EditDelete from "./EditDelete";
+import EditDelete from "../../General/Table/EditDelete";
+import EditAddon from "../../AddOns/Components/EditAddon";
+import EditType from "./EditType";
 
 
 
 function Table(props) {
   const [listOfRoomTypes, setlistOfRoomTypes] = useState([]);
-  const [showPopup, setShowPopup] = useState(false);
-  const [selectedRoomType, setSelectedRoomTypes] = useState(null);
+ 
+
+  const [isDone, setIsDone] = useState(false);
+  
+  const handleDone=()=>{
+    setIsDone(false)
+    axios.get("http://localhost:3001/roomtypes").then((response)=>{
+      setlistOfRoomTypes(response.data)
+    })
+  }
 
   useEffect(() => {
     axios.get("http://localhost:3001/roomtypes").then((response) => {
@@ -61,7 +71,7 @@ function Table(props) {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete setlistOfRoomTypes={setlistOfRoomTypes} row={row} />
+      cell: (row) => <EditDelete  editComponent={<EditType  values={row} setIsDone={setIsDone}   />} setlistOfRoomTypes={setlistOfRoomTypes} row={row} editOption  isDone={isDone} handleDone={handleDone}/>
     },
   ];
   return (

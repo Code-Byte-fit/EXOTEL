@@ -36,4 +36,24 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/",async (req,res)=>{
+  const {RoomTypeID, NewTypeName,View, NoOfBeds, sqFeet, StandardCharge, AddInfo}=req.body
+  
+    await RoomTypes.update({
+      TypeName:NewTypeName,
+      View:View,
+      NoOfBeds:NoOfBeds,
+      sqFeet:sqFeet,
+      StandardCharge:StandardCharge,
+      AddInfo:AddInfo
+    },{where:{RoomTypeID:RoomTypeID}})
+    res.json("updated successfully")
+ 
+  
+})
+
+
+
+
+
 module.exports=router

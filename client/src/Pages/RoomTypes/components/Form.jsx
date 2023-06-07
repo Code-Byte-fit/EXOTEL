@@ -33,7 +33,7 @@ function FormOne(props) {
         StandardCharge: Yup.string()
             .required('Required')
             .typeError('Must contain only numbers'),
-         MiniBarPack:Yup.string().required('Required'),
+        //  MiniBarPack:Yup.string().required('Required'),
         AddInfo: Yup.string(),
     });
 
@@ -119,7 +119,7 @@ function FormOne(props) {
                                 <ErrorMessage name="StandardCharge" component="span" className={style.error} />
                             </span>
                                
-                            <span className={style.box}>
+                            {/* <span className={style.box}>
                             <Field
                                 name="RoomTypeView"
                                 component={Input}
@@ -136,7 +136,7 @@ function FormOne(props) {
                             />
 
                             <ErrorMessage name="RoomTypeView" component="span" className={style.error} />
-                        </span>
+                        </span> */}
 
                         </div>
 

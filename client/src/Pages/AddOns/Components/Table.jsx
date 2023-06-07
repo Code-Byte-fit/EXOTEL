@@ -9,7 +9,6 @@ import EditAddon from "./EditAddon";
 
 function Table(props) {
   const {host}=useContext(AppContext);
-
   const [isDone, setIsDone] = useState(false);
 
   const handleDone=()=>{
@@ -18,7 +17,6 @@ function Table(props) {
       setlistOfAddons(response.data)
     })
   }
-
 
   const [listOfAddons, setlistOfAddons] = useState([]);
   useEffect(() => {

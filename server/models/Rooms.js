@@ -37,8 +37,8 @@ module.exports = (sequelize, Datatypes) => {
                 async afterCreate(room, options) {
                     // Generate a new minibar ID
                     const lastMiniBar = await sequelize.models.MiniBar.findOne({ order: [['MiniBarID', 'DESC']] });
-                    const lastMiniBarID = lastMiniBar ? lastMiniBar.MiniBarID : '0';
-                    const newMiniBarID = String(parseInt(lastMiniBarID) + 1);
+                    const lastMiniBarID = lastMiniBar ? lastMiniBar.MiniBarID : 0;
+                    const newMiniBarID = (lastMiniBarID) + 1;
 
                     // Create a new minibar instance with the generated ID
                     const minibar = await sequelize.models.MiniBar.create({

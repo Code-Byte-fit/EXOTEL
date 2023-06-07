@@ -9,6 +9,16 @@ import * as Yup from 'yup';
 function EditType(props) {
 
 
+
+    const handleEdit = (data) => {
+        axios.put("http://localhost:3001/roomtypes", data).then((res) => {
+            props.setIsDone(true)
+        })
+
+    }
+
+    const [initialValues, setInitialValues] = useState({ ...props.values, NewTypeName: props.values.TypeName })
+
     const validationSchema = Yup.object().shape({
         TypeName: Yup.string().required('Required'),
         NoOfBeds: Yup.number()
@@ -38,84 +48,87 @@ function EditType(props) {
 
             <div className={style.editHeading}>Edit Room Type</div>
 
-            <Formik initialValues={props.values} onSubmit={null} validationSchema={validationSchema} >
-                <Form>
+            <Formik initialValues={initialValues} onSubmit={handleEdit} validationSchema={validationSchema} >
+                {(formik) => (
+                    <Form>
 
-                    <div className={style.Editdiv1}>
+                        <div className={style.Editdiv1}>
 
-                        <span className={style.box1}>
-                            <Field name="TypeName"
+                            <span className={style.box1}>
+                                <Field name="NewTypeName"
+                                    component={Input}
+                                    label="Room Type"
+                                    type="text"
+
+                                    width="13vw" />
+                                <ErrorMessage name="TypeName" component="span" className={style.error} />
+                            </span>
+
+                            <span className={style.box1}>
+                                <Field name="View"
+                                    component={Input}
+                                    label="View"
+                                    type="select"
+                                    options={view}
+
+                                    className={style.inputOne}
+                                    width="13vw" />
+                                <ErrorMessage name="View" component="span" className={style.error} />
+                            </span>
+
+                            <span className={style.box1}>
+                                <Field name="NoOfBeds"
+                                    component={Input}
+                                    label="No of Beds"
+                                    type="text"
+
+                                    width="13vw" />
+                                <ErrorMessage name="NoOfBeds" component="span" className={style.error} />
+                            </span>
+                            <span className={style.box1}>
+                                <Field name="sqFeet"
+                                    component={Input}
+                                    label="Square Feet(Sqft)"
+                                    type="text"
+
+                                    width="13vw" />
+                                <ErrorMessage name="sqFeet" component="span" className={style.error} />
+                            </span>
+
+                            <span className={style.box1}>
+                                <Field name="StandardCharge"
+                                    component={Input}
+                                    label="Standard Charge($)"
+                                    type="text"
+
+                                    width="13vw" />
+                                <ErrorMessage name="StandardCharge" component="span" className={style.error} />
+                            </span>
+
+                        </div>
+
+                        <div className={style.Editdiv2}>
+
+                            <Field name="AddInfo"
                                 component={Input}
-                                label="Room Type"
-                                type="text"
+                                label="Additional Information"
+                                type="textarea"
+                                rows="3"
+                                cols="70" />
 
-                                width="13vw" />
-                            <ErrorMessage name="TypeName" component="span" className={style.error} />
-                        </span>
-
-                        <span className={style.box1}>
-                            <Field name="View"
-                                component={Input}
-                                label="View"
-                                type="select"
-                                options={view}
-
-                                className={style.inputOne}
-                                width="13vw" />
-                            <ErrorMessage name="View" component="span" className={style.error} />
-                        </span>
-
-                        <span className={style.box1}>
-                            <Field name="NoOfBeds"
-                                component={Input}
-                                label="No of Beds"
-                                type="text"
-
-                                width="13vw" />
-                            <ErrorMessage name="NoOfBeds" component="span" className={style.error} />
-                        </span>
-                        <span className={style.box1}>
-                            <Field name="sqFeet"
-                                component={Input}
-                                label="Square Feet(Sqft)"
-                                type="text"
-
-                                width="13vw" />
-                            <ErrorMessage name="sqFeet" component="span" className={style.error} />
-                        </span>
-
-                        <span className={style.box1}>
-                            <Field name="StandardCharge"
-                                component={Input}
-                                label="Standard Charge($)"
-                                type="text"
-
-                                width="13vw" />
-                            <ErrorMessage name="StandardCharge" component="span" className={style.error} />
-                        </span>
-
-                    </div>
-
-                    <div className={style.Editdiv2}>
-
-                        <Field name="AddInfo"
-                            component={Input}
-                            label="Additional Information"
-                            type="textarea"
-                            rows="3"
-                            cols="70" />
-
-                    </div>
+                        </div>
 
 
-                    <div className={style.confirmBtnCont}>
-                        <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
-                        <button type='button' className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
-                    </div>
+                        <div className={style.confirmBtnCont}>
+                            <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
+                            <button type='submit' className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
+                        </div>
 
 
 
-                </Form>
+                    </Form>
+                )}
+
             </Formik>
 
 

@@ -1,13 +1,12 @@
-import React, { useState, useEffect,useContext } from "react";
-import {AppContext} from "../../../Helpers/AppContext"
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import axios from 'axios';
 import style from "./components/AddOns.module.css";
 import RoomTable from "../../General/Table/Table";
 
 function ViewAddOns() {
-  const {host}=useContext(AppContext)
+  const { host } = useContext(AppContext)
   const [listOfAddons, setlistOfAddons] = useState([]);
-
 
   useEffect(() => {
     axios.get(`${host}/addon`).then((response) => {
@@ -15,7 +14,6 @@ function ViewAddOns() {
       console.log(listOfAddons)
     })
   }, [])
-
 
   const columns = [
     {
@@ -50,10 +48,7 @@ function ViewAddOns() {
         </div>
       ),
     },
-
-
   ];
-
 
   return (
     <div className={style.tableContainer}>

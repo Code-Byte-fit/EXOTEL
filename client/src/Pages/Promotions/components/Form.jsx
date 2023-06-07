@@ -154,12 +154,7 @@ function FormOne(props) {
                   rows="5"
                   cols="158" />
               </div>
-
-
             </div>
-
-
-
           </div>
           <span className={style.createBtn}>
             <button className={style.buttonOne} type="submit">Create Promotion</button>
