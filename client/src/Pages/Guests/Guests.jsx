@@ -13,6 +13,7 @@ export default function Guests() {
   const {host,authState}=useContext(AppContext)
   const [guestList,setGuestList]=useState([]);
   const [isDone, setIsDone] = useState(false);
+  const [success,setSuccess]=useState(true);
   const [isFilterActive, setIsFilterActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState({fname:"",lname:"",country:""});
   const [loading, setLoading] = useState(false); 
@@ -81,8 +82,8 @@ export default function Guests() {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete editOption isDone={isDone} handleDone={handleDone}
-      editComponent={<Edit values={row} setIsDone={setIsDone}/>}/>
+      cell: (row) => <EditDelete editOption isDone={isDone} handleDone={handleDone} success={success}
+      editComponent={<Edit values={row} setIsDone={setIsDone} setSuccess={setSuccess}/>}/>
     },
 ];
 

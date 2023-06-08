@@ -7,6 +7,7 @@ import axios from 'axios';
 export default function ResEditDelete(props) {
   const {host}=useContext(AppContext)
     const [isDone, setIsDone] = useState(false);
+    const [success,setSuccess]=useState(true);
     const [isReBookValid, setIsReBookValid] =useState(true);
     const row=props.row;
 
@@ -65,10 +66,11 @@ export default function ResEditDelete(props) {
                       onRebook={()=>handleRebook(row)}
                       onCheckIn={()=>handleCheckIn(row)}
                       isDone={isDone}
+                      success={success}
                       isReBookValid={isReBookValid}
                       handleDone={handleDone} 
                       handleReBookError={handleRebookError}
-                      editComponent={<EditRes values={row} setIsDone={setIsDone}/>} 
+                      editComponent={<EditRes values={row} setIsDone={setIsDone} setSuccess={setSuccess}/>} 
                       cancelHeading="Confirm Cancellation"
                       cancelBody="Are you sure that you want to cancel this reservation?"
                       />

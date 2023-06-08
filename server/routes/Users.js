@@ -26,4 +26,35 @@ router.post("/",async (req,res)=>{
     res.json(user)
 })
 
+router.put("/",async (req,res)=>{
+  const {userId,FirstName,LastName,Email,PhoneNumber,Country,Role,UserAccount: { userName }}=req.body
+  try{
+    await Users.update(
+      {
+        FirstName,
+        LastName,
+        Role,
+        Country,
+        Email,
+        PhoneNumber,
+      },
+      {
+        where: { userId },
+      }
+    );
+    await UserAccounts.update(
+      {
+        userName,
+      },
+      {
+        where: { userId },
+      }
+    );
+    res.json("updated successfully")
+  }
+  catch(error){
+    res.status(500).json({ error: 'Failed to edit user' });
+  }
+})
+
 module.exports=router

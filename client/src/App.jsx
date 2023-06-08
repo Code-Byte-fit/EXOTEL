@@ -83,6 +83,10 @@ export default function App() {
                             <Route path="/userlist" element={<Users/>}/>
                             <Route path="/profile" element={<Profile/>}/>
                             <Route path="/calender" element={<Calender/>}/>
+                            <Route path="/guests" element={<Guests/>}/>
+                            <Route path="/reservationTab" element={<ReservationTab/>}/>
+
+
                         </>
                 )}
                 {authState.status && authState.userRole === 'FOManager' && (
