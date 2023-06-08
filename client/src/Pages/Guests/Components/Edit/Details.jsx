@@ -34,8 +34,10 @@ export default function Details(props) {
                       </div>
                      
                       <div className={style.confirmBtnCont}>
-                        <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
-                        <button type='button' className={`${style.editBtn} ${style.confirmBtn}`} onClick={()=>{props.handleEdit(formikValues.values)}}>Confirm</button>
+                        <button type='button' className={`${style.editBtn} ${style.cancelBtn}`} 
+                        onClick={()=>{props.handleEdit(formikValues.values,false)}}>Cancel</button>
+                        <button type='button' className={`${style.editBtn} ${style.confirmBtn}`} 
+                        onClick={()=>{props.handleEdit(formikValues.values,true)}}>Confirm</button>
                       </div>
                       </div> 
                   </Form>

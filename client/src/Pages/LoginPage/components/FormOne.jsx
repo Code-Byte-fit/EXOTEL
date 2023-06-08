@@ -26,6 +26,9 @@ function FormOne(props){
                     LastName:response.data.LastName,
                     userRole:response.data.userRole,
                     proPic:response.data.proPic,
+                    country:response.data.country,
+                    email:response.data.Email,
+                    phone:response.data.Phone,
                     status:true,
                 })
                 navigate('/dashBoard');
