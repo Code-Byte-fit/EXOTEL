@@ -1,6 +1,7 @@
 import React, { useState,useEffect,useContext} from 'react'
 import {AppContext} from "../../Helpers/AppContext"
 import axios from "axios"
+import Spinner from '../General/Spinner/Spinner'
 import Table from '../General/Table/Table'
 import EditDelete from '../General/Table/EditDelete'
 import Edit from './Components/Edit/Edit'
@@ -12,19 +13,25 @@ export default function Guests() {
   const {host,authState}=useContext(AppContext)
   const [guestList,setGuestList]=useState([]);
   const [isDone, setIsDone] = useState(false);
+  const [success,setSuccess]=useState(true);
   const [isFilterActive, setIsFilterActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState({fname:"",lname:"",country:""});
+  const [loading, setLoading] = useState(false); 
 
   useEffect(()=>{
+    setLoading(true)
     axios.get(`${host}/guests`).then((response)=>{
       setGuestList(response.data)
+      setLoading(false)
      })
    },[])
 
    const handleDone=()=>{
     setIsDone(false)
+    setLoading(true)
     axios.get(`${host}/guests`).then((response)=>{
       setGuestList(response.data)
+      setLoading(false)
     })
   }
 
@@ -75,13 +82,14 @@ export default function Guests() {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete editOption isDone={isDone} handleDone={handleDone}
-      editComponent={<Edit values={row} setIsDone={setIsDone}/>}/>
+      cell: (row) => <EditDelete editOption isDone={isDone} handleDone={handleDone} success={success}
+      editComponent={<Edit values={row} setIsDone={setIsDone} setSuccess={setSuccess}/>}/>
     },
 ];
 
   return (
     <>
+    {loading && <Spinner loading={loading}/>}
       <div className={style.header}>
         <span className={style.heading}>Guests</span>
         {guestList.length>0 && <div className={style.headerRight}>

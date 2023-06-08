@@ -38,3 +38,4 @@ module.exports=(sequelize, Datatypes)=>{
 
       return Feedback;
     };
+      

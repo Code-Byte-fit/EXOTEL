@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Link } from 'react-router-dom';
-import { AppContext } from "../../../../Helpers/AppContext"
+import React, { useState, useEffect,useContext } from "react";
+import {Link} from 'react-router-dom';
+import {AppContext} from "../../../../Helpers/AppContext"
 import Rooms from '../../../../Assets/Images/Bedroom.png'
 import axios from 'axios';
 import style from './CardSection.module.css';

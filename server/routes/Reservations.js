@@ -4,6 +4,7 @@ const {Sequelize,Op} = require('sequelize');
 const moment = require('moment');
 const upload=require('../middleware/Upload')
 const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations,GuestEmail,GuestPhoneNumber}=require('../models')
+const sendEmail=require('../middleware/Email')
 
 
 //get all reservation details
@@ -87,6 +88,16 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
           });
         }
       }
+      const reservationDetails = `
+      <h2>Reservation Details</h2>
+      <p>Guest Name:${FirstName} ${LastName}</p>
+      <p>Check-in Date: ${CheckIn}</p>
+      <p>Check-out Date: ${CheckOut}</p>
+      <p>Check-in Time: ${CheckInTime}</p>
+      <p>Check-out Time: ${CheckOutTime}</p>
+      <p>Total Amount: ${totalAmount}</p>
+  `;
+    sendEmail(Email,reservationDetails)
     res.status(201).json({ reservation, guestId });}
     catch (error) {
         console.error(error);
