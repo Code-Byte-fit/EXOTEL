@@ -9,34 +9,50 @@ router.get('/',async (req,res)=>{
 })
 
 // Create a new addon
-router.post("/", async (req, res) => {
-    try {
-      const addon = req.body;
-      await Addons.create(addon);
-      res.json(addon);
-    } catch (error) {
-      if (error.name === 'SequelizeUniqueConstraintError') {
-        return res.status(400).json({ error: 'AddonNo already exists' });
-      }
-      console.error(error);
-      res.status(500).json({ error: 'Failed to create addon' });
+router.post('/', async (req, res) => {
+  try {
+    const addon = req.body;
+    const existingAddon = await Addons.findOne({ where: { AddOn: addon.AddOn } });
+
+    if (existingAddon) {
+      return res.status(400).json({ error: 'Addon already exists' });
     }
-  });
+
+    await Addons.create(addon);
+    res.json(addon);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to create addon' });
+  }
+});
   
   
-  router.put("/",async (req,res)=>{
-    const {addonID,NewAddOn, Unit, Charge, AddInfo}=req.body
-    
-      await Addons.update({
-        AddOn:NewAddOn,
-        Unit:Unit,
+// Update an existing addon
+router.put('/', async (req, res) => {
+  try {
+    const { addonID, NewAddOn, Unit, Charge, AddInfo } = req.body;
+
+    const existingAddon = await Addons.findOne({ where: { addonID: addonID } });
+    if (!existingAddon) {
+      return res.status(404).json({ error: 'Addon not found' });
+    }
+
+    await Addons.update(
+      {
+        AddOn: NewAddOn,
+        Unit: Unit,
         Charge: Charge,
-        AddInfo:AddInfo
-      },{where:{addonID:addonID}})
-      res.json("updated successfully")
-   
-    
-  })
+        AddInfo: AddInfo,
+      },
+      { where: { addonID: addonID } }
+    );
+    res.json('Addon updated successfully');
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to update addon' });
+  }
+});
+
 
 
 

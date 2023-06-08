@@ -467,3 +467,77 @@ padding-right: 2%;
   margin: 0 2vw 0 0;
   
 }
+
+
+/* Medium devices (up to 1024px) */
+@media (max-width: 1024px) {
+  .div1 {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2vh;
+  }
+
+  .div2 {
+    margin-top: 4vh;
+    width: 80vw;
+  }
+
+  .box {
+    flex-basis: 45%;
+  }
+  .createBtn {
+    margin-left: auto;
+    margin-top: 2vh;
+  }
+}
+/*edyty*/
+
+
+@media screen and (max-width: 1024px) {
+  .editCont {
+    width: 200%;
+    right: 50%;
+    height: 150%;
+  }
+
+  /* .inputCont select {
+    width: 26vw;
+  } */
+
+  .btnCont,
+  .confirmBtnCont {
+    width: 90%;
+    margin: 3% auto;
+  }
+
+  .editBtn {
+    width: clamp(4vw, 14vw, 14vw);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .editCont {
+    width: 180%;
+    right: 40%;
+    height: 210%;
+    font-size: small;
+  }
+
+  .inputCont,
+  .btnCont,
+  .confirmBtnCont {
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    margin: 3% auto;
+  }
+
+  /* .inputCont select {
+    width: 100%;
+  } */
+
+  .editBtn {
+    width: 100%;
+    margin-top: 2%;
+  }
+}

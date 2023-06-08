@@ -9,13 +9,14 @@ module.exports = (sequelize, DataTypes) => {
       AddOn: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
       Unit: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       Charge: {
-        type: DataTypes.STRING,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
       AddInfo: {
