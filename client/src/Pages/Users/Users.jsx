@@ -22,6 +22,7 @@ export default function Users() {
     })
   },[])
 
+
   const handleDone=()=>{
     setIsDone(false)
     setLoading(true)
@@ -30,6 +31,8 @@ export default function Users() {
       setLoading(false)
     })
   }
+
+  console.log(users)
 
 
   const columns = [

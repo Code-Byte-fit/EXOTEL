@@ -76,13 +76,13 @@
 }
 
 .editCont{
-    height: 150%;
+    height: 175%;
     width: 105%;
     background-color:white;
     border-radius: 8px;
     position: relative;
     right: 2.5%;
-    bottom: 40%;
+    bottom: 50%;
 }
 
 .editHeading{
@@ -98,21 +98,20 @@
 }
 
 .lowerCont{
-    gap: 1vh;
     margin: 5% auto;
     position: relative;
-    
+}
+
+.lowerCont label{
+    margin: 0 0 1vh 0;
 }
 
 .country{
     text-align: left;
-    width: 43%;
+    width: 100%;
+    margin: 0;
 }
 
-.emailbtn{    
-    height: 6vh;
-    margin: 3vh 0 0 0;
-}
 
 
 
@@ -136,7 +135,7 @@
 }
 
 .confirmBtnCont{
-    margin:10% auto;
+    margin:8% auto;
 }
 
 .confirmBtn{
