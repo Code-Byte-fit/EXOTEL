@@ -19,34 +19,35 @@ router.get("/", async (req, res) => {
       },
     ],
   });
+
   res.json(listOfTasks);
 });
 
 //fetch the room boy ids and the names from user table and room numbers from rooms table
 router.get("/taskDetails", async (req, res) => {
   try {
-    // Finds all the room numbers from the rooms table.
+    // Find room numbers
     const rooms = await Rooms.findAll({
       attributes: ["RoomNo"],
     });
 
-    // Finds all the room boy IDs and names from the users table.
+    // Find room boy IDs and names
     const roomBoy = await Users.findAll({
       attributes: ["userId", "FirstName"],
     });
 
-    // Creates an array of objects containing only the room numbers.
+    // Create an array of objects containing only the room numbers.
     const roomDetails = rooms.map((room) => ({
       RoomNo: room.RoomNo,
     }));
 
-    // Creates an array of objects containing the room boy IDs and names.
+    // Create an array of objects containing the room boy IDs and names.
     const roomBoyDetails = roomBoy.map((roomBoy) => ({
       RoomBoyId: roomBoy.userId,
       RoomBoyName: roomBoy.FirstName,
     }));
 
-    // Creates a response object with the room details and room boy details.
+    // Create a response object with the room details and room boy details.
     const response = {
       roomDetails: roomDetails,
       roomBoyDetails: roomBoyDetails,
@@ -59,92 +60,13 @@ router.get("/taskDetails", async (req, res) => {
   }
 });
 
-router.get("/autoSchedule", async (req, res) => {
-  try {
-    const curr = new Date();
-    const date = curr.toISOString().substring(0, 10);
-
-    const checkOuts = await Reservations.findAll({
-      attributes: ["id"],
-      where: {
-        CheckOut: { [Op.eq]: "2023-04-30" },
-      },
-    });
-
-    let checkOutRoomDetails = [];
-
-    await Promise.all(
-      checkOuts.map(async (room) => {
-        const checkOutRooms = await ReservationRoom.findAll({
-          attributes: ["RoomRoomNo"],
-          where: {
-            ReservationId: { [Op.eq]: room.id },
-          },
-        });
-
-        checkOutRooms.map(({ RoomRoomNo }) => {
-          checkOutRoomDetails.push(RoomRoomNo);
-        });
-      })
-    );
-
-    // await Promise.all(
-    //   checkOutRoomDetails.map(async (RoomNo) => {
-    //     const roomBoy = await TaskCount.findOne({
-    //       order: [["taskCount", "ASC"]],
-    //     });
-
-    //     const { userId } = roomBoy;
-    //     const { taskCount } = roomBoy;
-
-    //     // await TaskAllocation.create({
-    //     //   RoomNo: RoomNo,
-    //     //   userId: userId,
-    //     //   taskType: "clean",
-    //     //   taskDate: "2023-04-30",
-    //     //   taskTime: "00:00:00",
-    //     //   Notes: "",
-    //     //   ReservationId: 12,
-    //     // });
-
-    //     await TaskCount.update(
-    //       {
-    //         taskCount: taskCount + 1,
-    //       },
-    //       { where: { userId: userId } }
-    //     );
-    //   })
-    // );
-
-    for (const RoomNo of checkOutRoomDetails) {
-      const roomBoy = await TaskCount.findOne({
-        order: [["taskCount", "ASC"]],
-      });
-
-      const { userId, taskCount } = roomBoy;
-
-      console.log(userId, taskCount);
-
-      await TaskCount.update(
-        {
-          taskCount: taskCount + 1,
-        },
-        { where: { userId: userId } }
-      );
-    }
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server Error");
-  }
-});
-
 //store the task details taken from the form to the database and find the reservation number for the respective rooms
 router.post("/", async (req, res) => {
   try {
-    // Extracts the required data from the request body.
+    // Extract the required data from the request body.
     const { RoomNo, userId, taskType, taskDate, taskTime, Notes } = req.body;
 
-    // Finds the reservation ID for the given room and date.
+    // Find the reservation ID for the given room and date.
     const reservation = await Reservations.findOne({
       attributes: ["id"],
       include: [
@@ -166,10 +88,12 @@ router.post("/", async (req, res) => {
       },
     });
 
-    // Extracts the reservation ID from the reservation object.
+    console.log(reservation);
+
+    // Extract the reservation ID from the reservation object.
     const { id } = reservation;
 
-    // Creates a new task allocation record with the given details and reservation ID.
+    // Create a new task allocation record with the given details and reservation ID.
     const newTask = await TaskAllocation.create({
       RoomNo,
       userId,
@@ -190,11 +114,11 @@ router.post("/", async (req, res) => {
 //edit the records in the table
 router.put("/", async (req, res) => {
   try {
-    // Extracts the required data from the request body.
+    // Extract the required data from the request body.
     const { taskNo, RoomNo, userId, taskType, taskDate, taskTime, Notes } =
       req.body;
 
-    // Finds the reservation ID for the given room and date.
+    // Find the reservation ID for the given room and date.
     const reservation = await Reservations.findOne({
       attributes: ["id"],
       include: [
@@ -216,10 +140,10 @@ router.put("/", async (req, res) => {
       },
     });
 
-    // Extracts the reservation ID from the reservation object.
+    // Extract the reservation ID from the reservation object.
     const { id } = reservation;
 
-    // Updates the task allocation record with the given task number with the provided details and reservation ID in the database.
+    // Update the task allocation record with the given task number
     await TaskAllocation.update(
       {
         RoomNo,
@@ -240,26 +164,61 @@ router.put("/", async (req, res) => {
   }
 });
 
-// retrieve only the room number
-// router.get("/taskDetails", async (req, res) => {
+//Automation of Task Allocation
+// router.get("/autoSchedule", async (req, res) => {
 //   try {
-//     const rooms = await Rooms.findAll({
-//       attributes: ["RoomNo"],
+//     const curr = new Date();
+//     const date = curr.toISOString().substring(0, 10);
+
+//     //fetch the reservations for today's date
+//     const checkOuts = await Reservations.findAll({
+//       attributes: ["id"],
+//       where: {
+//         CheckOut: { [Op.eq]: "2023-04-30" },
+//       },
 //     });
-//     console.log(rooms);
-//     const roomNumbers = rooms.map((room) => room.RoomNo);
-//     res.json(roomNumbers);
+
+//     let checkOutRoomDetails = [];
+
+//     //
+//     await Promise.all(
+//       //find the rooms for each reservations
+//       checkOuts.map(async (room) => {
+//         const checkOutRooms = await ReservationRoom.findAll({
+//           attributes: ["RoomRoomNo"],
+//           where: {
+//             ReservationId: { [Op.eq]: room.id },
+//           },
+//         });
+
+//         //create an array containing room numbers
+//         checkOutRooms.map(({ RoomRoomNo }) => {
+//           checkOutRoomDetails.push(RoomRoomNo);
+//         });
+//       })
+//     );
+
+//     for (const RoomNo of checkOutRoomDetails) {
+//       //fetch the lowest task count
+//       const roomBoy = await TaskCount.findOne({
+//         order: [["taskCount", "ASC"]],
+//       });
+
+//       const { userId, taskCount } = roomBoy;
+
+//       console.log(userId, taskCount);
+
+//       await TaskCount.update(
+//         {
+//           taskCount: taskCount + 1,
+//         },
+//         { where: { userId: userId } }
+//       );
+//     }
 //   } catch (err) {
 //     console.error(err.message);
 //     res.status(500).send("Server Error");
 //   }
-// });
-
-// router.post("/", async (req, res) => {
-//   console.log("call");
-//   const task = req.body;
-//   await TaskAllocation.create(task);
-//   res.json(task);
 // });
 
 module.exports = router;

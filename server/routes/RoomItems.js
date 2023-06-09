@@ -31,4 +31,42 @@ router.get("/roomTypes", async (req, res) => {
   }
 });
 
+router.post("/", async (req, res) => {
+  try {
+    // Extract the required data from the request body.
+    const { RoomItemNo, RoomItemName, Cost } = req.body;
+
+    // Create a new room item record with the given details.
+    const newItem = await RoomItems.create({
+      RoomItemNo,
+      RoomItemName,
+      Cost,
+    });
+
+    res.status(201).json({ newItem });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to create Item" });
+  }
+});
+
+// router.post("/", async (req, res) => {
+//   try {
+//     const { RoomItemNo, RoomItemName, Cost, roomTypes } = req.body;
+//     console.log("asdjfdb");
+//     console.log(RoomItemNo);
+//     const newItem = await RoomItems.create({
+//       RoomItemNo,
+//       RoomItemName,
+//       Cost,
+//     });
+
+//     console.log(newItem);
+//     res.status(201).json({ newItem });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Failed to create task" });
+//   }
+// });
+
 module.exports = router;

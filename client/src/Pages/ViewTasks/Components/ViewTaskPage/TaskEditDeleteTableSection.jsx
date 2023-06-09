@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import style from "./RBTaskViewstyle.module.css";
-import { getTaskData } from "./HKDummy";
 import axios from "axios";
 import Table from "../../../General/Table/Table";
 
@@ -27,28 +26,33 @@ const TaskEditDeleteTableSection = () => {
       sortable: true,
     },
     {
-      name: "ROOM-NUMBER",
-      selector: (row) => row.ReservationNo,
+      name: "ROOM-ID",
+      selector: (row) => row.RoomNo,
       sortable: true,
     },
     {
-      name: "ROOM-BOY",
+      name: "USER-ID",
       selector: (row) => row.userId,
       sortable: true,
     },
     {
+      name: "USER-NAME",
+      selector: (row) => row.User.FirstName,
+      sortable: true,
+    },
+    {
       name: "TASK-TYPE",
-      selector: (row) => row.TaskType,
+      selector: (row) => row.taskType,
       sortable: true,
     },
     {
       name: "DATE",
-      selector: (row) => row.TaskDate,
+      selector: (row) => row.taskDate,
       sortable: false,
     },
     {
       name: "TIME",
-      selector: (row) => row.TaskTime,
+      selector: (row) => row.taskTime,
       sortable: false,
     },
     {

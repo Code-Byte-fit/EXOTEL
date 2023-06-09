@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import style from "./RepairItemsStyle.module.css";
+import style from "./RoomItemsStyle.module.css";
 import ItemAddSection from "./RoomItemsAddSection";
 import ItemEditDeleteTableSection from "./RoomItemEditDeleteTableSection";
 

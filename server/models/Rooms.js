@@ -41,7 +41,7 @@ module.exports = (sequelize, Datatypes) => {
     Rooms.belongsToMany(models.Reservations, { through: "ReservationRoom" });
     Rooms.belongsTo(models.RoomTypes, { foreignKey: "TypeName" });
     Rooms.hasMany(models.TaskAllocation, { foreignKey: "RoomNo" });
-    Rooms.hasMany(models.RepairReq, { foreignKey: "RoomNo" });
+    Rooms.hasMany(models.RepairRequest, { foreignKey: "RoomNo" });
   };
 
   return Rooms;

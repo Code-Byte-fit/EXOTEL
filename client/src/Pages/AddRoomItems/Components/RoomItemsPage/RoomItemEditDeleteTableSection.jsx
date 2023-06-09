@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import style from "../RepairItemsPage/RepairItemsStyle.module.css";
+import style from "./RoomItemsStyle.module.css";
 import axios from "axios";
 import Table from "../../../General/Table/Table";
 import { BsPencil, BsTrash } from "react-icons/bs";

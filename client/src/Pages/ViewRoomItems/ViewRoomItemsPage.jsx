@@ -1,11 +1,11 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
-import Content from "./Components/RepairItemsPage/Content";
 import Header from "./Components/Header/Header";
-import style from "../RepairItems/Components/RepairItemsPage/RepairItemsStyle.module.css";
+import Content from "./Components/ViewRoomItems/Content";
+import style from "./Components/ViewRoomItems/RoomItemViewstyle.module.css";
 
-const RepairItemsPage = () => {
+const ViewRoomItems = () => {
   return (
     <div className={style.container}>
       <Header />
@@ -14,4 +14,4 @@ const RepairItemsPage = () => {
   );
 };
 
-export default RepairItemsPage;
+export default ViewRoomItems;
