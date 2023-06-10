@@ -1,0 +1,99 @@
+.header{
+    display: flex;
+    justify-content: space-between;
+}
+
+.heading{
+    font-size: 2.5rem;
+    margin: 0 0 0 2vw;
+}
+
+.editCont{
+    height: 220%;
+    width: 105%;
+    background-color:white;
+    border-radius: 8px;
+    position: relative;
+    right: 2.5%;
+    bottom: 60%;
+}
+
+.editHeading{
+    font-size: 1.4rem;
+    padding: 2% 0 0 0;
+}
+
+.inputCont,.lowerCont,.confirmBtnCont{
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 3% auto;
+}
+
+.lowerCont{
+    gap: 1vh;
+    margin: 5% auto;
+    position: relative;
+    
+}
+
+.country{
+    text-align: left;
+    width:100%;
+}
+
+.country label{
+    margin: 0 0 1vh 0;
+}
+
+.editBtn{
+    padding: 2.2% 2%;
+    font-size: 0.7rem;
+    color: #4D5949;
+    background: white;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    width: clamp(3vw,12.2vw,12.2vw);
+}
+
+.cancelBtn,.confirmBtn  {
+    padding: 3%;
+    font-size: 0.9rem;
+}
+
+.cancelBtn{
+    border:1px solid #4D5949;
+}
+
+.confirmBtnCont{
+    margin:10% auto;
+}
+
+.confirmBtn{
+    background:#4D5949;
+    color: white;
+}
+
+.popup{
+    position: relative;
+    display: grid;
+    height: 100%;
+    align-items: center;
+}
+
+.exclamation{
+    position: absolute;
+    top: -7vh;
+    left: 11.5vw;
+    width: 12vw;
+    height: 12vh;
+}
+
+.popup span{
+    font-size: 1.2rem;
+    margin: 8vh 0 0 0;
+}
+
+.popup button{
+    justify-self: center;
+}

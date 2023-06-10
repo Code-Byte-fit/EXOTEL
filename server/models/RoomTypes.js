@@ -1,37 +1,50 @@
-module.exports = (sequelize, Datatypes) => {
+module.exports = (sequelize, DataTypes) => {
   const RoomTypes = sequelize.define(
     "RoomTypes",
     {
-      TypeName: {
-        type: Datatypes.STRING,
+      RoomTypeID: {
+        type: DataTypes.INTEGER,
         allowNull: false,
+        autoIncrement: true,
         primaryKey: true,
       },
+      TypeName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      View: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       NoOfBeds: {
-        type: Datatypes.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
       },
       sqFeet: {
-        type: Datatypes.STRING,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       StandardCharge: {
-        type: Datatypes.FLOAT,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       AddInfo: {
-        type: Datatypes.STRING,
+        type: DataTypes.STRING,
         allowNull: true,
       },
     },
     {
       timestamps: false,
+      uniqueKeys: {
+        uniqueRoomTypeAndViews: {
+          fields: ["TypeName", "View"],
+        },
+      },
     }
   );
 
   RoomTypes.associate = (models) => {
-    RoomTypes.hasMany(models.Rooms, { foreignKey: "TypeName" });
-    RoomTypes.belongsToMany(models.RoomItems, { through: "ItemRoomTypes" });
+    RoomTypes.hasMany(models.Rooms, { foreignKey: "RoomTypeID" });
   };
 
   return RoomTypes;

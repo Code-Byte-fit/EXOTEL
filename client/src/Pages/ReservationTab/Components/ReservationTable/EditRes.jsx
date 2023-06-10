@@ -1,9 +1,22 @@
-import React from 'react'
+import React, { useContext} from 'react'
+import {AppContext} from "../../../../Helpers/AppContext"
 import {Formik,Form,Field} from "formik"
+import axios from "axios"
 import Input from "../../../General/Inputs/Inputs"
 import style from "../Style.module.css"
 
 export default function EditRes(props) {
+  const {host}=useContext(AppContext)
+  const handleEdit=(data,success)=>{
+    success?
+    axios.put(`${host}/reservations`,data).then((res)=>{
+      props.setIsDone(true)
+      props.setSuccess(success);
+    }):
+      props.setIsDone(true);
+      props.setSuccess(success);
+  }
+  
   const Status = [
     { key: 'active', value: 'active' },
     { key: 'cancelled', value: 'cancelled' },
@@ -43,11 +56,11 @@ const Sources = [
                         <Field name="Source" component={Input} label="Source" type="select" options={Sources} id="source"/>
                       </span>
                       </div>
-                      
-                      
                       <div className={style.confirmBtnCont}>
-                        <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
-                        <button type='button' className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
+                        <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}
+                        onClick={()=>{handleEdit(values,false)}}>Cancel</button>
+                        <button type='button' className={`${style.editBtn} ${style.confirmBtn}`} 
+                        onClick={()=>{handleEdit(values,true)}}>Confirm</button>
                       </div>
                       </div> 
                   </Form>

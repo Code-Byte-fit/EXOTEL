@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState,useContext} from 'react'
+import {AppContext} from "../../../Helpers/AppContext"
 import axios from 'axios';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
@@ -7,6 +8,7 @@ import successIcon from "../../../Assets/Images/Success.png"
 import style from "./Style.module.css"
 
 export default function ConfirmRegistration(props) {
+  const {host}=useContext(AppContext)
   const navigate = useNavigate();
   const [open, setOpen] =useState(false);
   const [isUserNameValid, setIsUserNameValid] = useState(true);
@@ -14,7 +16,11 @@ export default function ConfirmRegistration(props) {
   
   const handleSubmit = async (values) => {
     try {
-      const response=await axios.post('http://localhost:3001/register', values);
+      const response=await axios.post(`${host}/register/${values.userName}`, values, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
       setIsUserNameValid(true);
       setIsConfirmed(true)
       

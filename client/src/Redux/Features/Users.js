@@ -1,27 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios"
+import { createSlice } from '@reduxjs/toolkit';
 
-export const usersSlice = createSlice({
-  name: "users",
-  initialState: { value: [],isUserNameValid: true},
+export const userRoleSlice = createSlice({
+  name: 'userRole',
+  initialState: {
+    value: localStorage.getItem('userRole') || '',
+  },
   reducers: {
-    addUser: (state, action) => {
-      axios.post("http://localhost:3001/register", action.payload)
-        .then(response => {
-          console.log(response.data);
-          state.isUserNameValid = true;
-        })
-        .catch(error => {
-          state.isUserNameValid = false;
-          console.log(state.isUserNameValid);
-          
-        });
+    setUserRole: (state, action) => {
+      state.value = action.payload;
+      localStorage.setItem('userRole', action.payload);
     },
-    setIsUserNameValid: (state) => {
-        state.isUserNameValid = true;
-      },
-
-  }
+  },
 });
 
-export default usersSlice.reducer;
+export const { setUserRole } = userRoleSlice.actions;
+
+export const selectUserRole = state => state.userRole.value;
+
+export default userRoleSlice.reducer;

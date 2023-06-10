@@ -38,16 +38,10 @@ module.exports = (sequelize, Datatypes) => {
     }
   );
 
-  Users.hasOne(sequelize.models.UserAccounts, {
-    foreignKey: {
-      name: "userId",
-      unique: true,
-    },
-    as: "userAccount",
-  });
-
   Users.associate = (models) => {
-    Users.hasMany(models.TaskAllocation, { foreignKey: "userId" });
+    Users.hasOne(models.UserAccounts, {
+      foreignKey: { name: "userId", unique: true },
+    });
   };
 
   return Users;

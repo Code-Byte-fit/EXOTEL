@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useState, useEffect } from "react";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -6,9 +6,11 @@ import {
   RouterProvider,
   Outlet,
 } from "react-router-dom";
+import { AppContext } from "./Helpers/AppContext";
+import jwtDecode from "jwt-decode";
+import axios from "axios";
 import Header from "./Pages/General/Header/Header";
 import ReservationTab from "./Pages/ReservationTab/ReservationTab";
-import Reservations from "./Pages/Reservations/Reservations";
 import CreateRes from "./Pages/CreateReservation/CreateRes";
 import ViewRooms from "./Pages/NewRooms/ViewRooms/ViewRoomList";
 import Rooms from "./Pages/NewRooms/Rooms";
@@ -20,49 +22,137 @@ import RoomTypes from "./Pages/RoomTypes/Types";
 import RegisterUser from "./Pages/RegisterUser/RegisterUser";
 import Login from "../src/Pages/LoginPage/Login";
 import ViewRoomTypes from "./Pages/RoomTypes/ViewRoomTypes/ViewRoomTypes";
+import Guests from "./Pages/Guests/Guests";
 import AdminDash from "./Pages/Dashboard/Admin/Admin";
-import TaskPage from "./Pages/AddTasks/TaskPage";
-import ViewTaskPage from "./Pages/ViewTasks/ViewTaskPage";
-import RoomItems from "./Pages/AddRoomItems/RoomItemsPage";
-import ViewRoomItems from "./Pages/ViewRoomItems/ViewRoomItemsPage";
-import RepairRequests from "./Pages/AddRepairRequests/AddRepairRequestPage";
+import FODash from "./Pages/Dashboard/FrontOffice/FOmanager";
+import ReceptionDash from "./Pages/Dashboard/Receptionist/Receptionist";
+import CashierDash from "./Pages/Dashboard/Cashier/Cashier";
+import HKDash from "./Pages/Dashboard/HKManager/HKmanager";
+import Users from "./Pages/Users/Users";
+import Profile from "./Pages/Profile/Profile";
+import Calender from "./Pages/Calender/Calender";
+import Calender2 from "./Pages/Calender/Calender2";
 
 export default function App() {
+  const host = `${window.location.protocol}//${window.location.hostname}:3001`;
+  const [authState, setAuthState] = useState({
+    userAccountId: 0,
+    userName: "",
+    FirstName: "",
+    LastName: "",
+    userRole: "",
+    proPic: "",
+    country: "",
+    email: "",
+    phone: "",
+    status: false,
+  });
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      setAuthState({ ...authState, status: false });
+      router.navigate("/login");
+    } else {
+      const decodedToken = jwtDecode(accessToken);
+      axios
+        .get(`http://localhost:3001/userAccounts/${decodedToken.userAccountId}`)
+        .then((response) => {
+          setAuthState({
+            userAccountId: response.data.userAccountId,
+            userName: response.data.userName,
+            FirstName: response.data.User.FirstName,
+            LastName: response.data.User.LastName,
+            userRole: response.data.User.Role,
+            proPic: response.data.proPic,
+            country: response.data.User.Country,
+            email: response.data.User.Email,
+            phone: response.data.User.PhoneNumber,
+            status: true,
+          });
+        });
+    }
+  }, []);
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
         <Route path="/" element={<Root />}>
-          <Route path="/createReservation" element={<CreateRes />} />
-          <Route path="/reservationTab" element={<ReservationTab />} />
-          <Route path="/viewRooms" element={<ViewRooms />} />
-          <Route path="/viewPromotions" element={<ViewPromotions />} />
-          <Route path="/rooms" element={<Rooms />} />
-          <Route path="/admin" element={<AdminDash />} />
-          <Route path="/promotion" element={<Promotion />} />
-          <Route path="/addons" element={<AddOns />} />
-          <Route path="/roomtypes" element={<RoomTypes />} />
-          <Route path="/viewRooms" element={<ViewRooms />} />
-          <Route path="/viewPromotions" element={<ViewPromotions />} />
-          <Route path="/viewaddons" element={<ViewAddOns />} />
-          <Route path="/viewroomtypes" element={<ViewRoomTypes />} />
-          <Route path="/reservations" element={<Reservations />} />
-          <Route path="/register" element={<RegisterUser />} />
-          <Route path="/addTasks" element={<TaskPage />} />
-          <Route path="/viewTasks" element={<ViewTaskPage />} />
-          <Route path="/roomItems" element={<RoomItems />} />
-          <Route path="/viewRoomItems" element={<ViewRoomItems />} />
-          <Route path="/repairRequests" element={<RepairRequests />} />
+          {authState.status && authState.userRole === "Administrator" && (
+            <>
+              <Route path="/dashBoard" element={<AdminDash />} />
+              <Route path="/rooms" element={<Rooms />} />
+              <Route path="/promotion" element={<Promotion />} />
+              <Route path="/addons" element={<AddOns />} />
+              <Route path="/roomtypes" element={<RoomTypes />} />
+              <Route path="/register" element={<RegisterUser />} />
+              <Route path="/userlist" element={<Users />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/calender" element={<Calender />} />
+              <Route path="/guests" element={<Guests />} />
+              <Route path="/reservationTab" element={<ReservationTab />} />
+            </>
+          )}
+          {authState.status && authState.userRole === "FOManager" && (
+            <>
+              <Route path="/dashBoard" element={<FODash />} />
+              <Route path="/viewRooms" element={<ViewRooms />} />
+              <Route path="/viewPromotions" element={<ViewPromotions />} />
+              <Route path="/viewaddons" element={<ViewAddOns />} />
+              <Route path="/viewroomtypes" element={<ViewRoomTypes />} />
+              <Route path="/reservationTab" element={<ReservationTab />} />
+              <Route path="/profile" element={<Profile />} />
+            </>
+          )}
+          {authState.status && authState.userRole === "Receptionist" && (
+            <>
+              <Route path="/dashBoard" element={<ReceptionDash />} />
+              <Route path="/createReservation" element={<CreateRes />} />
+              <Route path="/guests" element={<Guests />} />
+              <Route path="/reservationTab" element={<ReservationTab />} />
+              <Route path="/viewRooms" element={<ViewRooms />} />
+              <Route path="/viewPromotions" element={<ViewPromotions />} />
+              <Route path="/viewaddons" element={<ViewAddOns />} />
+              <Route path="/viewroomtypes" element={<ViewRoomTypes />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/calender" element={<Calender />} />
+            </>
+          )}
+          {authState.status && authState.userRole === "Cashier" && (
+            <>
+              <Route path="/dashBoard" element={<CashierDash />} />
+              <Route path="/guests" element={<Guests />} />
+              <Route path="/reservationTab" element={<ReservationTab />} />
+              <Route path="/viewRooms" element={<ViewRooms />} />
+              <Route path="/viewPromotions" element={<ViewPromotions />} />
+              <Route path="/viewaddons" element={<ViewAddOns />} />
+              <Route path="/viewroomtypes" element={<ViewRoomTypes />} />
+              <Route path="/profile" element={<Profile />} />
+            </>
+          )}
+          {authState.status && authState.userRole === "HKManager" && (
+            <>
+              <Route path="/dashBoard" element={<HKDash />} />
+              <Route path="/guests" element={<Guests />} />
+              <Route path="/reservationTab" element={<ReservationTab />} />
+              <Route path="/viewRooms" element={<ViewRooms />} />
+              <Route path="/viewPromotions" element={<ViewPromotions />} />
+              <Route path="/viewaddons" element={<ViewAddOns />} />
+              <Route path="/viewroomtypes" element={<ViewRoomTypes />} />
+              <Route path="/profile" element={<Profile />} />
+            </>
+          )}
         </Route>
-        <Route path="/login" element={<Login />} />
+        {!authState.status && <Route path="/login" element={<Login />} />}
         <Route path="*" element={<>Page Not Found</>} />
       </>
     )
   );
 
   return (
-    <div>
+    <AppContext.Provider value={{ host, authState, setAuthState }}>
       <RouterProvider router={router} />
-    </div>
+    </AppContext.Provider>
   );
 }
 

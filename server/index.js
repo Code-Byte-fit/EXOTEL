@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 
 app.use(express.json());
+app.use(express.static("./Assets"));
 app.use(cors());
 
 const db = require("./models");
@@ -32,17 +33,8 @@ app.use("/promotions", promotionRouter);
 const roomTypenRouter = require("./routes/RoomTypes");
 app.use("/roomtypes", roomTypenRouter);
 
-const taskRouter = require("./routes/Tasks");
-app.use("/tasks", taskRouter);
-
 const addOnRouter = require("./routes/Addon");
 app.use("/addon", addOnRouter);
-
-const roomItemRouter = require("./routes/RoomItems");
-app.use("/roomItems", roomItemRouter);
-
-const repairRequestRouter = require("./routes/Repairs");
-app.use("/repairs", repairRequestRouter);
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {

@@ -1,30 +1,37 @@
-import React, { useState } from "react";
+import React,{useContext} from "react";
 import axios from "axios"; 
 import style from '../components/Login.module.css'
 import {Formik,Form,Field,ErrorMessage} from 'formik'
 import Input from '../../General/Inputs/Inputs'
 import * as Yup from 'yup' 
 import { useNavigate } from 'react-router-dom';
+import {AppContext} from "../../../Helpers/AppContext"
+
 
 function FormOne(props){
-    // const [userName, setUsername] = useState([]); // define setListOfLogin
-    // const [passWord, setPassword] = useState([]); // define setListOfLogin
-    
     const navigate = useNavigate();
-
-    const initialValues = {
-        userName: "",
-        password: "",
-    };
+    const {host,setAuthState}=useContext(AppContext)
+    const initialValues = {userName: "",password: ""};
 
     const onSubmit = (data) => {
-        axios.post("http://localhost:3001/userAccounts/login",data).then((response) =>{
+        axios.post(`${host}/userAccounts/login`,data).then((response) =>{
             if(response.data.error) {
                 alert(response.data.error);
             }else{
-                sessionStorage.setItem("accessToken", response.data);
-                console.log(response.data)
-                navigate('/');
+                localStorage.setItem("accessToken", response.data.token);
+                setAuthState({
+                    userAccountId:response.data.userAccountId,
+                    userName:response.data.userName,
+                    FirstName:response.data.FirstName,
+                    LastName:response.data.LastName,
+                    userRole:response.data.userRole,
+                    proPic:response.data.proPic,
+                    country:response.data.country,
+                    email:response.data.Email,
+                    phone:response.data.Phone,
+                    status:true,
+                })
+                navigate('/dashBoard');
             }
             
         });
@@ -48,10 +55,6 @@ function FormOne(props){
                 label = "User Name"
                 type = "text"
                 width = "20vw"
-                // value={userName}
-                // onChange={(event) =>{
-                //     setUsername(event.target.value);
-                // }}
                 />
                 
                 <ErrorMessage name="userName" component="span"/>
@@ -59,11 +62,8 @@ function FormOne(props){
                 <Field name="password"
                 component = {Input}
                 label = "Password"
-                type = "text"
+                type = "password"
                 width = "20vw"
-                // onChange={(event) =>{
-                //     setPassword(event.target.value);
-                // }}
                 />
                 <ErrorMessage name="password" component="span"/>
                 </div>
@@ -75,12 +75,6 @@ function FormOne(props){
         </Formik>
 
 
-
-    {/* <label className={style.lbl2}>Welcome Back,</label>
-    <TextInput placeholder="Email" type="text"/>
-    <TextInput placeholder="Password" type="password" /> */}
-    {/* <input type="checkbox" className={style.check}/>
-    <span className={style.remember}>Remember Me</span> */}
     
 </div>
 

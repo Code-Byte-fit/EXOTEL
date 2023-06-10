@@ -1,37 +1,33 @@
-//Nethmi
 module.exports = (sequelize, Datatypes) => {
-  const TaskAllocation = sequelize.define("TaskAllocation", {
-    taskNo: {
-      type: Datatypes.INTEGER,
-      autoIncrement: true,
-      allowNull: false,
-      primaryKey: true,
+  const TaskAllocations = sequelize.define(
+    "TaskAllocations",
+    {
+      taskId: {
+        type: Datatypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      description: {
+        type: Datatypes.STRING,
+        allowNull: false,
+      },
+      taskDate: {
+        type: Datatypes.DATEONLY,
+        allowNull: false,
+      },
+      completeStatus: {
+        type: Datatypes.STRING,
+        allowNull: false,
+      },
     },
-    taskType: {
-      type: Datatypes.ENUM("laundry", "minibar", "clean"),
-      allowNull: false,
-    },
-    taskDate: {
-      type: Datatypes.DATEONLY,
-      allowNull: false,
-    },
-    taskTime: {
-      type: Datatypes.TIME,
-      allowNull: false,
-    },
-    Notes: {
-      type: Datatypes.STRING,
-      allowNull: false,
-    },
-  });
-
-  TaskAllocation.associate = (models) => {
-    TaskAllocation.belongsTo(models.Reservations, {
-      foreignKey: "ReservationId",
-    });
-    TaskAllocation.belongsTo(models.Rooms, { foreignKey: "RoomNo" });
-    TaskAllocation.belongsTo(models.Users, { foreignKey: "userId" });
+    {
+      timestamps: false,
+    }
+  );
+  TaskAllocations.associate = (models) => {
+    TaskAllocations.belongsTo(models.Reservations, { foreignKey: "Id" });
+    TaskAllocations.hasMany(models.Laundry, { foreignKey: "taskId" });
+    TaskAllocations.hasMany(models.MiniBarRestock, { foreignKey: "taskId" });
   };
-
-  return TaskAllocation;
+  return TaskAllocations;
 };

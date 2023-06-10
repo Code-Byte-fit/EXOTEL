@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import Input from '../General/Inputs/Inputs';
-import { FileInput } from '../General/Inputs/Inputs'
 import ConfirmRegistration from './Components/ConfirmRegistration';
+import Combobox from "react-widgets/Combobox";
+import options from "./Components/CountryList.json"
 import uploadIcon from "../../Assets/Images/Upload.png"
 import style from './Components/Style.module.css';
 
@@ -11,7 +12,6 @@ export default function RegisterUser() {
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required('required'),
     lastName: Yup.string().required('required'),
-    birthDate: Yup.date().required('required'),
     country: Yup.string().required('required'),
     email: Yup.string().email('Invalid email').required('required'),
     phoneNumber: Yup.string().required('required'),
@@ -23,13 +23,14 @@ export default function RegisterUser() {
   const initialValues={
     firstName: '',
     lastName: '',
-    birthDate: '',
+    userGroup:'',
     country: '',
     email: '',
     phoneNumber: '',
     userName: '',
     password: '',
     confirmPassword: '',
+    proPic:'',
   }
 
   const userGroups=[
@@ -37,14 +38,13 @@ export default function RegisterUser() {
     {key:'Administrator',value:'Administrator'},
     {key:'FO Manager',value:'FOManager'},
     {key:'HK Manager',value:'HKManager'},
-    {key:'Receiptionist',value:'Receiptionist'},
+    {key:'Receptionist',value:'Receptionist'},
     {key:'Cashier',value:'Cashier'},
     {key:'Room-Boy',value:'RoomBoy'},
   ]
 
+  const [selectedFile,setSelectedFile]=useState(null)
   
-  
-
   return (
     <>
       
@@ -53,7 +53,7 @@ export default function RegisterUser() {
       
         <Formik initialValues={initialValues} onSubmit={()=>{}}  validationSchema={validationSchema} >
             {(formikValues) => (
-              <Form>
+              <Form encType="multipart/form-data">
               <div className={style.mainCont}>
               <span className={style.mainHeading}>Register User</span>
                 <div className={style.formContainer}>
@@ -74,8 +74,14 @@ export default function RegisterUser() {
                     <Field name="userGroup" component={Input} label="User-Group" type="select" id="userGroup" options={userGroups}/>
                     <ErrorMessage name="userGroup" component="small" className={style.errorMsg} />
                   </span>
-                  <span className={style.inputContainer}>
-                    <Field name="country" component={Input} label="Country" type="text" />
+                  <span className={style.country}>
+                        <label for="country">Country</label>
+                        <Field name="country" id="country" component={Combobox}  defaultValue="Sri Lanka" data={options} hideEmptyPopup
+                          value={formikValues.values.country}
+                          onChange={(value) => {
+                            formikValues.setFieldValue("country", value);
+                          }}
+                        />
                     <ErrorMessage name="country" component="small" className={style.errorMsg} />
                   </span>
                   </div>
@@ -110,19 +116,29 @@ export default function RegisterUser() {
                   </span>
                   </div>
                   <div className={style.fileInputCont}>
-                    <Field name="ProfilePic" component={FileInput} label="Upload Profile-Picture" id="propic" img={uploadIcon}/>
+                    <label for="proPic" className={style.proPicCont}>
+                          <img src={uploadIcon}/>
+                          <span>Profile-Picture</span>
+                    </label>
+                    {selectedFile!==null &&
+                      <div className={style.selectFileCont}>
+                        <span>Selected File:</span>
+                        <span className={style.fileName}>{selectedFile.name}</span>
+                      </div>
+                    }
+                      <input id="proPic" name="proPic" type="file" style={{display:'none'}}
+                      onChange={(event) => {
+                      formikValues.setFieldValue("proPic", event.currentTarget.files[0]);
+                      setSelectedFile(event.target.files[0])
+                      }}/>
                   </div>
-                  
                 </div>
                 </div>
                 <ConfirmRegistration values={formikValues.values} isValid={formikValues.isValid && formikValues.dirty}/>
               </div>
-             
-             
-              </Form>
+            </Form>
             )}
           </Formik>
-      
       </div>
     </>
   );

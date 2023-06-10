@@ -4,11 +4,10 @@ import style from "./AddOns.module.css";
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
-import ConfirmationPopup from '../../NewRooms/components/ConfirmationPopup';
 
 function FormOne(props) {
     const [showConfirmation, setShowConfirmation] = useState(false);
- 
+
     const initialValues = {
         AddOn: '',
         Unit: '',
@@ -20,7 +19,7 @@ function FormOne(props) {
         Charge: Yup.number().required("Required"),
         Unit: Yup.string().required("Required"),
         AddInfo: Yup.string(),
-      });
+    });
 
 
 
@@ -31,40 +30,40 @@ function FormOne(props) {
 
             <label className={style.labelOne}>Add Add-On</label>
 
-            <Formik initialValues={initialValues} onSubmit={props.makeReq}  validationSchema={validationSchema} >
+            <Formik initialValues={initialValues} onSubmit={props.makeReq} validationSchema={validationSchema} >
                 <Form>
 
                     <div className={style.div1}>
-                    
-                    <span>  
-                        <Field name="AddOn"
-                            component={Input}
-                            label="Add-On"
-                            type="text"
-                       
-                            width="13vw" />
-                      <ErrorMessage name="AddOn" component="div"  className={style.error}/>
-                    </span>
 
-                    <span>  
-                        <Field name="Unit"
-                            component={Input}
-                            label="Unit"
-                            type="text"
-                      
-                            width="13vw" />
-                              <ErrorMessage name="Unit" component="div"  className={style.error}/>
-</span>
- <span>  
-                        <Field name="Charge"
-                            component={Input}
-                            label="Charge"
-                            type="text"
-                       
-                            width="13vw" />
-                              <ErrorMessage name="Charge" component="div"  className={style.error}/>
-</span>
- 
+                        <span className={style.box}>
+                            <Field name="AddOn"
+                                component={Input}
+                                label="Add-On"
+                                type="text"
+
+                                width="13vw" />
+                            <ErrorMessage name="AddOn" component="span" className={style.error} />
+                        </span>
+
+                        <span className={style.box}>
+                            <Field name="Unit"
+                                component={Input}
+                                label="Unit"
+                                type="text"
+
+                                width="13vw" />
+                            <ErrorMessage name="Unit" component="span" className={style.error} />
+                        </span>
+                        <span className={style.box}>
+                            <Field name="Charge"
+                                component={Input}
+                                label="Charge"
+                                type="text"
+
+                                width="13vw" />
+                            <ErrorMessage name="Charge" component="span" className={style.error} />
+                        </span>
+
                     </div>
 
                     <div className={style.div2}>
@@ -75,11 +74,11 @@ function FormOne(props) {
                             rows="4"
                             cols="150" />
                     </div>
-                    <span className={style.createBtn}> 
-                    <button  className={style.buttonOne}  type="submit">Create Add On</button>
-                    </span> 
-        
-             
+                    <span className={style.createBtn}>
+                        <button className={style.buttonOne} type="submit">Create Add On</button>
+                    </span>
+
+
 
                 </Form>
             </Formik>

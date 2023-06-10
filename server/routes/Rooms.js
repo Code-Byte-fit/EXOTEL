@@ -14,11 +14,7 @@ router.get("/", async (req, res) => {
   res.json(listOfRooms);
 });
 
-router.get("/", async (req, res) => {
-  const listOfRooms = await Rooms.findAll();
-  res.json(listOfRooms);
-});
-
+//get free rooms for booking
 router.get(
   "/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime",
   async (req, res) => {
@@ -67,11 +63,10 @@ router.get(
         },
       });
 
-      // return the available rooms to the user
       res.json(availableRooms);
     } catch (err) {
       console.error(err);
-      res.status(500).json({ message: "Internal server error" });
+      res.status(500).json({ message: "Error occured while retrieving rooms" });
     }
   }
 );
@@ -83,20 +78,25 @@ router.post("/", async (req, res) => {
       floor,
       View,
       Status,
-      TypeName,
+      RoomTypeView,
       AdditionalCharges,
       AddInfo,
     } = req.body;
-
+    const typeView = RoomTypeView.split("-");
     // Find the room type with the given TypeName to get the standard charge
-    const roomType = await RoomTypes.findOne({ where: { TypeName } });
+    const roomType = await RoomTypes.findOne({
+      where: {
+        TypeName: typeView[0],
+        View: typeView[1],
+      },
+    });
 
     if (!roomType) {
       return res.status(404).json({ error: "Room type not found" });
     }
 
     // Calculate the base charge by adding the additional charge and standard charge
-    const BaseCharge = roomType.StandardCharge + parseFloat(AdditionalCharges);
+    const TotalCharge = roomType.StandardCharge + parseFloat(AdditionalCharges);
 
     // Create a new room with the calculated base charge
     const room = await Rooms.create({
@@ -104,14 +104,17 @@ router.post("/", async (req, res) => {
       floor,
       View,
       Status,
-      TypeName,
+      RoomTypeView,
       AdditionalCharges,
-      BaseCharge,
+      TotalCharge,
       AddInfo,
     });
 
     res.status(201).json({ room });
   } catch (error) {
+    if (error.name === "SequelizeUniqueConstraintError") {
+      return res.status(400).json({ error: "RoomNo already exists" });
+    }
     console.error(error);
     res.status(500).json({ error: "Failed to create room" });
   }
@@ -128,7 +131,7 @@ router.post("/", async (req, res) => {
 //           [Sequelize.Op.notIn]: reservedRooms
 //         }
 //       },
-//       attributes: ['RoomNo', 'BaseCharge'],
+//       attributes: ['RoomNo', 'TotalCharge'],
 //       include: [
 //         {
 //           model: Reservations,
