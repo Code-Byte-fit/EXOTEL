@@ -189,3 +189,23 @@
 .errInput {
   border: 2px solid red;
 }
+
+.redBadge {
+  border: 1px solid red;
+  background-color: red;
+  color: white;
+  padding: 5px;
+  border-radius: 12px;
+  width: 65px;
+  text-align: center;
+}
+
+.blueBadge {
+  border: 1px solid blue;
+  background-color: blue;
+  color: white;
+  padding: 5px;
+  border-radius: 12px;
+  width: 65px;
+  text-align: center;
+}

@@ -34,11 +34,11 @@ router.get("/roomTypes", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     // Extract the required data from the request body.
-    const { RoomItemNo, RoomItemName, Cost } = req.body;
+    const { RoomItemName, Cost } = req.body;
 
     // Create a new room item record with the given details.
     const newItem = await RoomItems.create({
-      RoomItemNo,
+      // RoomItemNo,
       RoomItemName,
       Cost,
     });

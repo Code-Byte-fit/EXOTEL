@@ -57,7 +57,20 @@ const RepairRequestEditDeleteTableSection = ({ refresh, onEditRequest }) => {
       selector: (row) => row.createdAt.substring(0, 10),
       sortable: false,
     },
-
+    {
+      name: "STATUS",
+      selector: (row) => row.DoneStatus,
+      sortable: false,
+      cell: (row) => (
+        <span
+          className={
+            row.DoneStatus === "Waiting" ? style.redBadge : style.blueBadge
+          }
+        >
+          {row.DoneStatus}
+        </span>
+      ),
+    },
     {
       name: "NOTES",
       selector: (row) => row.Notes,
@@ -81,7 +94,9 @@ const RepairRequestEditDeleteTableSection = ({ refresh, onEditRequest }) => {
 
   return (
     <div className={style.divEditDeleteTableSection}>
-      <div className={style.divTitleEditDelete}>EDIT/CANCEL TASK</div>
+      <div className={style.divTitleEditDelete}>
+        EDIT/CANCEL REPAIR REQUESTS
+      </div>
 
       <div class="class=table-responsive-lg" className={style.divTblEditDelete}>
         <Table

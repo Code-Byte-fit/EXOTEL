@@ -36,7 +36,7 @@ const RoomItemsAddSection = ({ taskToEdit, onRefresh }) => {
         {({ values, handleChange, handleSubmit, isSubmitting }) => (
           <Form>
             <div className={style.divFormRow1}>
-              <div className={style.divInputField1}>
+              {/* <div className={style.divInputField1}>
                 <Field
                   name="RoomItemNo"
                   type="text"
@@ -49,7 +49,7 @@ const RoomItemsAddSection = ({ taskToEdit, onRefresh }) => {
                   component="div"
                   className={style.error}
                 />
-              </div>
+              </div> */}
               <div className={style.divInputField2}>
                 <Field
                   name="RoomItemName"

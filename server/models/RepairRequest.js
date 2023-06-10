@@ -6,6 +6,16 @@ module.exports = (sequelize, Datatypes) => {
       autoIncrement: true,
       primaryKey: true,
     },
+    SentStatus: {
+      type: Datatypes.ENUM("Sent", "Waiting"),
+      allowNull: false,
+      defaultValue: "Waiting",
+    },
+    DoneStatus: {
+      type: Datatypes.ENUM("Done", "Waiting"),
+      allowNull: false,
+      defaultValue: "Waiting",
+    },
     Notes: {
       type: Datatypes.STRING,
       allowNull: false,

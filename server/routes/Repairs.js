@@ -52,17 +52,18 @@ router.get("/repairItemDetails", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     // Extract the required data from the request body.
-    let { RoomNo, RoomItemNo, Notes } = req.body;
-    RoomItemNo = RoomItemNo.substring(0, 1);
+    let { RoomNo, RoomItemNo, DoneStatus, Notes } = req.body;
+    // RoomItemNo = RoomItemNo.substring(0, 1);
 
     // Create a new request record with the given details and reservation ID.
     const newRequest = await RepairRequest.create({
       RoomNo,
       RoomItemNo,
+      DoneStatus,
       Notes,
     });
 
-    res.status(201).json("Updated Successfully");
+    res.status(201).json(newRequest);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to update request" });
@@ -72,14 +73,15 @@ router.post("/", async (req, res) => {
 router.put("/", async (req, res) => {
   try {
     // Extract the required data from the request body.
-    let { RoomNo, RoomItemNo, Notes, RepairRequestNo } = req.body;
-    RoomItemNo = RoomItemNo.substring(0, 1);
+    let { RoomNo, RoomItemNo, DoneStatus, Notes, RepairRequestNo } = req.body;
+    // RoomItemNo = RoomItemNo.substring(0, 1);
 
     // Create a new request record with the given details and reservation ID.
     await RepairRequest.update(
       {
         RoomNo,
         RoomItemNo,
+        DoneStatus,
         Notes,
       },
       { where: { RepairRequestNo: RepairRequestNo } }

@@ -9,6 +9,7 @@ const RepairRequestAddSection = ({ requestToEdit, onRefresh }) => {
   const initialValues = {
     RoomNo: "",
     RoomItemNo: "",
+    DoneStatus: "",
     Notes: "",
   };
 
@@ -25,6 +26,7 @@ const RepairRequestAddSection = ({ requestToEdit, onRefresh }) => {
         RepairRequestNo: requestToEdit.RepairRequestNo,
         RoomNo: requestToEdit.RoomNo,
         RoomItemNo: requestToEdit.RoomItemNo,
+        DoneStatus: requestToEdit.DoneStatus,
         Notes: requestToEdit.Notes,
       };
       setInitValues(updatedValues);
@@ -34,7 +36,7 @@ const RepairRequestAddSection = ({ requestToEdit, onRefresh }) => {
 
   //create request
   const makeReq = async (formData) => {
-    console.log(formData);
+    // console.log(formData);
     await axios.post("http://localhost:3001/repairs/", formData);
     onRefresh();
   };
@@ -88,6 +90,11 @@ const RepairRequestAddSection = ({ requestToEdit, onRefresh }) => {
   const extraOption = { key: "None Selected", value: "" };
   const roomNumberOptions = [extraOption, ...roomNumbers];
   const itemOptions = [extraOption, ...items];
+  const statusOptions = [
+    extraOption,
+    { key: "Waiting", value: "Waiting" },
+    { key: "Done", value: "Done" },
+  ];
 
   const validationSchema = Yup.object().shape({
     RoomNo: Yup.string().required("Required"),
@@ -137,6 +144,24 @@ const RepairRequestAddSection = ({ requestToEdit, onRefresh }) => {
                   />
                   <ErrorMessage
                     name="RoomItemNo"
+                    component="div"
+                    className={style.error}
+                  />
+                </div>
+                <div
+                  className={style.labelRow1s}
+                  style={{ marginLeft: "0.5vw" }}
+                >
+                  <Field
+                    name="DoneStatus"
+                    component={Input}
+                    label="Status"
+                    type="select"
+                    options={statusOptions}
+                    style={{ width: "17.2vw" }}
+                  />
+                  <ErrorMessage
+                    name="DoneStatus"
                     component="div"
                     className={style.error}
                   />

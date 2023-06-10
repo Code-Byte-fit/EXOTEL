@@ -2,9 +2,10 @@
 module.exports = (sequelize, Datatypes) => {
   const RoomItems = sequelize.define("RoomItems", {
     RoomItemNo: {
-      type: Datatypes.STRING,
+      type: Datatypes.INTEGER,
       allowNull: false,
       primaryKey: true,
+      autoIncrement: true,
     },
     RoomItemName: {
       type: Datatypes.STRING,
