@@ -11,6 +11,35 @@ router.get('/',async (req,res)=>{
 })
 
 
+router.get('/:roomNo/status', async (req, res) => {
+  const roomNo = req.params.roomNo;
+
+  try {
+    const room = await Rooms.findOne({
+      where: { RoomNo: roomNo },
+      include: [
+        {
+          model: Reservations,
+          where: {
+            ReservationStatus: ['checked-in', 'active']
+          }
+        }
+      ]
+    });
+
+    if (!room) {
+      return res.status(404).json({ error: 'Room not found' });
+    }
+
+    const reservations = room.Reservations;
+    res.json({ reservations });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to retrieve room reservations' });
+  }
+});
+
+
 //get free rooms for booking
 router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async (req, res) => {
   const checkin = req.params.checkIn;
@@ -32,6 +61,8 @@ router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async 
         ReservationStatus: { [Op.not]: 'cancelled' }, 
       }
     });
+
+  
     
     // retrieve the rooms associated with  reservations 
     const bookedRoomNos = reservations.filter(reservation =>{
@@ -60,18 +91,19 @@ router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async 
   router.post("/", async (req, res) => {
     try {
       const { RoomNo, floor, View, Status, RoomTypeView, AdditionalCharges ,  AddInfo} = req.body;
+
        // Split the RoomTypeView into TypeName and View
       const typeView = RoomTypeView.split('-') 
       // Find the room type with the given TypeName to get the standard charge
       const roomType = await RoomTypes.findOne({ 
-        attributes:['RoomTypeID'],
+        attributes:['RoomTypeID', 'StandardCharge'],
         where: { 
           TypeName: typeView[0],
           View : typeView[1]
         } 
       });
 
-      console.log(roomType)
+      console.log(roomType);
       
       if (!roomType) {
         return res.status(404).json({ error: 'Room type not found' });
@@ -80,6 +112,9 @@ router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async 
       // Calculate the total charge by adding the additional charge and standard charge
       const TotalCharge = roomType.StandardCharge+ parseFloat(AdditionalCharges);
   
+      console.log(TotalCharge);
+      console.log(roomType.StandardCharge);
+      console.log(AdditionalCharges);
       // Create a new room with the calculated total charge
       const room = await Rooms.create({ RoomNo, floor, View, Status, RoomTypeView, AdditionalCharges,TotalCharge ,AddInfo,RoomTypeID:roomType.RoomTypeID });
   

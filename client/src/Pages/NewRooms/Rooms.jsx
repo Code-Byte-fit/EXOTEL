@@ -7,7 +7,7 @@ import style from '../NewRooms/components/Rooms.module.css'
 
 function DisplayFormData() {
   const [listOfRooms, setlistOfRooms] = useState([]);
-
+ 
   const { host } = useContext(AppContext)
   useEffect(() => {
     axios.get(`${host}/rooms`).then((response) => {

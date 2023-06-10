@@ -5,16 +5,21 @@ import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
 import { AppContext } from "../../../Helpers/AppContext"
-
+import { ReactComponent as Exclamation } from "../../../Assets/Images/exclamation.svg";
 function EditAddon(props) {
 
     const { host } = useContext(AppContext);
 
-    const handleEdit = (data) => {
+ 
+    const handleEdit = (data,success) => {
+        success?
         axios.put(`${host}/addon`, data).then((res) => {
-            props.setIsDone(true)
-        })
-    }
+          props.setIsDone(true);
+          props.setSuccess(success);
+        }):
+          props.setIsDone(true);
+          props.setSuccess(success);
+      };
 
     const [initialValues, setInitialValues] = useState({ ...props.values, NewAddOn: props.values.AddOn })
     const validationSchema = Yup.object().shape({
@@ -24,9 +29,14 @@ function EditAddon(props) {
         AddInfo: Yup.string(),
     });
 
+    const temp = false;
+
     return (
 
-        <div className={style.editCont}>
+        <>
+            {temp ?
+            <>
+            <div className={style.editCont}>
             <div className={style.editHeading}>Edit Add-On</div>
             <Formik initialValues={initialValues} onSubmit={handleEdit} validationSchema={validationSchema}>
                 {(formik) => (
@@ -71,8 +81,8 @@ function EditAddon(props) {
                                 cols="150" />
                         </div>
                         <div className={style.confirmBtnCont}>
-                            <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
-                            <button type='submit' className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
+                            <button type='button' className={`${style.editBtn} ${style.cancelBtn}`} onClick={()=>{handleEdit(formik.values,false)}} >Cancel</button>
+                            <button type='button' className={`${style.editBtn} ${style.confirmBtn}`} onClick={()=>{handleEdit(formik.values,true)}} >Confirm</button>
                         </div>
 
                     </Form>
@@ -82,6 +92,22 @@ function EditAddon(props) {
 
 
         </div>
+            </>:
+            <span>
+            <>
+                        <div className={style.confirmModal}>
+                            <Exclamation className={style.exclamation} />
+                            <span className={`${style.confirmHeading} ${style.success}`}>Error!</span>
+                            <span className={style.confirmBody}> This AddOn cannot be edited since it is associated with one or more reservations</span>
+                            <button className={`${style.Btn} ${style.doneBtn}`}>Ok</button>
+                        </div>
+                    </>
+            </span>
+            
+            }
+        </>
+
+       
     )
 }
 

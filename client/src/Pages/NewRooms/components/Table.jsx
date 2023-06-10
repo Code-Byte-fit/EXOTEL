@@ -11,7 +11,8 @@ function Table(props) {
   const [listOfRooms, setlistOfRooms] = useState([]);
   const {host}=useContext(AppContext);
   const [isDone, setIsDone] = useState(false);
-  
+  const [success,setSuccess]=useState(true);
+
   const handleDone=()=>{
     setIsDone(false)
     axios.get(`${host}/rooms`).then((response)=>{
@@ -26,9 +27,6 @@ function Table(props) {
 
     });
   }, []);
-
-
-
 
   const columns = [
     {
@@ -87,7 +85,9 @@ function Table(props) {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete editComponent={<EditRoom  values={row} setIsDone={setIsDone}   />} setlistOfRooms={setlistOfRooms} row={row} editOption  isDone={isDone} handleDone={handleDone}/>
+      cell: (row) => <EditDelete setlistOfRooms={setlistOfRooms} row={row} editOption  isDone={isDone} handleDone={handleDone} success={success}
+        editComponent={<EditRoom  values={row} setIsDone={setIsDone} setSuccess={setSuccess}  />} 
+      />
     },
   ];
 

@@ -12,6 +12,7 @@ import EditType from "./EditType";
 function Table(props) {
   const [listOfRoomTypes, setlistOfRoomTypes] = useState([]);
   const { host } = useContext(AppContext);
+  const [success,setSuccess]=useState(true);
 
   const [isDone, setIsDone] = useState(false);
   
@@ -68,7 +69,9 @@ function Table(props) {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete  editComponent={<EditType  values={row} setIsDone={setIsDone}   />} setlistOfRoomTypes={setlistOfRoomTypes} row={row} editOption  isDone={isDone} handleDone={handleDone}/>
+      cell: (row) => <EditDelete  setlistOfRoomTypes={setlistOfRoomTypes} row={row} editOption  isDone={isDone} handleDone={handleDone}  success={success}
+        editComponent={<EditType  values={row} setIsDone={setIsDone}  setSuccess={setSuccess}  />} 
+      />
     },
   ];
   return (

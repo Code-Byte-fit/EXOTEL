@@ -11,12 +11,15 @@ function EditType(props) {
 
     const { host } = useContext(AppContext);
 
-    const handleEdit = (data) => {
+    const handleEdit = (data,success) => {
+        success?
         axios.put(`${host}/roomtypes`, data).then((res) => {
-            props.setIsDone(true)
-        })
-
-    }
+          props.setIsDone(true);
+          props.setSuccess(success);
+        }):
+          props.setIsDone(true);
+          props.setSuccess(success);
+      };
 
     const [initialValues, setInitialValues] = useState({ ...props.values, NewTypeName: props.values.TypeName })
 
@@ -41,6 +44,8 @@ function EditType(props) {
     { key: "Graden View", value: "Graden View" },
     { key: "Patio View", value: "Patio View" },
     { key: "City View", value: "City View" }]
+
+    const temp = true;
 
     return (
 
@@ -121,8 +126,8 @@ function EditType(props) {
 
 
                         <div className={style.confirmBtnCont}>
-                            <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
-                            <button type='submit' className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
+                            <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}onClick={()=>{handleEdit(formik.values,false)}}>Cancel</button>
+                            <button type='button' className={`${style.editBtn} ${style.confirmBtn}`} onClick={()=>{handleEdit(formik.values,true)}}>Confirm</button>
                         </div>
 
 

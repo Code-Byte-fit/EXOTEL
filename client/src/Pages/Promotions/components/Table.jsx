@@ -13,6 +13,7 @@ function Table(props) {
     const [listOfPromotions, setlistOfPromotions] = useState([]);
     const [isDone, setIsDone] = useState(false);
     const { host } = useContext(AppContext);
+    const [success,setSuccess]=useState(true);
     const handleDone=()=>{
       setIsDone(false)
       axios.get(`${host}/promotions`).then((response)=>{
@@ -115,7 +116,10 @@ function Table(props) {
           },
         {
           selector: row => row,
-          cell: (row) => <EditDelete editComponent={<EditPromo  values={row} setIsDone={setIsDone}   />}  setlistOfPromotions={setlistOfPromotions} row={row} editOption  isDone={isDone} handleDone={handleDone}/>
+          cell: (row) => <EditDelete   setlistOfPromotions={setlistOfPromotions} row={row} editOption  isDone={isDone} handleDone={handleDone} success={success}
+
+editComponent={<EditPromo  values={row} setIsDone={setIsDone} setSuccess={setSuccess}   />}
+          />
         },
     ];
     

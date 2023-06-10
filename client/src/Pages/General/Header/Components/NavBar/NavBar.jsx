@@ -78,6 +78,9 @@ export default function NavBar(props) {
         <NavElement to="/register" icon={dashBoardIcon} desc="Register User" active={active} setActive={setActive}/>
         <NavElement to="/userlist" icon={dashBoardIcon} desc="Users List" active={active} setActive={setActive}/>
       </MultiElement>
+      <NavElement to="/promotion" icon={dashBoardIcon} desc="Promotions" active={active} setActive={setActive}/>
+      <NavElement to="/addons" icon={dashBoardIcon} desc="Add-Ons" active={active} setActive={setActive}/>
+      <NavElement to="/calender" icon={dashBoardIcon} desc="Calender" active={active} setActive={setActive}/>
       {/* <NavElement to="/register" icon={dashBoardIcon} desc="Register User" active={active} setActive={setActive}/>
       
       <NavElement to="/rooms" icon={dashBoardIcon} desc="Rooms" active={active} setActive={setActive}/>

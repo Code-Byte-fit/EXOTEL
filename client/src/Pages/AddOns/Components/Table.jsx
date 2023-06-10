@@ -6,10 +6,10 @@ import AddOnTable from '../../General/Table/Table'
 import EditDelete from "../../General/Table/EditDelete";
 import EditAddon from "./EditAddon";
 
-
 function Table(props) {
   const { host } = useContext(AppContext);
   const [isDone, setIsDone] = useState(false);
+  const [success,setSuccess]=useState(true);
 
   const handleDone = () => {
     setIsDone(false)
@@ -62,7 +62,9 @@ function Table(props) {
 
     {
       selector: row => row,
-      cell: (row) => <EditDelete editComponent={<EditAddon values={row} setIsDone={setIsDone} />} setlistOfAddons={setlistOfAddons} row={row} editOption isDone={isDone} handleDone={handleDone} />
+      cell: (row) => <EditDelete setlistOfAddons={setlistOfAddons} row={row} editOption isDone={isDone} handleDone={handleDone} success={success}
+      editComponent={<EditAddon values={row} setIsDone={setIsDone} setSuccess={setSuccess}  />} 
+       />
     },
   ];
 

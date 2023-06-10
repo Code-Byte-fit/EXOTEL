@@ -27,8 +27,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Guests.associate = (models) => {
     Guests.hasMany(models.Reservations, { foreignKey: 'guestId' });
-    Guests.hasMany(models.GuestEmail, { foreignKey: 'guestId' });
-    Guests.hasMany(models.GuestPhoneNumber, { foreignKey: 'guestId' });
   };
 
   return Guests;
