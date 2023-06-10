@@ -1,29 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import style from "./RoomItemsStyle.module.css";
 import Input from "../../../General/Inputs/Inputs";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { AppContext } from "../../../../Helpers/AppContext";
 
 // const roomTypeOptions = ["single", "double", "suite"];
 
-const RoomItemsAddSection = ({ taskToEdit, onRefresh }) => {
-  const initialValues = {};
+const RoomItemsAddSection = ({ onRefresh }) => {
+  const { host } = useContext(AppContext);
+  const initialValues = {
+    RoomItemName: "",
+    Cost: "",
+  };
 
-  const validationSchema = Yup.object().shape({
-    // roomTypes: Yup.array().min(1, "Please select at least one room type"),
-  });
+  const [initValues, setInitValues] = useState(initialValues);
+
+  useEffect(() => {}, [initValues]);
 
   const makeReq = async (formData) => {
-    await axios.post("http://localhost:3001/roomItems/", formData);
+    // console.log(formData);
+    await axios.post(`${host}/roomItems`, formData);
     onRefresh();
+    setInitValues(initialValues);
   };
 
   const onSubmit = (data) => {
     makeReq(data);
   };
 
-  useEffect(() => {}, []);
+  const validationSchema = Yup.object().shape({
+    RoomItemName: Yup.string().required("Required"),
+    Cost: Yup.number().required("Required"),
+  });
 
   return (
     <div className={style.divAddItemsSection}>
@@ -33,23 +43,9 @@ const RoomItemsAddSection = ({ taskToEdit, onRefresh }) => {
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
-        {({ values, handleChange, handleSubmit, isSubmitting }) => (
+        {({ values }) => (
           <Form>
             <div className={style.divFormRow1}>
-              {/* <div className={style.divInputField1}>
-                <Field
-                  name="RoomItemNo"
-                  type="text"
-                  component={Input}
-                  label="Room Item ID"
-                  width="17vw"
-                />
-                <ErrorMessage
-                  name="RoomItemNo"
-                  component="div"
-                  className={style.error}
-                />
-              </div> */}
               <div className={style.divInputField2}>
                 <Field
                   name="RoomItemName"
@@ -79,33 +75,11 @@ const RoomItemsAddSection = ({ taskToEdit, onRefresh }) => {
                 />
               </div>
             </div>
-            {/* <div className={style.divFormRow2}>
-              <fieldset>
-                <legend className={style.formLegend}>Room Types</legend>
-                {roomType.map((type) => (
-                  <label key={type} style={{ margin: "0 0.5rem" }}>
-                    <Field
-                      type="checkbox"
-                      name="roomTypes"
-                      value={type}
-                      style={{ margin: "0 0.5rem" }}
-                    />
-                    {type.charAt(0).toUpperCase() + type.slice(1)} Room
-                  </label>
-                ))}
-                <ErrorMessage
-                  name="roomTypes"
-                  component="div"
-                  className={style.error}
-                />
-              </fieldset>
-            </div> */}
             <div className={style.divFormRow3}>
               <input
                 type="submit"
                 className={style.btnAddToList}
                 value="Add Item"
-                // disabled={isSubmitting}
               />
             </div>
           </Form>

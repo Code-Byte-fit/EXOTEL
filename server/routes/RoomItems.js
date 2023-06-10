@@ -8,7 +8,7 @@ const { Op, Sequelize } = require("sequelize");
 //   res.json(listOfItems);
 // });
 
-router.get("/itemdetails", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const roomItems = await RoomItems.findAll({});
     res.json(roomItems);
@@ -18,18 +18,18 @@ router.get("/itemdetails", async (req, res) => {
   }
 });
 
-router.get("/roomTypes", async (req, res) => {
-  try {
-    const roomtypes = await RoomTypes.findAll({
-      attributes: ["TypeName"],
-    });
-    console.log(roomtypes);
-    res.json(roomtypes);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error" });
-  }
-});
+// router.get("/roomTypes", async (req, res) => {
+//   try {
+//     const roomtypes = await RoomTypes.findAll({
+//       attributes: ["TypeName"],
+//     });
+//     console.log(roomtypes);
+//     res.json(roomtypes);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+// });
 
 router.post("/", async (req, res) => {
   try {
@@ -49,6 +49,29 @@ router.post("/", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to create Item" });
+  }
+});
+
+router.put("/", async (req, res) => {
+  try {
+    // Extract the required data from the request body.
+    const { RoomItemName, Cost, RoomItemNo } = req.body;
+
+    // Create a new room item record with the given details.
+    await RoomItems.update(
+      {
+        RoomItemName,
+        Cost,
+      },
+      {
+        where: { RoomItemNo: RoomItemNo },
+      }
+    );
+
+    res.status(201).json("Updated Successfully.");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to Update Item" });
   }
 });
 

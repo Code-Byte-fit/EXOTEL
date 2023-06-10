@@ -1,35 +1,61 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import style from "./RepairRequeststyle.module.css";
-// import { getTaskData } from "./HKDummy";
 import axios from "axios";
 import Table from "../../General/Table/Table";
-import { BsPencil, BsTrash } from "react-icons/bs";
+import EditDelete from "../../General/Table/EditDelete";
+import Spinner from "../../General/Spinner/Spinner";
+import { AppContext } from "../../../Helpers/AppContext";
+import Edit from "./Edit";
 
 const RepairRequestEditDeleteTableSection = ({ refresh, onEditRequest }) => {
-  const [requestData, setRequestData] = useState([]);
-
-  const viewRepairs = async () => {
-    const response = await axios.get(`http://localhost:3001/repairs/`);
-    setRequestData(response.data);
-  };
-
-  const handleEdit = (data) => {
-    onEditRequest(data);
-  };
-
-  const handleDelete = (data) => {};
+  const { host } = useContext(AppContext);
+  const [success, setSuccess] = useState(true);
+  const [isDone, setIsDone] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [repairRequests, setRepairRequests] = useState("");
 
   useEffect(() => {
-    viewRepairs();
+    setLoading(true);
+    axios.get(`${host}/repairs`).then((res) => {
+      setRepairRequests(res.data);
+      setLoading(false);
+    });
   }, []);
 
+  const handleDone = () => {
+    setIsDone(false);
+    setLoading(true);
+    axios.get(`${host}/repairs`).then((response) => {
+      setRepairRequests(response.data);
+      setLoading(false);
+    });
+  };
+
+  const [requestData, setRequestData] = useState([]);
+
+  // const viewRepairs = async () => {
+  //   const response = await axios.get(`http://localhost:3001/repairs/`);
+  //   setRequestData(response.data);
+  // };
+
+  // const handleEdit = (data) => {
+  //   onEditRequest(data);
+  // };
+
+  // const handleDelete = (data) => {};
+
+  // useEffect(() => {
+  //   viewRepairs();
+  // }, []);
+
   useEffect(() => {
-    viewRepairs();
+    // viewRepairs();
+    handleDone();
   }, [refresh]);
 
-  const getRequestList = () => {
-    return requestData;
-  };
+  // const getRequestList = () => {
+  //   return requestData;
+  // };
 
   const columns = [
     {
@@ -77,23 +103,25 @@ const RepairRequestEditDeleteTableSection = ({ refresh, onEditRequest }) => {
       sortable: false,
     },
     {
-      name: "Actions",
-      selector: (row) => (
-        <>
-          <button onClick={() => handleEdit(row)}>
-            <BsPencil color="grey" />
-          </button>
-          <button onClick={() => handleDelete(row)}>
-            <BsTrash color="grey" />
-          </button>
-        </>
+      selector: (row) => row,
+      cell: (row) => (
+        <EditDelete
+          editOption
+          isDone={isDone}
+          handleDone={handleDone}
+          setIsDone={setIsDone}
+          success={success}
+          editComponent={
+            <Edit values={row} setIsDone={setIsDone} setSuccess={setSuccess} />
+          }
+        />
       ),
-      sortable: false,
     },
   ];
 
   return (
     <div className={style.divEditDeleteTableSection}>
+      {loading && <Spinner loading={loading} />}
       <div className={style.divTitleEditDelete}>
         EDIT/CANCEL REPAIR REQUESTS
       </div>
@@ -101,7 +129,7 @@ const RepairRequestEditDeleteTableSection = ({ refresh, onEditRequest }) => {
       <div class="class=table-responsive-lg" className={style.divTblEditDelete}>
         <Table
           columns={columns}
-          data={getRequestList()}
+          data={repairRequests}
           height="35vh"
           pagination
         />

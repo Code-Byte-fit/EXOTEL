@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import style from "./RepairRequeststyle.module.css";
 import Input from "../../General/Inputs/Inputs";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { AppContext } from "../../../Helpers/AppContext";
 
-const RepairRequestAddSection = ({ requestToEdit, onRefresh }) => {
+const RepairRequestAddSection = ({ onRefresh }) => {
+  const { host } = useContext(AppContext);
   const initialValues = {
     RoomNo: "",
     RoomItemNo: "",
@@ -19,48 +21,21 @@ const RepairRequestAddSection = ({ requestToEdit, onRefresh }) => {
 
   useEffect(() => {}, [initValues]);
 
-  useEffect(() => {
-    if (requestToEdit) {
-      console.log(requestToEdit);
-      const updatedValues = {
-        RepairRequestNo: requestToEdit.RepairRequestNo,
-        RoomNo: requestToEdit.RoomNo,
-        RoomItemNo: requestToEdit.RoomItemNo,
-        DoneStatus: requestToEdit.DoneStatus,
-        Notes: requestToEdit.Notes,
-      };
-      setInitValues(updatedValues);
-    }
-    console.log(initValues);
-  }, [requestToEdit]);
-
   //create request
   const makeReq = async (formData) => {
     // console.log(formData);
-    await axios.post("http://localhost:3001/repairs/", formData);
+    await axios.post(`${host}/repairs/repairItemDetails`, formData);
     onRefresh();
-  };
-
-  //update request
-  const updateReq = async (formData) => {
-    await axios.put("http://localhost:3001/repairs/", formData);
     setInitValues(initialValues);
-    onRefresh();
   };
 
   const onSubmit = (data) => {
-    if (requestToEdit) {
-      updateReq(data);
-    } else {
-      makeReq(data);
-    }
+    makeReq(data);
   };
 
   async function viewRepairs() {
     try {
-      const response = await axios.get(
-        "http://localhost:3001/repairs/repairItemDetails"
-      );
+      const response = await axios.get(`${host}/repairs/repairItemDetails`);
 
       const room = response.data.roomDetails.map((value) => {
         return {
@@ -89,7 +64,7 @@ const RepairRequestAddSection = ({ requestToEdit, onRefresh }) => {
 
   const extraOption = { key: "None Selected", value: "" };
   const roomNumberOptions = [extraOption, ...roomNumbers];
-  const itemOptions = [extraOption, ...items];
+  const itemOptions = [extraOption, "Other", ...items];
   const statusOptions = [
     extraOption,
     { key: "Waiting", value: "Waiting" },
