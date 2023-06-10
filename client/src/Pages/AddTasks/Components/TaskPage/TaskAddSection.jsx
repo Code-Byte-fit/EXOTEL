@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import style from "./HKstyle.module.css";
 import Input from "../../../General/Inputs/Inputs";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { AppContext } from "../../../../Helpers/AppContext";
 
 const TaskAddSection = ({ taskToEdit, onRefresh }) => {
+  const { host } = useContext(AppContext);
   const curr = new Date();
   const date = curr.toISOString().substring(0, 10);
   const time = curr.toTimeString().substring(0, 5);
@@ -25,42 +27,15 @@ const TaskAddSection = ({ taskToEdit, onRefresh }) => {
 
   useEffect(() => {}, [initValues]);
 
-  useEffect(() => {
-    if (taskToEdit) {
-      console.log(taskToEdit);
-      const updatedValues = {
-        taskNo: taskToEdit.taskNo,
-        RoomNo: taskToEdit.RoomNo,
-        userId: taskToEdit.userId,
-        taskType: taskToEdit.taskType,
-        taskDate: taskToEdit.taskDate,
-        taskTime: taskToEdit.taskTime,
-        Notes: taskToEdit.Notes,
-      };
-      setInitValues(updatedValues);
-    }
-    console.log(initValues);
-  }, [taskToEdit]);
-
   //create task
   const makeReq = async (formData) => {
-    await axios.post("http://localhost:3001/tasks/", formData);
+    await axios.post(`${host}/tasks`, formData);
     onRefresh();
-  };
-
-  //update task
-  const updateReq = async (formData) => {
-    await axios.put("http://localhost:3001/tasks/", formData);
     setInitValues(initialValues);
-    onRefresh();
   };
 
   const onSubmit = (data) => {
-    if (taskToEdit) {
-      updateReq(data);
-    } else {
-      makeReq(data);
-    }
+    makeReq(data);
   };
 
   // async function handleSchedule() {
@@ -76,9 +51,7 @@ const TaskAddSection = ({ taskToEdit, onRefresh }) => {
   //Retrieve data from room and user tables for the drop downs in the forms
   async function viewTasks() {
     try {
-      const response = await axios.get(
-        "http://localhost:3001/tasks/taskDetails"
-      );
+      const response = await axios.get(`${host}/tasks/taskDetails`);
       // console.log(response);
       const room = response.data.roomDetails.map((value) => {
         return {
@@ -103,7 +76,6 @@ const TaskAddSection = ({ taskToEdit, onRefresh }) => {
 
   useEffect(() => {
     viewTasks();
-    // console.log(roomNumbers);
   }, []);
 
   //Task Type array
@@ -112,7 +84,6 @@ const TaskAddSection = ({ taskToEdit, onRefresh }) => {
     { key: "Mini-Bar", value: "minibar" },
     { key: "Clean", value: "clean" },
   ];
-  // console.log(roomNumbers);
 
   const extraOption = { key: "None Selected", value: "" };
   const roomNumberOptions = [extraOption, ...roomNumbers];

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const {
-  TaskAllocation,
+  TaskAllocations,
   Users,
   Rooms,
   Reservations,
@@ -11,7 +11,7 @@ const {
 const { Op } = require("sequelize");
 
 router.get("/", async (req, res) => {
-  const listOfTasks = await TaskAllocation.findAll({
+  const listOfTasks = await TaskAllocations.findAll({
     include: [
       {
         model: Users,
@@ -88,23 +88,28 @@ router.post("/", async (req, res) => {
       },
     });
 
-    console.log(reservation);
+    if (reservation != null) {
+      // Extract the reservation ID from the reservation object.
+      const { id } = reservation;
 
-    // Extract the reservation ID from the reservation object.
-    const { id } = reservation;
+      // Create a new task allocation record with the given details and reservation ID.
+      const newTask = await TaskAllocations.create({
+        RoomNo,
+        userId,
+        taskType,
+        taskDate,
+        taskTime,
+        Notes,
+        ReservationId: id,
+      });
+      console.log(newTask);
 
-    // Create a new task allocation record with the given details and reservation ID.
-    const newTask = await TaskAllocation.create({
-      RoomNo,
-      userId,
-      taskType,
-      taskDate,
-      taskTime,
-      Notes,
-      ReservationId: id,
-    });
-
-    res.status(201).json({ newTask });
+      res.status(201).json({ newTask });
+    } else {
+      res
+        .status(500)
+        .json({ error: "There is no reservation on this date for this room" });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Failed to create task" });
@@ -115,7 +120,7 @@ router.post("/", async (req, res) => {
 router.put("/", async (req, res) => {
   try {
     // Extract the required data from the request body.
-    const { taskNo, RoomNo, userId, taskType, taskDate, taskTime, Notes } =
+    const { taskId, RoomNo, userId, taskType, taskDate, taskTime, Notes } =
       req.body;
 
     // Find the reservation ID for the given room and date.
@@ -144,7 +149,7 @@ router.put("/", async (req, res) => {
     const { id } = reservation;
 
     // Update the task allocation record with the given task number
-    await TaskAllocation.update(
+    await TaskAllocations.update(
       {
         RoomNo,
         userId,
@@ -154,7 +159,7 @@ router.put("/", async (req, res) => {
         Notes,
         ReservationId: id,
       },
-      { where: { taskNo: taskNo } }
+      { where: { taskId: taskId } }
     );
 
     res.status(201).json("Updated Successfully.");

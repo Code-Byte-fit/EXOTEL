@@ -1,40 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import style from "./HKstyle.module.css";
-// import { getTaskData } from "./HKDummy";
+import { AppContext } from "../../../../Helpers/AppContext";
 import axios from "axios";
 import Table from "../../../General/Table/Table";
-import { BsPencil, BsTrash } from "react-icons/bs";
+import EditDelete from "../../../General/Table/EditDelete";
+import Edit from "./Edit";
+import Spinner from "../../../General/Spinner/Spinner";
 
 const TaskEditDeleteTableSection = ({ refresh, onEditTask }) => {
-  const [taskData, setTaskData] = useState([]);
-
-  const viewTasks = async () => {
-    const response = await axios.get(`http://localhost:3001/tasks/`);
-    setTaskData(response.data);
-  };
-
-  const handleEdit = (data) => {
-    onEditTask(data);
-  };
-
-  const handleDelete = (data) => {};
+  const { host } = useContext(AppContext);
+  const [success, setSuccess] = useState(true);
+  const [isDone, setIsDone] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [tasks, setTasks] = useState("");
 
   useEffect(() => {
-    viewTasks();
+    setLoading(true);
+    axios.get(`${host}/tasks`).then((res) => {
+      setTasks(res.data);
+      setLoading(false);
+    });
   }, []);
 
-  useEffect(() => {
-    viewTasks();
-  }, [refresh]);
-
-  const getTaskList = () => {
-    return taskData;
+  const handleDone = () => {
+    setIsDone(false);
+    setLoading(true);
+    axios.get(`${host}/tasks`).then((response) => {
+      setTasks(response.data);
+      setLoading(false);
+    });
   };
+  const [taskData, setTaskData] = useState([]);
+
+  useEffect(() => {
+    handleDone();
+  }, [refresh]);
 
   const columns = [
     {
       name: "TASK-ID",
-      selector: (row) => row.taskNo,
+      selector: (row) => row.taskId,
       sortable: true,
     },
     {
@@ -72,30 +77,35 @@ const TaskEditDeleteTableSection = ({ refresh, onEditTask }) => {
       selector: (row) => row.Notes,
       sortable: false,
     },
+
     {
-      name: "Actions",
-      selector: (row) => (
-        <>
-          <button onClick={() => handleEdit(row)}>
-            <BsPencil color="grey" />
-          </button>
-          <button onClick={() => handleDelete(row)}>
-            <BsTrash color="grey" />
-          </button>
-        </>
+      selector: (row) => row,
+      cell: (row) => (
+        <EditDelete
+          editOption
+          isDone={isDone}
+          handleDone={handleDone}
+          setIsDone={setIsDone}
+          success={success}
+          editComponent={
+            <Edit values={row} setIsDone={setIsDone} setSuccess={setSuccess} />
+          }
+        />
       ),
-      sortable: false,
     },
   ];
 
   return (
     <div className={style.divEditDeleteTableSection}>
+      {loading && <Spinner loading={loading} />}
+
       <div className={style.divTitleEditDelete}>EDIT/CANCEL TASK</div>
 
       <div class="class=table-responsive-lg" className={style.divTblEditDelete}>
         <Table
           columns={columns}
-          data={getTaskList()}
+          // data={getTaskList()}
+          data={tasks}
           height="35vh"
           pagination
         />

@@ -7,15 +7,19 @@ module.exports = (sequelize, Datatypes) => {
         primaryKey: true,
         autoIncrement: true,
       },
-      description: {
-        type: Datatypes.STRING,
+      taskType: {
+        type: Datatypes.ENUM("laundry", "minibar", "clean"),
         allowNull: false,
       },
       taskDate: {
         type: Datatypes.DATEONLY,
         allowNull: false,
       },
-      completeStatus: {
+      taskTime: {
+        type: Datatypes.TIME,
+        allowNull: false,
+      },
+      Notes: {
         type: Datatypes.STRING,
         allowNull: false,
       },
@@ -25,7 +29,11 @@ module.exports = (sequelize, Datatypes) => {
     }
   );
   TaskAllocations.associate = (models) => {
-    TaskAllocations.belongsTo(models.Reservations, { foreignKey: "Id" });
+    TaskAllocations.belongsTo(models.Reservations, {
+      foreignKey: "ReservationId",
+    });
+    TaskAllocations.belongsTo(models.Rooms, { foreignKey: "RoomNo" });
+    TaskAllocations.belongsTo(models.Users, { foreignKey: "userId" });
     TaskAllocations.hasMany(models.Laundry, { foreignKey: "taskId" });
     TaskAllocations.hasMany(models.MiniBarRestock, { foreignKey: "taskId" });
   };

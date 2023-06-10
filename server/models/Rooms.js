@@ -66,6 +66,8 @@ module.exports = (sequelize, Datatypes) => {
       },
       as: "minibar",
     });
+    // Rooms.hasMany(models.TaskAllocation, { foreignKey: "RoomNo" });
+    Rooms.hasMany(models.RepairRequest, { foreignKey: "RoomNo" });
   };
 
   return Rooms;

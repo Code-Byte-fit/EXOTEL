@@ -43,6 +43,8 @@ router.post("/", async (req, res) => {
       Cost,
     });
 
+    console.log(newItem);
+
     res.status(201).json({ newItem });
   } catch (error) {
     console.error(error);

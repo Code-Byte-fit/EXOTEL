@@ -32,6 +32,11 @@ import Users from "./Pages/Users/Users";
 import Profile from "./Pages/Profile/Profile";
 import Calender from "./Pages/Calender/Calender";
 import Calender2 from "./Pages/Calender/Calender2";
+import TaskPage from "./Pages/AddTasks/TaskPage";
+import ViewTaskPage from "./Pages/ViewTasks/ViewTaskPage";
+import RoomItems from "./Pages/AddRoomItems/RoomItemsPage";
+import ViewRoomItems from "./Pages/ViewRoomItems/ViewRoomItemsPage";
+import RepairRequests from "./Pages/AddRepairRequests/AddRepairRequestPage";
 
 export default function App() {
   const host = `${window.location.protocol}//${window.location.hostname}:3001`;
@@ -139,6 +144,11 @@ export default function App() {
               <Route path="/viewPromotions" element={<ViewPromotions />} />
               <Route path="/viewaddons" element={<ViewAddOns />} />
               <Route path="/viewroomtypes" element={<ViewRoomTypes />} />
+              <Route path="/addTasks" element={<TaskPage />} />
+              <Route path="/viewTasks" element={<ViewTaskPage />} />
+              <Route path="/addRoomItems" element={<RoomItems />} />
+              <Route path="/viewRoomItems" element={<ViewRoomItems />} />
+              <Route path="/addRepairRequests" element={<RepairRequests />} />
               <Route path="/profile" element={<Profile />} />
             </>
           )}

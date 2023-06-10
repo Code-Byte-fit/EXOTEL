@@ -115,7 +115,7 @@
   height: 5vh;
   background-color: white;
   border-color: rgb(145, 150, 139, 0.8);
-  color: rgb(145, 150, 139, 0.8);
+  color: #4d5949;
   border-radius: 4px;
   padding: 5px;
 }
@@ -123,7 +123,7 @@
 .btnAddToList {
   width: 10vw;
   height: 5vh;
-  background-color: rgb(145, 150, 139, 0.8);
+  background-color: #4d5949;
   border: none;
   color: white;
   border-radius: 4px;
