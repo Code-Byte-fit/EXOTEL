@@ -1,23 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect,useContext } from "react";
+import {AppContext} from "../../../Helpers/AppContext"
 import style from "./Rooms.module.css";
 import axios from "axios";
-import { useEffect } from "react";
 import RoomTable from "../../General/Table/Table";
 import EditDelete from "../../General/Table/EditDelete";
+import EditRoom from "./EditRoom";
 
 
 function Table(props) {
   const [listOfRooms, setlistOfRooms] = useState([]);
+  const {host}=useContext(AppContext);
+  const [isDone, setIsDone] = useState(false);
+  const [success,setSuccess]=useState(true);
 
+  const handleDone=()=>{
+    setIsDone(false)
+    axios.get(`${host}/rooms`).then((response)=>{
+      setlistOfRooms(response.data)
+    })
+  }
 
   useEffect(() => {
-    axios.get("http://localhost:3001/rooms").then((response) => {
+    axios.get(`${host}/rooms`).then((response) => {
       setlistOfRooms(response.data);
-      console.log(listOfRooms)
+      // console.log(listOfRooms)
 
     });
   }, []);
-
 
   const columns = [
     {
@@ -76,7 +85,10 @@ function Table(props) {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete />
+      cell: (row) => <EditDelete setlistOfRooms={setlistOfRooms} row={row} editOption  isDone={isDone} handleDone={handleDone} success={success}
+      removeOption deleteHeading ="Confirm Remove" deleteBody="Are you sure you want to remove?"
+        editComponent={<EditRoom  values={row} setIsDone={setIsDone} setSuccess={setSuccess}  />} 
+      />
     },
   ];
 

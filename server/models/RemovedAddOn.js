@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Addons = sequelize.define("Addons", {
+    const RemovedAddOn = sequelize.define("RemovedAddOn", {
       addonID: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -27,10 +27,10 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     });
   
-    Addons.associate = (models) => {
-      Addons.belongsToMany(models.Reservations, { through: 'ReservationAddOn' });
+    RemovedAddOn.associate = (models) => {
+        RemovedAddOn.belongsToMany(models.Reservations, { through: 'ReservationAddOn' });
     };
   
-    return Addons;
+    return RemovedAddOn;
   }
   

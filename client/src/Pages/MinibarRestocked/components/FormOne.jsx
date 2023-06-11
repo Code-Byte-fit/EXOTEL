@@ -1,5 +1,5 @@
-import React from "react";
-import {useState,useEffect} from 'react';
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import Input from "../../General/Inputs/Inputs";
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
@@ -10,6 +10,7 @@ import style from '../components/Minibar.module.css'
 export default function FormOne(props) {
   const [Reservations, setReservations] = useState([]);
   const [MiniBarItems, setMinibarItems] = useState([]);
+  const { host } = useContext(AppContext);
   const today = new Date();
     const initialValues = {
         ResNumber: '',
@@ -43,14 +44,14 @@ export default function FormOne(props) {
     ];
 
     const fetchResNum = async()=>{
-      const response = await axios.get("http://localhost:3001/reservations");
+      const response = await axios.get(`${host}/reservations`);
       setReservations(response.data);}
       useEffect(()=>{
         fetchResNum();
       },[]);
 
       const fetchItemName = async()=>{
-        const response = await axios.get("http://localhost:3001/Minibar/minibaritems");
+        const response = await axios.get(`${host}/Minibar/minibaritems`);
         
         setMinibarItems(response.data);
         console.log(response.data)

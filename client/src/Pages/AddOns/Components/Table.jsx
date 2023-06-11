@@ -1,15 +1,29 @@
-import React, { useState, useEffect,useContext } from "react";
-import {AppContext} from "../../../Helpers/AppContext"
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import style from "./AddOns.module.css"
 import axios from 'axios';
 import AddOnTable from '../../General/Table/Table'
-import EditDelete from "./EditDelete";
-
-
-
+import EditDelete from "../../General/Table/EditDelete";
+import EditAddon from "./EditAddon";
 
 function Table(props) {
-  const {host}=useContext(AppContext)
+  const { host } = useContext(AppContext);
+  const [isDone, setIsDone] = useState(false);
+  const [success,setSuccess]=useState(true);
+
+  const handleDone = () => {
+    setIsDone(false)
+    axios.get(`${host}/addon`).then((response) => {
+      setlistOfAddons(response.data)
+    })
+  }
+
+  const handleRemove=(addonID)=>{
+    axios.delete(`${host}/addon/${addonID}`).then((res)=>{
+      setIsDone(true)
+    })
+  }
+
   const [listOfAddons, setlistOfAddons] = useState([]);
   useEffect(() => {
     axios.get(`${host}/addon`).then((response) => {
@@ -52,11 +66,12 @@ function Table(props) {
       ),
     },
 
-
-
     {
       selector: row => row,
-      cell: (row) => <EditDelete setlistOfAddons={setlistOfAddons} row={row} />
+      cell: (row) => <EditDelete setlistOfAddons={setlistOfAddons} row={row} editOption isDone={isDone} handleDone={handleDone} success={success}
+      removeOption deleteHeading ="Confirm Remove" deleteBody="Are you sure you want to remove?" onRemove={handleRemove} id= {row.addonID} successMsg="Add-On removed Successfully!"
+      editComponent={<EditAddon values={row} setIsDone={setIsDone} setSuccess={setSuccess}  />} 
+       />
     },
   ];
 

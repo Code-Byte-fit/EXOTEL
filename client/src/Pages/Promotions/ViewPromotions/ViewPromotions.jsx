@@ -1,19 +1,20 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import axios from 'axios';
 import style from "../ViewPromotions/components/ViewPromotions.module.css";
 import RoomTable from "../../General/Table/Table";
 import EditDelete from "../../General/Table/EditDelete";
-import { useEffect, useState } from "react";
+
 import styled from 'styled-components';
 
 
 function ViewRooms() {
-
+  const { host } = useContext(AppContext);
     const [listOfPromotions, setlistOfPromotions] = useState([]);
-    const [filter, setFilter] = useState("");
+    
 
     useEffect(() => {
-        axios.get("http://localhost:3001/promotions").then((response) => {
+        axios.get(`${host}/promotions`).then((response) => {
             setlistOfPromotions(response.data);
         })
     }, [])

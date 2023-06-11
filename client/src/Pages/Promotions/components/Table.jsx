@@ -1,18 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import style from "./Promotions.module.css"
-import { useEffect } from "react";
 import axios from 'axios';
 import PromotionTable from '../../General/Table/Table'
-import EditDelete from "./EditDelete";
+import EditDelete from "../../General/Table/EditDelete";
 import styled from 'styled-components';
+import EditPromo from "./EditPromo";
 
 function Table(props) {
 
     
     const [listOfPromotions, setlistOfPromotions] = useState([]);
+    const [isDone, setIsDone] = useState(false);
+    const { host } = useContext(AppContext);
+    const [success,setSuccess]=useState(true);
+    const handleDone=()=>{
+      setIsDone(false)
+      axios.get(`${host}/promotions`).then((response)=>{
+        setlistOfPromotions(response.data)
+      })
+    }
+  
 
     useEffect(() => {
-      axios.get('http://localhost:3001/promotions')
+      axios.get(`${host}/promotions`)
         .then((response) => {
           setlistOfPromotions(response.data);
         })
@@ -44,7 +55,7 @@ function Table(props) {
   `;
 
   function updateExpiredPromotions() {
-    axios.put("http://localhost:3001/promotions/updateExpired")
+    axios.put(`${host}/promotions/updateExpired`)
       .then((response) => {
         console.log(response.data.message);
       })
@@ -105,7 +116,10 @@ function Table(props) {
           },
         {
           selector: row => row,
-          cell: (row) => <EditDelete setlistOfPromotions={setlistOfPromotions} row={row}/>
+          cell: (row) => <EditDelete   setlistOfPromotions={setlistOfPromotions} row={row} editOption  isDone={isDone} handleDone={handleDone} success={success}
+removeOption deleteHeading ="Confirm Remove" deleteBody="Are you sure you want to remove?"
+editComponent={<EditPromo  values={row} setIsDone={setIsDone} setSuccess={setSuccess}   />}
+          />
         },
     ];
     
