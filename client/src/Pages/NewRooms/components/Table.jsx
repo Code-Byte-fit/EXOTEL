@@ -86,6 +86,7 @@ function Table(props) {
     {
       selector: row => row,
       cell: (row) => <EditDelete setlistOfRooms={setlistOfRooms} row={row} editOption  isDone={isDone} handleDone={handleDone} success={success}
+      removeOption deleteHeading ="Confirm Remove" deleteBody="Are you sure you want to remove?"
         editComponent={<EditRoom  values={row} setIsDone={setIsDone} setSuccess={setSuccess}  />} 
       />
     },

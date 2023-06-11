@@ -40,7 +40,7 @@ function FormOne(props) {
     const view = [{ key: "--None Selected --", value: "" },
      { key: "Beach View", value: "Beach View" }, 
      { key: "Pool View", value: "Pool View" }, 
-     { key: "Graden View", value: "Graden View" },
+     { key: "Garden View", value: "Graden View" },
       { key: "Patio View", value: "Patio View" }, 
       { key: "City View", value: "City View" }]
 

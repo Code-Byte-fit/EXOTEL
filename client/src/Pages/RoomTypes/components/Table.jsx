@@ -36,12 +36,12 @@ function Table(props) {
       sortable: true,
     },
     {
-      name: 'VIEW',
+      name: 'View',
       selector: row => row.View,
       sortable: true,
     },
     {
-      name: 'No of Beds',
+      name: 'No. of Beds',
       selector: row => row.NoOfBeds,
       sortable: true,
     },
@@ -52,7 +52,7 @@ function Table(props) {
       sortable: true,
     },
     {
-      name: 'Standard Charge',
+      name: 'Standard Charge($)',
       selector: row => row.StandardCharge,
       sortable: true,
     },
@@ -70,6 +70,7 @@ function Table(props) {
     {
       selector: row => row,
       cell: (row) => <EditDelete  setlistOfRoomTypes={setlistOfRoomTypes} row={row} editOption  isDone={isDone} handleDone={handleDone}  success={success}
+      removeOption deleteHeading ="Confirm Remove" deleteBody="Are you sure you want to remove?"
         editComponent={<EditType  values={row} setIsDone={setIsDone}  setSuccess={setSuccess}  />} 
       />
     },

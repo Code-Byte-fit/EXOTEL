@@ -52,7 +52,7 @@
 
 .error {
   position:absolute;
-  color: rgb(141, 22, 22);
+  color: red;
   font-size: 0.8rem;
   display: block;
   right: 0;

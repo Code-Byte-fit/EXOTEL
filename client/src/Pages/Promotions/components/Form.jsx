@@ -29,7 +29,7 @@ function FormOne(props) {
       .required('Required'),
     MaxUses: Yup.number()
       .required('Required')
-      .test('non-negative', 'MaxUses must be non-negative', function (value) {
+      .test('non-negative', 'Only Positive Allowed', function (value) {
         return value >= 0;
       }),
     Status: Yup.string().required('Required'),

@@ -117,7 +117,7 @@ function Table(props) {
         {
           selector: row => row,
           cell: (row) => <EditDelete   setlistOfPromotions={setlistOfPromotions} row={row} editOption  isDone={isDone} handleDone={handleDone} success={success}
-
+removeOption deleteHeading ="Confirm Remove" deleteBody="Are you sure you want to remove?"
 editComponent={<EditPromo  values={row} setIsDone={setIsDone} setSuccess={setSuccess}   />}
           />
         },
