@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Promotion } = require('../models')
+const { Promotion ,Reservations } = require('../models')
 const { Op } = require("sequelize");
 const cron = require('node-cron');
 
@@ -11,6 +11,40 @@ router.get('/', async (req, res) => {
   res.json(listOfPromotions)
   console.log(listOfPromotions)
 })
+
+router.get("/:PromoC/apply", async (req, res) => {
+  const PromoC = req.params.PromoC;
+
+  try {  
+   
+      const promo = await Reservations.findOne({
+        where: { PromoCode: PromoC },
+        include: [
+          {
+            model: Reservations,
+            where: {
+              ReservationStatus: {
+                [Op.or]: ['checked-in', 'active']
+              }
+            }
+          }
+        ]
+      });
+  
+
+      if (!promo) {
+        return res.status(404).json({ error: 'Promo Code not found' });
+      }
+
+      const reservations = room.Reservations.map(reservation => reservation.ReservationStatus);
+  
+      res.json({ reservations });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Failed to retrieve Promo Code reservations' });
+    }
+  });
+  
 
 router.post("/", async (req, res) => {
   try {

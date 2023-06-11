@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import {useEffect} from 'react';
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import Input from "../../General/Inputs/Inputs";
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
@@ -12,7 +12,7 @@ import './Itmes.css'
 export default function FormOne(props) {
   const [minibarPackage, setminibarPackage] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
-
+  const { host } = useContext(AppContext);
   const initialValues = {
     PackageName: "",
     PackagePrice: 0, // use totalPrice prop here
@@ -28,7 +28,7 @@ export default function FormOne(props) {
   // });
 
   const fetchItemName = async()=>{
-    const response = await axios.get("http://localhost:3001/Minibar/minibaritems");
+    const response = await axios.get(`${host}/Minibar/minibaritems`);
     
     setminibarPackage(response.data);
     console.log(response.data)

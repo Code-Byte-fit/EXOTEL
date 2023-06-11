@@ -12,7 +12,7 @@ function CardSection() {
   const { host } = useContext(AppContext)
   const [roomCount, setRoomCount] = useState(0);
   const [promoCount, setPromoCount] = useState(0);
-  const [userCount, setUserCount] = useState(0);
+  const [usersCount, setUserCount] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -51,7 +51,7 @@ function CardSection() {
           <div className={`${style.icon} ${style.addIcon}`}>
             <img src={User} className="fas fa-bed"></img>
           </div>
-          <div className={`${style.number} ${style.addNum}`}>{userCount}</div>
+          <div className={`${style.number} ${style.addNum}`}>{usersCount}</div>
           <div className={`${style.text} ${style.addText}`}>Users</div>
         </div>
         <div className={style.rightContainer}>

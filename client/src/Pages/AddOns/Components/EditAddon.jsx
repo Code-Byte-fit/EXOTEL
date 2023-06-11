@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext , useEffect } from 'react';
 import Input from "../../General/Inputs/Inputs";
 import style from "./AddOns.module.css";
 import axios from 'axios';
@@ -9,7 +9,8 @@ import { ReactComponent as Exclamation } from "../../../Assets/Images/exclamatio
 function EditAddon(props) {
 
     const { host } = useContext(AppContext);
-
+    const [isAddOnValid, setAddOnValid] = useState(false);
+    const [AddOn, setRoomTypes] = useState([]);
  
     const handleEdit = (data,success) => {
         success?
@@ -29,12 +30,27 @@ function EditAddon(props) {
         AddInfo: Yup.string(),
     });
 
-    const temp = false;
+    const checkConflict = async (addOn) => {
+        try {
+          const response = await axios.get(`${host}/addon/${addOn}/use`);
+          const reservations = response.data.reservations;
+          const isValid = reservations.includes('checkedin') || reservations.includes('active');
+          setAddOnValid(isValid);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      useEffect(() => {
+        checkConflict(initialValues.NewAddOn);
+      }, []);
+
+
+    // const temp = true;
 
     return (
 
         <>
-            {temp ?
+            {!isAddOnValid ?
             <>
             <div className={style.editCont}>
             <div className={style.editHeading}>Edit Add-On</div>

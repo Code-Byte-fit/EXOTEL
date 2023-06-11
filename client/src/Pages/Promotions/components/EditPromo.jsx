@@ -12,7 +12,7 @@ function EditPromo(props) {
 
   const [Promotions, setPromotions] = useState([]);
   const { host } = useContext(AppContext);
-
+  const [isPromoValid, setPromoValid] = useState(false);
 
   const handleEdit = (data, success) => {
     success ?
@@ -23,6 +23,21 @@ function EditPromo(props) {
       props.setIsDone(true);
     props.setSuccess(success);
   };
+
+  const checkConflict = async (PromoC) => {
+    try {
+      const response = await axios.get(`${host}/promotions/${PromoC}/apply`);
+      const reservations = response.data.reservations;
+      const isValid = reservations.includes('checked-in') || reservations.includes('active');
+      setPromoValid(isValid);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    checkConflict(initialValues.NewPromoCode);
+  }, []);
+
 
 
   const [initialValues, setInitialValues] = useState({ ...props.values, NewPromoCode: props.values.PromoCode })
@@ -67,11 +82,11 @@ function EditPromo(props) {
   { key: "Active", value: "Active" },
   { key: "Disabled", value: "Disabled" },]
 
-  const temp = true;
+  // const temp = true;
   return (
 
     <>
-      {temp ?
+      {!isPromoValid ?
 
         <>
           <div className={style.editCont}>

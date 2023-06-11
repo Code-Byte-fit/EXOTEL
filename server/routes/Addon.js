@@ -1,12 +1,45 @@
 const express=require('express')
 const router=express.Router()
-const {Addons}=require('../models')
+const {Addons , Reservations, ReservationAddOn}=require('../models')
 
 // Get all addons
 router.get('/',async (req,res)=>{
     const listOfAddons=await Addons.findAll()
     res.json(listOfAddons)
 })
+
+router.get('/:addOn/use', async (req, res) => {
+  const addOn = req.params.addOn;
+
+  try {
+    const addon = await Addons.findOne({
+      where: { AddOn: addOn },
+      include: [
+        {
+          model: Reservations,
+          where: {
+            ReservationStatus: {
+              [Op.or]: ['checked-in', 'active']
+            }
+          }
+        }
+      ]
+    });
+
+    if (!addon) {
+      return res.status(404).json({ error: 'Add-On not found' });
+    }
+    
+
+    const reservations = addon.Reservations.map(reservation => reservation.ReservationStatus);
+
+    res.json({ reservations });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to retrieve addOn reservations' });
+  }
+});
+
 
 // Create a new addon
 router.post('/', async (req, res) => {

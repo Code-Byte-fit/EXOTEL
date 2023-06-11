@@ -26,8 +26,7 @@ function FormOne(props) {
     PromoCode: Yup.string().required('Required'),
     PromoType: Yup.string().required('Required'),
     Value: Yup.string()
-      .required('Required')
-      .matches(/%$/, 'Value must end with %'),
+      .required('Required'),
     MaxUses: Yup.number()
       .required('Required')
       .test('non-negative', 'MaxUses must be non-negative', function (value) {

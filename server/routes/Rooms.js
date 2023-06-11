@@ -10,7 +10,6 @@ router.get('/',async (req,res)=>{
   res.json(listOfRooms)
 })
 
-
 router.get('/:roomNo/status', async (req, res) => {
   const roomNo = req.params.roomNo;
 
@@ -21,7 +20,9 @@ router.get('/:roomNo/status', async (req, res) => {
         {
           model: Reservations,
           where: {
-            ReservationStatus: ['checked-in', 'active']
+            ReservationStatus: {
+              [Op.or]: ['checked-in', 'active']
+            }
           }
         }
       ]
@@ -30,14 +31,47 @@ router.get('/:roomNo/status', async (req, res) => {
     if (!room) {
       return res.status(404).json({ error: 'Room not found' });
     }
+    
 
-    const reservations = room.Reservations;
+    const reservations = room.Reservations.map(reservation => reservation.ReservationStatus);
+
     res.json({ reservations });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to retrieve room reservations' });
   }
 });
+
+
+// router.get('/:roomNo/status', async (req, res) => {
+//   const roomNo = req.params.roomNo;
+
+//   try {
+//     const room = await Rooms.findOne({
+//       where: { RoomNo: roomNo },
+//       include: [
+//         {
+//           model: Reservations,
+//           where: {
+//             ReservationStatus: {
+//               [Op.or]: ['checked-in', 'active']
+//             }
+//           }
+//         }
+//       ]
+//     });
+
+//     if (!room) {
+//       return res.status(404).json({ error: 'Room not found' });
+//     }
+
+//     const reservations = room.Reservations;
+//     res.json({ reservations });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: 'Failed to retrieve room reservations' });
+//   }
+// });
 
 
 //get free rooms for booking

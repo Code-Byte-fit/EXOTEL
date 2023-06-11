@@ -33,7 +33,7 @@ router.get('/',async (req,res)=>{
 
 //used to create a new reservation
 router.post("/:nameFile",upload('Identification'),async (req,res)=>{
-    try{
+    // try{
       const {CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,
              Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus,totalAmount}=req.body
     //find if the guest is already existing in the db
@@ -98,11 +98,12 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
       <p>Total Amount: ${totalAmount}</p>
   `;
     sendEmail(Email,reservationDetails)
-    res.status(201).json({ reservation, guestId });}
-    catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Failed to create reservation' });
-      }
+    res.status(201).json({ reservation, guestId });
+  // }
+//     catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: 'Failed to create reservation' });
+//       }
 })
 
 //edit reservation details

@@ -349,3 +349,80 @@
   width: 12vw;
   height: 12vh;
 }
+
+/*filter*/
+
+.filter{
+  z-index: 2;
+  display: flex;
+  gap: 1vw;
+}
+
+.filter input{
+  font-family: "Roboto Mono",monospace;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  text-align: center;
+}
+
+
+.filter input[type=text]{
+  width: 10vw;
+}
+
+.filter input[type=date]{
+  width: 8vw;
+}
+
+
+.filter input:focus {
+  outline: none;
+  border-color: #0398fc;
+  box-shadow: 0 0 0 1px #0398fc;
+ }
+
+.filterIcon{
+  width: 2vw;
+  height: 4vh;
+  cursor: pointer;
+  position: relative;
+  top: 1vh;
+}
+
+.select{
+  z-index: 2;
+  min-width: 16vw;
+}
+
+.select *{
+  text-align: start;
+  font-size: 0.7rem;
+}
+
+.hidden{
+  visibility: hidden;
+}
+
+.menu{
+  margin: 0 2vw 0 0;
+}
+
+.inputs{
+ display: flex;
+ flex-direction: column;
+ position: relative;
+ bottom: 3.2vh;
+}
+
+.inputs input{
+  padding: 5%;
+}
+
+.inputs input[type="date"]{
+ width: 9vw;
+ padding:6%;
+}
+
+.icon{
+  width: 2vw;
+}

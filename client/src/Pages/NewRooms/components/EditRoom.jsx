@@ -12,6 +12,7 @@ function EditRoom(props) {
 
     const [RoomTypes, setRoomTypes] = useState([]);
     const { host } = useContext(AppContext);
+    const [isRoomValid, setRoomValid] = useState(false);
 
     const handleEdit = (data, success) => {
         success ?
@@ -41,6 +42,30 @@ function EditRoom(props) {
         AddInfo: Yup.string(),
     });
 
+    // const checkConflict = (roomNo) => {
+    //     axios.get(`${host}/room/${roomNo}/status`).then((res) =>{
+    //             console.log(res.data);
+    //     });
+    // }
+
+    // checkConflict(100);
+  
+    const checkConflict = async (roomNo) => {
+        try {
+          const response = await axios.get(`${host}/rooms/${roomNo}/status`);
+          const reservations = response.data.reservations;
+          const isValid = reservations.includes('checkedin') || reservations.includes('active');
+          setRoomValid(isValid);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      useEffect(() => {
+        fetchRoomTypes();
+        checkConflict(initialValues.NewRoomNo);
+      }, []);
+
+
 
     const fetchRoomTypes = async () => {
         const response = await axios.get(`${host}/roomtypes`);
@@ -57,14 +82,14 @@ function EditRoom(props) {
         { key: "1st Floor", value: "1st Floor" },
         { key: "2nd Floor", value: "3rd Floor" }]
 
-    const temp = false;
+    // const temp = true;
 
     return (
 
 
         <>
 
-            {temp ?
+            {!isRoomValid ?
                 <>
                     <div className={style.editCont}>
                         <div className={style.editHeading}>Edit Room</div>
