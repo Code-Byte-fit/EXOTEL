@@ -1,0 +1,97 @@
+.card,.addCard,.chartCard{
+    background-color:#d7d0c2;
+    border-radius: 10px;
+    width: 12vw;
+    height: 20vh
+}
+
+.addCard{
+    width: 14vw;
+    display: flex;
+    align-items: center;
+}
+
+.addCard span{
+    width: 50%;
+    margin: 0 0 0 2vw;
+    font-size: 1.2rem;
+}
+
+
+.cardContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cardImg{
+    width: 2.5vw;
+    height: 5.5vh;
+    margin: 4% 0 2% 0;
+}
+
+.value{
+    font-size: 2rem;
+}
+
+.addIcon{
+    margin: 0 0 0 1vw;
+    cursor: pointer;
+}
+
+
+.rowOne{
+    display: flex;
+    gap: 2vw;
+}
+
+.rowTwo{
+    margin: 3% 0 0 0 ;
+}
+
+.chartCard{
+    width: 16vw;
+    min-height: 35vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2vh;
+}
+
+.chartCard span{
+    margin: 2% 0 0 0;
+    font-size: 0.9rem;
+}
+
+.chart{
+    height: 18vh;
+    width: 10vw;
+    margin: 4% 0 0 10%;
+}
+
+.legendCont{
+    display: flex;
+    gap: 1vw;
+    margin: 4% 0 0 0;
+}
+
+.legend{
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+}
+
+.legendColor{
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.available{
+    background-color: #898E80;
+}
+
+.occupied{
+    background-color: #22311E;
+}

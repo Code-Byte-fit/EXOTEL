@@ -147,6 +147,14 @@
     font-size: 1.2rem;
 }
 
+.newGuest{
+    display: inline-flex;
+    gap: 0.5vw;
+    position: relative;
+    top: 1vh;
+    left: 28vw;
+}
+
 .inputContainer{
     display: flex;
     gap: 2vw;

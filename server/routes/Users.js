@@ -1,6 +1,6 @@
 const express=require('express')
 const router=express.Router()
-const {Users,UserAccounts}=require('../models')
+const {Users,UserAccounts,RemovedUsers,RemovedUserAccounts}=require('../models')
 
 router.get('/',async (req,res)=>{
     try{
@@ -56,5 +56,50 @@ router.put("/",async (req,res)=>{
     res.status(500).json({ error: 'Failed to edit user' });
   }
 })
+
+router.delete("/:userId", async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    // Find the user to be removed
+    const user = await Users.findOne({
+      where: { userId },
+      include: [UserAccounts],
+    });
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Create a new removed user entry
+    const removedUser = await RemovedUsers.create({
+      FirstName: user.FirstName,
+      LastName: user.LastName,
+      Role: user.Role,
+      Country: user.Country,
+      Email: user.Email,
+      PhoneNumber: user.PhoneNumber,
+    });
+
+    // Create a new removed user account entry
+    const removedUserAccount = await RemovedUserAccounts.create({
+      userName: user.UserAccount.userName,
+      password: user.UserAccount.password,
+      proPic: user.UserAccount.proPic,
+      userId:removedUser.userId
+    });
+
+    // Remove the user and user account from the existing tables
+    await UserAccounts.destroy({ where: { userId } });
+    await Users.destroy({ where: { userId } });
+
+    res.json({ message: 'User removed successfully' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to remove user' });
+  }
+});
+
+
+
 
 module.exports=router

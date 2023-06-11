@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
+import {AppContext} from "../../../Helpers/AppContext"
 import {Formik,Form,Field,ErrorMessage} from "formik"
 import * as yup from 'yup';
+import axios from 'axios';
 import Input from "../../General/Inputs/Inputs"
 import Combobox from "react-widgets/Combobox";
 import options from "./CountryList.json"
@@ -10,7 +12,10 @@ import style from "./Style.module.css"
 
 
 export default function ResPageTwo(props) {
-  const [selectedFile,setSelectedFile]=useState(null)
+  const {host}=useContext(AppContext);
+  const [selectedFile,setSelectedFile]=useState(null);
+  const [isOldGuest,setIsOldGuest]=useState(false);
+  const [guests,setGuests]=useState([]);
   const schema = yup.object().shape({
     Source: yup.string().required('required'),
     FirstName: yup.string().required('required'),
@@ -25,6 +30,16 @@ export default function ResPageTwo(props) {
   const handleSubmit=(values)=>{
     props.next(values)
   }
+
+  const handleCheckboxChange = (event) => {
+    setIsOldGuest(event.target.checked);
+  };
+
+  useState(()=>{
+    axios.get(`${host}/guests`).then((res)=>{
+      console.log(res.data)
+    })
+  },[])
 
   
 
@@ -49,7 +64,14 @@ export default function ResPageTwo(props) {
                     </div>
                   </div>
                   <div>
-                    <div className={style.heading}>MAIN GUEST</div>
+                    <div className={style.heading}>
+                    <span>MAIN GUEST</span>
+                    {guests.length===0 &&
+                    <span className={style.newGuest}>
+                       <input type="checkbox" onChange={handleCheckboxChange}/>
+                      <small>existing guest</small>
+                    </span>}
+                    </div>
                     <div className={style.inputContainer}>
                     <span className={style.innerinputContainer}>
                         <Field name="FirstName" component={Input} label="First Name" type="text"/>
