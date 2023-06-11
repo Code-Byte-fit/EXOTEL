@@ -32,7 +32,13 @@ export default function Users() {
     })
   }
 
-  console.log(users)
+
+  const handleRemove=(userId)=>{
+    axios.delete(`${host}/users/${userId}`).then((res)=>{
+      setIsDone(true)
+    })
+  }
+
 
 
   const columns = [
@@ -77,8 +83,10 @@ export default function Users() {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete editOption isDone={isDone} handleDone={handleDone} setIsDone={setIsDone} success={success}
-                       editComponent={<Edit values={row} setIsDone={setIsDone} setSuccess={setSuccess}/>} />
+      cell: (row) => <EditDelete isDone={isDone} handleDone={handleDone} setIsDone={setIsDone} success={success} id={row.userId}
+      removeOption deleteHeading="Confirm Remove" deleteBody="Are you sure you want to remove this user" 
+      onRemove={handleRemove} successMsg="Successfully Removed User" 
+      editOption editComponent={<Edit values={row} setIsDone={setIsDone} setSuccess={setSuccess}/>} />
     },
 ];
 

@@ -39,6 +39,8 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
 
       const guest = await Guests.create(
         { FirstName, LastName, DOB, Country,Email,PhoneNumber,Identification:req.file.path});
+
+       
     
 
     const reservation = await Reservations.create({//create new reservation record
@@ -72,7 +74,7 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
       <p>Total Amount: ${totalAmount}</p>
   `;
     sendEmail(Email,reservationDetails)
-    res.status(201).json({ reservation });}
+    res.status(201).json({ reservation ,guest});}
     catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Failed to create reservation' });
