@@ -92,7 +92,7 @@ export default function NavBar(props) {
 
       {authState.userRole==="FOManager" && 
       <>
-      <NavElement to="/dashBoard" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive}/>
+      <NavElement to="/" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive}/>
       <NavElement to="/reservationTab" icon={dashBoardIcon} desc="Reservations Tab" active={active} setActive={setActive}/>
       <NavElement to="/viewRooms" icon={dashBoardIcon} desc="Rooms" active={active} setActive={setActive}/>
       <NavElement to="/viewPromotions" icon={dashBoardIcon} desc="Promotions" active={active} setActive={setActive}/>
@@ -103,7 +103,7 @@ export default function NavBar(props) {
 
       {authState.userRole==="Cashier" && 
       <>
-      <NavElement to="/dashBoard" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive}/>
+      <NavElement to="/" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive}/>
       <NavElement to="/reservationTab" icon={dashBoardIcon} desc="Reservations Tab" active={active} setActive={setActive}/>
       <NavElement to="/viewRooms" icon={dashBoardIcon} desc="Rooms" active={active} setActive={setActive}/>
       <NavElement to="/viewPromotions" icon={dashBoardIcon} desc="Promotions" active={active} setActive={setActive}/>
@@ -114,7 +114,7 @@ export default function NavBar(props) {
 
       {authState.userRole==="Receptionist" && 
       <>
-      <NavElement to="/dashBoard" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive}/>
+      <NavElement to="/" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive}/>
       <NavElement to="/createReservation" icon={dashBoardIcon} desc="Create-Reservation" active={active} setActive={setActive}/>
       <NavElement to="/reservationTab" icon={dashBoardIcon} desc="Reservations Tab" active={active} setActive={setActive}/>
       <NavElement to="/guests" icon={dashBoardIcon} desc="Guests" active={active} setActive={setActive}/>

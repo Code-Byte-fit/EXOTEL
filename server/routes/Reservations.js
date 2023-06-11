@@ -33,39 +33,15 @@ router.get('/',async (req,res)=>{
 
 //used to create a new reservation
 router.post("/:nameFile",upload('Identification'),async (req,res)=>{
-    // try{
+    try{
       const {CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,
              Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus,totalAmount}=req.body
-    //find if the guest is already existing in the db
-    let isGuest = await Guests.findOne({
-      where: {
-        firstName: FirstName.trim(),
-        lastName: LastName.trim()
-      }
-    });
-    let guestId=null;
-    if (!isGuest) { //if guest is not present,create new record in the Guest table
-      const guest = await Guests.create({ FirstName, LastName, DOB, Country,Identification:req.file.path});
-      await GuestEmail.create({ email: Email, guestId: guest.id });
-      await GuestPhoneNumber.create({ phoneNumber: PhoneNumber, guestId: guest.id });
-      guestId=guest.id
-    } 
-    else {
-      guestId=isGuest.id
-      const guestEmail = await GuestEmail.findOne({//check if the provided email is already present
-        where: { guestId: guestId, email: Email }
-      });
-      if (!guestEmail) {
-        await GuestEmail.create({ email: Email, guestId: guestId });
-      }
-  
-      const guestPhoneNumber = await GuestPhoneNumber.findOne({ //check if the provided phone number is already present
-        where: { guestId: guestId, phoneNumber: PhoneNumber }
-      });
-      if (!guestPhoneNumber) {
-        await GuestPhoneNumber.create({ phoneNumber: PhoneNumber, guestId: guestId });
-      }
-    }
+
+      const guest = await Guests.create(
+        { FirstName, LastName, DOB, Country,Email,PhoneNumber,Identification:req.file.path});
+
+       
+    
 
     const reservation = await Reservations.create({//create new reservation record
         CheckIn,
@@ -75,7 +51,7 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
         Source,
         ReservationStatus,
         totalAmount,
-        guestId: guestId,
+        guestId: guest.id,
     });
 
     //create record in ReservationRoom table
@@ -98,12 +74,11 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
       <p>Total Amount: ${totalAmount}</p>
   `;
     sendEmail(Email,reservationDetails)
-    res.status(201).json({ reservation, guestId });
-  // }
-//     catch (error) {
-//         console.error(error);
-//         res.status(500).json({ error: 'Failed to create reservation' });
-//       }
+    res.status(201).json({ reservation ,guest});}
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to create reservation' });
+      }
 })
 
 //edit reservation details

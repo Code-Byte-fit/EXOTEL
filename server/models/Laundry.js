@@ -35,5 +35,5 @@ module.exports=(sequelize,Datatypes)=>{
         Laundry.belongsTo(models.Reservations, { foreignKey: 'resNumber' });
     };
     
-    return Laundry;
+    return Laundry;
 }

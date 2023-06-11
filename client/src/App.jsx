@@ -74,7 +74,7 @@ export default function App() {
                 <Route path="/" element={<Root/>}>
                 {authState.status && authState.userRole === 'Administrator' && (
                         <>
-                            <Route path="/dashBoard" element={<AdminDash/>}/>
+                            <Route path="/" element={<AdminDash/>}/>
                             <Route path="/rooms" element={<Rooms/>}/>
                             <Route path="/promotion" element={<Promotion/>}/>
                             <Route path="/addons" element={<AddOns/>}/>
@@ -91,7 +91,7 @@ export default function App() {
                 )}
                 {authState.status && authState.userRole === 'FOManager' && (
                         <>
-                            <Route path="/dashBoard" element={<FODash/>}/>
+                            <Route path="/" element={<FODash/>}/>
                             <Route path="/viewRooms" element={<ViewRooms/>}/>
                             <Route path="/viewPromotions" element={<ViewPromotions/>}/>
                             <Route path="/viewaddons" element={<ViewAddOns/>}/>
@@ -102,7 +102,7 @@ export default function App() {
                 )}
                 {authState.status && authState.userRole === 'Receptionist' && (
                         <>
-                            <Route path="/dashBoard" element={<ReceptionDash/>}/>
+                            <Route path="/" element={<ReceptionDash/>}/>
                             <Route path="/createReservation" element={<CreateRes/>}/>
                             <Route path="/guests" element={<Guests/>}/>
                             <Route path="/reservationTab" element={<ReservationTab/>}/>
@@ -116,7 +116,7 @@ export default function App() {
                 )}
                 {authState.status && authState.userRole === 'Cashier' && (
                         <>
-                            <Route path="/dashBoard" element={<CashierDash/>}/>
+                            <Route path="/" element={<CashierDash/>}/>
                             <Route path="/guests" element={<Guests/>}/>
                             <Route path="/reservationTab" element={<ReservationTab/>}/>
                             <Route path="/viewRooms" element={<ViewRooms/>}/>
@@ -128,7 +128,7 @@ export default function App() {
                 )}
                 {authState.status && authState.userRole === 'HKManager' && (
                         <>
-                            <Route path="/dashBoard" element={<HKDash/>}/>
+                            <Route path="/" element={<HKDash/>}/>
                             <Route path="/guests" element={<Guests/>}/>
                             <Route path="/reservationTab" element={<ReservationTab/>}/>
                             <Route path="/viewRooms" element={<ViewRooms/>}/>
