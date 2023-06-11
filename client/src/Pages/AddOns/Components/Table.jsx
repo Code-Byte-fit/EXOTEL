@@ -18,6 +18,12 @@ function Table(props) {
     })
   }
 
+  const handleRemove=(addonID)=>{
+    axios.delete(`${host}/addon/${addonID}`).then((res)=>{
+      setIsDone(true)
+    })
+  }
+
   const [listOfAddons, setlistOfAddons] = useState([]);
   useEffect(() => {
     axios.get(`${host}/addon`).then((response) => {
@@ -63,7 +69,7 @@ function Table(props) {
     {
       selector: row => row,
       cell: (row) => <EditDelete setlistOfAddons={setlistOfAddons} row={row} editOption isDone={isDone} handleDone={handleDone} success={success}
-      removeOption deleteHeading ="Confirm Remove" deleteBody="Are you sure you want to remove?"
+      removeOption deleteHeading ="Confirm Remove" deleteBody="Are you sure you want to remove?" onRemove={handleRemove} id= {row.addonID} successMsg="Add-On removed Successfully!"
       editComponent={<EditAddon values={row} setIsDone={setIsDone} setSuccess={setSuccess}  />} 
        />
     },
