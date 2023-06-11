@@ -72,7 +72,7 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
       <p>Total Amount: ${totalAmount}</p>
   `;
     sendEmail(Email,reservationDetails)
-    res.status(201).json({ reservation, guestId });}
+    res.status(201).json({ reservation });}
     catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Failed to create reservation' });

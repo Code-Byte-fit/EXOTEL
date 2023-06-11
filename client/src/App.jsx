@@ -118,7 +118,6 @@ export default function App() {
                         <>
                             <Route path="/" element={<CashierDash/>}/>
                             <Route path="/guests" element={<Guests/>}/>
-                            a
                             <Route path="/reservationTab" element={<ReservationTab/>}/>
                             <Route path="/viewRooms" element={<ViewRooms/>}/>
                             <Route path="/viewPromotions" element={<ViewPromotions/>}/>
