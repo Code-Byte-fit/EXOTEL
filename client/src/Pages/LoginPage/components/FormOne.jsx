@@ -31,7 +31,7 @@ function FormOne(props){
                     phone:response.data.Phone,
                     status:true,
                 })
-                navigate('/dashBoard');
+                navigate('/');
             }
             
         });
