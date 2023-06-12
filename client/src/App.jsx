@@ -30,7 +30,7 @@ import MinibarPackage from './Pages/MinibarPackage/MinibarPackage';
 import Bill from './Pages/Bill/Bill'
 import MinibarRestocked from './Pages/MinibarRestocked/MinibarRestocked'
 import ViewMRestock from './Pages/MinibarRestocked/ViewMRestock/ViewMRestock'
-import Laundry from './Pages/Laundry/Laundry'
+import Laundry from './Pages/LaundryNew/Laundry'
 
 
 import Users from './Pages/Users/Users';

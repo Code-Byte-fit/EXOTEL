@@ -1,13 +1,13 @@
 import React, { useState, useEffect,useContext } from "react";
-import {AppContext} from "../../../Helpers/AppContext"
+import {AppContext} from "../../Helpers/AppContext"
 import axios from "axios";
-import FormOne from "../components/FormOne";
-import LTable from './LTable';
+import FormOne from "./components/FormOne"
+import LTable from './components/LTable'
 
-
-function DisplayData() {
-    const[host]=useContext(AppContext) 
-    const [listOfLaundry, setListOfLaundry] = useState([]);
+export default function Laundry() {
+    const{host}=useContext(AppContext) 
+    const [listOfLaundry,setListOfLaundry]=useState([]);
+    
     useEffect(() => {
         axios.get(`${host}/laundry`)
         .then((response) => {
@@ -59,16 +59,13 @@ function DisplayData() {
         const newLaun = [...laundry, newLaundry];
         setlaundry(newLaun);
     };
+  return (
+    <React.Fragment>
 
-    return (
-        <React.Fragment>
-
-            <FormOne handleAddFormChange={handleAddFormChange} addFormData={addFormData} onSubmit={onSubmit}/>
-          
-            <LTable listOfLaundry={listOfLaundry}  
-            laundry={laundry} />
-        </React.Fragment>
-
-    )
+    <FormOne handleAddFormChange={handleAddFormChange} addFormData={addFormData} onSubmit={onSubmit}/>
+  
+    <LTable listOfLaundry={listOfLaundry}  
+    laundry={laundry} />
+</React.Fragment>
+  )
 }
-export default DisplayData;

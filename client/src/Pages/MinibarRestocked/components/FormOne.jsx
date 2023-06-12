@@ -13,14 +13,14 @@ export default function FormOne(props) {
   const { host } = useContext(AppContext);
   const today = new Date();
     const initialValues = {
-        ResNumber: '',
+        ReservationId: '',
         LastRestocked: today.toISOString().slice(0, 10),
         ItemName: '',
         Quantity: ''
     }; 
 
     const validationSchema = Yup.object().shape({
-      ResNumber: Yup.string().required("Required"),
+      ReservationId: Yup.string().required("Required"),
       ItemName: Yup.string().required("Required") ,
       Quantity:Yup.number().positive("Quantity must be greater than 1").required("Required") 
     });
@@ -58,9 +58,9 @@ export default function FormOne(props) {
                  <div className={style.div1}>
                      <span className={style.select}>
                      <div className={style.lbl4}>
-                      <label className={style.lbl3} for="resNumber">Reservation Number</label><br/></div>
+                      <label className={style.lbl3} for="ReservationId">Reservation Number</label><br/></div>
                       <span className={style.cont}>
-                     <Field name="ResNumber"
+                     <Field name="ReservationId"
                         render={({ field, form }) => (
                           <Select
                             options={[{ value: '', label: '-- None Selected -- ' }, ...Reservations]}
@@ -73,7 +73,7 @@ export default function FormOne(props) {
 
                         )}
                     />                  
-                       <ErrorMessage name="ResNumber"
+                       <ErrorMessage name="ReservationId"
                             component="span" 
                             className={style.error} 
                     /> 

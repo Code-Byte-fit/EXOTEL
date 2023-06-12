@@ -1,0 +1,94 @@
+
+.formContainer {
+    display: grid;
+    flex-direction: column;
+    height: 42vh;
+    justify-content: center;
+    margin-left: 2vw;
+  }
+  
+  .div1 {
+    display: grid;
+    grid-template-columns:repeat(5,1fr) ;
+    /* gap: 2vw; */
+  }
+  
+  .div2 {
+    margin-top: 1vh;
+    width: 90vw;
+  }
+  .div3 {
+    /* top right bottom left */
+     margin: 0 0 0 0;  }
+  
+  .labelOne {
+    font-size: 1.6rem;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  }
+  
+  .createBtn {
+    position: relative;
+    top: 2vh;
+    bottom: 10vh;
+    margin-left: 81vw;
+  }
+  
+  .buttonOne {
+    border: none;
+    padding: 1vh 1vw 1vh 1vw;
+    min-width: 6vw;
+    background: #4d5949;
+    color: #fcfbff;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+  /* table */
+  .tableContainer {
+    position: relative;
+    bottom: 1vh;
+  }
+  .tbl {
+    background-color: white;
+    width: 88vw;
+    height: 37vh;
+    margin: 3vh 0 0 5vw;
+  }
+
+  .select{
+    z-index: 10;
+    margin-top: 1vh; 
+    width: 15vw;
+  }
+
+  .lbl4 {
+    margin-bottom: 10px;
+  }
+
+  
+  .labelTwo {
+    font-size: 1.6rem;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+    margin: -5vh 9vh 0;
+    position: relative;
+    top: 2vh;
+  }
+  .cont{
+    position: relative;
+    margin-top: 1vh;
+  }
+  .resNumberField {
+    width: 10vw; /* Set the desired width */
+  }
+  
+  .error {
+    position: absolute;
+    color: rgb(141, 22, 22);
+    font-size: 0.8rem;
+    display: block;
+    right: 0;
+  }
+  
+
+   

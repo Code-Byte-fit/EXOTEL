@@ -17,13 +17,12 @@ export default function Button(props) {
     axios.get("http://localhost:3001/reservations").then((response) => {
       setListOfReservations(response.data);
     });
-  }, []);
-
-  useEffect(() => {
     axios.get("http://localhost:3001/payment/duePayment").then((response) => {
       setListOfPayments(response.data);
     });
   }, []);
+
+  
   
 
   const handleLeftClick = () => {
@@ -71,6 +70,7 @@ export default function Button(props) {
   useEffect(() => {
     handleLeftClick(); 
   }, [listOfReservations]);
+  console.log(listOfReservations)
 
   const columnsL = [
     {
@@ -104,12 +104,7 @@ export default function Button(props) {
     
     {
         name: "Base value",
-        selector: (row) => {
-          const reservation = listOfReservations.find(
-            (reservation) => reservation.id === row.id
-          );
-          return reservation ? reservation.totalAmount : "";
-        },
+        selector: (row) => row.totalAmount,
         sortable: true,
       },
     
@@ -157,7 +152,7 @@ export default function Button(props) {
   const columnsR = [
     {
       name: "Res Number",
-      selector: "restId",
+      selector: "ReservationId",
       sortable: true,
     },
     {
@@ -198,7 +193,7 @@ export default function Button(props) {
         <div className={style.tbl}>
           <span className={style.div3}>
           <Table
-            columns={columns}
+            columns={isLeftActive ? columnsL : columnsR}
             data={isLeftActive ? listOfReservations : listOfPayments}
             height="35vh"
             />

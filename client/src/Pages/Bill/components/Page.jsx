@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import logo from '../../../Assets/Logos/logo(2).png';
 import style from "../components/Page.module.css";
+import axios from 'axios';
 
 export default function Page() {
   const [tableData, setTableData] = useState([]);
@@ -12,11 +13,16 @@ export default function Page() {
   const minibarTotal = parseFloat(searchParams.get("minibarTotal")) || 0;
   const laundryTotal = parseFloat(searchParams.get("laundryTotal")) || 0;
   const total = parseFloat(searchParams.get("total")) || 0;
+  const handleButton = (id)=>{
+    
+    axios.post(`http://localhost:3001/payment/confirm/${id}`)
+  }
 
   useEffect(() => {
     const serviceCharge = total * 0.02;
     const tax = total * 0.1;
     const grossAmount = total + serviceCharge + tax;
+
   
     const transformedData = [
       { description: 'Base Value', price: baseValue },
@@ -64,7 +70,9 @@ export default function Page() {
             </tbody>
           </table>
         </div>
-        <button className={style.buttonProcess}>Conform</button>
+        <button className={style.buttonProcess}
+        onClick={()=>{handleButton(reservationNumber)}}
+        >Confirm</button>
       </div>
     </>
   );

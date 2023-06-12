@@ -5,7 +5,6 @@ import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
 import Select from 'react-select';
-import "./Laundry.css";
 import style from '../components/Laundry.module.css'
 
 export default function FormOne(props) {
@@ -28,25 +27,25 @@ export default function FormOne(props) {
       type:Yup.string().required("Required")
     });
 
-    // const fetchResNum = async()=>{
-    //     const response = await axios.get("http://localhost:3001/reservations");
-    //     setReservations(response.data.map(Reservations => ({ value: Reservations.id, label: Reservations.id })));
-    //   }
+    const fetchResNum = async()=>{
+        const response = await axios.get("http://localhost:3001/reservations");
+        setReservations(response.data.map(Reservations => ({ value: Reservations.id, label: Reservations.id })));
+      }
 
-      // const fetchLaundry = async()=>{
-      //   const response = await axios.get("http://localhost:3001/addon/laundry");
-      //   setLaundryType(response.data.map(LaundryType => ({ value: LaundryType.AddOn, label: LaundryType.AddOn })));
-      // }
+      const fetchLaundry = async()=>{
+        const response = await axios.get("http://localhost:3001/addon/laundry");
+        setLaundryType(response.data.map(LaundryType => ({ value: LaundryType.AddOn, label: LaundryType.AddOn })));
+      }
       
       
-      // useEffect(() => {
-      //   fetchLaundry();
-      // }, []);
+      useEffect(() => {
+        fetchLaundry();
+      }, []);
       
         
-      // useEffect(()=>{
-      //     fetchResNum();
-      //   },[]);
+      useEffect(()=>{
+          fetchResNum();
+        },[]);
       
         
         

@@ -1,14 +1,15 @@
 import React from "react";
 import Table from "../../General/Table/Table"
 import EditDelete from "../../General/Table/EditDelete";
-import style from "../components/Minibar.module.css";
+import style from "../components/Laundry.module.css";
 
-function MTable(props) {
-  
+
+function LTable(props) {
+   
   const columns = [
     {
-      name: 'Restocked Id',
-      selector: row=>row.RestockId,
+      name: 'Laundry Id',
+      selector: row=>row.laundryId,
       sortable: true,
     },
     {
@@ -17,23 +18,28 @@ function MTable(props) {
       sortable: true,
     },
     {
-      name: 'Last Restocked',
-      selector: row=>row.LastRestocked,
+      name: 'Receive Date',
+      selector: row=>row.receivedDate,
       sortable: true,
     },
     {
-      name: 'Item Name',
-      selector: row=>row.ItemName,
+      name: 'Return Date',
+      selector: row=>row.returnDate,
       sortable: true,
     },
     {
-      name: 'Quantity',
-      selector: row=>row.Quantity,
+      name: 'Type',
+      selector: row=>row.type,
       sortable: true,
     },
     {
-      name: 'Amount',
-      selector: row=>row.Amount,
+      name: 'Load',
+      selector: row=>row.load,
+      sortable: true,
+    },
+    {
+      name: 'Charge',
+      selector: row=>row.charge,
       sortable: true,
     },
    
@@ -47,11 +53,11 @@ function MTable(props) {
       <label className={style.labelTwo}>Entries</label>
       <div className={style.tbl}>
         <span className={style.div3}>
-        <Table columns={columns} data = {props.listOfMinibar} height ='35vh'/>
+        <Table columns={columns} data = {props.listOfLaundry} height ='35vh'/>
         </span>
       </div>
     </span>
   );
 }
 
-export default MTable;
+export default LTable;

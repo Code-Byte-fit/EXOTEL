@@ -47,12 +47,6 @@ app.use("/minibar", minibarRouter);
 const laundryRouter = require ('./routes/Laundry')
 app.use("/laundry", laundryRouter);
 
-const compRouter = require ('./routes/Compensation')
-app.use("/compensation", compRouter);
-
-const billRouter = require ('./routes/Bill')
-app.use("/bill", billRouter);
-
 const paymentRouter = require ('./routes/Payment')
 app.use("/payment",paymentRouter);
 
