@@ -42,8 +42,11 @@ module.exports = (sequelize, DataTypes) => {
     Reservations.belongsToMany(models.Rooms, { through: 'ReservationRoom' });
     Reservations.belongsToMany(models.Addons, { through: 'ReservationAddOn' });
     Reservations.belongsTo(models.Promotion, { foreignKey: 'PromoCode' });
-    Reservations.hasMany(models.TaskAllocations, { foreignKey: 'Id' });
-    Reservations.belongsTo(models.Bill, { foreignKey: 'billNumber' });
+    Reservations.hasMany(models.TaskAllocations, { foreignKey: 'ReservationId' });
+    Reservations.hasOne(models.DuePayment, { foreignKey: 'ReservationId' }); 
+    Reservations.hasMany(models.MiniBarRestock, { foreignKey: 'ReservationId' });
+    Reservations.hasMany(models.Laundry, { foreignKey: 'ReservationId' });
+    
   };
 
   return Reservations;

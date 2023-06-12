@@ -32,8 +32,6 @@ module.exports=(sequelize,Datatypes)=>{
         timestamps: false
       });
     
-      Cashier.associate = (models) => {
-          Cashier.hasMany(models.Bill, { foreignKey: 'employeeId' });
-        };
+
     return Cashier;
 }

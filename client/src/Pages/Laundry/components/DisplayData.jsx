@@ -26,10 +26,11 @@ function DisplayData() {
   
     const [laundry, setlaundry] = useState();
     const [addFormData, setAddFormData] = useState({
-        resNumber: '',
+        ReservationId: '',
         receivedDate: '',
         returnDate: '',
         load: '',
+        type:'',
     })
 
     const handleAddFormChange = (event) => {
@@ -48,10 +49,11 @@ function DisplayData() {
         event.preventDefault();
 
         const newLaundry = {
-            resNumber: addFormData.resNumber,
+            ReservationId: addFormData.ReservationId,
             receivedDate: addFormData.receivedDate,
             returnDate: addFormData.returnDate,
             load: addFormData.load,
+            type: addFormData.type,
         };
 
         const newLaun = [...laundry, newLaundry];
@@ -63,7 +65,8 @@ function DisplayData() {
 
             <FormOne handleAddFormChange={handleAddFormChange} addFormData={addFormData} onSubmit={onSubmit}/>
           
-            <LTable listOfLaundry={listOfLaundry}  laundry={laundry} />
+            <LTable listOfLaundry={listOfLaundry}  
+            laundry={laundry} />
         </React.Fragment>
 
     )

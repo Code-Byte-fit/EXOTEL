@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react";
-import { AppContext } from "../../../Helpers/AppContext"
+import React, { useState } from "react";
+import { useEffect } from 'react';
 import Input from "../../General/Inputs/Inputs";
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
@@ -8,75 +8,89 @@ import Select from 'react-select';
 import style from './MPackage.module.css'
 import './Itmes.css'
 
-
 export default function FormOne(props) {
-  const [minibarPackage, setminibarPackage] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const { host } = useContext(AppContext);
+  // Define state variables
+  const [minibarPackage, setMinibarPackage] = useState([]); // state variable to store minibar items
+  const [totalPrice, setTotalPrice] = useState(0); // state variable to store total price of selected items
+
+  // Define initial form values
   const initialValues = {
     PackageName: "",
-    PackagePrice: 0, // use totalPrice prop here
+    PackagePrice: 0,
     PackageItems: []
   };
-  
 
-  // const validationSchema = Yup.object().shape({
-  //   RoomNumber: Yup.string().required("Required"),
-  //   Date: Yup.date().required("Required") ,
-  //   ItemNumber: Yup.number().min(4).max(8).required("Required") ,
-  //   Quantity:Yup.number().required("Required") 
-  // });
+  // Define validation schema using Yup
+  const validationSchema = Yup.object().shape({
+    PackageName: Yup.string().required("Required"),
+    PackageItems: Yup.array().min(1, "Required")
 
-  const fetchItemName = async()=>{
-    const response = await axios.get(`${host}/Minibar/minibaritems`);
+   
+  });  
+
+  // Function to fetch minibar items from server
+  const fetchItemName = async () => {
+    const response = await axios.get("http://localhost:3001/Minibar/minibaritems");
     
-    setminibarPackage(response.data);
+    setMinibarPackage(response.data);
     console.log(response.data)
   }
 
-  useEffect(()=>{
+  // Call fetchItemName function on component mount
+  useEffect(() => {
     fetchItemName();
-  
-  //calculate initial total price
-  const selectedItemsTotalPrice = minibarPackage.reduce(
-    (acc, item) => acc + item.ItemPrice,
-    0
-  );
-  setTotalPrice(selectedItemsTotalPrice);
-}, []);
 
-  const handleSelectChange = (Formik, selectedOption) => {
-    const selectedItems = selectedOption.map((option) =>
-    minibarPackage.find((item) => item.ItemName === option.value)
-    );
-    const selectedItemsTotalPrice = selectedItems.reduce(
+    // Calculate initial total price
+    const selectedItemsTotalPrice = minibarPackage.reduce(
       (acc, item) => acc + item.ItemPrice,
       0
     );
     setTotalPrice(selectedItemsTotalPrice);
+  }, []);
+
+  // Function to handle changes to selected items
+  const handleSelectChange = (Formik, selectedOption) => {
+    // Map selectedOption values to corresponding minibar items
+    const selectedItems = selectedOption.map((option) =>
+      minibarPackage.find((item) => item.ItemName === option.value)
+    );
+
+    // Calculate total price of selected items
+    const selectedItemsTotalPrice = selectedItems.reduce(
+      (acc, item) => acc + item.ItemPrice,
+      0
+    );
+
+    // Update state variables and form field values
+    setTotalPrice(selectedItemsTotalPrice);
     Formik.setFieldValue("PackageItems", selectedOption);
-    Formik.setFieldValue("PackagePrice", selectedItemsTotalPrice); // update PackagePrice field
+    Formik.setFieldValue("PackagePrice", selectedItemsTotalPrice);
   };
-  
 
   return (
     <div className={style.formContainer}>
       <label className={style.labelOne}>Minibar Package</label>
-      <Formik initialValues={initialValues} onSubmit={props.onSubmit}>
+      <Formik initialValues={initialValues} onSubmit={props.onSubmit} validationSchema={validationSchema}>
         {(Formik) => (
           <Form>
             <div className={style.div1}>
+            <span className={style.cont}>
               <Field
                 name="PackageName"
                 component={Input}
                 label="Package Name"
                 type="text"
                 width="20vw"/>
-              
+                <ErrorMessage name="PackageName"
+                         component="span" 
+                         className={style.error} 
+                      />
+              </span>
 
               <div className={style.div4}>
                 <label className={style.label}>Package Items</label>
                 <br />
+                <span className={style.cont}>
                 <Select
                     name="PackageItems"
                     className="react-select-container"
@@ -90,14 +104,16 @@ export default function FormOne(props) {
                     })),
                     ]}
                       onChange={(selectedOption) => handleSelectChange(Formik, selectedOption)}/>
+                        <ErrorMessage name="PackageItems"
+                         component="span" 
+                         className={style.error} 
+                      />
+                      </span>
 
               </div>
             </div>
-            <div className={style.div5}>
-                  <label className={style}>Package Price: $ </label> {totalPrice}
-                  </div>
-
             <span className={style.div2}>
+
               <Field
                 name="addInfo"
                 component={Input}

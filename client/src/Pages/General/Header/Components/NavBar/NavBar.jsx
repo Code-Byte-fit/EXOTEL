@@ -109,7 +109,14 @@ export default function NavBar(props) {
       <NavElement to="/viewPromotions" icon={dashBoardIcon} desc="Promotions" active={active} setActive={setActive}/>
       <NavElement to="/viewaddons" icon={dashBoardIcon} desc="Add-Ons" active={active} setActive={setActive}/>
       <NavElement to="/viewroomtypes" icon={dashBoardIcon} desc="Room-Types" active={active} setActive={setActive}/>
-      <NavElement to="/guests" icon={dashBoardIcon} desc="Guests" active={active} setActive={setActive}/>
+      {/* <NavElement to="/guests" icon={dashBoardIcon} desc="Guests" active={active} setActive={setActive}/> */}
+      <NavElement to="/compensation" icon={dashBoardIcon} desc="Compensation" active={active} setActive={setActive}/>
+      <NavElement to="/ViewMRestock" icon={dashBoardIcon} desc="Minibar" active={active} setActive={setActive}/>
+      <NavElement to="/payments" icon={dashBoardIcon} desc="payments" active={active} setActive={setActive}/>
+      {/* <NavElement to="/Minibar" icon={dashBoardIcon} desc="Minibar" active={active} setActive={setActive}/> */}
+      
+
+
       </>}
 
       {authState.userRole==="Receptionist" && 
@@ -121,6 +128,28 @@ export default function NavBar(props) {
       </MultiElement>
       <NavElement to="/guests" icon={dashBoardIcon} desc="Guests" active={active} setActive={setActive}/>
       <NavElement to="/calender" icon={dashBoardIcon} desc="Calender" active={active} setActive={setActive}/>
+      </>}
+
+      {authState.userRole==="RoomBoy" && 
+      <>
+      <NavElement to="/dashBoard" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive}/>
+      <NavElement to = "/minibarRestocked" icon={dashBoardIcon} desc="Minibar-Restock" active={active} setActive={setActive}/>
+      <NavElement to = "/laundry" icon={dashBoardIcon} desc="Laundry" active={active} setActive={setActive}/>
+   
+      </>}
+
+      
+      {authState.userRole==="HKManager" && 
+      <>
+      <NavElement to="/dashBoard" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive}/>
+      <NavElement to = "/guests" icon={dashBoardIcon} desc="Guests" active={active} setActive={setActive}/>
+      <NavElement to = "/reservationTab" icon={dashBoardIcon} desc="ReservationTab" active={active} setActive={setActive}/>
+      <NavElement to = "/viewRooms" icon={dashBoardIcon} desc="View-Rooms" active={active} setActive={setActive}/>
+      <NavElement to = "/viewPromotions" icon={dashBoardIcon} desc="view-Promotions" active={active} setActive={setActive}/>
+      <NavElement to = "/viewaddons" icon={dashBoardIcon} desc="view-addons" active={active} setActive={setActive}/>
+      <NavElement to = "/viewroomtypes" icon={dashBoardIcon} desc="view-roomtypes" active={active} setActive={setActive}/>
+      <NavElement to = "/minibarItems" icon={dashBoardIcon} desc="minibarItems" active={active} setActive={setActive}/>
+      <NavElement to = "/minibarPackage" icon={dashBoardIcon} desc="minibarPackage" active={active} setActive={setActive}/> 
       </>}
 
       </div>

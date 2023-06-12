@@ -1,12 +1,33 @@
 const express=require('express')
 const router=express.Router()
 const {Addons , Reservations, ReservationAddOn, RemovedAddOn}=require('../models')
+const { Op } = require('sequelize');
 
 // Get all addons
 router.get('/',async (req,res)=>{
     const listOfAddons=await Addons.findAll()
     res.json(listOfAddons)
 })
+// Get addons equal to "laundry"
+router.get('/laundry', async (req, res) => {
+  try {
+    const addons = await Addons.findAll({
+      attributes: ['AddOn'],
+      where: {
+        AddOn: {
+          [Op.like]: 'Laundry%'
+        }
+      }
+    });
+
+    res.json(addons);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to fetch laundry addons' });
+  }
+});
+
+
 
 router.get('/:addOn/use', async (req, res) => {
   const addOn = req.params.addOn;

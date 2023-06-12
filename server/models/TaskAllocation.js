@@ -23,7 +23,7 @@ module.exports=(sequelize,Datatypes)=>{
         
     });
     TaskAllocations.associate = (models) =>{
-        TaskAllocations.belongsTo(models.Reservations, { foreignKey: 'Id' });
+        TaskAllocations.belongsTo(models.Reservations, { foreignKey: 'ReservationId' });
         TaskAllocations.hasMany(models.Laundry, { foreignKey: 'taskId' });
         TaskAllocations.hasMany(models.MiniBarRestock, { foreignKey: 'taskId' });
     }

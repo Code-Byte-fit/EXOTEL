@@ -41,6 +41,14 @@ app.use("/addon",addOnRouter);
 const adminRouter=require('./routes/Admin')
 app.use("/admin",adminRouter);
 
+const minibarRouter = require ('./routes/Minibar')
+app.use("/minibar", minibarRouter);
+
+const laundryRouter = require ('./routes/Laundry')
+app.use("/laundry", laundryRouter);
+
+const paymentRouter = require ('./routes/Payment')
+app.use("/payment",paymentRouter);
 
 
 
