@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState,useEffect,useContext} from 'react'
+import {AppContext} from "../../Helpers/AppContext"
 import axios from "axios"
+import Spinner from '../General/Spinner/Spinner'
 import Table from '../General/Table/Table'
 import EditDelete from '../General/Table/EditDelete'
 import Edit from './Components/Edit/Edit'
@@ -8,24 +10,32 @@ import filterIcon from "../../Assets/Images/mixer (2).png"
 import style from "./Components/Style.module.css"
 
 export default function Guests() {
+  const {host,authState}=useContext(AppContext)
   const [guestList,setGuestList]=useState([]);
   const [isDone, setIsDone] = useState(false);
+  const [success,setSuccess]=useState(true);
   const [isFilterActive, setIsFilterActive] = useState(false);
   const [searchQuery, setSearchQuery] = useState({fname:"",lname:"",country:""});
+  const [loading, setLoading] = useState(false); 
 
   useEffect(()=>{
-    axios.get("http://localhost:3001/guests").then((response)=>{
+    setLoading(true)
+    axios.get(`${host}/guests`).then((response)=>{
       setGuestList(response.data)
+      setLoading(false)
      })
    },[])
 
    const handleDone=()=>{
     setIsDone(false)
-    axios.get("http://localhost:3001/guests").then((response)=>{
+    setLoading(true)
+    axios.get(`${host}/guests`).then((response)=>{
       setGuestList(response.data)
+      setLoading(false)
     })
   }
 
+  //obtain filtered guest data
    const filteredData = guestList.filter((item) => {
     let matchesFilter = true;
     if (searchQuery.fname) {
@@ -62,23 +72,24 @@ export default function Guests() {
     },
     {
       name: 'E-MAIL',
-      selector: row  => row.GuestEmails.map(email => <div>{email['email']}</div>),
+      selector: row  => row.Email,
       sortable: true,
     },
     {
       name: 'PHONE-NO',
-      selector: row =>row.GuestPhoneNumbers.map(number => <div>{number['phoneNumber']}</div>),
+      selector: row =>row.PhoneNumber,
       sortable: true,
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete editOption isDone={isDone} handleDone={handleDone}
-      editComponent={<Edit values={row} setIsDone={setIsDone}/>}/>
+      cell: (row) => <EditDelete editOption isDone={isDone} handleDone={handleDone} success={success}
+      editComponent={<Edit values={row} setIsDone={setIsDone} setSuccess={setSuccess}/>}/>
     },
 ];
 
   return (
     <>
+    {loading && <Spinner loading={loading}/>}
       <div className={style.header}>
         <span className={style.heading}>Guests</span>
         {guestList.length>0 && <div className={style.headerRight}>

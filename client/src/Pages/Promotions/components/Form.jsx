@@ -20,65 +20,63 @@ function FormOne(props) {
     AddInfo: ''
   };
 
-
-  const [Promotions, setPromotions] = useState([]);
   const validationSchema = Yup.object().shape({
     PromoCode: Yup.string().required('Required'),
     PromoType: Yup.string().required('Required'),
-    Value: Yup.string()
+    Value: Yup.number()
       .required('Required')
-      .matches(/%$/, 'Value must end with %'),
+      .integer('Invalid')
+      .typeError("Invalid")
+      .min(0, 'Invalid')
+      .max(100, 'Invalid'),
     MaxUses: Yup.number()
       .required('Required')
-      .test('non-negative', 'MaxUses must be non-negative', function (value) {
-        return value >= 0;
-      }),
+      .min(0, 'Cannot be negative')
+      .integer('Max Uses must be an integer')
+      .typeError('Invalid'),
     Status: Yup.string().required('Required'),
     Startdate: Yup.date()
       .required('Required')
-      .test(
-        'end-date-after-start-date',
-        'End date must be after start date',
-        function (value) {
-          const { Enddate } = this.parent;
-          return !Enddate || value <= Enddate;
-        }
-      ),
+      .test('end-date-after-start-date', 'Invalid', function (value) {
+        const { Enddate } = this.parent;
+        return !Enddate || value <= Enddate;
+      }),
     Enddate: Yup.date()
       .required('Required')
-      .test(
-        'end-date-after-start-date',
-        'End date must be after start date',
-        function (value) {
-          const { Startdate } = this.parent;
-          return !Startdate || value >= Startdate;
-        }
-      ),
+      .test('end-date-after-start-date', 'Invalid', function (value) {
+        const { Startdate } = this.parent;
+        return !Startdate || value >= Startdate;
+      }),
     AddInfo: Yup.string(),
   });
   
+
 
   const Status = [{ key: "--None Selected --", value: "" },
   { key: "Active", value: "Active" },
   { key: "Disabled", value: "Disabled" },]
 
+  const handleSubmit = (values, { resetForm }) => {
+    props.makeReq(values);
+    resetForm({ values: initialValues });
+  };
 
   return (
     <span className={style.formContainer}>
-      <label className={style.labelOne}>Add Promotions</label>
+      <label className={style.labelOne}>Create Promotions</label>
 
-      <Formik initialValues={initialValues} onSubmit={props.makeReq} validationSchema={validationSchema}>
+      <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema}>
         <Form>
           <div className={style.div1}>
             <div className={style.top}>
-             
 
-            <span className={style.box}>
+
+              <span className={style.box}>
                 <Field name="PromoCode"
                   component={Input}
                   label="Promo Code"
                   type="text"
-                  width="13vw" />
+                />
                 <ErrorMessage name="PromoCode" component="span" className={style.error} />
               </span>
 
@@ -88,7 +86,7 @@ function FormOne(props) {
                   component={Input}
                   label="Promo Type"
                   type="text"
-                  width="13vw" />
+                />
                 <ErrorMessage name="PromoType" component="span" className={style.error} />
               </span>
 
@@ -97,7 +95,7 @@ function FormOne(props) {
                   component={Input}
                   label="Value(%)"
                   type="text"
-                  width="13vw" />
+                />
                 <ErrorMessage name="Value" component="span" className={style.error} />
               </span>
               <span className={style.box}>
@@ -105,12 +103,12 @@ function FormOne(props) {
                   component={Input}
                   label="Max Uses"
                   type="number"
-                  width="13vw"
+
                 />
                 <ErrorMessage name="MaxUses" component="span" className={style.error} />
               </span>
 
-              
+
               <span className={style.box}>
                 <Field name="Status"
                   component={Input}
@@ -118,42 +116,39 @@ function FormOne(props) {
                   type="select"
 
                   options={Status}
-                  width="13vw" />
+                />
                 <ErrorMessage name="Status" component="span" className={style.error} />
               </span>
-            </div>
-            <div className={style.div6}>
-              <div className={style.div7}>
-              <span className= {style.box}>
+<div className={style.div6}> <span className= {style.box}>
                   <Field name="Startdate"
                     component={Input}
                     label="Start Date"
                     type="Date"
 
-                    width="13vw" />
+                  />
                   <ErrorMessage name="Startdate" component="span" className={style.error} />
                 </span>
-                <span className= {`${style.box} ${style.box1}`}>
+                <span className= {style.box}>
                   <Field name="Enddate"
                     component={Input}
                     label="End Date"
                     type="Date"
-                    width="13vw" />
+                     />
                   <ErrorMessage name="Enddate" component="span" className={style.error} />
-                </span>
-              </div>
+                </span></div>
+             
+            </div>
+            <div className={style.div7}>
+             
               <div className={style.textArea}>
                 <Field name="AddInfo"
                   component={Input}
                   label="Additional Information"
                   type="textarea"
                   rows="5"
-                  cols="115" />
+                  cols="158" />
               </div>
-
-
             </div>
-
           </div>
           <span className={style.createBtn}>
             <button className={style.buttonOne} type="submit">Create Promotion</button>

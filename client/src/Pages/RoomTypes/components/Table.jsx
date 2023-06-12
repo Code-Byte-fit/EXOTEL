@@ -1,25 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import style from "./Types.module.css";
 import axios from "axios";
-import { useEffect } from "react";
 import RoomTypeTable from '../../General/Table/Table'
-import EditDelete from "./EditDelete";
-
+import EditDelete from "../../General/Table/EditDelete";
+import EditAddon from "../../AddOns/Components/EditAddon";
+import EditType from "./EditType";
+import Spinner from '../../General/Spinner/Spinner';
 
 
 function Table(props) {
   const [listOfRoomTypes, setlistOfRoomTypes] = useState([]);
-  const [showPopup, setShowPopup] = useState(false);
-  const [selectedRoomType, setSelectedRoomTypes] = useState(null);
+  const { host } = useContext(AppContext);
+  const [success, setSuccess] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [isDone, setIsDone] = useState(false);
+
+  const handleDone = () => {
+    setIsDone(false)
+    setLoading(true)
+    axios.get(`${host}/roomtypes`).then((response) => {
+      setlistOfRoomTypes(response.data)
+      setLoading(false)
+    })
+  }
+
+  const handleRemove = (RoomTypeID) => {
+    axios.delete(`${host}/roomtypes/${RoomTypeID}`).then((res) => {
+      setIsDone(true)
+    })
+  }
 
   useEffect(() => {
-    axios.get("http://localhost:3001/roomtypes").then((response) => {
+    setLoading(true)
+    axios.get(`${host}/roomtypes`).then((response) => {
       setlistOfRoomTypes(response.data);
+      setLoading(false)
     });
   }, []);
-
-
-
 
   const columns = [
     {
@@ -28,12 +46,12 @@ function Table(props) {
       sortable: true,
     },
     {
-      name: 'VIEW',
+      name: 'View',
       selector: row => row.View,
       sortable: true,
     },
     {
-      name: 'No of Beds',
+      name: 'No. of Beds',
       selector: row => row.NoOfBeds,
       sortable: true,
     },
@@ -44,7 +62,7 @@ function Table(props) {
       sortable: true,
     },
     {
-      name: 'Standard Charge',
+      name: 'Standard Charge($)',
       selector: row => row.StandardCharge,
       sortable: true,
     },
@@ -61,15 +79,22 @@ function Table(props) {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete setlistOfRoomTypes={setlistOfRoomTypes} row={row} />
+      cell: (row) => <EditDelete setlistOfRoomTypes={setlistOfRoomTypes} row={row} editOption isDone={isDone} handleDone={handleDone} success={success}
+        removeOption deleteHeading="Confirm Remove" deleteBody="Are you sure you want to remove?" onRemove={handleRemove} id={row.RoomTypeID} successMsg="Room Type removed Successfully!"
+        editComponent={<EditType values={row} setIsDone={setIsDone} setSuccess={setSuccess} />}
+      />
     },
   ];
   return (
-    <span className={style.tableContainer}>
-      <label className={style.labelTwo}>Edit/Delete Room Types</label>
-      <RoomTypeTable columns={columns} data={props.listOfRoomTypes} height="35vh" edit pagination />
+    <>
+      {loading && <Spinner loading={loading} />}
+      <span className={style.tableContainer}>
+        <label className={style.labelTwo}>Edit/Delete Room Types</label>
+        <RoomTypeTable columns={columns} data={props.listOfRoomTypes} height="35vh" edit pagination />
 
-    </span>
+      </span>
+    </>
+
   );
 }
 

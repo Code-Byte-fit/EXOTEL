@@ -1,18 +1,34 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import Input from "../../General/Inputs/Inputs";
 import style from "./Rooms.module.css";
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
-
+import { ReactComponent as Exclamation } from "../../../Assets/Images/exclamation.svg";
 function EditRoom(props) {
-    const [showConfirmation, setShowConfirmation] = useState(false);
-    const [RoomTypes, setRoomTypes] = useState([]);
 
+
+
+    const [RoomTypes, setRoomTypes] = useState([]);
+    const { host } = useContext(AppContext);
+    const [isRoomValid, setRoomValid] = useState(false);
+
+    const handleEdit = (data, success) => {
+        success ?
+            axios.put(`${host}/rooms`, data).then((res) => {
+                props.setIsDone(true);
+                props.setSuccess(success);
+            }) :
+            props.setIsDone(true);
+        props.setSuccess(success);
+    };
+
+
+    const [initialValues, setInitialValues] = useState({ ...props.values, NewRoomNo: props.values.RoomNo })
 
     const validationSchema = Yup.object().shape({
-        RoomNo: Yup.string()
+        NewRoomNo: Yup.string()
             .required('Required')
             .matches(/^[A-Za-z0-9]+$/, 'Must only contain letters and numbers')
             .max(10, 'Must be at most 10 characters long'),
@@ -26,9 +42,33 @@ function EditRoom(props) {
         AddInfo: Yup.string(),
     });
 
+    // const checkConflict = (roomNo) => {
+    //     axios.get(`${host}/room/${roomNo}/status`).then((res) =>{
+    //             console.log(res.data);
+    //     });
+    // }
+
+    // checkConflict(100);
+  
+    const checkConflict = async (roomNo) => {
+        try {
+          const response = await axios.get(`${host}/rooms/${roomNo}/status`);
+          const reservations = response.data.reservations;
+          const isValid = reservations.includes('checkedin') || reservations.includes('active');
+          setRoomValid(isValid);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      useEffect(() => {
+        fetchRoomTypes();
+        checkConflict(initialValues.NewRoomNo);
+      }, []);
+
+
 
     const fetchRoomTypes = async () => {
-        const response = await axios.get("http://localhost:3001/roomtypes");
+        const response = await axios.get(`${host}/roomtypes`);
         setRoomTypes(response.data);
     }
 
@@ -42,93 +82,105 @@ function EditRoom(props) {
         { key: "1st Floor", value: "1st Floor" },
         { key: "2nd Floor", value: "3rd Floor" }]
 
+    // const temp = true;
 
     return (
 
-        <div className={style.editCont}>
 
+        <>
 
-            <div className={style.editHeading}>Edit Room</div>
+            {!isRoomValid ?
+                <>
+                    <div className={style.editCont}>
+                        <div className={style.editHeading}>Edit Room</div>
 
-            <Formik initialValues={props.values} onSubmit={null} validationSchema={validationSchema} >
-                <Form>
+                        <Formik initialValues={initialValues} onSubmit={handleEdit} validationSchema={validationSchema} >
+                            {(formik) => (
+                                <Form>
 
-                    <div className={style.Editdiv1}>
+                                    <div className={style.Editdiv1}>
 
-                        <span className={style.box1}>
-                            <Field name="RoomNo"
-                                component={Input}
-                                label="Room Number"
-                                type="text"
-                                width="13vw" />
-                            <ErrorMessage name="RoomNo" component="span" className={style.error} />
-                        </span>
+                                        <span className={style.box1}>
+                                            <Field name="NewRoomNo"
+                                                component={Input}
+                                                label="Room Number"
+                                                type="text"
+                                                width="13vw" />
+                                            <ErrorMessage name="NewRoomNo" component="span" className={style.error} />
+                                        </span>
 
-                        <span className={style.box1}>
-                            <Field
-                                name="RoomTypeView"
-                                component={Input}
-                                label="Room Type"
-                                type="select"
-                                options={[
-                                    { key: "--None Selected --", value: "" },
-                                    ...RoomTypes.map(roomType => ({
-                                        key: `${roomType.TypeName}-${roomType.View}`,
-                                        value: `${roomType.TypeName}-${roomType.View}`
-                                    }))
-                                ]}
-                                width="13vw"
-                            />
+                                        <span className={style.box1}>
+                                            <Field
+                                                name="RoomTypeView"
+                                                component={Input}
+                                                label="Room Type"
+                                                type="select"
+                                                options={[
+                                                    { key: "--None Selected --", value: "" },
+                                                    ...RoomTypes.map(roomType => ({
+                                                        key: `${roomType.TypeName}-${roomType.View}`,
+                                                        value: `${roomType.TypeName}-${roomType.View}`
+                                                    }))
+                                                ]}
+                                                width="13vw"
+                                            />
 
-                            <ErrorMessage name="RoomTypeView" component="span" className={style.error} />
-                        </span>
+                                            <ErrorMessage name="RoomTypeView" component="span" className={style.error} />
+                                        </span>
 
-                        <span className={style.box1}>
-                            <Field name="AdditionalCharges"
-                                component={Input}
-                                label="Additional Charges($)"
-                                type="text"
-                                width="13vw" />
-                            <ErrorMessage name="AdditionalCharges" component="span" className={style.error} />
-                        </span>
-                        <span className={style.box1}>
-                            <Field name="floor"
-                                component={Input}
-                                label="Floor"
-                                type="select"
-                                options={Floor}
-                                width="13vw" />
-                            <ErrorMessage name="floor" component="span" className={style.error} />
-                        </span>
+                                        <span className={style.box1}>
+                                            <Field name="AdditionalCharges"
+                                                component={Input}
+                                                label="Additional Charges($)"
+                                                type="text"
+                                                width="13vw" />
+                                            <ErrorMessage name="AdditionalCharges" component="span" className={style.error} />
+                                        </span>
+                                        <span className={style.box1}>
+                                            <Field name="floor"
+                                                component={Input}
+                                                label="Floor"
+                                                type="select"
+                                                options={Floor}
+                                                width="13vw" />
+                                            <ErrorMessage name="floor" component="span" className={style.error} />
+                                        </span>
+                                    </div>
 
-
-
-
-
+                                    <div className={style.Editdiv2}>
+                                        <Field name="AddInfo"
+                                            component={Input}
+                                            label="Additional Information"
+                                            type="textarea"
+                                            rows="4"
+                                            cols="150" />
+                                    </div>
+                                    <div className={style.confirmBtnCont}>
+                                        <button type='button' className={`${style.editBtn} ${style.cancelBtn}`} onClick={() => { handleEdit(formik.values, false) }} >Cancel</button>
+                                        <button type='button' className={`${style.editBtn} ${style.confirmBtn}`} onClick={() => { handleEdit(formik.values, true) }} >Confirm</button>
+                                    </div>
+                                </Form>
+                            )}
+                        </Formik>
                     </div>
+                </> :
+                <span>
+                    <>
+                        <div className={style.confirmModal}>
+                            <Exclamation className={style.exclamation} />
+                            <span className={`${style.confirmHeading} ${style.success}`}>Error!</span>
+                            <span className={style.confirmBody}> This room cannot be edited since it is associated with one or more reservations</span>
+                            <button className={`${style.Btn} ${style.doneBtn}`} onClick={() => { handleEdit(null, false) }}>Ok</button>
+                        </div>
+                    </>
+                </span>
+            }
 
-                    <div className={style.Editdiv2}>
-                        <Field name="AddInfo"
-                            component={Input}
-                            label="Additional Information"
-                            type="textarea"
-                            rows="4"
-                            cols="150" />
-                    </div>
-                    <div className={style.confirmBtnCont}>
-                        <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}>Cancel</button>
-                        <button type='button' className={`${style.editBtn} ${style.confirmBtn}`}>Confirm</button>
-                    </div>
-
-
-
+        </>
 
 
-                </Form>
-            </Formik>
 
 
-        </div>
     )
 }
 

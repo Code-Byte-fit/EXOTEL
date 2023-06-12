@@ -1,0 +1,139 @@
+.mainCont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5vh;
+}
+
+.imgCont{
+    width: 90vw;
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+
+
+.coverImg{
+    width: 100%;
+    height: 60%;
+    object-fit:cover;
+    border-radius: 8px 8px 0 0;
+}
+
+.edit{
+    position: absolute;
+    right: 0.5vw;
+    top: 1vh;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0.2% 1%;
+    border-radius: 8px;
+    border:none;
+    color: aliceblue;
+    display: flex;
+    align-items: center;
+    gap: 0.5vw;
+}
+
+
+.lowerCont{
+    background: #969771d5;
+    height: 40%;
+    border-radius: 0 0 8px 8px;
+    position: relative;
+}
+
+.proPic{
+    width: 10%;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 3vh;
+    left: 2vw;
+}
+
+.nameCont{
+    width: 20vw;
+    margin: 1vh 0 0 12vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.name{
+    color: aliceblue;
+    font-size: 1.1rem;
+}
+
+.role{
+    color:gray;
+    font-size: 0.9rem;
+}
+
+.detailsCont{
+    width: 90vw;
+    height: 24vw;
+    border-radius: 8px;
+    border: 1px solid rgba(128, 128, 128, 0.258);
+}
+
+.line{
+    background-color: #969771d5;
+    width: 100%;
+    height: 2vh;
+    border-radius: 8px 8px 0 0;
+}
+
+.detailsSecondCont{
+    display: flex;
+    gap: 10vw;
+    position: relative;
+}
+
+.detailsInnerCont,.detailsInnerCont2{
+    margin: 5vh 0 0 5vw;
+    display: flex;
+    flex-direction: column;
+    gap: 5vh;
+}
+
+.detailsInnerCont2{
+    margin: 5vh 0 0 -2.9vw;
+}
+
+.detail{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5vh;
+}
+
+.label{
+    color:gray;
+}
+
+.value,.input{
+    font-size: 1.1rem;
+    margin: 0 0 0 1vw;
+}
+
+.input{
+    border: none;
+    border-bottom: 0.5px solid gray;
+}
+
+.input:focus{
+    outline: none;
+}
+
+.save{
+    position: absolute;
+    right: 1vw;
+    bottom: -8vh;
+    padding: 0.7%;
+    font-size: 0.7rem;
+    color: #ffff;
+    background:#4D5949;
+    border: none;
+    border-radius: 4px;
+    width: clamp(3vw,5vw,5vw);
+}
+

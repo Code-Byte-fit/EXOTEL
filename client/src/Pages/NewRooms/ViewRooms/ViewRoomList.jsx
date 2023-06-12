@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import axios from 'axios';
 import style from "../ViewRooms/components/ViewRooms.module.css";
 import RoomTable from "../../General/Table/Table";
 import EditDelete from "../../General/Table/EditDelete";
-import { useEffect, useState } from "react";
+import Spinner from '../../General/Spinner/Spinner';
 
 function ViewRooms() {
-
+    const { host } = useContext(AppContext);
     const [listOfRooms, setlistOfRooms] = useState([]);
-    const [filter, setFilter] = useState("");
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        axios.get("http://localhost:3001/rooms").then((response) => {
+        setLoading(true)
+        axios.get(`${host}/rooms`).then((response) => {
             setlistOfRooms(response.data);
+            setLoading(false)
         });
     }, []);
 
@@ -24,7 +27,7 @@ function ViewRooms() {
         },
         {
             name: 'ROOM-TYPE',
-            selector: row => row.TypeName,
+            selector: row => row.RoomTypeView,
             sortable: true,
         },
         {
@@ -49,19 +52,23 @@ function ViewRooms() {
             ),
         },
         {
-            name: 'BASE CHARGE',
-            selector: row => row.BaseCharge,
+            name: 'TOTAL CHARGE',
+            selector: row => row.TotalCharge,
             sortable: true,
         },
     ];
 
     return (
-        <div className={style.tableContainer}>
-            <div className={style.heading}>
-                <h1>Available Rooms</h1>
+        <>
+            {loading && <Spinner loading={loading} />}
+            <div className={style.tableContainer}>
+                <div className={style.heading}>
+                    <h1>Available Rooms</h1>
+                </div>
+                <RoomTable columns={columns} data={listOfRooms} height="110vh" pagination />
             </div>
-            <RoomTable columns={columns} data={listOfRooms} height="110vh" pagination />
-        </div>
+        </>
+
     );
 }
 

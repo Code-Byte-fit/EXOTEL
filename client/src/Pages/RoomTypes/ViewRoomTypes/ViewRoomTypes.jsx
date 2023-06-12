@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import axios from 'axios';
 import style from "../ViewRoomTypes/components/ViewRoomTypes.module.css";
 import RoomTable from "../../General/Table/Table";
 import EditDelete from "../../General/Table/EditDelete";
-import { useEffect, useState } from "react";
+import Spinner from '../../General/Spinner/Spinner';
 
 function ViewRoomTypes() {
-
+  const { host } = useContext(AppContext);
     const [listOfRoomTypes, setlistOfRoomTypes] = useState([]);
-    const [filter, setFilter] = useState("");
+    const [loading, setLoading] = useState(false); 
 
     useEffect(() => {
-        axios.get("http://localhost:3001/roomtypes").then((response) => {
+      setLoading(true)
+        axios.get(`${host}/roomtypes`).then((response) => {
           setlistOfRoomTypes(response.data);
+          setLoading(false)
         });
       }, []);
     
@@ -54,12 +57,16 @@ function ViewRoomTypes() {
    
 ];
     return (
-        <div className={style.tableContainer}>
+      <>
+        {loading && <Spinner loading={loading}/>}
+         <div className={style.tableContainer}>
             <div className={style.heading}>
                 <h1>Available Room Types</h1>
             </div>
             <RoomTable columns={columns} data={listOfRoomTypes} height="110vh" pagination />
         </div>
+      </>
+       
     );
 }
 

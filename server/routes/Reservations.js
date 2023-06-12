@@ -3,7 +3,7 @@ const router=express.Router()
 const {Sequelize,Op} = require('sequelize');
 const moment = require('moment');
 const upload=require('../middleware/Upload')
-const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations}=require('../models')
+const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations,DuePayment}=require('../models')
 const sendEmail=require('../middleware/Email')
 
 
@@ -33,7 +33,7 @@ router.get('/',async (req,res)=>{
 
 //used to create a new reservation
 router.post("/:nameFile",upload('Identification'),async (req,res)=>{
-    // try{
+    try{
       const {CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,
              Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus,totalAmount,PromoCode}=req.body
 
@@ -75,12 +75,11 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
       <p>Total Amount: ${totalAmount}</p>
   `;
     sendEmail(Email,reservationDetails)
-    res.status(201).json({ reservation ,guest});
-  // }
-  //   catch (error) {
-  //       console.error(error);
-  //       res.status(500).json({ error: 'Failed to create reservation' });
-  //     }
+    res.status(201).json({ reservation ,guest});}
+    catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Failed to create reservation' });
+      }
 })
 
 //edit reservation details
@@ -195,13 +194,9 @@ router.put("/CheckIn/:resId",async (req,res)=>{
       PaymentAmount:reservation.totalAmount,
       ReservationId:reservation.id
     });
-    res.status(200).json({ 
-      message: "Guest Checked-In",
-    });
-  } else {
-    res.status(400).json({ 
-      message: "Cannot Check-In",
-    });
+    res.status(200).json({ message: "Guest Checked-In",});
+    } else {
+    res.status(400).json({ message: "Cannot Check-In",});
   }
 });
 

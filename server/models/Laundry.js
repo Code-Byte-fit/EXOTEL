@@ -19,6 +19,11 @@ module.exports=(sequelize,Datatypes)=>{
             },
         type:{
                 type:Datatypes.STRING,
+                type:Datatypes.FLOAT,
+                allowNull:false,
+            },
+        type:{
+                type:Datatypes.STRING,
                 allowNull:false,
             },
         charge:{

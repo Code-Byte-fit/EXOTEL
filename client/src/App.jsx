@@ -33,9 +33,14 @@ import ViewMRestock from './Pages/MinibarRestocked/ViewMRestock/ViewMRestock'
 import Laundry from './Pages/Laundry/Laundry'
 
 
+import Users from './Pages/Users/Users';
+import Profile from './Pages/Profile/Profile';
+import Calender from './Pages/Calender/Calender';
+import Calender2 from './Pages/Calender/Calender2';
 
 
 export default function App() {
+    const host=`${window.location.protocol}//${window.location.hostname}:3001`
     const [authState,setAuthState]=useState({
         userAccountId:0,
         userName:"",
@@ -43,6 +48,9 @@ export default function App() {
         LastName:"",
         userRole:"",
         proPic:"",
+        country:"",
+        email:"",
+        phone:"",
         status:false,
     });
 
@@ -61,6 +69,9 @@ export default function App() {
                             LastName:response.data.User.LastName,
                             userRole:response.data.User.Role,
                             proPic:response.data.proPic,
+                            country:response.data.User.Country,
+                            email:response.data.User.Email,
+                            phone:response.data.User.PhoneNumber,
                             status:true,
                         })
                     })
@@ -74,27 +85,35 @@ export default function App() {
                 <Route path="/" element={<Root/>}>
                 {authState.status && authState.userRole === 'Administrator' && (
                         <>
-                            <Route path="/dashBoard" element={<AdminDash/>}/>
+                            <Route path="/" element={<AdminDash/>}/>
                             <Route path="/rooms" element={<Rooms/>}/>
                             <Route path="/promotion" element={<Promotion/>}/>
                             <Route path="/addons" element={<AddOns/>}/>
                             <Route path="/roomtypes" element={<RoomTypes/>}/>
                             <Route path="/register" element={<RegisterUser/>}/>
+                            <Route path="/userlist" element={<Users/>}/>
+                            <Route path="/profile" element={<Profile/>}/>
+                            <Route path="/calender" element={<Calender/>}/>
+                            <Route path="/guests" element={<Guests/>}/>
+                            <Route path="/reservationTab" element={<ReservationTab/>}/>
+
+
                         </>
                 )}
                 {authState.status && authState.userRole === 'FOManager' && (
                         <>
-                            <Route path="/dashBoard" element={<FODash/>}/>
+                            <Route path="/" element={<FODash/>}/>
                             <Route path="/viewRooms" element={<ViewRooms/>}/>
                             <Route path="/viewPromotions" element={<ViewPromotions/>}/>
                             <Route path="/viewaddons" element={<ViewAddOns/>}/>
                             <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/>
                             <Route path="/reservationTab" element={<ReservationTab/>}/>
+                            <Route path="/profile" element={<Profile/>}/>
                         </>
                 )}
                 {authState.status && authState.userRole === 'Receptionist' && (
                         <>
-                            <Route path="/dashBoard" element={<ReceptionDash/>}/>
+                            <Route path="/" element={<ReceptionDash/>}/>
                             <Route path="/createReservation" element={<CreateRes/>}/>
                             <Route path="/guests" element={<Guests/>}/>
                             <Route path="/reservationTab" element={<ReservationTab/>}/>
@@ -102,12 +121,14 @@ export default function App() {
                             <Route path="/viewPromotions" element={<ViewPromotions/>}/>
                             <Route path="/viewaddons" element={<ViewAddOns/>}/>
                             <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/> 
+                            <Route path="/profile" element={<Profile/>}/>
+                            <Route path="/calender" element={<Calender/>}/>
                         </>
                 )}
                 {authState.status && authState.userRole === 'Cashier' && (
                         <>
-                            <Route path="/dashBoard" element={<CashierDash/>}/>
-                            {/* <Route path="/guests" element={<Guests/>}/> */}
+                            <Route path="/" element={<CashierDash/>}/>
+                            <Route path="/guests" element={<Guests/>}/>
                             <Route path="/reservationTab" element={<ReservationTab/>}/>
                             <Route path="/viewRooms" element={<ViewRooms/>}/>
                             <Route path="/viewPromotions" element={<ViewPromotions/>}/>
@@ -119,11 +140,12 @@ export default function App() {
                             <Route path="/ViewMRestock" element={<ViewMRestock/>}/>
                             {/* <Route path="/Minibar" element={<Minibar/>}/> */}
 
+                            <Route path="/profile" element={<Profile/>}/>
                         </>
                 )}
                 {authState.status && authState.userRole === 'HKManager' && (
                         <>
-                            <Route path="/dashBoard" element={<HKDash/>}/>
+                            <Route path="/" element={<HKDash/>}/>
                             <Route path="/guests" element={<Guests/>}/>
                             <Route path="/reservationTab" element={<ReservationTab/>}/>
                             <Route path="/viewRooms" element={<ViewRooms/>}/>
@@ -140,6 +162,7 @@ export default function App() {
                              <Route path="/minibarRestocked" element={<MinibarRestocked/>}/>
                              <Route path="/laundry" element={<Laundry/>}/>
                              
+                            <Route path="/profile" element={<Profile/>}/>
                         </>
                 )}
                 </Route>
@@ -153,7 +176,7 @@ export default function App() {
 
     
     return(
-        <AppContext.Provider value={{authState,setAuthState}}>
+        <AppContext.Provider value={{host,authState,setAuthState}}>
             <RouterProvider router={router}/>
         </AppContext.Provider>
     )

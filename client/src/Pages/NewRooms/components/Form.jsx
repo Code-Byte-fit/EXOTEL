@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import React, { useState, useEffect,useContext } from "react";
+import {AppContext} from "../../../Helpers/AppContext"
 import Input from "../../General/Inputs/Inputs";
 import style from "./Rooms.module.css";
 import axios from 'axios';
@@ -9,9 +9,10 @@ import * as Yup from 'yup';
 function FormOne(props) {
 
     const [RoomTypes, setRoomTypes] = useState([]);
-
+    const {host}=useContext(AppContext);
 
     const initialValues = {
+      
         RoomNo: '',
         RoomTypeView: '',
         AdditionalCharges: '',
@@ -22,21 +23,27 @@ function FormOne(props) {
     };
     const validationSchema = Yup.object().shape({
         RoomNo: Yup.string()
-            .required('Required')
-            .matches(/^[A-Za-z0-9]+$/, 'Must only contain letters and numbers')
-            .max(10, 'Must be at most 10 characters long'),
+          .required('Required')
+          .matches(/^[A-Za-z0-9]+$/, 'Invalid')
+          .max(10, 'Must be at most 10 characters long'),
         RoomTypeView: Yup.string().required('Required'),
-        // AdditionalCharges: Yup.number()
-        //   .required('Required'),
-        // TotalCharge: Yup.number().required('Required'),
+        AdditionalCharges: Yup.number()
+          .required('Required')
+          .min(0, 'Cannot be negative')
+          .typeError('Invalid'),
         floor: Yup.string().required('Required'),
         Status: Yup.string().required('Required'),
         AddInfo: Yup.string(),
-    });
-
+      });
+      
+    
+    const handleSubmit = (values, { resetForm }) => {
+        props.makeReq(values);
+        resetForm({ values: initialValues });
+    };
 
     const fetchRoomTypes = async () => {
-        const response = await axios.get("http://localhost:3001/roomtypes");
+        const response = await axios.get(`${host}/roomtypes`);
         setRoomTypes(response.data);
     }
 
@@ -50,15 +57,16 @@ function FormOne(props) {
         { key: "1st Floor", value: "1st Floor" },
         { key: "2nd Floor", value: "3rd Floor" }]
 
+      
 
     return (
 
         <span className={style.formContainer}>
 
 
-            <label className={style.labelOne}>Add Room</label>
+            <label className={style.labelOne}>Create Room</label>
 
-            <Formik initialValues={initialValues} onSubmit={props.makeReq} validationSchema={validationSchema} >
+            <Formik initialValues={initialValues} onSubmit={handleSubmit} validationSchema={validationSchema} >
                 <Form>
 
                     <div className={style.div1}>
@@ -108,10 +116,6 @@ function FormOne(props) {
                                 width="13vw" />
                             <ErrorMessage name="floor" component="span" className={style.error} />
                         </span>
-
-
-
-
 
                     </div>
 

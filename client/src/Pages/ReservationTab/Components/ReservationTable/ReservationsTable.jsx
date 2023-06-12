@@ -1,8 +1,9 @@
 import React, { useEffect, useState ,useContext} from 'react'
-import { Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import axios from "axios"
 import { AppContext } from '../../../../Helpers/AppContext';
 import addIcon from "../../../../Assets/Images/Add small.png"
+import Spinner from '../../../General/Spinner/Spinner';
 import Table from '../../../General/Table/Table';
 import ResEditDelete from './ResEditDelete';
 import Filter from './Filter';
@@ -17,13 +18,16 @@ export default function ReservationsTable(props) {
   const [checkInQuery, setCheckInQuery] = useState(new Date().toISOString().slice(0, 10));
   const [checkOutQuery, setCheckOutQuery] = useState('');
   const [isFilterActive, setIsFilterActive] = useState(false);
-  const {authState}=useContext(AppContext)
+  const {host,authState}=useContext(AppContext)
+  const [loading, setLoading] = useState(false); 
    
-  useEffect(()=>{
-   axios.get("http://localhost:3001/reservations").then((response)=>{
-      setReservationDetails(response.data)
-    })
-  },[])
+  useEffect(() => {
+    setLoading(true);
+    axios.get(`${host}/reservations`).then((response) => {
+      setReservationDetails(response.data);
+      setLoading(false)
+    });
+  }, []);
 
 
   const filteredData = reservationDetails.filter((item) => {
@@ -91,7 +95,7 @@ export default function ReservationsTable(props) {
     },
     {
       selector: row => row,
-      cell: (row) => <ResEditDelete row={row} setReservationDetails={setReservationDetails} setStats={props.setStats}/>
+      cell: (row) => <ResEditDelete row={row} setReservationDetails={setReservationDetails} setStats={props.setStats} setLoading={setLoading}/>
     },
 ];
 
@@ -99,6 +103,7 @@ export default function ReservationsTable(props) {
 
 return (
     <>
+    {loading && <Spinner loading={loading}/>}
     <div className={style.resTableContainer}>
       <div className={style.tableHeader}>
                 <div className={style.headerLeft}>

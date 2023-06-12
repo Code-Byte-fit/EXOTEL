@@ -76,13 +76,13 @@
 }
 
 .editCont{
-    height: 180%;
+    height: 175%;
     width: 105%;
     background-color:white;
     border-radius: 8px;
     position: relative;
     right: 2.5%;
-    bottom: 40%;
+    bottom: 50%;
 }
 
 .editHeading{
@@ -90,28 +90,30 @@
     padding: 2% 0 0 0;
 }
 
-.inputCont,.btnCont,.confirmBtnCont{
+.inputCont,.lowerCont,.confirmBtnCont{
     display: flex;
     justify-content: space-between;
     width: 80%;
     margin: 3% auto;
 }
 
-.countryCont{
-    display: flex;
-    flex-direction: column;
-    gap: 1vh;
-    width: 80%;
-    margin: 0 auto;
-}
-
-.countryCont label{
-    align-self: flex-start;
-}
-
-.btnCont{
+.lowerCont{
     margin: 5% auto;
+    position: relative;
 }
+
+.lowerCont label{
+    margin: 0 0 1vh 0;
+}
+
+.country{
+    text-align: left;
+    width: 100%;
+    margin: 0;
+}
+
+
+
 
 .editBtn{
     padding: 2.2% 2%;
@@ -133,7 +135,7 @@
 }
 
 .confirmBtnCont{
-    margin:10% auto;
+    margin:8% auto;
 }
 
 .confirmBtn{

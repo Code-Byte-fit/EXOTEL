@@ -13,10 +13,10 @@ export default function Header(props) {
   <header className={style.header}>
        <NavBar/>
        <img src={LogoImg} className={style.logo}/>
-       <SearchBar/>
+       {/* <SearchBar/> */}
        <div className={style.headerRight}>
-          <HotelStatus/>
-          <Notification/>
+          {/* <HotelStatus/>
+          <Notification/> */}
           <UserCard/>
        </div>
   </header>

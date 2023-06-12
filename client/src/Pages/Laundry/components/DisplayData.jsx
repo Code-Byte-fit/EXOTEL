@@ -1,27 +1,27 @@
+import React, { useState, useEffect,useContext } from "react";
+import {AppContext} from "../../../Helpers/AppContext"
 import axios from "axios";
-import React, { useState, useEffect } from "react";
 import FormOne from "../components/FormOne";
 import LTable from './LTable';
 
 
 function DisplayData() {
+    const[host]=useContext(AppContext) 
     const [listOfLaundry, setListOfLaundry] = useState([]);
-
     useEffect(() => {
-        axios.get("http://localhost:3001/laundry")
+        axios.get(`${host}/laundry`)
         .then((response) => {
           setListOfLaundry(response.data);
         });
       }, []);
 
       const onSubmit = async (fData) =>{
-        await axios.post("http://localhost:3001/laundry",fData).then(()=>{
-            axios.get("http://localhost:3001/laundry")
+        await axios.post(`${host}/laundry`,fData).then(()=>{
+            axios.get(`${host}/laundry`)
             .then((response) => {
             setListOfLaundry(response.data);
         });
         })
-        console.log(fData)
     };
   
     const [laundry, setlaundry] = useState();

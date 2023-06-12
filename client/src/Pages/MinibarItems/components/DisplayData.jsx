@@ -1,5 +1,6 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import FormOne from "../components/FormOne";
 import MTable from './MTable';
 
@@ -7,11 +8,9 @@ function DisplayData() {
 
     // Declare a state variable called 'listOfMinibarItems' and initialize it as an empty array.
     const [listOfMinibarItems, setlistOfMinibarItems] = useState([]);
-    
-
-    // Fetch data from the API endpoint when the component is mounted for the first time.
+    const { host } = useContext(AppContext);
     useEffect(() => {
-        axios.get("http://localhost:3001/Minibar/minibaritems")
+        axios.get(`${host}/Minibar/minibaritems`)
         .then((response) => {
           setlistOfMinibarItems(response.data);
         });

@@ -34,56 +34,7 @@
     width: 185px;
 }
 
-/* Media queries to adjust styles for smaller screen sizes
-@media (max-width: 768px) {
-    .headerSection {
-        width: 90%;
-        height: 12%;
-        bottom: 50vh;
-    }
-    .title {
-        margin-left: 10vw;
-        margin-top: 2vh;
-    }
-    .head {
-        font-size: 1.5rem;
-    }
-    .para {
-        font-size: small;
-    }
-    .cardSection {
-        margin-left: 2vw;
-        margin-top: 2vh;
-    }
-    .cardSection .img {
-        width: 20vw;
-    }
-}
 
-@media (max-width: 480px) {
-    .headerSection {
-        width: 100%;
-        height: 10%;
-        bottom: 40vh;
-    }
-    .title {
-        margin-left: 5vw;
-        margin-top: 1vh;
-    }
-    .head {
-        font-size: 1rem;
-    }
-    .para {
-        font-size: x-small;
-    }
-    .cardSection {
-        margin-left: 1vw;
-        margin-top: 1vh;
-    }
-    .cardSection .img {
-        width: 30vw;
-    }
-} */
 
 @media (max-width: 1000px) {
     .headerSection{
