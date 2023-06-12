@@ -74,7 +74,7 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
       <p>Check-out Time: ${CheckOutTime}</p>
       <p>Total Amount: ${totalAmount}</p>
   `;
-    sendEmail(Email,reservationDetails)
+    sendEmail(Email,reservationDetails,"Reservation Confirmed")
     res.status(201).json({ reservation ,guest});}
     catch (error) {
         console.error(error);

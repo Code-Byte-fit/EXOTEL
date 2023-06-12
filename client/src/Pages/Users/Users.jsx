@@ -9,7 +9,7 @@ import style from "./Components/Style.module.css"
 
 
 export default function Users() {
-  const {host}=useContext(AppContext);
+  const {host,authState}=useContext(AppContext);
   const [success,setSuccess]=useState(true);
   const [isDone, setIsDone] = useState(false);
   const [loading, setLoading] = useState(false); 
@@ -83,7 +83,7 @@ export default function Users() {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete isDone={isDone} handleDone={handleDone} setIsDone={setIsDone} success={success} id={row.userId}
+      cell: (row) => (authState.userRole==="Administrator" ) && <EditDelete isDone={isDone} handleDone={handleDone} setIsDone={setIsDone} success={success} id={row.userId}
       removeOption deleteHeading="Confirm Remove" deleteBody="Are you sure you want to remove this user" 
       onRemove={handleRemove} successMsg="Successfully Removed User" 
       editOption editComponent={<Edit values={row} setIsDone={setIsDone} setSuccess={setSuccess}/>} />

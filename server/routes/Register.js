@@ -32,7 +32,7 @@ router.post('/:nameFile',upload('proPic'), async (req, res) => {
       <p>User Name:${userAccount.userName}</p>
       <p>Password: ${req.body.password}</p>
   `;
-      sendEmail(user.Email,EmailContent)
+      sendEmail(user.Email,EmailContent,"User Registration")
       res.json({user,userAccount}); 
     }
   } catch (error) {

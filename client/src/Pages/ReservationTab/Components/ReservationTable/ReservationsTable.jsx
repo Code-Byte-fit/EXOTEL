@@ -95,7 +95,8 @@ export default function ReservationsTable(props) {
     },
     {
       selector: row => row,
-      cell: (row) => <ResEditDelete row={row} setReservationDetails={setReservationDetails} setStats={props.setStats} setLoading={setLoading}/>
+      cell: (row) => (authState.userRole==="Receptionist" ) && 
+      <ResEditDelete row={row} setReservationDetails={setReservationDetails} setStats={props.setStats} setLoading={setLoading}/>
     },
 ];
 
@@ -108,7 +109,7 @@ return (
       <div className={style.tableHeader}>
                 <div className={style.headerLeft}>
                       <span className={style.heading}>RESERVATIONS</span>
-                     {(authState.userRole==="Administrator" || authState.userRole==="Receptionist") &&
+                     {(authState.userRole==="Receptionist") &&
                       <Link to="/createReservation"><img src={addIcon} className={style.addIcon}/></Link>}      
                 </div>
               {reservationDetails.length>0 && <div className={style.headerRight}>
