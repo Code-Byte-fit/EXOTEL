@@ -2,6 +2,8 @@ import React,{useContext} from 'react'
 import {AppContext} from "../../../../Helpers/AppContext"
 import style from './components/Welcome.module.css'
 import image from '../../../../Assets/Images/Banner-Image.png'
+
+
 const WelcomeBar = () => {
     const {authState}=useContext(AppContext);
     return (

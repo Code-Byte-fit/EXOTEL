@@ -1,10 +1,12 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import FormOne from "./FormOne";
 import MTable from './MTable';
 
 function DisplayData({totalPrice}) {
   const [listOfMinibarPackage, setListOfMinibarPackage] = useState([]);
+  const { host } = useContext(AppContext);
   const [isLoading, setIsLoading] = useState(false);
   const [minibarPackage, setminibarPackage] = useState([]);
   const [addFormData, setAddFormData] = useState({
@@ -15,11 +17,11 @@ function DisplayData({totalPrice}) {
 
   useEffect(() => {
     setIsLoading(true);
-    axios.get("http://localhost:3001/Minibar/minibarpackage")
+    axios.get(`${host}/Minibar/minibarpackage`)
       .then(async (response) => {
         const packages = response.data;
         for (const pkg of packages) {
-          const { data } = await axios.get(`http://localhost:3001/Minibar/minibarpackage/${pkg.PackageName}`);
+          const { data } = await axios.get(`${host}/Minibar/minibarpackage/${pkg.PackageName}`);
           pkg.PackagePrice = data.PackagePrice;
         }
         setListOfMinibarPackage(packages);
@@ -32,7 +34,7 @@ function DisplayData({totalPrice}) {
   }, []);
 
   const onSubmit = async (fData) => {
-    await axios.post("http://localhost:3001/Minibar/minibarpackage", fData)
+    await axios.post(`${host}/Minibar/minibarpackage`, fData)
       .then(() => {
         setminibarPackage((prev) => {
           return[...prev, fData];
@@ -43,7 +45,7 @@ function DisplayData({totalPrice}) {
 
     // Update package price in MinibarPackage table
     const PackageName = fData.name; // replace with the actual ID of the package to update
-    await axios.put(`http://localhost:3001/Minibar/minibarpackage/${PackageName}`, { PackagePrice: totalPrice })
+    await axios.put(`${host}/Minibar/minibarpackage/${PackageName}`, { PackagePrice: totalPrice })
       .then(() => {
         console.log('Package price updated successfully');
       })

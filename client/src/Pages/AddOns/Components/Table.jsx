@@ -1,19 +1,38 @@
-import React, { useState, useEffect,useContext } from "react";
-import {AppContext} from "../../../Helpers/AppContext"
+import React, { useState, useEffect, useContext } from "react";
+import { AppContext } from "../../../Helpers/AppContext"
 import style from "./AddOns.module.css"
 import axios from 'axios';
+import Spinner from '../../General/Spinner/Spinner';
 import AddOnTable from '../../General/Table/Table'
-import EditDelete from "./EditDelete";
-
-
-
+import EditDelete from "../../General/Table/EditDelete";
+import EditAddon from "./EditAddon";
 
 function Table(props) {
-  const {host}=useContext(AppContext)
+  const { host } = useContext(AppContext);
+  const [isDone, setIsDone] = useState(false);
+  const [success,setSuccess]=useState(true);
+  const [loading, setLoading] = useState(false); 
+  const handleDone = () => {
+    setIsDone(false)
+    setLoading(true)
+    axios.get(`${host}/addon`).then((response) => {
+      setlistOfAddons(response.data)
+      setLoading(false)
+    })
+  }
+
+  const handleRemove=(addonID)=>{
+    axios.delete(`${host}/addon/${addonID}`).then((res)=>{
+      setIsDone(true)
+    })
+  }
+
   const [listOfAddons, setlistOfAddons] = useState([]);
   useEffect(() => {
+    setLoading(true)
     axios.get(`${host}/addon`).then((response) => {
       setlistOfAddons(response.data);
+      setLoading(false)
     });
   }, []);
 
@@ -52,19 +71,24 @@ function Table(props) {
       ),
     },
 
-
-
     {
       selector: row => row,
-      cell: (row) => <EditDelete setlistOfAddons={setlistOfAddons} row={row} />
+      cell: (row) => <EditDelete setlistOfAddons={setlistOfAddons} row={row} editOption isDone={isDone} handleDone={handleDone} success={success}
+      removeOption deleteHeading ="Confirm Remove" deleteBody="Are you sure you want to remove?" onRemove={handleRemove} id= {row.addonID} successMsg="Add-On removed Successfully!"
+      editComponent={<EditAddon values={row} setIsDone={setIsDone} setSuccess={setSuccess}  />} 
+       />
     },
   ];
 
   return (
-    <span className={style.tableContainer}>
+    <>
+      {loading && <Spinner loading={loading}/>}
+       <span className={style.tableContainer}>
       <label className={style.labelTwo}>Edit/Delete Add Ons</label>
       <AddOnTable columns={columns} data={props.listOfAddons} height="35vh" edit pagination />
     </span>
+    </>
+   
 
   )
 }

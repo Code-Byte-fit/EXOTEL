@@ -8,11 +8,12 @@
   top: 14vh;
   left: 7vw;
   box-sizing: border-box;
- 
+
 }
 
 .cover {
   margin-left: 5vw;
+ 
 }
 
 /* form
@@ -23,12 +24,14 @@
   display: flex;
   flex-direction: column;
   height: 42vh;
+ 
 }
 
 .div1 {
   display: flex;
-  gap: 4vw;
+  gap: 2vw;
   margin-top: 2vh;
+   
 }
 
 .div2 {
@@ -49,7 +52,7 @@
 
 .error {
   position:absolute;
-  color: rgb(141, 22, 22);
+  color: red;
   font-size: 0.8rem;
   display: block;
   right: 0;
@@ -463,4 +466,127 @@ padding-right: 2%;
 .Editdiv1{
   margin: 0 2vw 0 0;
   
+}
+
+
+/* Medium devices (up to 1024px) */
+@media (max-width: 1024px) {
+  .div1 {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2vh;
+  }
+
+  .div2 {
+    margin-top: 4vh;
+    width: 80vw;
+  }
+
+  .box {
+    flex-basis: 45%;
+  }
+  .createBtn {
+    margin-left: auto;
+    margin-top: 2vh;
+  }
+}
+/*edyty*/
+
+
+@media screen and (max-width: 1024px) {
+  .editCont {
+    width: 200%;
+    right: 50%;
+    height: 150%;
+  }
+
+  /* .inputCont select {
+    width: 26vw;
+  } */
+
+  .btnCont,
+  .confirmBtnCont {
+    width: 90%;
+    margin: 3% auto;
+  }
+
+  .editBtn {
+    width: clamp(4vw, 14vw, 14vw);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .editCont {
+    width: 180%;
+    right: 40%;
+    height: 210%;
+    font-size: small;
+  }
+
+  .inputCont,
+  .btnCont,
+  .confirmBtnCont {
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    margin: 3% auto;
+  }
+
+  /* .inputCont select {
+    width: 100%;
+  } */
+
+  .editBtn {
+    width: 100%;
+    margin-top: 2%;
+  }
+}
+
+
+/**/
+.confirmModal{
+  margin: 2% 0 0 0;
+  display: flex;
+  height: 90%;
+  flex-direction: column;
+  position: relative;
+}
+
+.confirmHeading{
+  font-weight: bold;
+  font-size: 1.7rem;
+  margin: 1% 0 0 0;
+}
+
+.confirmBody{
+  margin: 5% 0 0 0;
+  font-size: 1.2rem;
+}
+
+.Btn{
+  align-self: center;
+  padding: 0.7%;
+  font-size: 0.9rem;
+  color: #ffff;
+  border: none;
+  border-radius: 4px;
+  width: clamp(5vw,8vw,8vw);
+}
+
+.doneBtn{
+  align-self: center;
+  padding: 3%;
+  margin: 5% 0 0 0;
+  color: #ffff;
+  background:#4D5949;
+}
+.success{
+  margin: 5% 0 0 0;
+}
+.exclamation{
+  position: absolute;
+  top: -9vh;
+  left: 11vw;
+  width: 12vw;
+  height: 12vh;
 }

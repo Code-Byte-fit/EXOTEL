@@ -1,11 +1,16 @@
 module.exports = (sequelize, Datatypes) => {
-    const Rooms = sequelize.define("Rooms", {
+    const RemovedRoom = sequelize.define("RemovedRoom", {
+        RemovedRoomNo:{
+            type:Datatypes.INTEGER,
+            allowNull:false,
+            primaryKey:true,
+            autoIncrement: true
+        },
         RoomNo: {
             type: Datatypes.STRING,
             allowNull: false,
-            primaryKey: true,
+            
         },
-
         RoomTypeView: {
             type: Datatypes.STRING,
             allowNull: false,
@@ -52,12 +57,12 @@ module.exports = (sequelize, Datatypes) => {
 
         });
 
-    Rooms.associate = (models) => {
-        Rooms.belongsToMany(models.Reservations, { through: 'ReservationRoom' });
-        Rooms.belongsTo(models.RoomTypes, { foreignKey: 'RoomTypeID' });
-        Rooms.hasOne(sequelize.models.MiniBar, {
+        RemovedRoom.associate = (models) => {
+            RemovedRoom.belongsToMany(models.Reservations, { through: 'ReservationRoom' });
+            RemovedRoom.belongsTo(models.RoomTypes, { foreignKey: 'RoomTypeID' });
+            RemovedRoom.hasOne(sequelize.models.MiniBar, {
             foreignKey: {
-                name: "RoomNo",
+                name: "RemovedRoomNo",
                 unique: true
             },
             as: "minibar"
@@ -68,5 +73,5 @@ module.exports = (sequelize, Datatypes) => {
 
 
 
-    return Rooms;
+    return RemovedRoom;
 }

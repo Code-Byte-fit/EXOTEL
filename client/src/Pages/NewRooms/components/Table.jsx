@@ -1,23 +1,43 @@
-import React, { useState } from "react";
+import React, { useState, useEffect,useContext } from "react";
+import {AppContext} from "../../../Helpers/AppContext"
 import style from "./Rooms.module.css";
 import axios from "axios";
-import { useEffect } from "react";
 import RoomTable from "../../General/Table/Table";
 import EditDelete from "../../General/Table/EditDelete";
-
+import EditRoom from "./EditRoom";
+import Spinner from '../../General/Spinner/Spinner';
 
 function Table(props) {
   const [listOfRooms, setlistOfRooms] = useState([]);
+  const {host}=useContext(AppContext);
+  const [isDone, setIsDone] = useState(false);
+  const [success,setSuccess]=useState(true);
+  const [loading, setLoading] = useState(false); 
 
+  const handleDone=()=>{
+    setIsDone(false)
+    setLoading(true)
+    axios.get(`${host}/rooms`).then((response)=>{
+      setlistOfRooms(response.data)
+      setLoading(false)
+    })
+  }
+
+  const handleRemove=(RoomNo)=>{
+    axios.delete(`${host}/rooms/${RoomNo}`).then((res)=>{
+      setIsDone(true)
+    })
+  }
 
   useEffect(() => {
-    axios.get("http://localhost:3001/rooms").then((response) => {
+    setLoading(true)
+    axios.get(`${host}/rooms`).then((response) => {
       setlistOfRooms(response.data);
-      console.log(listOfRooms)
+      setLoading(false)
+      // console.log(listOfRooms)
 
     });
   }, []);
-
 
   const columns = [
     {
@@ -76,17 +96,24 @@ function Table(props) {
     },
     {
       selector: row => row,
-      cell: (row) => <EditDelete />
+      cell: (row) => <EditDelete setlistOfRooms={setlistOfRooms} row={row} editOption  isDone={isDone} handleDone={handleDone} success={success}
+      removeOption deleteHeading ="Confirm Remove" deleteBody="Are you sure you want to remove?"  onRemove={handleRemove} id= {row.RoomNo} successMsg="Room removed Successfully!"
+        editComponent={<EditRoom  values={row} setIsDone={setIsDone} setSuccess={setSuccess}  />} 
+      />
     },
   ];
 
 
   return (
-    <div className={style.tableContainer}>
+    <>
+      {loading && <Spinner loading={loading}/>}
+       <div className={style.tableContainer}>
       <label className={style.labelTwo}>Edit/Delete Room</label>
       <RoomTable columns={columns} data={props.listOfRooms} height="30vh" edit pagination />
 
     </div>
+    </>
+   
   );
 }
 
