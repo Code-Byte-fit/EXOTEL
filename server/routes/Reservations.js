@@ -192,6 +192,23 @@ router.put("/CheckIn/:resId",async (req,res)=>{
 });
 
 
+//Checkout a reservation
+router.put("/CheckOut/:resId",async (req,res)=>{
+  const resID=req.params.resId;
+  const reservation = await Reservations.findOne({
+    where:{
+      id:resID,
+    }});
+  if(reservation.ReservationStatus==="Checked-In"){
+    reservation.ReservationStatus = "Checked-Out";
+    await reservation.save();
+    res.status(200).json({ message: "Guest Checked-Out",});
+    } else {
+    res.status(400).json({ message: "Cannot Checked-Out",});
+  }
+});
+
+
 router.get('/todayStats', async (req, res) => {
   try {
     const today = moment().startOf('day');

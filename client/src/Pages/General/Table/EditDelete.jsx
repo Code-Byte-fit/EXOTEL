@@ -13,6 +13,7 @@ export default function EditDelete(props) {
   const [cancelOpen, setCancelOpen] =useState(false);
   const [reBookOpen, setreBookOpen] =useState(false);
   const [checkInOpen, setcheckInOpen] =useState(false);
+  const [checkoutOpen, setcheckOutOpen] =useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -33,6 +34,7 @@ export default function EditDelete(props) {
     setCancelOpen(false)
     setreBookOpen(false)
     setcheckInOpen(false)
+    setcheckOutOpen(false)
     setIsOpen(false);
   };
 
@@ -65,12 +67,18 @@ export default function EditDelete(props) {
     setIsOpen(false);
   };
 
+  const handleCheckOut = () => {
+    setcheckOutOpen(true);
+    setIsOpen(false);
+  };
+
   const handleClosePopup = () => {
     setDeleteOpen(false);
     setEditOpen(false)
     setCancelOpen(false)
     setreBookOpen(false)
     setcheckInOpen(false)
+    setcheckOutOpen(false)
 
   };
 
@@ -98,6 +106,7 @@ export default function EditDelete(props) {
       {isOpen &&
       <div className={style.optionCont} ref={ref}>
         {props.checkinOption && <div className={`${style.options} ${style.checkIn}`} onClick={handleCheckIn}>Check-In</div>}
+        {props.checkOutOption && <div className={`${style.options} ${style.checkIn}`} onClick={handleCheckOut}>Check-Out</div>}
         {props.editOption && <div className={`${style.options} ${style.edit}`} onClick={handleEdit}>Edit</div>}
         {props.removeOption && <div className={`${style.options} ${style.delete}`} onClick={handleDelete}>Remove</div>}
         {props.cancelOption && <div className={`${style.options} ${style.delete}`} onClick={handleCancel}>Cancel</div>}
@@ -201,6 +210,7 @@ export default function EditDelete(props) {
         }
       </Popup>
 
+
       {/* CheckIn  */}
       <Popup open={checkInOpen}  closeOnDocumentClick={true} onClose={handleClosePopup}>
          {!props.isDone?
@@ -218,6 +228,36 @@ export default function EditDelete(props) {
             <img src={successIcon} className={style.successIcon}/>
             <span className={`${style.confirmHeading} ${style.success}`}>Success!</span>
             <span className={style.confirmBody}>Successfully Checked-In</span>
+            <button onClick={handleDone} className={`${style.Btn} ${style.doneBtn}`}>Done</button>
+          </div>
+        </>
+        }
+      </Popup>
+
+
+       {/* CheckOut  */}
+       <Popup open={checkoutOpen}  closeOnDocumentClick={true} onClose={handleClosePopup}>
+         {!props.isDone?
+        (props.isPaid?
+          <div className={style.confirmModal}>
+          <span className={style.confirmHeading}>Check-Out Guest </span>
+          <span className={style.confirmBody}>Are you sure you want to check-out this guest?</span>
+          <div className={style.modalBtnContainer}>
+              <button onClick={closeModal} className={`${style.Btn} ${style.cancelBtn}`}>Cancel</button>
+              <button onClick={props.onCheckOut} className={`${style.Btn} ${style.checkInBtn}`}>Check-Out</button>
+          </div>
+        </div>:
+         <div>
+          hi
+
+         </div>
+        )
+         :
+        <>
+          <div className={style.confirmModal}>
+            <img src={successIcon} className={style.successIcon}/>
+            <span className={`${style.confirmHeading} ${style.success}`}>Success!</span>
+            <span className={style.confirmBody}>Successfully Checked-Out</span>
             <button onClick={handleDone} className={`${style.Btn} ${style.doneBtn}`}>Done</button>
           </div>
         </>

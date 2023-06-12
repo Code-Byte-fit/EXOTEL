@@ -224,8 +224,8 @@ const valid=AvailableRooms.length>0 || SelectedRooms.length>0
                                     onChange={handleRoomTypeChange}
                                     value={filters}
                                     />
-                                    <Field name="Package" component={Input} label="Package" type="select" options={Pacakge} id="Package" disabled={!valid}/>
-                                    <Field name="PromoCode" component={Input} label="Promo-Code" type="text" id="promoCode" disabled={!valid}/>
+                                    {/* <Field name="Package" component={Input} label="Package" type="select" options={Pacakge} id="Package" disabled={!valid}/>
+                                    <Field name="PromoCode" component={Input} label="Promo-Code" type="text" id="promoCode" disabled={!valid}/> */}
                                 </div>
                                 <div className={style.topRightContainer}>
                                   <span className={style.datesCont}>
