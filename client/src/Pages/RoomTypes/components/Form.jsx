@@ -24,19 +24,28 @@ function FormOne(props) {
     const validationSchema = Yup.object().shape({
         TypeName: Yup.string().required('Required'),
         NoOfBeds: Yup.number()
-            .required('Required')
-            .typeError('Must contain only numbers'),
-        sqFeet: Yup.string()
-            .required('Required')
-            .matches(/^[0-9]+$/, 'Must contain only numbers'),
+          .required('Required')
+          .typeError('Must contain only numbers')
+          .positive('Must be a positive number')
+          .integer('Must be an integer')
+          .min(1, 'Must be greater than zero'),
+        sqFeet: Yup.number()
+          .required('Required')
+          .typeError('Must contain only numbers')
+          .positive('Must be a positive number')
+          .integer('Must be an integer')
+          .min(1, 'Must be greater than zero'),
         View: Yup.string().required('Required'),
-        StandardCharge: Yup.string()
-            .required('Required')
-            .typeError('Must contain only numbers'),
-        //  MiniBarPack:Yup.string().required('Required'),
+        StandardCharge: Yup.number()
+          .required('Required')
+          .typeError('Must contain only numbers')
+          .positive('Must be a positive number')
+          .min(1, 'Must be greater than zero'),
+       
         AddInfo: Yup.string(),
-    });
-
+      });
+      
+      
     const view = [{ key: "--None Selected --", value: "" },
      { key: "Beach View", value: "Beach View" }, 
      { key: "Pool View", value: "Pool View" }, 

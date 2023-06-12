@@ -115,7 +115,7 @@ function EditAddon(props) {
                             <Exclamation className={style.exclamation} />
                             <span className={`${style.confirmHeading} ${style.success}`}>Error!</span>
                             <span className={style.confirmBody}> This AddOn cannot be edited since it is associated with one or more reservations</span>
-                            <button className={`${style.Btn} ${style.doneBtn}`}>Ok</button>
+                            <button className={`${style.Btn} ${style.doneBtn}`} onClick={() => { handleEdit(null, false) }}>Ok</button>
                         </div>
                     </>
             </span>

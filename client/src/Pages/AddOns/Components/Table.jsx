@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../../Helpers/AppContext"
 import style from "./AddOns.module.css"
 import axios from 'axios';
+import Spinner from '../../General/Spinner/Spinner';
 import AddOnTable from '../../General/Table/Table'
 import EditDelete from "../../General/Table/EditDelete";
 import EditAddon from "./EditAddon";
@@ -10,11 +11,13 @@ function Table(props) {
   const { host } = useContext(AppContext);
   const [isDone, setIsDone] = useState(false);
   const [success,setSuccess]=useState(true);
-
+  const [loading, setLoading] = useState(false); 
   const handleDone = () => {
     setIsDone(false)
+    setLoading(true)
     axios.get(`${host}/addon`).then((response) => {
       setlistOfAddons(response.data)
+      setLoading(false)
     })
   }
 
@@ -26,8 +29,10 @@ function Table(props) {
 
   const [listOfAddons, setlistOfAddons] = useState([]);
   useEffect(() => {
+    setLoading(true)
     axios.get(`${host}/addon`).then((response) => {
       setlistOfAddons(response.data);
+      setLoading(false)
     });
   }, []);
 
@@ -76,10 +81,14 @@ function Table(props) {
   ];
 
   return (
-    <span className={style.tableContainer}>
+    <>
+      {loading && <Spinner loading={loading}/>}
+       <span className={style.tableContainer}>
       <label className={style.labelTwo}>Edit/Delete Add Ons</label>
       <AddOnTable columns={columns} data={props.listOfAddons} height="35vh" edit pagination />
     </span>
+    </>
+   
 
   )
 }

@@ -53,7 +53,7 @@ router.get('/todayStats', async (req, res) => {
     // number of users with the role of Receptionist
     const receptionistCount = await Users.count({
       where: {
-        Role: 'Receiptionist'
+        Role: 'Receptionist'
       }
     });
 
@@ -77,5 +77,14 @@ router.get('/todayStats', async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
+router.get('/active',async (req,res)=>{
+  const listOfPromotions=await Promotion.findAll({
+    where:{
+      Status:'active'
+    }
+  })
+  res.json(listOfPromotions);
+})
 
 module.exports = router;

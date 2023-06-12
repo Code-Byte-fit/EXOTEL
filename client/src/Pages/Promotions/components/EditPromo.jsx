@@ -24,16 +24,17 @@ function EditPromo(props) {
     props.setSuccess(success);
   };
 
-  const checkConflict = async (PromoC) => {
+  const checkConflict = async (PromoCode) => {
     try {
-      const response = await axios.get(`${host}/promotions/${PromoC}/apply`);
+      const response = await axios.get(`${host}/promotions/${PromoCode}/apply`);
+      console.log(response.data)
       const reservations = response.data.reservations;
-      const isValid = reservations.includes('checked-in') || reservations.includes('active');
+      const isValid = !reservations.includes('checked-in') && !reservations.includes('active');
       setPromoValid(isValid);
     } catch (error) {
       console.error(error);
     }
-  };
+  };  
   useEffect(() => {
     checkConflict(initialValues.NewPromoCode);
   }, []);
@@ -199,7 +200,7 @@ function EditPromo(props) {
                             <Exclamation className={style.exclamation} />
                             <span className={`${style.confirmHeading} ${style.success}`}>Error!</span>
                             <span className={style.confirmBody}> This promotion cannot be edited since it is associated with one or more reservations</span>
-                            <button className={`${style.Btn} ${style.doneBtn}`}>Ok</button>
+                            <button className={`${style.Btn} ${style.doneBtn}`} onClick={() => { handleEdit(null, false) }}>Ok</button>
                         </div>
                     </>
                 </span>

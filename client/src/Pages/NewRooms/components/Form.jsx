@@ -23,17 +23,20 @@ function FormOne(props) {
     };
     const validationSchema = Yup.object().shape({
         RoomNo: Yup.string()
-            .required('Required')
-            .matches(/^[A-Za-z0-9]+$/, 'Must only contain letters and numbers')
-            .max(10, 'Must be at most 10 characters long'),
+          .required('Required')
+          .matches(/^[A-Za-z0-9]+$/, 'Invalid')
+          .max(10, 'Must be at most 10 characters long'),
         RoomTypeView: Yup.string().required('Required'),
-        AdditionalCharges: Yup.string()
-          .required('Required'),
-        // TotalCharge: Yup.number().required('Required'),
+        AdditionalCharges: Yup.number()
+          .required('Required')
+          .min(0, 'Cannot be negative')
+          .typeError('Invalid'),
         floor: Yup.string().required('Required'),
         Status: Yup.string().required('Required'),
         AddInfo: Yup.string(),
-    });
+      });
+      
+    
     const handleSubmit = (values, { resetForm }) => {
         props.makeReq(values);
         resetForm({ values: initialValues });

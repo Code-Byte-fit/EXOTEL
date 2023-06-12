@@ -12,26 +12,27 @@ function EditType(props) {
 
     const { host } = useContext(AppContext);
     const [isRoomTypeValid, setRoomTypeValid] = useState(false);
-    const [isFormVisible, setFormVisible] = useState(false);
-  
-    useEffect(() => {
-      checkConflict();
-    }, []);
 
+  
     const checkConflict = (RoomTypeID) => {
         axios.get(`${host}/roomtypes/${RoomTypeID}/allocate`)
           .then((response) => {
             const data = response.data;
-            if (data.length === 0) {
-              setFormVisible(true);
+            if (data.roomTypeID !== null) {
+              setRoomTypeValid(true);
             } else {
-              setFormVisible(false);
+              setRoomTypeValid(false);
             }
           })
           .catch((error) => {
             console.log(error);
           });
       };
+      
+      useEffect(() => {
+        checkConflict(initialValues.RoomTypeID);
+      }, []);
+  
   
     const handleEdit = (data, success) => {
         success ?
@@ -42,21 +43,6 @@ function EditType(props) {
             props.setIsDone(true);
         props.setSuccess(success);
     };
-
-
-// const checkConflict = async (roomTypeNo) => {
-//     try {
-//       const response = await axios.get(`${host}/roomtypes/${roomTypeNo}/allocate`);
-//       const roomTypeID = response.data.roomTypeID;
-//       setRoomTypeValid(!!roomTypeID);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     checkConflict(initialValues.NewTypeName);
-//   }, []);
 
 
     const [initialValues, setInitialValues] = useState({ ...props.values, NewTypeName: props.values.TypeName })
@@ -88,7 +74,7 @@ function EditType(props) {
     return (
 
         <>
-            {!isFormVisible ?
+            {!isRoomTypeValid ?
                 <>
                     <div className={style.editCont}>
 
@@ -187,7 +173,7 @@ function EditType(props) {
                             <Exclamation className={style.exclamation} />
                             <span className={`${style.confirmHeading} ${style.success}`}>Error!</span>
                             <span className={style.confirmBody}> This Room Type cannot be edited since it is associated with one or more reservations</span>
-                            <button className={`${style.Btn} ${style.doneBtn}`}>Ok</button>
+                            <button className={`${style.Btn} ${style.doneBtn}`} onClick={() => { handleEdit(null, false) }}>Ok</button>
                         </div>
                     </>
                 </span>

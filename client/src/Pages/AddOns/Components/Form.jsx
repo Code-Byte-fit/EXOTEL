@@ -4,9 +4,9 @@ import style from "./AddOns.module.css";
 import axios from 'axios';
 import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup';
-
+import Spinner from '../../General/Spinner/Spinner';
 function FormOne(props) {
-
+ const [loading, setLoading] = useState(false);
     const initialValues = {
         AddOn: '',
         Unit: '',
@@ -15,10 +15,15 @@ function FormOne(props) {
     };
     const validationSchema = Yup.object().shape({
         AddOn: Yup.string().required("Required"),
-        Charge: Yup.number().required("Required"),
+        Charge: Yup.number()
+          .required("Required")
+          .min(0, "Invalid")
+          .typeError("Invalid")
+          .positive("Invalid"),
         Unit: Yup.string().required("Required"),
         AddInfo: Yup.string(),
-    });
+      });
+      
 
     const handleSubmit = (values, { resetForm }) => {
         props.makeReq(values);

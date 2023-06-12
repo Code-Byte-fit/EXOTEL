@@ -15,6 +15,7 @@ const UserList = () => {
       try {
         
         const response = await axios.get(`${host}/admin/todayStats`);
+        console.log(response);
         sethouseKeepingManagerCount(response.data.houseKeepingManagerCount);
         setfoManagerCount(response.data.foManagerCount);
         setadminCount(response.data.adminCount);
