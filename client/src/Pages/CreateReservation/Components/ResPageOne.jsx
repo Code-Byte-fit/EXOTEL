@@ -20,6 +20,8 @@ export default function ResPageOne(props) {
   const [filters,setFilters]=useState('');
   const [AvailableRooms,setAvailableRooms]=useState(props.data.AvailableRooms)
   const [SelectedRooms,setSelectedRooms]=useState(props.data.SelectedRooms)
+  const [PromoList,setPromoList] =useState([]);
+  const [Promo, setPromo] = useState({ PromoCode: props.data.PromoCode, DiscountPercentage: 0 });
 
 
   const currentHour = new Date().getHours().toString().padStart(2, '0');
@@ -106,6 +108,8 @@ const validationSchema = Yup.object().shape({
   const handleSubmit=(values)=>{
     values.AvailableRooms=AvailableRooms;
     values.SelectedRooms=SelectedRooms;
+    values.SelectedRooms=SelectedRooms;
+    values.PromoCode=Promo.PromoCode;
     props.next(values)
   }
  
@@ -163,7 +167,13 @@ const fetchRoomTypes = async () => {
 }
 useEffect(() => {
   fetchRoomTypes();
+  axios.get(`${host}/promotions/active`).then((res)=>{
+    setPromoList(res.data)
+    console.log(res.data)
+  })
 }, []);
+
+
 
 
 
@@ -185,8 +195,8 @@ const selectRoom=(Room)=>{
   props.setAmounts(prevValue=>{
     return({
       subTotal:prevValue.subTotal + Room.TotalCharge*days,
-      discounts:0,
-      GrandTotal:prevValue.GrandTotal + Room.TotalCharge*days
+      discounts:prevValue.discounts + Room.TotalCharge*days * (Promo.DiscountPercentage/100),
+      GrandTotal:prevValue.GrandTotal + Room.TotalCharge*days - (Room.TotalCharge*days * (Promo.DiscountPercentage/100)),
     })
   })
 }
@@ -198,8 +208,8 @@ const removeRoom = (Room) => {
   props.setAmounts(prevValue=>{
     return({
       subTotal:prevValue.subTotal - Room.TotalCharge*days,
-      discounts:0,
-      GrandTotal:prevValue.GrandTotal - Room.TotalCharge*days
+      discounts:prevValue.discounts - Room.TotalCharge*days * (Promo.DiscountPercentage/100),
+      GrandTotal:prevValue.GrandTotal - Room.TotalCharge*days + (Room.TotalCharge*days * (Promo.DiscountPercentage/100))
     })
   })
 }
@@ -208,6 +218,7 @@ const handleRoomTypeChange = (event) => {
   const selectedRoomType = event.target.value;
   setFilters(selectedRoomType);
 };
+
 
 const valid=AvailableRooms.length>0 || SelectedRooms.length>0
 
@@ -224,8 +235,13 @@ const valid=AvailableRooms.length>0 || SelectedRooms.length>0
                                     onChange={handleRoomTypeChange}
                                     value={filters}
                                     />
-                                    {/* <Field name="Package" component={Input} label="Package" type="select" options={Pacakge} id="Package" disabled={!valid}/>
-                                    <Field name="PromoCode" component={Input} label="Promo-Code" type="text" id="promoCode" disabled={!valid}/> */}
+                                    {/* <Field name="Package" component={Input} label="Package" type="select" options={Pacakge} id="Package" disabled={!valid}/> */}
+                                    <Field name="PromoCode" component={Input} label="Promo-Code" type="select" id="promoCode"
+                                   options={[{ key: "None Selected", value: "" }, ...PromoList.map((promo) => ({ key: promo.PromoCode, value: promo.PromoCode }))]}
+                                   onBlur={(event) => {
+                                                const selectedPromo = PromoList.find((promo) => promo.PromoCode === event.target.value);
+                                                setPromo({ PromoCode: event.target.value, DiscountPercentage: selectedPromo.Value });
+                                              }} />
                                 </div>
                                 <div className={style.topRightContainer}>
                                   <span className={style.datesCont}>
