@@ -38,36 +38,14 @@ module.exports = (sequelize, Datatypes) => {
     },
         {
             timestamps: false,
-            hooks: {
-                async afterCreate(room, options) {
-                    // Generate a new minibar ID
-                    const lastMiniBar = await sequelize.models.MiniBar.findOne({ order: [['MiniBarID', 'DESC']] });
-                    const lastMiniBarID = lastMiniBar ? lastMiniBar.MiniBarID : 0;
-                    const newMiniBarID = (lastMiniBarID) + 1;
-
-                    // Create a new minibar instance with the generated ID
-                    const minibar = await sequelize.models.MiniBar.create({
-                        MiniBarID: newMiniBarID,
-                    });
-
-                    // Associate the new minibar with the newly created room
-                    await room.setMinibar(minibar);
-                },
-            },
+           
 
         });
 
         RemovedRoom.associate = (models) => {
             RemovedRoom.belongsToMany(models.Reservations, { through: 'ReservationRoom' });
             RemovedRoom.belongsTo(models.RoomTypes, { foreignKey: 'RoomTypeID' });
-            RemovedRoom.hasOne(sequelize.models.MiniBar, {
-            foreignKey: {
-                name: "RemovedRoomNo",
-                unique: true
-            },
-            as: "minibar"
-        });
-
+          
 
     };
 
