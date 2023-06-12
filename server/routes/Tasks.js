@@ -74,8 +74,8 @@ router.post("/", async (req, res) => {
           model: Rooms,
           through: {
             model: ReservationRoom,
-            where: { RoomRoomNo: { [Op.eq]: RoomNo } },
           },
+          where: { RoomNo: RoomNo },
         },
       ],
       where: {
@@ -90,7 +90,14 @@ router.post("/", async (req, res) => {
 
     if (reservation != null) {
       // Extract the reservation ID from the reservation object.
+      // reservation.map((reservation) => {
+      //   console.log(reservation.Rooms, reservation.Rooms);
+      //   if (reservation.Rooms) {
+      //     console.log(reservation.id, reservation.Rooms);
+      //   }
+      // });
       const { id } = reservation;
+      console.log(id);
 
       // Create a new task allocation record with the given details and reservation ID.
       const newTask = await TaskAllocations.create({
@@ -102,7 +109,6 @@ router.post("/", async (req, res) => {
         Notes,
         ReservationId: id,
       });
-      console.log(newTask);
 
       res.status(201).json({ newTask });
     } else {
@@ -131,8 +137,8 @@ router.put("/", async (req, res) => {
           model: Rooms,
           through: {
             model: ReservationRoom,
-            where: { RoomRoomNo: { [Op.eq]: RoomNo } },
           },
+          where: { RoomRoomNo: { [Op.eq]: RoomNo } },
         },
       ],
       where: {
@@ -167,6 +173,41 @@ router.put("/", async (req, res) => {
     console.error(error);
     res.status(500).json({ error: "Failed to update task" });
   }
+});
+
+router.get("/automate", async (req, res) => {
+  const date = new Date().toISOString().substring(0, 10);
+  try {
+    const reservation = await Reservations.findAll({
+      attributes: ["id"],
+      include: [
+        {
+          model: Rooms,
+          through: {
+            model: ReservationRoom,
+            where: { RoomRoomNo: { [Op.eq]: RoomNo } },
+          },
+        },
+      ],
+      where: {
+        CheckOut: {
+          [Op.eq]: date,
+        },
+      },
+    });
+
+    console.log("test here", reservation);
+
+    // const newTask = await TaskAllocations.create({
+    //   RoomNo,
+    //   userId,
+    //   taskType,
+    //   taskDate,
+    //   taskTime,
+    //   Notes,
+    //   ReservationId: id,
+    // });
+  } catch (error) {}
 });
 
 //Automation of Task Allocation

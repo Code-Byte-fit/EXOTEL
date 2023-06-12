@@ -30,50 +30,58 @@ function CardSection() {
   }, []);
 
   return (
-    <div className={style.cardContainer}>
-      {/* <div className={style.card}>
-        <div className={style.icon}>
-          <img src={Rooms} className="fas fa-bed"></img>
-        </div>
-        <div className={style.number}>{taskCount}</div>
-        <div className={style.text}>Rooms Available</div>
-      </div> */}
-      {/* <div className={style.card}>
-        <div className={style.icon}>
-          <img src={Dis} className="fas fa-bed"></img>
-        </div>
-        <div className={style.number}>{taskCount}</div>
-        <div className={style.text}>Promos Available</div>
-      </div> */}
-      <div className={`${style.card} ${style.card3}`}>
-        <div className={style.leftContainer}>
-          <div className={`${style.icon} ${style.addIcon}`}>
-            <img src={User} className="fas fa-bed"></img>
+    <div className={style.cardLargeContainer}>
+      <div className={style.cardContainer}>
+        <div className={`${style.card} ${style.card3}`}>
+          <div className={style.leftContainer}>
+            <div className={`${style.icon} ${style.addIcon}`}>
+              <img src={User} className="fas fa-bed"></img>
+            </div>
+            <div className={`${style.number} ${style.addNum}`}>
+              {repairCount}
+            </div>
+            <div className={`${style.text} ${style.addText}`}>Repairs</div>
           </div>
-          <div className={`${style.number} ${style.addNum}`}>{repairCount}</div>
-          <div className={`${style.text} ${style.addText}`}>Repairs</div>
-        </div>
-        <div className={style.rightContainer}>
-          <div className={style.addButton}>
-            <Link to="/addRepairRequests">
-              <img src={add} className={style.plus} alt="Add Repairs" />
-            </Link>
+          <div className={style.rightContainer}>
+            <div className={style.addButton}>
+              <Link to="/addRepairRequests">
+                <img src={add} className={style.plus} alt="Add Repairs" />
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
-      <div className={`${style.card} ${style.card3}`}>
-        <div className={style.leftContainer}>
-          <div className={`${style.icon} ${style.addIcon}`}>
-            <img src={User} className="fas fa-bed"></img>
+        <div className={`${style.card} ${style.card3}`}>
+          <div className={style.leftContainer}>
+            <div className={`${style.icon} ${style.addIcon}`}>
+              <img src={User} className="fas fa-bed"></img>
+            </div>
+            <div className={`${style.number} ${style.addNum}`}>
+              {repairCount}
+            </div>
+            <div className={`${style.text} ${style.addText}`}>Repairs</div>
           </div>
-          <div className={`${style.number} ${style.addNum}`}>{taskCount}</div>
-          <div className={`${style.text} ${style.addText}`}>Tasks</div>
+          <div className={style.rightContainer}>
+            <div className={style.addButton}>
+              <Link to="/addRepairRequests">
+                <img src={add} className={style.plus} alt="Add Repairs" />
+              </Link>
+            </div>
+          </div>
         </div>
-        <div className={style.rightContainer}>
-          <div className={style.addButton}>
-            <Link to="/addTasks">
-              <img src={add} className={style.plus} alt="Add tasks" />
-            </Link>
+        <div className={`${style.card} ${style.card3}`}>
+          <div className={style.leftContainer}>
+            <div className={`${style.icon} ${style.addIcon}`}>
+              <img src={User} className="fas fa-bed"></img>
+            </div>
+            <div className={`${style.number} ${style.addNum}`}>{taskCount}</div>
+            <div className={`${style.text} ${style.addText}`}>Tasks</div>
+          </div>
+          <div className={style.rightContainer}>
+            <div className={style.addButton}>
+              <Link to="/addTasks">
+                <img src={add} className={style.plus} alt="Add tasks" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

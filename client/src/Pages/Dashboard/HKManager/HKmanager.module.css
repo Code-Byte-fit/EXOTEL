@@ -1,0 +1,50 @@
+.rightPanel {
+  background-color: red;
+  width: 47vw;
+  height: 62vh;
+}
+
+.leftPanel {
+  /* background-color: green; */
+  width: 23vw;
+  height: 62vh;
+}
+
+.fullPanel {
+  display: flex;
+  flex-direction: row;
+  /* background-color: aqua; */
+  height: 62vh;
+  width: 70vw;
+}
+
+.cardPanel {
+  background-color: black;
+  height: 25vh;
+}
+
+.piechart {
+  display: flex;
+  flex-direction: column;
+  height: 62vh;
+  margin-right: 10px;
+  padding: 40px;
+  background-color: #f0ebe2;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+}
+
+.colorBox1 {
+  color: #4d5949;
+  border: 1px solid #4d5949;
+  background-color: #4d5949;
+}
+.colorBox2 {
+  color: #969771d5;
+  border: 1px solid #969771d5;
+  background-color: #969771d5;
+}
+
+.repairtitle {
+  font-weight: bold;
+}
