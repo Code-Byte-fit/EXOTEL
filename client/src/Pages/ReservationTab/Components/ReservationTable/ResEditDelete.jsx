@@ -43,6 +43,18 @@ export default function ResEditDelete(props) {
           });
       };
 
+      const handleCheckOut = (row) => {
+        axios.put(`${host}/reservations/CheckOut/${row.id}`)
+          .then(() => {
+            setIsDone(true);
+            setIsReBookValid(true);
+          })
+          .catch((error) => {
+            setIsReBookValid(false);
+          });
+      };
+
+
       const handleDone=()=>{
         props.setLoading(true)
         setIsDone(false)
@@ -61,10 +73,13 @@ export default function ResEditDelete(props) {
                       cancelOption={row.ReservationStatus==="active"}
                       reBookOption={row.ReservationStatus==="cancelled"} 
                       checkinOption={row.ReservationStatus==="active"}
+                      checkOutOption={row.ReservationStatus==="Checked-In"}
                       editOption
                       onCancel={()=>handleCancel(row)}  
                       onRebook={()=>handleRebook(row)}
                       onCheckIn={()=>handleCheckIn(row)}
+                      onCheckOut={()=>handleCheckOut(row)}
+                      isPaid={true}
                       isDone={isDone}
                       success={success}
                       isReBookValid={isReBookValid}

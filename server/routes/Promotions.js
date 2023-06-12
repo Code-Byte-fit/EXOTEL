@@ -43,6 +43,16 @@ router.get("/:PromoCode/apply", async (req, res) => {
 });
 
 
+
+router.get('/active',async (req,res)=>{
+  const listOfPromotions=await Promotion.findAll({
+    where:{
+      Status:'active'
+    }
+  })
+  res.json(listOfPromotions);
+})
+
 router.post("/", async (req, res) => {
   try {
     const promotion = req.body;

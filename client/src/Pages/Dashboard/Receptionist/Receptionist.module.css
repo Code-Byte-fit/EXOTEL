@@ -1,8 +1,9 @@
-.card,.addCard,.chartCard{
+.card,.addCard,.chartCard,.promotioncard{
     background-color:#d7d0c2;
     border-radius: 10px;
     width: 12vw;
-    height: 20vh
+    height: 20vh;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
 .addCard{
@@ -47,6 +48,8 @@
 
 .rowTwo{
     margin: 3% 0 0 0 ;
+    display: flex;
+    gap: 4vw;
 }
 
 .chartCard{
@@ -95,3 +98,48 @@
 .occupied{
     background-color: #22311E;
 }
+
+.promotioncard{
+    width: 50vw;
+    min-height: 35vh;
+    background-color:#FFFFFF;
+    
+}
+
+.promoCont{
+    margin: 2%;
+    display: flex;
+    flex-direction: column;
+}
+
+.promoHeading{
+    font-size: 1.1rem;
+    align-self: center;  
+    margin: 0 0 2% 0;  
+}
+
+.promoTable{
+background-color: #FFFFFF;
+font-size: 0.7rem;
+border-collapse: separate; 
+border-spacing: 10px;
+box-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+}
+
+
+
+.promoTable th,.promoTable td {
+    text-align: center;
+  }
+
+  .promoTable tr{
+    
+  }
+
+  .promoTable tbody tr:nth-child(even) {
+    background-color: transparent; 
+  }
+  
+  /* .promoTable tbody tr:nth-child(odd) {
+    background-color: #FFFFFF; 
+  } */

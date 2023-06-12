@@ -1,0 +1,8 @@
+.leftPanel{
+    margin-left: 3vw;
+}
+.rightPanel{
+    height: 20vh;
+    margin-left: -20vw;
+    margin-top: 24vh;
+}

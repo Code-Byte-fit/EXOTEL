@@ -19,11 +19,6 @@ function CTable(props) {
       sortable: true,
     },
     {
-      name: 'Room Number',
-      selector: row=>row.roomNumber,
-      sortable: true,
-    },
-    {
       name: 'Date',
       selector: row=>row.date,
       sortable: true,
