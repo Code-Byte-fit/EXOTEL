@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import style from "./RepairRequeststyle.module.css";
+import style from "./RepairViewStyle.module.css";
 import axios from "axios";
-import Table from "../../General/Table/Table";
-import EditDelete from "../../General/Table/EditDelete";
-import Spinner from "../../General/Spinner/Spinner";
-import { AppContext } from "../../../Helpers/AppContext";
+import Table from "../../../General/Table/Table";
+import { AppContext } from "../../../../Helpers/AppContext";
+import Spinner from "../../../General/Spinner/Spinner";
+import EditDelete from "../../../General/Table/EditDelete";
 import Edit from "./Edit";
 
-const RepairRequestEditDeleteTableSection = ({ refresh, onEditRequest }) => {
+const TaskEditDeleteTableSection = (refresh) => {
   const { host } = useContext(AppContext);
   const [success, setSuccess] = useState(true);
   const [isDone, setIsDone] = useState(false);
@@ -65,15 +65,15 @@ const RepairRequestEditDeleteTableSection = ({ refresh, onEditRequest }) => {
     },
     {
       name: "STATUS",
-      selector: (row) => row.DoneStatus,
+      selector: (row) => row.SentStatus,
       sortable: false,
       cell: (row) => (
         <span
           className={
-            row.DoneStatus === "Waiting" ? style.redBadge : style.blueBadge
+            row.SentStatus === "Waiting" ? style.redBadge : style.blueBadge
           }
         >
-          {row.DoneStatus}
+          {row.SentStatus}
         </span>
       ),
     },
@@ -118,4 +118,4 @@ const RepairRequestEditDeleteTableSection = ({ refresh, onEditRequest }) => {
   );
 };
 
-export default RepairRequestEditDeleteTableSection;
+export default TaskEditDeleteTableSection;

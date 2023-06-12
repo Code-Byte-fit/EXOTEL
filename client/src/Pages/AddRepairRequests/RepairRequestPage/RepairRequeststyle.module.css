@@ -107,7 +107,7 @@
   width: 88vw;
   height: 5vh;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .btnaddItems {
@@ -123,7 +123,7 @@
 .btnAddToList {
   width: 10vw;
   height: 5vh;
-  background-color: rgb(145, 150, 139, 0.8);
+  background-color: #4d5949;
   border: none;
   color: white;
   border-radius: 4px;

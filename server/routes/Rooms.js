@@ -18,6 +18,7 @@ router.get("/", async (req, res) => {
 router.get(
   "/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime",
   async (req, res) => {
+    console.log("roomcheckssss", req);
     const checkin = req.params.checkIn;
     const checkout = req.params.checkOut;
     const checkinTime = req.params.checkInTime;

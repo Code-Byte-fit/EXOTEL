@@ -15,14 +15,56 @@ export default function Edit(props) {
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleEdit = (data, success) => {
+    console.log("jbvdyhsbnvj");
     success
-      ? axios.put(`${host}/roomItems`, data).then((res) => {
+      ? axios.put(`${host}/repairs/sentDetails`, data).then((res) => {
           props.setIsDone(true);
           props.setSuccess(success);
         })
       : props.setIsDone(true);
     props.setSuccess(success);
   };
+
+  async function viewRepairs() {
+    try {
+      const response = await axios.get(`${host}/repairs/repairItemDetails`);
+
+      const room = response.data.roomDetails.map((value) => {
+        return {
+          key: value.RoomNo,
+          value: value.RoomNo,
+        };
+      });
+
+      const item = response.data.itemDetails.map((value) => {
+        return {
+          key: `${value.roomItemNo} - ${value.RoomItemName}`,
+          value: value.roomItemNo,
+        };
+      });
+
+      setItems(item);
+      setRoomNumbers(room);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    viewRepairs();
+  }, []);
+
+  const [roomNumbers, setRoomNumbers] = useState([]);
+  const [items, setItems] = useState([]);
+
+  const extraOption = { key: "None Selected", value: "" };
+  // const roomNumberOptions = [extraOption, ...roomNumbers];
+  // const itemOptions = [extraOption, ...items];
+  const statusOptions = [
+    extraOption,
+    { key: "Waiting", value: "Waiting" },
+    { key: "Sent", value: "Sent" },
+  ];
 
   return (
     <>
@@ -37,37 +79,88 @@ export default function Edit(props) {
             <Form>
               <div className={style.formCont}>
                 <div className={style.inputCont}>
+                  <div className={style.inputSection}>Repair ID</div>
+                  <div className={style.inputSection}>
+                    : {props.values.RepairRequestNo}
+                  </div>
+                </div>
+                <div className={style.inputCont}>
+                  <div className={style.inputSection}>Room ID</div>
+                  <div className={style.inputSection}>
+                    : {props.values.RoomNo}
+                  </div>
+                </div>
+                <div className={style.inputCont}>
+                  <div className={style.inputSection}>Item ID</div>
+                  <div className={style.inputSection}>
+                    : {props.values.RoomItemNo}
+                  </div>
+                </div>
+                <div className={style.inputCont}>
+                  <div className={style.inputSection}>Item Name</div>
+                  <div className={style.inputSection}>
+                    : {props.values.RoomItem.RoomItemName}
+                  </div>
+                </div>
+                <div className={style.inputCont}>
+                  <div className={style.inputSection}>Date</div>
+                  <div className={style.inputSection}>
+                    : {props.values.createdAt.substring(0, 10)}
+                  </div>
+                </div>
+                <div className={style.inputCont}>
+                  <div className={style.inputSection}>Notes</div>
+                  <div className={style.inputSection}>
+                    : {props.values.Notes}
+                  </div>
+                </div>
+                {/* <div className={style.inputCont}>
                   <span className={style.input}>
                     <Field
-                      name="RoomItemName"
-                      type="text"
+                      name="RoomItemNo"
                       component={Input}
                       label="Room Item"
-                      width="29vw"
+                      type="select"
+                      options={itemOptions}
+                      style={{ width: "17.2vw" }}
                     />
                     <ErrorMessage
-                      name="RoomItemName"
+                      name="RoomItemNo"
                       component="div"
                       className={style.error}
                     />
                   </span>
-                </div>
+                  <span className={style.input}></span>
+                </div> */}
                 <div className={style.inputCont}>
                   <span className={style.input}>
                     <Field
-                      name="Cost"
-                      type="text"
+                      name="SentStatus"
                       component={Input}
-                      label="Cost"
-                      width="29vw"
+                      label="Status"
+                      type="select"
+                      options={statusOptions}
+                      style={{ width: "17.2vw" }}
                     />
                     <ErrorMessage
-                      name="Cost"
+                      name="SentStatus"
                       component="div"
                       className={style.error}
                     />
                   </span>
                 </div>
+
+                {/* <div className={style.inputCont}>
+                  <span className={style.input}>
+                    <Field
+                      name="Notes"
+                      component={Input}
+                      label="Special Notes"
+                      type="textarea"
+                      style={{ width: "29vw", height: "5vh", resize: "none" }}
+                    />
+                  </span>
+                </div> */}
 
                 <div className={style.confirmBtnCont}>
                   <button

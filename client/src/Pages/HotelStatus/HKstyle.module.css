@@ -121,7 +121,7 @@
 }
 
 .btnAddToList {
-  width: 10vw;
+  width: 12vw;
   height: 5vh;
   background-color: #4d5949;
   border: none;
@@ -142,7 +142,7 @@
 }
 
 .btnAddToList:hover {
-  width: 10vw;
+  width: 12vw;
   height: 4.5vh;
   background-color: rgb(145, 150, 139, 0.8);
   border: none;

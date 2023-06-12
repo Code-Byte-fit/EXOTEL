@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import { AppContext } from "../../../Helpers/AppContext";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Combobox from "react-widgets/Combobox";
-// import countries from "../../RegisterUser/Components/CountryList.json";
 import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import Input from "../../General/Inputs/Inputs";
@@ -94,21 +93,6 @@ export default function Edit(props) {
                       className={style.error}
                     />
                   </span>
-                  {/* <span className={style.input}>
-                    <Field
-                      name="userId"
-                      component={Input}
-                      label="Room Boy"
-                      type="select"
-                      options={roomBoyOptions}
-                      style={{ width: "14vw" }}
-                    />
-                    <ErrorMessage
-                      name="userId"
-                      component="div"
-                      className={style.error}
-                    />
-                  </span> */}
                 </div>
                 <div className={style.inputCont}>
                   <span className={style.input}>
@@ -126,20 +110,7 @@ export default function Edit(props) {
                       className={style.error}
                     />
                   </span>
-                  <span className={style.input}>
-                    {/* <Field
-                      name="taskDate"
-                      component={Input}
-                      label="Task Date"
-                      type="date"
-                      width="14vw"
-                    />
-                    <ErrorMessage
-                      name="TaskDate"
-                      component="div"
-                      className={style.error}
-                    /> */}
-                  </span>
+                  <span className={style.input}></span>
                 </div>
                 <div className={style.inputCont}>
                   <span className={style.input}>

@@ -18,19 +18,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// router.get("/roomTypes", async (req, res) => {
-//   try {
-//     const roomtypes = await RoomTypes.findAll({
-//       attributes: ["TypeName"],
-//     });
-//     console.log(roomtypes);
-//     res.json(roomtypes);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Internal server error" });
-//   }
-// });
-
 router.post("/", async (req, res) => {
   try {
     // Extract the required data from the request body.
@@ -74,24 +61,5 @@ router.put("/", async (req, res) => {
     res.status(500).json({ error: "Failed to Update Item" });
   }
 });
-
-// router.post("/", async (req, res) => {
-//   try {
-//     const { RoomItemNo, RoomItemName, Cost, roomTypes } = req.body;
-//     console.log("asdjfdb");
-//     console.log(RoomItemNo);
-//     const newItem = await RoomItems.create({
-//       RoomItemNo,
-//       RoomItemName,
-//       Cost,
-//     });
-
-//     console.log(newItem);
-//     res.status(201).json({ newItem });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "Failed to create task" });
-//   }
-// });
 
 module.exports = router;

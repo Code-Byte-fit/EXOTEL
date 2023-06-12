@@ -29,6 +29,7 @@ const TaskAddSection = ({ taskToEdit, onRefresh }) => {
 
   //create task
   const makeReq = async (formData) => {
+    console.log("formData: ", formData);
     await axios.post(`${host}/tasks`, formData);
     onRefresh();
     setInitValues(initialValues);

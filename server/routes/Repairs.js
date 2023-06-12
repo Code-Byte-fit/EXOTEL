@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const { Rooms, RoomItems, RepairRequest } = require("../models");
 const { Op, Sequelize } = require("sequelize");
-// const RepairRequest = require("../models/RepairRequest");
 
 router.get("/", async (req, res) => {
   const listOfRepairs = await RepairRequest.findAll({
@@ -53,7 +52,6 @@ router.post("/", async (req, res) => {
   try {
     // Extract the required data from the request body.
     let { RoomNo, RoomItemNo, DoneStatus, Notes } = req.body;
-    // RoomItemNo = RoomItemNo.substring(0, 1);
 
     // Create a new request record with the given details and reservation ID.
     const newRequest = await RepairRequest.create({
@@ -74,7 +72,6 @@ router.put("/", async (req, res) => {
   try {
     // Extract the required data from the request body.
     let { RoomNo, RoomItemNo, DoneStatus, Notes, RepairRequestNo } = req.body;
-    // RoomItemNo = RoomItemNo.substring(0, 1);
 
     // Create a new request record with the given details and reservation ID.
     await RepairRequest.update(
@@ -90,7 +87,27 @@ router.put("/", async (req, res) => {
     res.status(201).json("Updated Successfully.");
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to create request" });
+    res.status(500).json({ error: "Failed to update request" });
+  }
+});
+
+router.put("/sentDetails", async (req, res) => {
+  try {
+    // Extract the required data from the request body.
+    let { SentStatus, RepairRequestNo } = req.body;
+
+    // Create a new request record with the given details and reservation ID.
+    await RepairRequest.update(
+      {
+        SentStatus,
+      },
+      { where: { RepairRequestNo: RepairRequestNo } }
+    );
+
+    res.status(201).json("Updated Successfully.");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Failed to update request" });
   }
 });
 

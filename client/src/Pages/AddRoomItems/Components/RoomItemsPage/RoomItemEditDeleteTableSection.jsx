@@ -31,32 +31,9 @@ const RoomItemEditDeleteTableSection = ({ refresh, onEditItems }) => {
     });
   };
 
-  const [itemData, setItemData] = useState([]);
-
-  // const viewItems = async () => {
-  //   const response = await axios.get(
-  //     `http://localhost:3001/roomItems/itemdetails/`
-  //   );
-  //   setItemData(response.data);
-  // };
-
-  // const handleEdit = (data) => {
-  //   onEditItems(data);
-  // };
-
-  // const handleDelete = (data) => {};
-
-  // useEffect(() => {
-  //   viewItems();
-  // }, []);
-
   useEffect(() => {
     handleDone();
   }, [refresh]);
-
-  // const getItemList = () => {
-  //   return itemData;
-  // };
 
   const columns = [
     {
@@ -69,11 +46,6 @@ const RoomItemEditDeleteTableSection = ({ refresh, onEditItems }) => {
       selector: (row) => row.RoomItemName,
       sortable: true,
     },
-    // {
-    //   name: "ROOM-TYPES",
-    //   selector:
-    //   sortable: false,
-    // },
     {
       name: "COST",
       selector: (row) => row.Cost,

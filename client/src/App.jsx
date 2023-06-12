@@ -37,6 +37,8 @@ import ViewTaskPage from "./Pages/ViewTasks/ViewTaskPage";
 import RoomItems from "./Pages/AddRoomItems/RoomItemsPage";
 import ViewRoomItems from "./Pages/ViewRoomItems/ViewRoomItemsPage";
 import RepairRequests from "./Pages/AddRepairRequests/AddRepairRequestPage";
+import ViewRepairRequests from "./Pages/ViewRepairRequests/ViewRepairRequestPage";
+import HotelStatus from "./Pages/HotelStatus/HotelStatusPage";
 
 export default function App() {
   const host = `${window.location.protocol}//${window.location.hostname}:3001`;
@@ -149,6 +151,8 @@ export default function App() {
               <Route path="/addRoomItems" element={<RoomItems />} />
               <Route path="/viewRoomItems" element={<ViewRoomItems />} />
               <Route path="/addRepairRequests" element={<RepairRequests />} />
+              <Route path="/RepairRequests" element={<ViewRepairRequests />} />
+              <Route path="/hotelStatus" element={<HotelStatus />} />
               <Route path="/profile" element={<Profile />} />
             </>
           )}

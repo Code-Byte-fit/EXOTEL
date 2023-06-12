@@ -199,11 +199,11 @@ export default function Edit(props) {
               {showConfirmation && (
                 <Popup open={true} closeOnDocumentClick={false}>
                   <div className={style.popup}>
-                    <Exclamation className={style.exclamation} />
+                    {/* <Exclamation className={style.exclamation} />
                     <span>
                       You are trying to change the Role of a user,are you sure
                       you want to proceed?
-                    </span>
+                    </span> */}
                     <div className={style.confirmBtnCont}>
                       <button
                         type="button"

@@ -37,6 +37,7 @@ router.get("/", async (req, res) => {
         },
       ],
     });
+
     res.json(listOfReservations);
   } catch (error) {
     res.status(500).json({ error: "occured when retrieving reservations" });
@@ -239,12 +240,10 @@ router.put("/Rebook/:resId", async (req, res) => {
     });
 
     if (overlappingReservations.length > 0) {
-      res
-        .status(400)
-        .json({
-          message:
-            "One or more rooms are not available for the selected date range",
-        });
+      res.status(400).json({
+        message:
+          "One or more rooms are not available for the selected date range",
+      });
       return;
     }
 
@@ -352,15 +351,13 @@ router.get("/todayStats", async (req, res) => {
     const totalRooms = await Rooms.count();
     const availableRooms = totalRooms - (checkinRooms + stayoverRooms);
 
-    res
-      .status(200)
-      .json({
-        checkins: checkinReservationIds.length,
-        checkinRooms,
-        checkouts,
-        stayovers: stayoverReservationIds.length,
-        availableRooms,
-      });
+    res.status(200).json({
+      checkins: checkinReservationIds.length,
+      checkinRooms,
+      checkouts,
+      stayovers: stayoverReservationIds.length,
+      availableRooms,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });

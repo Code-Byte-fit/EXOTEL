@@ -6,8 +6,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { AppContext } from "../../../../Helpers/AppContext";
 
-// const roomTypeOptions = ["single", "double", "suite"];
-
 const RoomItemsAddSection = ({ onRefresh }) => {
   const { host } = useContext(AppContext);
   const initialValues = {
@@ -75,7 +73,7 @@ const RoomItemsAddSection = ({ onRefresh }) => {
                 />
               </div>
             </div>
-            <div className={style.divFormRow3}>
+            <div className={style.divBtnAddToList}>
               <input
                 type="submit"
                 className={style.btnAddToList}

@@ -1,7 +1,6 @@
 .header {
   width: 100vw;
   height: 10vh;
-  /* background-color: rgb(255, 255, 255); */
   background-color: #8f9489;
 }
 
@@ -14,98 +13,15 @@
 .content {
   background-color: rgb(255, 255, 255);
   margin: 3vh 6vw 1vh;
-  /* background-color: red; */
   display: flex;
   flex-direction: column;
   width: 88vw;
   height: 86vh;
 }
 
-/* 
-.divTitleAddItems {
-  width: 88vw;
-  height: 5vh;
-  font-weight: 600;
-}
-
-.divInputRow1 {
-  width: 88vw;
-  height: fit-content;
-  display: flex;
-  flex-direction: row;
-}
-
-.divInputRow2 {
-  width: 88vw;
-  height: fit-content;
-  margin-top: 0px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.labelRow1 {
-  width: 88vw;
-  height: 1.5vh;
-  margin: 0 0.5rem 0 0;
-  display: flex;
-  flex-direction: row;
-}
-
-.labelRow1Text {
-  font-size: 12px;
-}
-
-.inputFieldRow1 {
-  width: 17vw;
-  height: 5vh;
-  margin-right: 0.75vw;
-  border: 2px solid #d1d1d1;
-  border-radius: 4px;
-  background-color: rgb(200, 203, 197, 0.5);
-}
-
-.inputFieldRow1,
-.inputFieldRow2 {
-  border: 2px solid rgb(209, 209, 209);
-  border-radius: 4px;
-  background-color: rgb(209, 209, 209);
-  padding: 0 10px;
-}
-
-.inputFieldRow1:hover,
-.inputFieldRow2:hover {
-  border: 2px solid rgb(209, 209, 209);
-  border-radius: 4px;
-  background-color: rgb(209, 209, 209);
-  box-shadow: 0 0 0 0px rgb(150, 152, 147);
-}
-
-.inputFieldRow1:focus,
-.inputFieldRow2:focus {
-  border: 2px solid rgb(150, 152, 147);
-  background-color: #f3f4f1;
-  box-shadow: 0 0 0 0px rgb(150, 152, 147);
-  outline: none;
-}
-
-.inputFieldRow1:active,
-.inputFieldRow2:active {
-  border: 2px solid rgb(150, 152, 147);
-  background-color: #f3f4f1;
-  box-shadow: #c8cbc5;
-  outline: none;
-}
-
-.inputFieldRow2 {
-  width: 88vw;
-  height: 11.5vh;
-  resize: none;
-}
-*/
 .divBtnAddToList {
   width: 88vw;
   height: fit-content;
-  /* background-color: pink; */
   display: flex;
   justify-content: flex-end;
 }
