@@ -7,16 +7,31 @@
   .div1 {
     display: grid;
     grid-template-columns:repeat(4,1fr) ;
-    gap: 2.5vw;
+    gap: 3.2vw; 
   }
   
   .div2 {
-    top:7vh;
+    margin-top: 1vh;
     width: 90vw;
   }
   .select{
-    margin-top: 1vh;
+    z-index: 10;
+    margin-top: 1vh; 
     width: 20vw;
+  }
+  .quantityInput {
+    height: 5vh;
+  }
+  .cont{
+    position: relative;
+    margin-top: 1.3vh;
+  }
+  .error {
+    position:absolute;
+    color: rgb(141, 22, 22);
+    font-size: 0.8rem;
+    display: block;
+    right: 0;
   }
   
   .labelOne {
@@ -25,12 +40,11 @@
     font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   }
   
-  .error {
-    color: red;
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
+  .qty{
+    margin-top: 2vh;
+    height: 5vh;
   }
-  
+   
   .createBtn {
     position: relative;
     top: 2vh;
@@ -45,7 +59,6 @@
     background: #4d5949;
     color: #fcfbff;
     border-radius: 12px;
-    box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
     cursor: pointer;
   }
   .lbl4 {

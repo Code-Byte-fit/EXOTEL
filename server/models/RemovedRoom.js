@@ -38,14 +38,13 @@ module.exports = (sequelize, Datatypes) => {
     },
         {
             timestamps: false,
+            
         });
 
         RemovedRoom.associate = (models) => {
             RemovedRoom.belongsToMany(models.Reservations, { through: 'ReservationRoom' });
             RemovedRoom.belongsTo(models.RoomTypes, { foreignKey: 'RoomTypeID' });
            
-
-
     };
 
 

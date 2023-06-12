@@ -22,6 +22,17 @@ import FODash from "./Pages/Dashboard/FrontOffice/FOmanager"
 import ReceptionDash from "./Pages/Dashboard/Receptionist/Receptionist"
 import CashierDash from "./Pages/Dashboard/Cashier/Cashier"
 import HKDash from "./Pages/Dashboard/HKManager/HKmanager"
+import Compensation from './Pages/Compensation/Compensation';
+import Payments from './Pages/Payments/Payments';
+import MinibarItems from './Pages/MinibarItems/MinibarItems';
+import Minibar from './Pages/Minibar/Minibar';
+import MinibarPackage from './Pages/MinibarPackage/MinibarPackage';
+import Bill from './Pages/Bill/Bill'
+import MinibarRestocked from './Pages/MinibarRestocked/MinibarRestocked'
+import ViewMRestock from './Pages/MinibarRestocked/ViewMRestock/ViewMRestock'
+import Laundry from './Pages/LaundryNew/Laundry'
+
+
 import Users from './Pages/Users/Users';
 import Profile from './Pages/Profile/Profile';
 import Calender from './Pages/Calender/Calender';
@@ -122,7 +133,13 @@ export default function App() {
                             <Route path="/viewRooms" element={<ViewRooms/>}/>
                             <Route path="/viewPromotions" element={<ViewPromotions/>}/>
                             <Route path="/viewaddons" element={<ViewAddOns/>}/>
-                            <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/> 
+                            <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/>
+                            <Route path="/bill" element={<Bill/>}/> 
+                            <Route path="/payments" element={<Payments/>}/>
+                            <Route path="/compensation" element={<Compensation/>}/>
+                            <Route path="/ViewMRestock" element={<ViewMRestock/>}/>
+                            {/* <Route path="/Minibar" element={<Minibar/>}/> */}
+
                             <Route path="/profile" element={<Profile/>}/>
                         </>
                 )}
@@ -135,6 +152,16 @@ export default function App() {
                             <Route path="/viewPromotions" element={<ViewPromotions/>}/>
                             <Route path="/viewaddons" element={<ViewAddOns/>}/>
                             <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/> 
+                            <Route path="/minibarItems" element={<MinibarItems/>}/>
+                            <Route path="/minibarPackage" element={<MinibarPackage/>}/>
+                             
+                        </>
+                )}
+                {authState.status && authState.userRole === 'RoomBoy' && (
+                        <>
+                             <Route path="/minibarRestocked" element={<MinibarRestocked/>}/>
+                             <Route path="/laundry" element={<Laundry/>}/>
+                             
                             <Route path="/profile" element={<Profile/>}/>
                         </>
                 )}

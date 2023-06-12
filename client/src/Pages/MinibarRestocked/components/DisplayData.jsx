@@ -3,8 +3,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { AppContext } from "../../../Helpers/AppContext"
 import FormOne from "../components/FormOne";
 import MTable from './MTable';
-// import { nanoid } from 'nanoid';
-// import Filter from "./Popup";
 
 function DisplayData() {
     const [listOfMinibar, setListOfMinibar] = useState([]);

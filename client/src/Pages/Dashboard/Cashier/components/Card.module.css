@@ -1,0 +1,134 @@
+.contain {
+    display: flex;
+    gap: 1.5vw;
+  }
+  
+  .card1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 15vw;
+    height: 20vh;
+    background-color:#F0EBE2;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+  }
+
+  .card2{ 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 15vw;
+    height: 20vh;
+    background-color:#ffffff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+  }
+  .value {
+    font-size: 48px;
+    font-weight: bold;
+    color: #4d4d4d;
+    margin-top: -10px;
+  }
+  
+   .new{
+    width: 5vw;
+    height: 16vh;
+    background-color: #ffffff;
+    margin-left: 7vw;
+    margin-top: -15.3vh;
+    border-style: dashed;
+    border-color: #4d4d4d;
+   }
+  .text {
+    font-size: 20px;
+    color: #4d4d4d;
+    margin-top: 5vh;
+  }
+
+  .com{
+    margin-top: 6vh;
+    margin-left: 1.7vw;
+  }
+
+  
+  /* ------Side----- */
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 18vw;
+    height: 35vh;
+    border-radius: 0.8rem;
+    align-items: center;
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+  }
+  
+  .title {
+    margin-bottom: 16px;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 1.5vh;
+  
+  }
+  
+  .cardList {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .card {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    border-radius: 4px;
+    width: 13rem;
+    height: 3rem;
+    margin-left: 0.2vw;
+    margin-bottom: 10px;
+    background-color: #ECE5D8;
+    border: 1px solid #e5e5e5;
+  }
+  
+  
+  .cardText {
+    font-size: 14px;
+    flex: 1;
+    text-align: left;
+    font-weight: 700;
+    height: 5vh;
+  }
+  
+  @media screen and (max-width: 900px) {
+    .container {
+      width: 80vw;
+      height: auto;
+    }
+    
+    .title {
+      font-size: 1.2rem;
+    }
+    
+    .cardList {
+      margin: 0;
+    }
+    
+    .card {
+      width: 100%;
+      height: auto;
+      margin: 8px 0;
+    }
+    
+    .cardNumber {
+      font-size: 12px;
+      height: 20px;
+      width: 20px;
+      margin-right: 4px;
+    }
+    
+    .cardText {
+      font-size: 12px;
+    }
+  }
+  

@@ -3,7 +3,7 @@ const router=express.Router()
 const {Sequelize,Op} = require('sequelize');
 const moment = require('moment');
 const upload=require('../middleware/Upload')
-const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations}=require('../models')
+const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations,DuePayment}=require('../models')
 const sendEmail=require('../middleware/Email')
 
 
@@ -186,6 +186,14 @@ router.put("/CheckIn/:resId",async (req,res)=>{
   if(reservation.ReservationStatus==="active"){
     reservation.ReservationStatus = "Checked-In";
     await reservation.save();
+    const payment = await DuePayment.create({
+      BaseValue:reservation.totalAmount,
+      TotalMinibar:0,
+      TotalLaundry:0,
+      TotalCompensation:0,
+      PaymentAmount:reservation.totalAmount,
+      ReservationId:reservation.id
+    });
     res.status(200).json({ message: "Guest Checked-In",});
     } else {
     res.status(400).json({ message: "Cannot Check-In",});

@@ -21,10 +21,14 @@
 
 
 .InputContainer input[type=date]{
-    padding: 0.8vh 1.7vw;  
+    padding: 0.6vh 1.7vw;  
 }
 
 .InputContainer input[type=time]{
+    padding: 0.8vh 1.8vw;  
+}
+
+.InputContainer input[type=number]{
     padding: 0.8vh 1.8vw;  
 }
 

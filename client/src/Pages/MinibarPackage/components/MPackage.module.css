@@ -15,6 +15,16 @@
     width: 20vw;
     height: 9.5vh;
   }
+  .cont{
+    position: relative;
+  }
+  .error {
+    position: absolute;
+    color: rgb(141, 22, 22);
+    font-size: 0.8rem;
+    display: block;
+    right: 0;
+  }
   
   .div2 {
     display: flex;
@@ -46,11 +56,6 @@
     margin-top: 2vh;
   }
   
-  .error {
-    color: red;
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
-  }
   
   .createBtn {
     position: relative;
