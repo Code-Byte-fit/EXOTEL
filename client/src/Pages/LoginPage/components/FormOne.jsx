@@ -34,27 +34,27 @@ function FormOne(props){
         });
     };
 
-    const validationSchema = Yup.object().shape({                     // Defining a validation schema using 'Yup' library
-        userName:Yup.string().required(" *Required"),                 
-        password:Yup.string().required(" *Required"),                 
+    const validationSchema = Yup.object().shape({
+        userName:Yup.string().required(),
+        password:Yup.string().required(),
     
     })
 
-    return  <div className={style.cont3}>                             {/* Returning JSX code to render the login form */}
+    return  <div className={style.cont3}>
         <Formik
             initialValues={initialValues}
              onSubmit={onSubmit} 
              validationSchema={validationSchema}>
             <Form>
-                <div className={style.inputs}>                        {/* Div for contain input fields */}
-
+                <div className={style.inputs}>
                 <Field name="userName"
                 component = {Input}
                 label = "User Name"
                 type = "text"
                 width = "20vw"
                 />
-                <ErrorMessage name="userName" component="span"/> <br></br>     {/* Displaying error message for user name field*/}
+                
+                <ErrorMessage name="userName" component="span"/>
 
                 <Field name="password"
                 component = {Input}
@@ -64,12 +64,10 @@ function FormOne(props){
                 />
                 <ErrorMessage name="password" component="span"/>
                 </div>
-                <Link to="../../ForgotPassword/ForgotPassword" className={style.forgot}>Forgot Password</Link> {/* Link to navigate to forgot password page */}
-                {/* <a href={props.forgotlink} className={style.forgot}>Forgot Password</a> Link to navigate to forgot password page */}
-                <button type ="Submit" className={style.btn1}>Log In</button>           {/* Submit button to submit the form */}
-
-    <small className={style.terms}>By clicking "Log in" you confirm that you accept the <a href={props.term}> Terms of Service</a></small> {/* Displaying terms and conditions of using the website */}
-
+                
+                <a href={props.forgotlink} className={style.forgot}>Forgot Password</a>
+                <button type ="Submit" className={style.btn1}><span>Log In</span></button>
+    <small className={style.terms}>By clicking "Log in" you confirm that you accept the <a href={props.term}> Terms of Service</a></small>
             </Form>
         </Formik>
 
@@ -80,4 +78,4 @@ function FormOne(props){
 
 }
 
-export default FormOne; // Exporting the 'FormOne' component as default.
+export default FormOne;

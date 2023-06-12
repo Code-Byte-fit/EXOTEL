@@ -48,6 +48,3 @@ module.exports = (sequelize, DataTypes) => {
 
   return Reservations;
 };
-
-
-    

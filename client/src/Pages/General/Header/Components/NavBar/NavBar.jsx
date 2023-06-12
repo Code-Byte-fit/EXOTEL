@@ -84,6 +84,7 @@ export default function NavBar(props) {
       <NavElement to="/viewaddons" icon={dashBoardIcon} desc="Add-Ons" active={active} setActive={setActive}/>
       <NavElement to="/viewroomtypes" icon={dashBoardIcon} desc="Room-Types" active={active} setActive={setActive}/>
       <NavElement to="/guests" icon={dashBoardIcon} desc="Guests" active={active} setActive={setActive}/>
+      <NavElement to="/ViewFeedbacks" icon={dashBoardIcon} desc="View Feedbacks" active={active} setActive={setActive}/>
       </>}
 
       {authState.userRole==="Cashier" && 

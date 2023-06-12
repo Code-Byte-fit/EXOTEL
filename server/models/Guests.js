@@ -13,6 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    Email: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    PhoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     Country: {
       type: DataTypes.STRING,
       allowNull: false
@@ -27,9 +35,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Guests.associate = (models) => {
     Guests.hasMany(models.Reservations, { foreignKey: 'guestId' });
-    Guests.hasMany(models.GuestEmail, { foreignKey: 'guestId' });
-    Guests.hasMany(models.GuestPhoneNumber, { foreignKey: 'guestId' });
-    Guests.hasMany(models.Feedback, { foreignKey: 'guestId' });
   };
 
   return Guests;

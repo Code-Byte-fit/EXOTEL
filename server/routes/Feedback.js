@@ -1,10 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const { Feedback } = require('../models');
+const { Feedback,Guests } = require('../models');
 
 router.get("/", async (req,  res) => {
-  const ListOfFeedback = await Feedback.findAll();
+  const ListOfFeedback = await Feedback.findAll({
+    include: [
+      {
+        model: Guests,
+        attributes: ['id', 'FirstName']
+      },
+      
+    ],
+  });
+  
   res.json(ListOfFeedback);
+ 
 });
 
 router.post("/", async (req, res) => {

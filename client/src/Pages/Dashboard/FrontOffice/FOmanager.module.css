@@ -1,0 +1,127 @@
+.Container {
+    display: flex;
+    flex-direction:row;
+    justify-items: center;
+    gap: 3vw;
+  }
+
+  .users{
+    margin-top: 2vh;
+    display: flex;
+    flex-direction: column;
+    border-radius:0.6rem;
+    width: 20vw;
+    height: 30vh;
+    background: #f0efefa7;
+  }
+
+  .userTopic{
+    font-weight: 600;
+    margin-top: 0.5vh;
+    margin-left: 0.3vw;
+  }
+
+  .lineGraph{
+    margin-top: 2vh;
+    padding: 3rem;
+    background: #f0efefa7;
+    border-radius: 0.6rem;
+    width: 45vw;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .graphHead{
+    margin-left: 8vw;
+    margin-bottom: 2vh;
+    margin-top: -2vh;
+  }
+  
+
+  .footer{
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: row;
+    gap: 2.5vw;
+
+  }
+
+  .reservations{
+    background: #f0efefa7;
+    width: 5.5rem;
+    height: 20vh;
+    border-radius: 0.6rem;
+  }
+
+  .ongoingPromotions{
+    background: #f0efefa7;
+    width: 5.5rem;
+    height: 20vh;
+    border-radius: 0.6rem;
+  }
+
+  .cards {
+    margin-top: 2vh;
+    margin-left: 4vw;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .CardRed {
+    background-color: #a6a6a6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    height: 100px;
+    width: 250px;
+    border-radius: 10px;
+    
+    cursor: pointer;
+    transition: 400ms;
+  }
+  
+  .CardBlue {
+    background-color: #a6a6a6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    height: 100px;
+    width: 250px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 400ms;
+  }
+  
+  .CardGreen {
+    background-color: #a6a6a6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    height: 100px;
+    width: 250px;
+    border-radius: 10px;
+    
+    cursor: pointer;
+    transition: 400ms;
+  }
+  
+  
+  .tip {
+    font-size: 1em;
+    font-weight: 700;
+  }
+  
+  .secondText {
+    font-size: .7em;
+  }
+  
+  
+  
+  

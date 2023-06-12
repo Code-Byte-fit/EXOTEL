@@ -18,7 +18,7 @@ import Login from '../src/Pages/LoginPage/Login'
 import ViewRoomTypes from './Pages/RoomTypes/ViewRoomTypes/ViewRoomTypes';
 import Guests from './Pages/Guests/Guests';
 import AdminDash from './Pages/Dashboard/Admin/Admin'
-import FODash from "./Pages/Dashboard/FrontOffice/FOmanager"
+import FODash from './Pages/Dashboard/FrontOffice/FOmanager'
 import ReceptionDash from "./Pages/Dashboard/Receptionist/Receptionist"
 import CashierDash from "./Pages/Dashboard/Cashier/Cashier"
 import HKDash from "./Pages/Dashboard/HKManager/HKmanager"
@@ -82,6 +82,7 @@ export default function App() {
                             <Route path="/viewaddons" element={<ViewAddOns/>}/>
                             <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/>
                             <Route path="/reservationTab" element={<ReservationTab/>}/>
+                            <Route path="/viewfeedbacks" element={<ViewFeedbacks/>}/>
                         </>
                 )}
                 {authState.status && authState.userRole === 'Receptionist' && (
@@ -120,7 +121,7 @@ export default function App() {
                 )}
                 </Route>
                 {!authState.status && <Route path="/login" element={<Login/>}/>}
-                <Route path="/viewfeedbacks" element={<ViewFeedbacks/>}/>
+               
                 <Route path="/feedbackthree" element={<FeedBackthree/>}/>
                 <Route path="*" element={<>Page Not Found</>}/>
             

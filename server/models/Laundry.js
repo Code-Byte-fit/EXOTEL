@@ -5,10 +5,6 @@ module.exports=(sequelize,Datatypes)=>{
             primaryKey: true,
             autoIncrement:true
           },  
-        resNumber:{
-                type:Datatypes.STRING,
-                allowNull:false,
-            },
         receivedDate:{
                 type:Datatypes.DATEONLY,
                 allowNull:false,
@@ -18,7 +14,11 @@ module.exports=(sequelize,Datatypes)=>{
                 allowNull:false,
             },
         load:{
-                type:Datatypes.INTEGER,
+                type:Datatypes.FLOAT,
+                allowNull:false,
+            },
+        type:{
+                type:Datatypes.STRING,
                 allowNull:false,
             },
         charge:{
@@ -27,12 +27,25 @@ module.exports=(sequelize,Datatypes)=>{
             }
         },
         {
-            timestamps: false
+            timestamps: false,
+            hooks: {
+                beforeCreate: async (laundry, options) => {
+                    const { type,load } = laundry;
+                    const item = await sequelize.models.Addons.findOne({ where: { AddOn: type } }); // Find the item by type 
+                    if (item) {
+                        laundry.charge = item.Charge * load; // Multiply the addon charge and load
+                        laundry.addonID = item.addonID; // Set the addonID of the laundry to the addonID of the matching addon
+                      }
+                    },
+                  
+            },
+              
     });
    Laundry.associate = (models) =>{
         Laundry.belongsTo(models.TaskAllocations, { foreignKey: 'taskId' });
-
-
-    }
+        Laundry.belongsTo(models.Addons, { foreignKey: 'addonID' });
+        Laundry.belongsTo(models.Reservations, { foreignKey: 'resNumber' });
+    };
+    
     return Laundry;
 }

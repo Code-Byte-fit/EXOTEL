@@ -1,0 +1,25 @@
+.container {
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3vw;
+    justify-content: center;
+  }
+  
+  .heading {
+    font-style:initial;
+    font-weight: 600;
+    margin-top: 7vh;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5vh;
+  }
+  
+  .Card {
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: row;
+    gap: 5vw;
+  }
+  
