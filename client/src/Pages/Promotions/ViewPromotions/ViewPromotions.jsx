@@ -4,18 +4,20 @@ import axios from 'axios';
 import style from "../ViewPromotions/components/ViewPromotions.module.css";
 import RoomTable from "../../General/Table/Table";
 import EditDelete from "../../General/Table/EditDelete";
-
+import Spinner from '../../General/Spinner/Spinner';
 import styled from 'styled-components';
 
 
 function ViewRooms() {
   const { host } = useContext(AppContext);
     const [listOfPromotions, setlistOfPromotions] = useState([]);
-    
+    const [loading, setLoading] = useState(false); 
 
     useEffect(() => {
+      setLoading(true)
         axios.get(`${host}/promotions`).then((response) => {
             setlistOfPromotions(response.data);
+            setLoading(false)
         })
     }, [])
     
@@ -93,12 +95,16 @@ function ViewRooms() {
     ];
 
     return (
-        <div className={style.tableContainer}>
+      <>
+       {loading && <Spinner loading={loading}/>}
+         <div className={style.tableContainer}>
             <div className={style.heading}>
                 <h1>Available Promotions</h1>
             </div>
             <RoomTable columns={columns} data={listOfPromotions} height="150vh" pagination />
         </div>
+      </>
+       
     );
 }
 

@@ -20,41 +20,36 @@ function FormOne(props) {
     AddInfo: ''
   };
 
-
-
   const validationSchema = Yup.object().shape({
     PromoCode: Yup.string().required('Required'),
     PromoType: Yup.string().required('Required'),
-    Value: Yup.string()
-      .required('Required'),
+    Value: Yup.number()
+      .required('Required')
+      .integer('Invalid')
+      .typeError("Invalid")
+      .min(0, 'Invalid')
+      .max(100, 'Invalid'),
     MaxUses: Yup.number()
       .required('Required')
-      .test('non-negative', 'Only Positive Allowed', function (value) {
-        return value >= 0;
-      }),
+      .min(0, 'Cannot be negative')
+      .integer('Max Uses must be an integer')
+      .typeError('Invalid'),
     Status: Yup.string().required('Required'),
     Startdate: Yup.date()
       .required('Required')
-      .test(
-        'end-date-after-start-date',
-        'Invalid',
-        function (value) {
-          const { Enddate } = this.parent;
-          return !Enddate || value <= Enddate;
-        }
-      ),
+      .test('end-date-after-start-date', 'Invalid', function (value) {
+        const { Enddate } = this.parent;
+        return !Enddate || value <= Enddate;
+      }),
     Enddate: Yup.date()
       .required('Required')
-      .test(
-        'end-date-after-start-date',
-        'Invalid',
-        function (value) {
-          const { Startdate } = this.parent;
-          return !Startdate || value >= Startdate;
-        }
-      ),
+      .test('end-date-after-start-date', 'Invalid', function (value) {
+        const { Startdate } = this.parent;
+        return !Startdate || value >= Startdate;
+      }),
     AddInfo: Yup.string(),
   });
+  
 
 
   const Status = [{ key: "--None Selected --", value: "" },
