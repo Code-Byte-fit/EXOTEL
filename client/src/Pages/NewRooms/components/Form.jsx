@@ -25,6 +25,7 @@ function FormOne(props) {
         RoomNo: Yup.string()
           .required('Required')
           .matches(/^[A-Za-z0-9]+$/, 'Invalid')
+          .matches(/^\S*$/, 'Spaces are not allowed')
           .max(10, 'Must be at most 10 characters long'),
         RoomTypeView: Yup.string().required('Required'),
         AdditionalCharges: Yup.number()

@@ -5,22 +5,29 @@ import style from './Admin.module.css'
 import CardSection from './components/CardSection'
 import UserList from './UserList/UserList'
 import axios from 'axios';
+import Spinner from '../../General/Spinner/Spinner';
 
 const Admin = () => {
+  const [loading, setLoading] = useState(false); 
   const [promoStats, setPromoStats] = useState([]);
   const { host } = useContext(AppContext);
   useEffect(() => {
+    setLoading(true)
     // Fetch active promotions from the server
     axios.get(`${host}/admin/active`).then((res)=>{
       console.log(res.data)
       setPromoStats(res.data);
+      setLoading(false);
     })    
   }, []);
 
 
   
   return (
-    <div className={style.Container}>
+
+    <>
+     {loading && <Spinner loading={loading}/>}
+        <div className={style.Container}>
      <Common>
       
             <div className={style.leftPanel}> 
@@ -62,6 +69,8 @@ const Admin = () => {
      </Common>
      
       </div>
+    </>
+  
  
   )
 }
