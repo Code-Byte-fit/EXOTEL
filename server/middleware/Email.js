@@ -11,11 +11,11 @@ const transporter = nodemailer.createTransport({
     },
   });
 
-  const sendEmail=(destination,content)=>{
+  const sendEmail=(destination,content,subject)=>{
     transporter.sendMail({
         from: 'exotelhotel2@gmail.com',
         to: destination,
-        subject: 'Reservation Confirmation',
+        subject: subject,
         html: content,
       }, (error, info) => {
         if (error) {
