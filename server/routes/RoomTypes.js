@@ -101,7 +101,7 @@ router.delete("/:RoomTypeID", async (req, res) => {
         required: true,
       },
       where: {
-        ReservationStatus: ["checked-in", "active"],
+        ReservationStatus: ["Checked-in", "active"],
       },
     });
 

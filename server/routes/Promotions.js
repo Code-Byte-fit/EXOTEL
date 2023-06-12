@@ -142,7 +142,7 @@ router.delete("/:PromoCode", async (req, res) => {
   try {
     // Check if the PromoCode is associated with reservations having ReservationStatus "checked-in" or "active"
     const reservations = await Reservations.findAll({
-      where: { PromoCode, ReservationStatus: ['checked-in', 'active'] }
+      where: { PromoCode, ReservationStatus: ['Checked-in', 'active'] }
     });
 
     if (reservations.length > 0) {

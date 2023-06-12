@@ -22,7 +22,7 @@ router.get('/:roomNo/status', async (req, res) => {
           model: Reservations,
           where: {
             ReservationStatus: {
-              [Op.or]: ['checked-in', 'active']
+              [Op.or]: ['Checked-in', 'active']
             }
           }
         }
