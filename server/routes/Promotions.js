@@ -135,40 +135,6 @@ router.put("/",async (req,res)=>{
 })
 
 
-// router.delete("/:PromoCode", async (req, res) => {
-//   const { PromoCode } = req.params;
-
-//   // try {
-//     // Find the Add On to be removed
-//     const promo = await Promotion.findOne({
-//       where: { PromoCode },
-    
-//     });
-
-//     if (!promo) {
-//       return res.status(404).json({ error: 'Add-On not found' });
-//     }
-
-//     // Create a new removed Add On entry
-//     const newRemovedPromo = await RemovedPromo.create({
-//       PromoCode:promo.PromoCode,
-//       PromoType:promo.PromoType,
-//       Value:promo.Value,
-//       MaxUses:promo.MaxUses,
-//       Status:promo.Status,
-//       Startdate:promo.Startdate,
-//       Enddate:promo.Enddate,
-//       AddInfo:promo.AddInfo 
-//     });
-
-//     // Remove the Add On from the existing tables
-//     await Promotion.destroy({ where: { PromoCode } });
-   
-//   //   res.json({ message: 'Promotion removed successfully' });
-//   // } catch (error) {
-//   //   res.status(500).json({ error: 'Failed to remove Promotion' });
-//   // }
-// });
 
 router.delete("/:PromoCode", async (req, res) => {
   const { PromoCode } = req.params;

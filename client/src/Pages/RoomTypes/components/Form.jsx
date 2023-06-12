@@ -22,7 +22,8 @@ function FormOne(props) {
         AddInfo: ''
     };
     const validationSchema = Yup.object().shape({
-        TypeName: Yup.string().required('Required'),
+        TypeName: Yup.string()
+          .required('Required'),
         NoOfBeds: Yup.number()
           .required('Required')
           .typeError('Must contain only numbers')
@@ -33,17 +34,17 @@ function FormOne(props) {
           .required('Required')
           .typeError('Must contain only numbers')
           .positive('Must be a positive number')
-          .integer('Must be an integer')
-          .min(1, 'Must be greater than zero'),
+          .min(0, 'Must be greater than or equal to zero'),        
         View: Yup.string().required('Required'),
         StandardCharge: Yup.number()
           .required('Required')
           .typeError('Must contain only numbers')
           .positive('Must be a positive number')
-          .min(1, 'Must be greater than zero'),
-       
+          .min(1, 'Must be greater than zero'), 
         AddInfo: Yup.string(),
       });
+      
+      
       
       
     const view = [{ key: "--None Selected --", value: "" },

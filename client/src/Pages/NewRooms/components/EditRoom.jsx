@@ -65,6 +65,7 @@ function EditRoom(props) {
         checkConflict(initialValues.NewRoomNo);
       }, []);
 
+      console.log(isRoomValid);
 
 
     const fetchRoomTypes = async () => {
