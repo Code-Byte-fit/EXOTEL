@@ -7,22 +7,27 @@
   .div1 {
     display: grid;
     grid-template-columns:repeat(4,1fr) ;
-    gap: 2.5vw;
+    gap: 3.2vw; 
   }
   
   .div2 {
-    top:7vh;
+    margin-top: 1vh;
     width: 90vw;
   }
   .select{
+    z-index: 10;
     margin-top: 1vh; 
     width: 20vw;
   }
+  .quantityInput {
+    height: 5vh;
+  }
   .cont{
     position: relative;
+    margin-top: 1.3vh;
   }
   .error {
-    position: absolute;
+    position:absolute;
     color: rgb(141, 22, 22);
     font-size: 0.8rem;
     display: block;
@@ -35,12 +40,11 @@
     font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   }
   
-  .error {
-    color: red;
-    font-size: 0.8rem;
-    margin-top: 0.5rem;
+  .qty{
+    margin-top: 2vh;
+    height: 5vh;
   }
-  
+   
   .createBtn {
     position: relative;
     top: 2vh;

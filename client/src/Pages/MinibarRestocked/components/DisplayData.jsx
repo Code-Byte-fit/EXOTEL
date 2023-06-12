@@ -2,8 +2,6 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import FormOne from "../components/FormOne";
 import MTable from './MTable';
-// import { nanoid } from 'nanoid';
-// import Filter from "./Popup";
 
 function DisplayData() {
     const [listOfMinibar, setListOfMinibar] = useState([]);

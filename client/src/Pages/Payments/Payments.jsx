@@ -1,11 +1,11 @@
 import React from 'react'
 // import DisplayFormData from './components/DisplayData'
-import PTable from './components/PTable'
+import Button from './components/Button'
 
 export default function Minibar() {
   return (
     <>
-    <PTable/>
+    <Button/>
     </>
   )
 }

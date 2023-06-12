@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     const Addons = sequelize.define("Addons", {
       addonID: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.INTEGER, 
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       Charge: {
-        type: DataTypes.STRING,
+        type: DataTypes.FLOAT,
         allowNull: false,
       },
       AddInfo: {
@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   
     Addons.associate = (models) => {
       Addons.belongsToMany(models.Reservations, { through: 'ReservationAddOn' });
+      Addons.hasOne(models.Laundry, { foreignKey: 'addonID' });
     };
   
     return Addons;

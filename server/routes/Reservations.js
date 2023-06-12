@@ -3,67 +3,47 @@ const router=express.Router()
 const {Sequelize,Op} = require('sequelize');
 const moment = require('moment');
 const upload=require('../middleware/Upload')
-const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations,GuestEmail,GuestPhoneNumber}=require('../models')
+const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations}=require('../models')
+const sendEmail=require('../middleware/Email')
 
 
+//get all reservation details
 router.get('/',async (req,res)=>{
-    const listOfReservations=await Reservations.findAll({
-      attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source','totalAmount'],
-      include: [
-        {
-          model: Guests,
-          attributes: ['id', 'FirstName']
-        },
-        {
-          model: Rooms,
-          attributes: ['RoomNo']
-        }
-      ],
-    });
-    res.json(listOfReservations)
+    try{
+      const listOfReservations=await Reservations.findAll({
+        attributes: ['id', 'CheckIn', 'CheckOut', 'ReservationStatus', 'Source','totalAmount'],
+        include: [
+          {
+            model: Guests,
+            attributes: ['id', 'FirstName']
+          },
+          {
+            model: Rooms,
+            attributes: ['RoomNo']
+          }
+        ],
+      });
+      res.json(listOfReservations)
+    }
+    catch(error){
+      res.status(500).json({error: "occured when retrieving reservations"})
+    }
+    
 })
 
-
+//used to create a new reservation
 router.post("/:nameFile",upload('Identification'),async (req,res)=>{
-    try{
+    // try{
       const {CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,
-             Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus,totalAmount}=req.body
-      console.log(req.file)
-      console.log(req.body)
-    //find if the guest is already existing in the db
-    let isGuest = await Guests.findOne({
-      where: {
-        firstName: FirstName.trim(),
-        lastName: LastName.trim()
-      }
-    });
-    let guestId=null;
-    if (!isGuest) {
-      const guest = await Guests.create({ FirstName, LastName, DOB, Country,Identification:req.file.path});
-      await GuestEmail.create({ email: Email, guestId: guest.id });
-      await GuestPhoneNumber.create({ phoneNumber: PhoneNumber, guestId: guest.id });
-      guestId=guest.id
-    } 
-    else {
-      guestId=isGuest.id
-      //check if the provided email is already present
-      const guestEmail = await GuestEmail.findOne({
-        where: { guestId: guestId, email: Email }
-      });
-      if (!guestEmail) {
-        await GuestEmail.create({ email: Email, guestId: guestId });
-      }
-  
-      //check if the provided phone number is already present
-      const guestPhoneNumber = await GuestPhoneNumber.findOne({
-        where: { guestId: guestId, phoneNumber: PhoneNumber }
-      });
-      if (!guestPhoneNumber) {
-        await GuestPhoneNumber.create({ phoneNumber: PhoneNumber, guestId: guestId });
-      }
-    }
+             Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus,totalAmount,PromoCode}=req.body
 
-    const reservation = await Reservations.create({
+      const guest = await Guests.create(
+        { FirstName, LastName, DOB, Country,Email,PhoneNumber,Identification:req.file.path});
+
+       
+    
+
+    const reservation = await Reservations.create({//create new reservation record
         CheckIn,
         CheckOut,
         CheckInTime,
@@ -71,10 +51,11 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
         Source,
         ReservationStatus,
         totalAmount,
-        guestId: guestId,
+        PromoCode,
+        guestId: guest.id,
     });
 
-
+    //create record in ReservationRoom table
     for (const roomNumber of SelectedRooms) {
         const room = await Rooms.findOne({ where: { RoomNo: roomNumber.RoomNo } });
         if (room) {
@@ -84,14 +65,25 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
           });
         }
       }
-    res.status(201).json({ reservation, guestId });}
-    catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Failed to create reservation' });
-      }
+      const reservationDetails = `
+      <h2>Reservation Details</h2>
+      <p>Guest Name:${FirstName} ${LastName}</p>
+      <p>Check-in Date: ${CheckIn}</p>
+      <p>Check-out Date: ${CheckOut}</p>
+      <p>Check-in Time: ${CheckInTime}</p>
+      <p>Check-out Time: ${CheckOutTime}</p>
+      <p>Total Amount: ${totalAmount}</p>
+  `;
+    sendEmail(Email,reservationDetails)
+    res.status(201).json({ reservation ,guest});
+  // }
+  //   catch (error) {
+  //       console.error(error);
+  //       res.status(500).json({ error: 'Failed to create reservation' });
+  //     }
 })
 
-
+//edit reservation details
 router.put("/",async (req,res)=>{
   try{
   const {id,CheckIn,CheckOut,ReservationStatus,Source,guestFirstName,rooms}=req.body
@@ -107,6 +99,7 @@ catch(error){
 })
 
 
+//cancel resevration
 router.put("/Cancel/:resId",async (req,res)=>{
   const resID=req.params.resId;
   const reservation = await Reservations.findOne({
@@ -117,7 +110,7 @@ router.put("/Cancel/:resId",async (req,res)=>{
     reservation.ReservationStatus = "cancelled";
     await reservation.save();
 
-    // create a new cancelled reservation record in the CancelledReservations table
+    // Create a new cancelled reservation record in the CancelledReservations table
     const cancelledReservation = await CancelledReservations.create({
       reservationId: reservation.id,
     });
@@ -133,6 +126,8 @@ router.put("/Cancel/:resId",async (req,res)=>{
   }
 });
 
+
+//Rebook a cancelled reservation
 router.put("/Rebook/:resId", async (req, res) => {
   const resID = req.params.resId;
   const reservation = await Reservations.findOne({
@@ -182,6 +177,7 @@ router.put("/Rebook/:resId", async (req, res) => {
   }
 });
 
+//Checkin a reservation
 router.put("/CheckIn/:resId",async (req,res)=>{
   const resID=req.params.resId;
   const reservation = await Reservations.findOne({
@@ -191,6 +187,14 @@ router.put("/CheckIn/:resId",async (req,res)=>{
   if(reservation.ReservationStatus==="active"){
     reservation.ReservationStatus = "Checked-In";
     await reservation.save();
+    const payment = await DuePayment.create({
+      BaseValue:reservation.totalAmount,
+      TotalMinibar:0,
+      TotalLaundry:0,
+      TotalCompensation:0,
+      PaymentAmount:reservation.totalAmount,
+      ReservationId:reservation.id
+    });
     res.status(200).json({ 
       message: "Guest Checked-In",
     });
@@ -198,6 +202,23 @@ router.put("/CheckIn/:resId",async (req,res)=>{
     res.status(400).json({ 
       message: "Cannot Check-In",
     });
+  }
+});
+
+
+//Checkout a reservation
+router.put("/CheckOut/:resId",async (req,res)=>{
+  const resID=req.params.resId;
+  const reservation = await Reservations.findOne({
+    where:{
+      id:resID,
+    }});
+  if(reservation.ReservationStatus==="Checked-In"){
+    reservation.ReservationStatus = "Checked-Out";
+    await reservation.save();
+    res.status(200).json({ message: "Guest Checked-Out",});
+    } else {
+    res.status(400).json({ message: "Cannot Checked-Out",});
   }
 });
 

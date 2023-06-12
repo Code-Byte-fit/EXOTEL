@@ -12,7 +12,6 @@ export default function EditDelete(props) {
   const [editOpen, setEditOpen] =useState(false);
   const [cancelOpen, setCancelOpen] =useState(false);
   const [reBookOpen, setreBookOpen] =useState(false);
-  
   const [checkInOpen, setcheckInOpen] =useState(false);
   const ref = useRef(null);
 
@@ -75,11 +74,7 @@ export default function EditDelete(props) {
 
   };
 
-  // const handleConfirm=()=>{
-  //   props.onDelete()
-  // }
-
-
+  
   const handleDone=()=>{
     props.handleDone();
     closeModal();
@@ -129,17 +124,18 @@ export default function EditDelete(props) {
 
 
       {/* edit  */}
-      <Popup open={editOpen}  closeOnDocumentClick={true} onClose={handleClosePopup}>
+      <Popup open={editOpen}  closeOnDocumentClick={false} onClose={handleClosePopup}>
          {!props.isDone?props.editComponent:
-        <>
+          (props.success ? 
+          <>
           <div className={style.confirmModal}>
             <img src={successIcon} className={style.successIcon}/>
             <span className={`${style.confirmHeading} ${style.success}`}>Success!</span>
             <span className={style.confirmBody}>Successfully Updated</span>
             <button onClick={handleDone} className={`${style.Btn} ${style.doneBtn}`}>Done</button>
           </div>
-        </>
-        }
+          </> :
+          ()=>{handleDone()})}
       </Popup>
 
       {/* cancel  */}

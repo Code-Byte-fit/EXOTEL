@@ -1,8 +1,9 @@
 .react-select-container{
-    width: 10vw;
     z-index: 99;
-    margin-left: -7vw;
+    margin-left: 0vw;
+    width: 15vw;
+
 }
 .react-select__menu-list {
-    height: 15vh;
+    height: 25vh;
   }

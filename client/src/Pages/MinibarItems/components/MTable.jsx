@@ -1,33 +1,28 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import Table from "../../General/Table/Table"
 import EditDelete from "../../General/Table/EditDelete";
+import EditMinibarItem from "./EditMinibarItem"
 import style from "../components/Minibar.module.css";
 import axios from "axios";
-// import sort from "../../../Assets/Images/sort.png";
-// import editIcon from "../../../Assets/Images/Small FAB(1).png";
-// import deleteIcon from "../../../Assets/Images/Small FAB.png";
-// import Popup from "./Popup";
 
 function MTable(props) {
-  // const [listOfMinibar, setListOfMinibar] = useState([]);
-  const [showPopup, setShowPopup] = useState(false);
-  const [selectedMinibarItems, setSelectedMinibarItems] = useState(null);
+  const [isDone, setIsDone] = useState(false);
+  const [success,setSuccess]=useState(true);
 
-  // useEffect(() => {
-  //   axios.get("http://localhost:3001/minibar")
-  //   .then((response) => {
-  //     setListOfMinibar(response.data);
-  //   });
-  // }, []);
-
-  function handleEditClick(bar) {
-    setSelectedMinibarItems(bar);
-    setShowPopup(true);
+  
+  const handleDone = () => {
+    setIsDone(false)
+    axios.get("http://localhost:3001/Minibar/minibaritems").then((response) => {
+      setlistOfMinibarItems(response.data)
+    })
   }
-
-  function handleDeleteClick() {
-    // Handle delete logic here
-  }
+   
+  const [listOfMinibarItems, setlistOfMinibarItems] = useState([]);
+  useEffect(() => {
+    axios.get("http://localhost:3001/Minibar/minibarpackage").then((response) => {
+      setlistOfMinibarItems(response.data);
+    });
+  }, []);
 
   const columns = [
    
@@ -50,7 +45,8 @@ function MTable(props) {
    
     {
       selector: row => row,
-      cell:(row)=><EditDelete/>
+      cell:(row)=><EditDelete setlistOfMinibarItems={setlistOfMinibarItems} row={row} editOption isDone={isDone} handleDone={handleDone} success={success}
+      editComponent={<EditMinibarItem values={row} setIsDone={setIsDone} setSuccess={setSuccess}  />}/> // specify the component that should be displayed in this column
     }
   ]
   return (

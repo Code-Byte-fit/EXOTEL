@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Table from "../../General/Table/Table"
 import EditDelete from "../../General/Table/EditDelete";
-import style from "../components/Minibar.module.css";
+import style from "../components/Minibar.module.css"
+import axios from "axios";
 
-function MTable(props) {
-  
+function ViewMRestock() {
+    const [listOfMinibar, setListOfMinibar] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://localhost:3001/Minibar/minibarrestocks")
+        .then((response) => {
+          setListOfMinibar(response.data);
+        });
+      }, []);
+
+  const [showPopup, setShowPopup] = useState(false);
+  const [selectedMinibar, setSelectedMinibar] = useState(null);
+
   const columns = [
     {
       name: 'Restocked Id',
@@ -12,7 +24,7 @@ function MTable(props) {
       sortable: true,
     },
     {
-      name: 'Rese Number',
+      name: 'Reservation Number',
       selector: row=>row.ResNumber,
       sortable: true,
     },
@@ -44,14 +56,14 @@ function MTable(props) {
   ]
   return (
     <span className={style.tableContainer}>
-      <label className={style.labelTwo}>Entries</label>
+      <label className={style.labelTwo}>Minibar Restock</label>
       <div className={style.tbl}>
         <span className={style.div3}>
-        <Table columns={columns} data = {props.listOfMinibar} height ='35vh'/>
+        <Table columns={columns} data = {listOfMinibar} height ='35vh'/>
         </span>
       </div>
     </span>
   );
 }
 
-export default MTable;
+export default ViewMRestock;
