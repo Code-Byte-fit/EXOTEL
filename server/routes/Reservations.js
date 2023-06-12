@@ -3,7 +3,7 @@ const router=express.Router()
 const {Sequelize,Op} = require('sequelize');
 const moment = require('moment');
 const upload=require('../middleware/Upload')
-const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations,GuestEmail,GuestPhoneNumber}=require('../models')
+const {Reservations,Guests,Rooms,ReservationRoom,CancelledReservations}=require('../models')
 const sendEmail=require('../middleware/Email')
 
 
@@ -35,7 +35,7 @@ router.get('/',async (req,res)=>{
 router.post("/:nameFile",upload('Identification'),async (req,res)=>{
     try{
       const {CheckIn,CheckOut,CheckInTime,CheckOutTime,SelectedRooms,
-             Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus,totalAmount}=req.body
+             Source,FirstName,LastName,DOB,Country,Email,PhoneNumber,ReservationStatus,totalAmount,PromoCode}=req.body
 
       const guest = await Guests.create(
         { FirstName, LastName, DOB, Country,Email,PhoneNumber,Identification:req.file.path});
@@ -51,6 +51,7 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
         Source,
         ReservationStatus,
         totalAmount,
+        PromoCode,
         guestId: guest.id,
     });
 
@@ -188,6 +189,23 @@ router.put("/CheckIn/:resId",async (req,res)=>{
     res.status(200).json({ message: "Guest Checked-In",});
     } else {
     res.status(400).json({ message: "Cannot Check-In",});
+  }
+});
+
+
+//Checkout a reservation
+router.put("/CheckOut/:resId",async (req,res)=>{
+  const resID=req.params.resId;
+  const reservation = await Reservations.findOne({
+    where:{
+      id:resID,
+    }});
+  if(reservation.ReservationStatus==="Checked-In"){
+    reservation.ReservationStatus = "Checked-Out";
+    await reservation.save();
+    res.status(200).json({ message: "Guest Checked-Out",});
+    } else {
+    res.status(400).json({ message: "Cannot Checked-Out",});
   }
 });
 

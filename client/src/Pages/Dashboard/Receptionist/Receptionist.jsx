@@ -19,6 +19,7 @@ const Receptionist = () => {
   const { host } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
   const [todayStats, setTodayStats] = useState([]);
+  const [promoStats,setPromoStats]=useState([])
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [
@@ -38,7 +39,6 @@ const Receptionist = () => {
     ]
   });
 
-  Chart.register(CategoryScale);
 
   useEffect(() => {
     setLoading(true);
@@ -46,7 +46,14 @@ const Receptionist = () => {
       setTodayStats(res.data);
       setLoading(false);
     });
+
+    axios.get(`${host}/promotions/active`).then((res)=>{
+      console.log(res.data)
+      setPromoStats(res.data);
+    })    
   }, []);
+
+  Chart.register(CategoryScale);
 
   useEffect(() => {
     const totalRooms =
@@ -117,7 +124,36 @@ const Receptionist = () => {
                     </div>  
               </div>
             </div>
-            
+            <div className={style.promotioncard}>
+                <div className={style.promoCont}>
+                  <span className={style.promoHeading}>Active Promotions</span>
+                  
+                  <table className={style.promoTable}>
+                  <thead>
+                    <tr>
+                      <th>Promo Code</th>
+                      <th>Promo Type</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Max Uses</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {promoStats.map((promo) => (
+                      <tr key={promo.PromoCode}>
+                        <td>{promo.PromoCode}</td>
+                        <td>{promo.PromoType}</td>
+                        <td>{promo.Startdate}</td>
+                        <td>{promo.Enddate}</td>
+                        <td>{promo.MaxUses}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                  
+                </div>
+            </div>
+           
           </div>
         </div>
       </Common>

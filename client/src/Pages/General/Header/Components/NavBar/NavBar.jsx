@@ -115,16 +115,18 @@ export default function NavBar(props) {
       {authState.userRole==="Receptionist" && 
       <>
       <NavElement to="/" icon={dashBoardIcon} desc="Dashboard" active={active} setActive={setActive}/>
-      <NavElement to="/createReservation" icon={dashBoardIcon} desc="Create-Reservation" active={active} setActive={setActive}/>
-      <NavElement to="/reservationTab" icon={dashBoardIcon} desc="Reservations Tab" active={active} setActive={setActive}/>
+       <MultiElement desc="Reservations" icon={dashBoardIcon} isActive={activeIndex === 3} onClick={() => handleMultiElementClick(3)}>
+         <NavElement to="/createReservation" icon={dashBoardIcon} desc="Add Res" active={active} setActive={setActive}/>
+         <NavElement to="/reservationTab" icon={dashBoardIcon} desc="Res-Tab" active={active} setActive={setActive}/>
+      </MultiElement>
       <NavElement to="/guests" icon={dashBoardIcon} desc="Guests" active={active} setActive={setActive}/>
       <NavElement to="/calender" icon={dashBoardIcon} desc="Calender" active={active} setActive={setActive}/>
       </>}
 
       </div>
       <div className={style.lowerIcons}>
-        <NavElement to="/dashboard" icon={dashBoardIcon} desc="Settings" active={active} setActive={setActive}/>
-        <NavElement to="/dashboard" icon={dashBoardIcon} desc="Help" active={active} setActive={setActive}/>
+        {/* <NavElement to="/dashboard" icon={dashBoardIcon} desc="Settings" active={active} setActive={setActive}/>
+        <NavElement to="/dashboard" icon={dashBoardIcon} desc="Help" active={active} setActive={setActive}/> */}
         <div onClick={logout} className={style.logout}>
             <img src={dashBoardIcon}/>
             <span>Logout</span>

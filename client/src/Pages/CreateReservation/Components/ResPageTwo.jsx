@@ -66,11 +66,11 @@ export default function ResPageTwo(props) {
                   <div>
                     <div className={style.heading}>
                     <span>MAIN GUEST</span>
-                    {guests.length===0 &&
+                    {/* {guests.length===0 &&
                     <span className={style.newGuest}>
                        <input type="checkbox" onChange={handleCheckboxChange}/>
                       <small>existing guest</small>
-                    </span>}
+                    </span>} */}
                     </div>
                     <div className={style.inputContainer}>
                     <span className={style.innerinputContainer}>

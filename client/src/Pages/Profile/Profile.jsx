@@ -3,7 +3,7 @@ import {Formik,Form,Field} from "formik"
 import Spinner from '../General/Spinner/Spinner'
 import axios from "axios"
 import {AppContext} from "../../Helpers/AppContext"
-import coverImg from "../../Assets/Images/DP2.png"
+import coverImg from "../../Assets/Images/cover3.jpg"
 import editIcon from "../../Assets/Images/edittransparent.png"
 import Detail from './Components/Detail'
 import style from "./Components/Style.module.css"
