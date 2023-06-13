@@ -36,7 +36,9 @@ export default function Edit(props) {
       .matches(/^[a-zA-Z\s]+$/, 'Invalid')
       .required('required'),
       Email: Yup.string().email('Invalid email').required('required'),
-      PhoneNumber: Yup.string().required('required'),
+      PhoneNumber: Yup.string()
+      .required("required")
+      .matches(/^[+]?\d{10,14}$/, "Invalid"),
   });
 
 
@@ -93,7 +95,7 @@ export default function Edit(props) {
                         formikValues.setFieldValue('Country', value);
                       }}
                     />
-                    <ErrorMessage name="Country" component="small" className={style.dateErr}/>
+                    <ErrorMessage name="Country" component="small" className={style.countryErr}/>
                   </span>
                 </div>
 
