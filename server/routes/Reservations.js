@@ -87,6 +87,8 @@ router.put("/",async (req,res)=>{
   try{
   const {id,CheckIn,CheckOut,ReservationStatus,Source,guestFirstName,rooms}=req.body
   await Reservations.update({
+    CheckIn:CheckIn,
+    CheckOut:CheckOut,
     Source:Source,
     ReservationStatus:ReservationStatus
   },{where:{id:id}})

@@ -97,3 +97,15 @@
 .popup button{
     justify-self: center;
 }
+
+.input,.country{
+    position: relative;
+}
+
+.dateErr{
+    color: red;
+    align-self:flex-end;
+    position: absolute;
+    bottom: -3vh;
+    right: 0vw;
+}
