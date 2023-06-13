@@ -10,9 +10,15 @@ import style from './Components/Style.module.css';
 
 export default function RegisterUser() {
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required('required'),
-    lastName: Yup.string().required('required'),
-    country: Yup.string().required('required'),
+    firstName: Yup.string()
+    .matches(/^[a-zA-Z\s]+$/, 'Invalid')
+    .required('required'),
+    lastName: Yup.string()
+    .matches(/^[a-zA-Z\s]+$/, 'Invalid')
+    .required('required'),
+    country: Yup.string()
+      .matches(/^[a-zA-Z\s]+$/, 'Invalid')
+      .required('required'),
     email: Yup.string().email('Invalid email').required('required'),
     phoneNumber: Yup.string().required('required'),
     userName: Yup.string().required('required'),

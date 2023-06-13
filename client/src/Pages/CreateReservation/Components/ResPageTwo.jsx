@@ -18,14 +18,21 @@ export default function ResPageTwo(props) {
   const [guests,setGuests]=useState([]);
   const schema = yup.object().shape({
     Source: yup.string().required('required'),
-    FirstName: yup.string().required('required'),
-    LastName: yup.string().required('required'),
-    Country: yup.string().required('required'),
+    FirstName: yup.string()
+      .matches(/^[a-zA-Z\s]+$/, 'Invalid')
+      .required('required'),
+    LastName: yup.string()
+      .matches(/^[a-zA-Z\s]+$/, 'Invalid')
+      .required('required'),
+    Country: yup.string()
+      .matches(/^[a-zA-Z\s]+$/, 'Invalid')
+      .required('required'),
     Email: yup.string().email('Invalid email').required('required'),
     PhoneNumber: yup.string()
-    .required("required")
-    .matches(/^[+]?\d{10,14}$/, "Invalid phone number"),
+      .required("required")
+      .matches(/^[+]?\d{10,14}$/, "Invalid phone number"),
   });
+  
 
   const handleSubmit=(values)=>{
     props.next(values)

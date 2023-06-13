@@ -199,6 +199,19 @@
     width: 2vw;
 }
 
+.input{
+    position: relative;
+}
+
+
+
+.dateErr{
+    color: red;
+    align-self:flex-end;
+    position: absolute;
+    bottom: -3vh;
+    right: 0vw;
+}
 
 
 
