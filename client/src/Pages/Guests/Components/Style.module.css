@@ -142,3 +142,18 @@
     background:#4D5949;
     color: white;
 }
+
+.input{
+    position: relative;
+}
+.country{
+    position: relative;
+}
+
+.dateErr{
+    color: red;
+    align-self:flex-end;
+    position: absolute;
+    bottom: -3vh;
+    right: 0vw;
+}

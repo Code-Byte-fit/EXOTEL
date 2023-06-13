@@ -74,7 +74,7 @@ router.post("/:nameFile",upload('Identification'),async (req,res)=>{
       <p>Check-out Time: ${CheckOutTime}</p>
       <p>Total Amount: ${totalAmount}</p>
   `;
-    sendEmail(Email,reservationDetails)
+    sendEmail(Email,reservationDetails,"Reservation Confirmed")
     res.status(201).json({ reservation ,guest});}
     catch (error) {
         console.error(error);
@@ -87,6 +87,8 @@ router.put("/",async (req,res)=>{
   try{
   const {id,CheckIn,CheckOut,ReservationStatus,Source,guestFirstName,rooms}=req.body
   await Reservations.update({
+    CheckIn:CheckIn,
+    CheckOut:CheckOut,
     Source:Source,
     ReservationStatus:ReservationStatus
   },{where:{id:id}})

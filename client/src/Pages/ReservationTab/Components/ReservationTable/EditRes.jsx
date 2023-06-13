@@ -1,8 +1,10 @@
 import React, { useContext} from 'react'
 import {AppContext} from "../../../../Helpers/AppContext"
-import {Formik,Form,Field} from "formik"
+import {Formik,Form,Field,ErrorMessage} from "formik"
+import * as yup from 'yup';
 import axios from "axios"
 import Input from "../../../General/Inputs/Inputs"
+import moment from 'moment';
 import style from "../Style.module.css"
 
 export default function EditRes(props) {
@@ -16,6 +18,15 @@ export default function EditRes(props) {
       props.setIsDone(true);
       props.setSuccess(success);
   }
+
+  const schema = yup.object().shape({
+    CheckIn: yup.date().required('required').min(moment(new Date()).startOf('day'), "invalid"),
+    CheckOut: yup
+      .date()
+      .min(yup.ref('CheckIn'), 'Invalid')
+      .required('required'),
+  });
+  
   
   const Status = [
     { key: 'active', value: 'active' },
@@ -32,8 +43,8 @@ const Sources = [
     <>
         <div className={style.editCont}>
           <div className={style.editHeading}>Edit Reservation</div>
-            <Formik initialValues={props.values} onSubmit={null} validationSchema={null}>
-                {({values})=>(
+            <Formik initialValues={props.values} onSubmit={null} validationSchema={schema}>
+                {(formik)=>(
                   <Form>
                   <div className={style.formCont}>
                   <div className={style.btnCont}>
@@ -43,9 +54,11 @@ const Sources = [
                       <div className={style.inputCont}>
                         <span className={style.input}>
                           <Field name="CheckIn" component={Input} label="Check-In" type="date"/>
+                          <ErrorMessage name="CheckIn" component="small" className={style.dateErr}/>
                         </span>
                         <span className={style.input}>
                           <Field name="CheckOut" component={Input} label="Check-Out" type="date"/>
+                          <ErrorMessage name="CheckOut" component="small" className={style.dateErr}/>
                         </span>
                       </div>
                       <div className={style.inputCont}>
@@ -58,9 +71,9 @@ const Sources = [
                       </div>
                       <div className={style.confirmBtnCont}>
                         <button type='button' className={`${style.editBtn} ${style.cancelBtn}`}
-                        onClick={()=>{handleEdit(values,false)}}>Cancel</button>
+                        onClick={()=>{handleEdit(formik.values,false)}}>Cancel</button>
                         <button type='button' className={`${style.editBtn} ${style.confirmBtn}`} 
-                        onClick={()=>{handleEdit(values,true)}}>Confirm</button>
+                        onClick={()=>{formik.dirty && formik.isValid && handleEdit(formik.values,true)}}>Confirm</button>
                       </div>
                       </div> 
                   </Form>

@@ -109,6 +109,8 @@ export default function App() {
                             <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/>
                             <Route path="/reservationTab" element={<ReservationTab/>}/>
                             <Route path="/profile" element={<Profile/>}/>
+                            <Route path="/calender" element={<Calender/>}/>
+                            <Route path="/guests" element={<Guests/>}/>
                         </>
                 )}
                 {authState.status && authState.userRole === 'Receptionist' && (
@@ -136,8 +138,10 @@ export default function App() {
                             <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/>
                             <Route path="/bill" element={<Bill/>}/> 
                             <Route path="/payments" element={<Payments/>}/>
-                            <Route path="/compensation" element={<Compensation/>}/>
+                            {/* <Route path="/compensation" element={<Compensation/>}/> */}
                             <Route path="/ViewMRestock" element={<ViewMRestock/>}/>
+                            <Route path="/calender" element={<Calender/>}/>
+
                             {/* <Route path="/Minibar" element={<Minibar/>}/> */}
 
                             <Route path="/profile" element={<Profile/>}/>
@@ -154,6 +158,12 @@ export default function App() {
                             <Route path="/viewroomtypes" element={<ViewRoomTypes/>}/> 
                             <Route path="/minibarItems" element={<MinibarItems/>}/>
                             <Route path="/minibarPackage" element={<MinibarPackage/>}/>
+                            <Route path="/profile" element={<Profile/>}/>
+                            <Route path="/calender" element={<Calender/>}/>
+                            <Route path="/laundry" element={<Laundry/>}/>
+
+
+
                              
                         </>
                 )}
@@ -161,8 +171,9 @@ export default function App() {
                         <>
                              <Route path="/minibarRestocked" element={<MinibarRestocked/>}/>
                              <Route path="/laundry" element={<Laundry/>}/>
-                             
                             <Route path="/profile" element={<Profile/>}/>
+                            <Route path="/calender" element={<Calender/>}/>
+                            
                         </>
                 )}
                 </Route>

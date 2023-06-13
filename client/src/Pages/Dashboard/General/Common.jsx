@@ -16,7 +16,7 @@ const Common = (props) => {
      </div>
     </div>
     <div className={style.RightPanel}>
-      <NotificationBox />
+      {/* <NotificationBox /> */}
       
       <Cal />
 

@@ -22,7 +22,7 @@ router.get('/:roomNo/status', async (req, res) => {
           model: Reservations,
           where: {
             ReservationStatus: {
-              [Op.or]: ['checked-in', 'active']
+              [Op.or]: ['Checked-in', 'active']
             }
           }
         }
@@ -135,13 +135,19 @@ router.get('/availability/:checkIn/:checkOut/:checkInTime/:checkOutTime', async 
   
 
   router.put("/",async (req,res)=>{
-    const {NewRoomNo,RoomNo, floor, Status, RoomTypeView, AdditionalCharges ,  AddInfo}=req.body
-    
+    const {NewRoomNo,RoomNo, floor, Status, RoomTypeView, AdditionalCharges , AddInfo}=req.body
+   const prevTotal =  await Rooms.findOne({
+      where:{RoomNo:RoomNo},
+      attributes:['TotalCharge', 'AdditionalCharges']
+      
+    })
+    console.log(prevTotal);
       await Rooms.update({
         RoomNo:NewRoomNo,
         floor:floor,
         Status:Status,
         RoomTypeView:RoomTypeView,
+        TotalCharge:parseInt(prevTotal.TotalCharge)-parseInt(prevTotal.AdditionalCharges)+parseInt(AdditionalCharges),
         AdditionalCharges:AdditionalCharges,
         AddInfo:AddInfo
       },{where:{RoomNo:RoomNo}})

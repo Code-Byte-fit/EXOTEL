@@ -80,9 +80,10 @@ export default function Guests() {
       selector: row =>row.PhoneNumber,
       sortable: true,
     },
-    {
+    { 
       selector: row => row,
-      cell: (row) => <EditDelete editOption isDone={isDone} handleDone={handleDone} success={success}
+      cell: (row) => (authState.userRole==="Receptionist" || authState.userRole==="FOManager" ) &&
+      <EditDelete editOption isDone={isDone} handleDone={handleDone} success={success}
       editComponent={<Edit values={row} setIsDone={setIsDone} setSuccess={setSuccess}/>}/>
     },
 ];

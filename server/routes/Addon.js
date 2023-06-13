@@ -40,7 +40,7 @@ router.get('/:addOn/use', async (req, res) => {
           model: Reservations,
           where: {
             ReservationStatus: {
-              [Op.or]: ['checked-in', 'active']
+              [Op.or]: ['Checked-in', 'active']
             }
           }
         }
