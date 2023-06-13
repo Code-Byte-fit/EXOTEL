@@ -25,8 +25,8 @@ export default function ResPageTwo(props) {
       .matches(/^[a-zA-Z\s]+$/, 'Invalid')
       .required('required'),
     Country: yup.string()
-      .matches(/^[a-zA-Z\s]+$/, 'Invalid')
-      .required('required'),
+    .matches(/^[a-zA-Z\s]+$/, 'Invalid')
+    .required('required'),
     Email: yup.string().email('Invalid email').required('required'),
     PhoneNumber: yup.string()
       .required("required")
