@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const sendEmail=require('../middleware/Email')
-const { DuePayment, Reservations,Guests } = require("../models");
+const { DuePayment, Reservations,Guests,Bill } = require("../models");
 
 router.get("/duePayment", async (req, res) => {
   const listOfDuePayment = await DuePayment.findAll();
@@ -63,6 +63,23 @@ router.post("/duePayment", async (req, res) => {
   const post = req.body;
   await DuePayment.create(post);
   res.json(post);
+});
+
+router.post('/confirm', async (req, res) => {
+  const { reservationId, grossAmount } = req.body;
+
+  try {
+    // Create a new bill entry in the database
+    const bill = await Bill.create({
+      grossAmount: grossAmount,
+      ReservationId: reservationId, 
+    });
+
+    res.status(200).json({ message: 'Invoice confirmed successfully', bill });
+  } catch (error) {
+    console.error('Error confirming invoice:', error);
+    res.status(500).json({ message: 'Failed to confirm invoice' });
+  }
 });
 
 module.exports = router;

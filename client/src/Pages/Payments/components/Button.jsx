@@ -9,16 +9,23 @@ export default function Button(props) {
   const [isLeftActive, setIsLeftActive] = useState(true);
   const [columns, setColumns] = useState([]);
   const [listOfReservations, setListOfReservations] = useState([]);
-  const [selectedReservationNumber, setSelectedReservationNumber] = useState(null);
   const [listOfPayments, setListOfPayments] = useState([]);
 
 
   useEffect(() => {
-    axios.get("http://localhost:3001/reservations").then((response) => {
-      setListOfReservations(response.data);
+    axios.get("http://localhost:3001/payment/confirm").then((response) => {
+      setListOfPayments(response.data);
     });
+
     axios.get("http://localhost:3001/payment/duePayment").then((response) => {
       setListOfPayments(response.data);
+    });
+
+    axios.get("http://localhost:3001/reservations").then((response) => {
+      const checkedInReservations = response.data.filter(
+        (reservation) => reservation.ReservationStatus === "Checked-In"
+      );
+      setListOfReservations(checkedInReservations);
     });
   }, []);
 
@@ -46,26 +53,29 @@ export default function Button(props) {
     const baseValue = reservation ? reservation.totalAmount : 0;
     const minibarTotal = payment ? payment.TotalMinibar : 0;
     const laundryTotal = payment ? payment.TotalLaundry : 0;
-    const total = payment ? payment.PaymentAmount : 0;
+    
+    // Calculate the total value by adding baseValue, minibarTotal, and laundryTotal
+    const total = baseValue + minibarTotal + laundryTotal;
+    
     const checkOutDate = reservation ? reservation.CheckOut : '';
     const checkInDate = reservation ? reservation.CheckIn : '';
-  
-    const serviceCharge = (total) * 0.02;
+    const serviceCharge = total * 0.02;
   
     const data = {
-        reservationNumber,
-        baseValue,
-        minibarTotal,
-        laundryTotal,
-        total,
-        serviceCharge,
-        checkOutDate,
-        checkInDate,
-      };
-    
-      const params = new URLSearchParams(data).toString();
-      window.location.href = `/Bill?${params}`;
+      reservationNumber,
+      baseValue,
+      minibarTotal,
+      laundryTotal,
+      total,
+      serviceCharge,
+      checkOutDate,
+      checkInDate,
     };
+  
+    const params = new URLSearchParams(data).toString();
+    window.location.href = `/Bill?${params}`;
+  };
+  
   
   useEffect(() => {
     handleLeftClick(); 
@@ -109,60 +119,65 @@ export default function Button(props) {
       },
     
       {
-        name: "Minibar",
-        selector: (row) => {
-          const payment = listOfPayments.find((payment) => payment.ReservationId === row.id);
-          return payment ? payment.TotalMinibar : "";
-        },
-        sortable: true,
-      },
-      {
-        name: "Laundry",
-        selector: (row) => {
-          const payment = listOfPayments.find((payment) => payment.ReservationId === row.id);
-          return payment ? payment.TotalLaundry : "";
-        },
-        sortable: true,
-      },
+  name: "Minibar",
+  selector: (row) => {
+    const payment = listOfPayments.find(
+      (payment) => payment.ReservationId === row.id
+    );
+    return payment ? payment.TotalMinibar : 0;
+  },
+  sortable: true,
+},
+{
+  name: "Laundry",
+  selector: (row) => {
+    const payment = listOfPayments.find(
+      (payment) => payment.ReservationId === row.id
+    );
+    return payment ? payment.TotalLaundry : 0;
+  },
+  sortable: true,
+},
+
       {
         name: "Total",
         selector: (row) => {
           const payment = listOfPayments.find((payment) => payment.ReservationId === row.id);
-          return payment ? payment.PaymentAmount : "";
+          return payment ? payment.PaymentAmount : 0;
         },
         sortable: true,
       },
     
-    {
-      name: "Action",
-      selector: (row) => row.id,
-      cell: (row) => (
-        <Link to="/Bill">
-          <button
-            className={style.buttonProcess}
-            onClick={() => handleProcessClick(row.id)}
-          >
-            Process
-          </button>
-        </Link>
-      ),
-    },
-  ];
+      {
+        name: "Action",
+        selector: (row) => row.id,
+        cell: (row) => (
+          <Link to="/Bill">
+            {row.totalAmount !== 0 && ( // Conditionally render the button
+              <button
+                className={style.buttonProcess}
+                onClick={() => handleProcessClick(row.id)}
+              >
+                Process
+              </button>
+            )}
+          </Link>
+        ),
+      },
+    ];
 
   const columnsR = [
+    
     {
       name: "Res Number",
       selector: "ReservationId",
       sortable: true,
     },
+    
     {
       name: "Amount",
       selector: "grossAmount",
       sortable: true,
-    },
-    {
-      selector: (row) => row,
-      cell: (row) => <EditDelete />,
     },
   ];
 
@@ -195,7 +210,7 @@ export default function Button(props) {
           <Table
             columns={isLeftActive ? columnsL : columnsR}
             data={isLeftActive ? listOfReservations : listOfPayments}
-            height="35vh"
+            height="55vh"
             />
 
           </span>

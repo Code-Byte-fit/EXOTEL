@@ -58,7 +58,7 @@ export default function App() {
         const accessToken = localStorage.getItem("accessToken");
         if (!accessToken) {
             setAuthState({ ...authState, status: false });
-            router.navigate("/login");
+            // router.navigate("/login");
         } else {
                     const decodedToken = jwtDecode(accessToken)
                     axios.get(`http://localhost:3001/userAccounts/${decodedToken.userAccountId}`).then((response)=>{
