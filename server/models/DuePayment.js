@@ -31,6 +31,7 @@ module.exports=(sequelize,Datatypes)=>{
     });
     Payment.associate = (models) => {
         Payment.belongsTo(models.Reservations, { foreignKey: 'ReservationId' });
+        Payment.hasOne(models.Bill, { foreignKey: 'ReservationId' }); 
       };
       
     return Payment;

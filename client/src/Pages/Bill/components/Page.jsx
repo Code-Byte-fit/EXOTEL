@@ -13,32 +13,58 @@ export default function Page() {
   const minibarTotal = parseFloat(searchParams.get("minibarTotal")) || 0;
   const laundryTotal = parseFloat(searchParams.get("laundryTotal")) || 0;
   const total = parseFloat(searchParams.get("total")) || 0;
-  const handleButton = (id)=>{
-    
-    axios.post(`http://localhost:3001/payment/confirm/${id}`)
-  }
+  const [showPopup, setShowPopup] = useState(false);
+
+
+  const handleButton = (id) => {
+    const grossAmount = calculateGrossAmount(total);
+  
+    axios
+      .post('http://localhost:3001/payment/confirm', {
+        reservationId: id,
+        grossAmount: grossAmount,
+      })
+      .then((response) => {
+        console.log('Invoice confirmed successfully:', response.data);
+        setShowPopup(true); // Set showPopup state to true
+      })
+      .catch((error) => {
+        console.error('Error confirming invoice:', error);
+      });
+  };
+  
 
   useEffect(() => {
-    const serviceCharge = total * 0.02;
-    const tax = total * 0.1;
-    const grossAmount = total + serviceCharge + tax;
-
-  
     const transformedData = [
       { description: 'Base Value', price: baseValue },
       { description: 'Minibar Restock Charge', price: minibarTotal },
       { description: 'Laundry Charge', price: laundryTotal },
       { description: 'Sub Total', price: total },
-      { description: 'Service Charge', price: serviceCharge },
-      { description: 'Tax', price: tax }, 
-      { description: 'Gross Amount', price: grossAmount },
+      { description: 'Service Charge', price: calculateServiceCharge(total) },
+      { description: 'Tax', price: calculateTax(total) },
+      { description: 'Gross Amount', price: calculateGrossAmount(total) },
     ];
-  
+
     setTableData(transformedData);
   }, [baseValue, minibarTotal, laundryTotal, total]);
 
   const today = new Date();
   const formattedDate = today.toLocaleDateString();
+
+  // Helper functions
+  const calculateServiceCharge = (amount) => {
+    return amount * 0.02;
+  };
+
+  const calculateTax = (amount) => {
+    return amount * 0.1;
+  };
+
+  const calculateGrossAmount = (amount) => {
+    const serviceCharge = calculateServiceCharge(amount);
+    const tax = calculateTax(amount);
+    return amount + serviceCharge + tax;
+  };
 
   return (
     <>
@@ -70,9 +96,12 @@ export default function Page() {
             </tbody>
           </table>
         </div>
-        <button className={style.buttonProcess}
-        onClick={()=>{handleButton(reservationNumber)}}
-        >Confirm</button>
+        <button className={style.buttonProcess} onClick={() => handleButton(reservationNumber)}>Confirm</button>
+        {showPopup && (
+           <div className={style.popup}>
+          <p>Payment Complete</p>
+           </div>
+          )}
       </div>
     </>
   );
