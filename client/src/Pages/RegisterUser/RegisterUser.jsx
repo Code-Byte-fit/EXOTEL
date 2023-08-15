@@ -20,7 +20,9 @@ export default function RegisterUser() {
       .matches(/^[a-zA-Z\s]+$/, 'Invalid')
       .required('required'),
     email: Yup.string().email('Invalid email').required('required'),
-    phoneNumber: Yup.string().required('required'),
+    phoneNumber:  Yup.string()
+    .required("required")
+    .matches(/^[+]?\d{10,14}$/, "Invalid"),
     userName: Yup.string().required('required'),
     password: Yup.string().required('required').min(8, 'min characters-8'),
     confirmPassword: Yup.string().required('required').oneOf([Yup.ref('password'), null], 'Passwords must match'),
